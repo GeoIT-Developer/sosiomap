@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import LoadingState from '@/types/loading-state.enum';
 import { convertHorizontalToMapDegree } from '@/utils/helper';
 import useDeviceOrientation from './useDeviceOrientation';
@@ -11,40 +11,32 @@ const useUserHeading = (
     userHeadingMarker: Marker | null,
 ) => {
     const deviceOrientation = useDeviceOrientation();
-    const [active, setActive] = useState(12);
+    const location = useRef({ latitude: 0, longitude: 0 });
 
     useEffect(() => {
-        const alpha = deviceOrientation.alpha || 90;
-
-        function updateMarkerRotation(event: any) {
+        function updateLocation(event: any) {
             const { latitude, longitude } = event.coords;
-            if (latitude && longitude && alpha) {
-                userHeadingMarker?.setRotation(
-                    convertHorizontalToMapDegree(alpha),
-                );
-                userHeadingMarker?.setLngLat([longitude, latitude]);
-            }
+            location.current = { latitude, longitude };
         }
 
         if (myMap && mapStatus === LoadingState.SUCCESS) {
-            geoControl.on('geolocate', updateMarkerRotation);
-
-            setInterval(() => {
-                setActive(new Date().getTime());
-            }, 1500);
+            geoControl.on('geolocate', updateLocation);
         }
         return () => {
             if (geoControl) {
-                geoControl.off('geolocate', updateMarkerRotation);
+                geoControl.off('geolocate', updateLocation);
             }
         };
-    }, [
-        deviceOrientation.alpha,
-        geoControl,
-        mapStatus,
-        myMap,
-        userHeadingMarker,
-    ]);
+    }, [geoControl, mapStatus, myMap]);
+
+    useEffect(() => {
+        const alpha = deviceOrientation.alpha || 90;
+        const { latitude, longitude } = location.current;
+        if (latitude && longitude && alpha) {
+            userHeadingMarker?.setRotation(convertHorizontalToMapDegree(alpha));
+            userHeadingMarker?.setLngLat([longitude, latitude]);
+        }
+    }, [deviceOrientation.alpha, userHeadingMarker]);
 };
 
 export default useUserHeading;
