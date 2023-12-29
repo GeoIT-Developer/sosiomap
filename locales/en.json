@@ -1,0 +1,38 @@
+{
+    "app": {
+        "name": "Sosiomap",
+        "description": "Sosiomap is an application..."
+    },
+    "label": {
+        "message": "Message",
+        "general": "General",
+        "local": "Local"
+    },
+    "button": {
+        "login": "Login"
+    },
+    "navigation": {
+        "home": "Home",
+        "menu": "Menu",
+        "explore": "Explore",
+        "chat": "Chat",
+        "profile": "Profile"
+    },
+    "map": {
+        "map_style": "Map Style"
+    },
+    "message": {
+        "error": {
+            "geolocation_not_supported": "Get location is not supported in this device!",
+            "geolocation_unavailable": "Location information is unavailable!",
+            "geolocation_timeout": "Get location request timed out!",
+            "geolocation_denied": "Please enable location services!"
+        },
+        "info": {
+            "login_to_continue": "Please login to continue!"
+        }
+    },
+    "unit": {
+        "km": "km"
+    }
+}

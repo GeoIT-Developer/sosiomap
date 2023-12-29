@@ -1,0 +1,38 @@
+{
+    "app": {
+        "name": "Sosiomap",
+        "description": "Sosiomap adalah sebuah aplikasi..."
+    },
+    "label": {
+        "message": "Pesan",
+        "general": "Umum",
+        "local": "Lokal"
+    },
+    "button": {
+        "login": "Masuk"
+    },
+    "navigation": {
+        "home": "Beranda",
+        "menu": "Menu",
+        "explore": "Jelajah",
+        "chat": "Obrolan",
+        "profile": "Profil"
+    },
+    "map": {
+        "map_style": "Gaya Peta"
+    },
+    "message": {
+        "error": {
+            "geolocation_not_supported": "Informasi lokasi tidak tersedia pada perangkat ini!!",
+            "geolocation_unavailable": "Informasi lokasi tidak ditemukan!",
+            "geolocation_timeout": "Waktu tunggu permintaan lokasi habis!",
+            "geolocation_denied": "Harap aktifkan lokasi GPS anda!"
+        },
+        "info": {
+            "login_to_continue": "Masuk untuk melanjutkan!"
+        }
+    },
+    "unit": {
+        "km": "km"
+    }
+}

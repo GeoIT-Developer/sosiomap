@@ -1,0 +1,34 @@
+{
+    "short_name": "Sosio Map",
+    "name": "Sosio Map",
+    "description": "A Social map to improve society",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "theme_color": "#b2ebf2",
+    "background_color": "#e5ffff",
+    "icons": [
+        {
+            "src": "favicon.ico",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "logo192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "logo512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any"
+        },
+        {
+            "src": "logo_maskable.png",
+            "sizes": "196x196",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

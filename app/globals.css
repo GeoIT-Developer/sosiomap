@@ -1,8 +1,21 @@
-@tailwind base;
-@tailwind components;
+/* @tailwind base; */
+/* @tailwind components; */
 @tailwind utilities;
 
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'ABeeZee', 'Segoe UI',
+        'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 :root {
+    --full-height: 100vh;
+}
+
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -24,4 +37,26 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+} */
+
+.maplibregl-ctrl-attrib-inner {
+    color: black !important;
+}
+
+.maplibregl-ctrl-top-right {
+    top: 4rem !important;
+    right: 0.5rem !important;
+}
+
+/* .maplibregl-ctrl-geolocate {
+    display: none !important;
+} */
+
+#compass-marker {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 40px solid rgba(52, 148, 244, 0.85);
+    border-radius: 10px;
 }
