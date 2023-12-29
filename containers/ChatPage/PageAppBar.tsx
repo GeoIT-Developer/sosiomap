@@ -39,6 +39,7 @@ export default function PageAppBar() {
                         onChange={(e) =>
                             setChannel(e.target.value as ChatChannelEnum)
                         }
+                        className='!text-white'
                     >
                         <MenuItem value={ChatChannelEnum.GENERAL}>
                             {t('label.general')}

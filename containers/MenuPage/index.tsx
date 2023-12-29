@@ -10,50 +10,103 @@ import {
     Paper,
 } from '@mui/material';
 import PageAppBar from './PageAppBar';
-import HubIcon from '@mui/icons-material/Hub';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import LocalActivityIcon from '@mui/icons-material/LocalActivity';
+import CelebrationIcon from '@mui/icons-material/Celebration';
+import TrafficIcon from '@mui/icons-material/Traffic';
+import ForestIcon from '@mui/icons-material/Forest';
+import FloodIcon from '@mui/icons-material/Flood';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+import DiscountIcon from '@mui/icons-material/Discount';
+import CellTowerIcon from '@mui/icons-material/CellTower';
+import {
+    green,
+    red,
+    blue,
+    amber,
+    blueGrey,
+    brown,
+    indigo,
+    yellow,
+    grey,
+    lime,
+} from '@mui/material/colors';
 
 const PEMILU_2024 = [
     {
-        label: 'Legislatif',
-        icon: <AccountBalanceIcon />,
+        label: 'DPR',
+        icon: <AccountBalanceIcon sx={{ color: 'white' }} />,
+        bg_color: indigo[500],
+    },
+    {
+        label: 'DPD',
+        icon: <AccountBalanceIcon sx={{ color: 'white' }} />,
+        bg_color: indigo[500],
+    },
+    {
+        label: 'DPRD Provinsi',
+        icon: <AccountBalanceIcon sx={{ color: 'white' }} />,
+        bg_color: indigo[500],
+    },
+    {
+        label: 'DPRD Kab/Kota',
+        icon: <AccountBalanceIcon sx={{ color: 'white' }} />,
+        bg_color: indigo[500],
     },
     {
         label: 'Voting',
-        icon: <HowToVoteIcon />,
+        icon: <HowToVoteIcon sx={{ color: grey[900] }} />,
+        bg_color: yellow[500],
     },
     {
         label: 'Kecurangan',
-        icon: <HighlightOffIcon />,
+        icon: <HighlightOffIcon sx={{ color: 'white' }} />,
+        bg_color: red[900],
     },
 ];
 
 const MAIN_FEATURE = [
     {
         label: 'User Activity',
-        icon: <HubIcon />,
+        icon: <LocalActivityIcon sx={{ color: 'white' }} />,
+        bg_color: blue[500],
     },
     {
         label: 'Events',
-        icon: <HubIcon />,
+        icon: <CelebrationIcon sx={{ color: grey[900] }} />,
+        bg_color: amber[600],
     },
     {
         label: 'Traffic',
-        icon: <HubIcon />,
+        icon: <TrafficIcon sx={{ color: 'white' }} />,
+        bg_color: blueGrey[600],
     },
     {
         label: 'Environment',
-        icon: <HubIcon />,
+        icon: <ForestIcon sx={{ color: 'white' }} />,
+        bg_color: green[500],
     },
     {
         label: 'Disaster',
-        icon: <HubIcon />,
+        icon: <FloodIcon sx={{ color: 'white' }} />,
+        bg_color: brown[800],
     },
     {
         label: 'Social',
-        icon: <HubIcon />,
+        icon: <VolunteerActivismIcon sx={{ color: 'white' }} />,
+        bg_color: red[500],
+    },
+    {
+        label: 'Public Facility',
+        icon: <CellTowerIcon sx={{ color: 'white' }} />,
+        bg_color: lime[900],
+    },
+    {
+        label: 'Promo',
+        icon: <DiscountIcon sx={{ color: grey[900] }} />,
+        bg_color: yellow['A200'],
     },
 ];
 
@@ -63,7 +116,7 @@ export default function MenuPage({ show = true }: { show?: boolean }) {
         <div className={show ? '' : 'hidden'}>
             <PageAppBar />
             <Paper
-                className='overflow-y-auto'
+                className='overflow-y-auto !rounded-none'
                 style={{ height: fragmentHeightStyle }}
             >
                 <Box>
@@ -79,7 +132,10 @@ export default function MenuPage({ show = true }: { show?: boolean }) {
                                 <Grid key={idx} item xs={1}>
                                     <ListItemButton className='flex-col !text-center'>
                                         <ListItemAvatar>
-                                            <Avatar className='mx-auto'>
+                                            <Avatar
+                                                className='mx-auto'
+                                                sx={{ bgcolor: item.bg_color }}
+                                            >
                                                 {item.icon}
                                             </Avatar>
                                         </ListItemAvatar>
@@ -108,7 +164,10 @@ export default function MenuPage({ show = true }: { show?: boolean }) {
                                 <Grid key={idx} item xs={1}>
                                     <ListItemButton className='flex-col !text-center'>
                                         <ListItemAvatar>
-                                            <Avatar className='mx-auto'>
+                                            <Avatar
+                                                className='mx-auto'
+                                                sx={{ bgcolor: item.bg_color }}
+                                            >
                                                 {item.icon}
                                             </Avatar>
                                         </ListItemAvatar>

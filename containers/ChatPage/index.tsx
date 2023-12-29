@@ -55,7 +55,7 @@ export default function ChatPage({ show = true }: { show?: boolean }) {
         <div className={show ? '' : 'hidden'}>
             <PageAppBar />
             <Paper
-                className='flex flex-col'
+                className='flex flex-col !rounded-none'
                 style={{ height: fragmentHeightStyle }}
             >
                 <Stack

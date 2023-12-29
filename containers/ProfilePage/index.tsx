@@ -11,7 +11,7 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
         <div className={show ? '' : 'hidden'}>
             <PageAppBar />
             <Paper
-                className='overflow-y-auto'
+                className='overflow-y-auto !rounded-none'
                 style={{ height: fragmentHeightStyle }}
             >
                 <NeedLogin

@@ -22,6 +22,7 @@ export default function PageAppBar() {
                                     ...params.InputProps,
                                     type: 'search',
                                     startAdornment: <TravelExploreIcon />,
+                                    className: '!text-white',
                                 }}
                                 placeholder={t('navigation.explore')}
                             />
