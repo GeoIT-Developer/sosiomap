@@ -48,10 +48,10 @@ export const BASEMAP: {
             id: 'carto_dark_matter',
             name: 'Dark Matter',
             tiles: [
-                'http://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-                'http://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-                'http://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-                'http://d.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+                'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+                'https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+                'https://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+                'https://d.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
             ],
             attribution:
                 '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
