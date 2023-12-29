@@ -17,7 +17,8 @@ export default function DataRecyclerView({
 
     return (
         <List
-            height={400}
+            height='75vh'
+            width='100%'
             itemCount={data.length}
             itemSize={50}
             className='w-full'

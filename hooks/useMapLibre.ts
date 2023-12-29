@@ -40,10 +40,10 @@ const useMapLibre = (options?: MapOptions) => {
     const { style: basemapStyle } = useBasemapContext();
     const mapInitialStorage = useLocalStorageFunc(
         LOCAL_STORAGE.MAP_INITIAL,
-        INITIAL_MAP
+        INITIAL_MAP,
     );
     const [mapStatus, setMapStatus] = useState<LoadingState>(
-        LoadingState.UNDEFINED
+        LoadingState.UNDEFINED,
     );
 
     useEffect(() => {
@@ -72,14 +72,14 @@ const useMapLibre = (options?: MapOptions) => {
         });
         map.current.addControl(
             new MapLibreGL.AttributionControl(),
-            'bottom-left'
+            'bottom-left',
         );
         map.current.addControl(
             new MapLibreGL.NavigationControl({
                 showCompass: true,
                 showZoom: true,
             }),
-            'top-right'
+            'top-right',
         );
 
         map.current.addControl(geoControl, 'top-right');

@@ -65,7 +65,7 @@ export default function PageAppBar() {
                                         key={item.locale}
                                         onClick={() =>
                                             changeLocale(
-                                                item.locale.toLowerCase() as NewLocaleType
+                                                item.locale.toLowerCase() as NewLocaleType,
                                             )
                                         }
                                     >

@@ -94,7 +94,7 @@ export default function BasemapDrawer({
                                                     </Stack>
                                                 </ToggleButton>
                                             );
-                                        }
+                                        },
                                     )}
                                 </ToggleButtonGroup>
                             </Fragment>

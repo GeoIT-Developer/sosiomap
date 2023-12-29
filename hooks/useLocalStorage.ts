@@ -21,7 +21,7 @@ function useLocalStorage<T>(key: string, initialValue: T) {
                 return finalValue;
             });
         },
-        [key]
+        [key],
     );
 
     return [value, setStoredValue] as const;

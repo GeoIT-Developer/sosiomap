@@ -55,7 +55,7 @@ export default function NeedLogin({
                                         <Typography variant='h6'>
                                             {message ||
                                                 t(
-                                                    'message.info.login_to_continue'
+                                                    'message.info.login_to_continue',
                                                 )}
                                         </Typography>
                                         {type !== 'message' && (

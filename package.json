@@ -15,7 +15,10 @@
         "lint": "next lint",
         "check:types": "tsc --pretty --noEmit",
         "check:lint": "eslint . --ext ts --ext tsx --ext js",
-        "check:format": "prettier --check ."
+        "check:format": "prettier --check .",
+        "prepare": "husky install",
+        "format": "prettier --write . && echo 'Prettier completed'",
+        "lint-staged": "echo 'Lint-staged completed'"
     },
     "dependencies": {
         "@emotion/cache": "^11.11.0",
@@ -49,6 +52,7 @@
         "eslint-config-next": "14.0.4",
         "husky": "^8.0.3",
         "postcss": "^8",
+        "prettier": "^3.1.1",
         "tailwindcss": "^3.3.0",
         "typescript": "^5"
     }

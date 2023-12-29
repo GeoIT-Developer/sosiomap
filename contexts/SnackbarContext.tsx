@@ -13,12 +13,11 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
 import CloseIcon from '@mui/icons-material/Close';
 
-const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref
-) {
-    return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
-});
+const Alert = forwardRef<HTMLDivElement, AlertProps>(
+    function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+    },
+);
 
 interface SettingState {
     duration?: number;
@@ -63,7 +62,7 @@ export default function SnackbarProvider({ children }: ReactChildrenProps) {
 
     const toastClose = (
         _event?: React.SyntheticEvent | Event,
-        reason?: string
+        reason?: string,
     ) => {
         if (reason === 'clickaway') {
             return;

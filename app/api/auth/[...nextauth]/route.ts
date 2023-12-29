@@ -6,7 +6,7 @@ const keycloakJWTDecode = (token: string) => {
     return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
 };
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
     providers: [
         KeycloakProvider({
             clientId: process.env.CLIENT_ID || '',
@@ -25,7 +25,7 @@ export const authOptions: AuthOptions = {
                     token.roles = getValObject(
                         decoded,
                         'realm_access.roles',
-                        []
+                        [],
                     );
                     token.access_token_expired = decoded?.exp;
                     token.id_token = account.id_token;

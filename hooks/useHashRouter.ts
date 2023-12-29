@@ -11,7 +11,7 @@ const useHashRouter = (): [string, (newHash: string) => void] => {
 
     const setHashInUrl = (newHash: string) => {
         router.replace(
-            `${window.location.pathname}${window.location.search}${newHash}`
+            `${window.location.pathname}${window.location.search}${newHash}`,
         );
         setHash(newHash);
     };

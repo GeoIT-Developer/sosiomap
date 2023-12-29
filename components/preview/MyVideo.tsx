@@ -11,9 +11,9 @@ export default function MyVideo({
     src,
     className,
     style,
-    width = "100%",
-    height = "500",
-    type = "video/mp4",
+    width = '100%',
+    height = '500',
+    type = 'video/mp4',
 }: Props) {
     return (
         <video

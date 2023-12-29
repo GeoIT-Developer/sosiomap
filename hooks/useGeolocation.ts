@@ -25,7 +25,7 @@ const useGeolocation = (): GeolocationHook => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [permissionGranted, setPermissionGranted] = useState<boolean | null>(
-        null
+        null,
     );
     const t = useScopedI18n('message.error');
 
@@ -72,7 +72,7 @@ const useGeolocation = (): GeolocationHook => {
                         default:
                             setError(t('geolocation_denied'));
                     }
-                }
+                },
             );
         } else {
             setError(t('geolocation_not_supported'));

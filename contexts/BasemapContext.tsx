@@ -141,10 +141,10 @@ const BasemapContext = createContext<BasemapContextProps>({
 export default function BasemapProvider({ children }: ReactChildrenProps) {
     const [basemap, setBasemap] = useLocalStorage<string>(
         LOCAL_STORAGE.BASEMAP,
-        'osm'
+        'osm',
     );
     const [style, setStyle] = useState<StyleSpecification | undefined>(
-        undefined
+        undefined,
     );
 
     useEffect(() => {

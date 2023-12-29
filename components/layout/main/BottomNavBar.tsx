@@ -46,7 +46,7 @@ export default function BottomNavBar({
 }) {
     const t = useScopedI18n('navigation');
     const [locationStatus, setLocationStatus] = useState<LocationStatusEnum>(
-        LocationStatusEnum.IDLE
+        LocationStatusEnum.IDLE,
     );
     const { myMap, mapStatus, geoControl } = useMapLibreContext();
     const geoLocation = useGeolocation();

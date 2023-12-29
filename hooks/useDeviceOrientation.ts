@@ -61,7 +61,7 @@ const useDeviceOrientation = () => {
         return () => {
             window.removeEventListener(
                 'deviceorientation',
-                handleDeviceOrientation
+                handleDeviceOrientation,
             );
             clearTimeout(timeoutId);
         };

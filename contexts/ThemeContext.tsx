@@ -16,18 +16,18 @@ const ColorModeContext = createContext<{
 export default function ThemeContext({ children }: ReactChildrenProps) {
     const [mode, setMode] = useLocalStorage<ThemeModeType>(
         LOCAL_STORAGE.THEME,
-        'dark'
+        'dark',
     );
 
     const colorMode = useMemo(
         () => ({
             toggleColorMode: () => {
                 setMode((prevMode) =>
-                    prevMode === 'light' ? 'dark' : 'light'
+                    prevMode === 'light' ? 'dark' : 'light',
                 );
             },
         }),
-        [setMode]
+        [setMode],
     );
 
     const theme = useMemo(
@@ -46,7 +46,7 @@ export default function ThemeContext({ children }: ReactChildrenProps) {
                     fontFamily: 'ABeeZee',
                 },
             }),
-        [mode]
+        [mode],
     );
 
     return (

@@ -8,7 +8,7 @@ const useUserHeading = (
     myMap: Map | null,
     mapStatus: LoadingState,
     geoControl: GeolocateControl,
-    userHeadingMarker: Marker | null
+    userHeadingMarker: Marker | null,
 ) => {
     const deviceOrientation = useDeviceOrientation();
     const [active, setActive] = useState(12);
@@ -20,7 +20,7 @@ const useUserHeading = (
             const { latitude, longitude } = event.coords;
             if (latitude && longitude && alpha) {
                 userHeadingMarker?.setRotation(
-                    convertHorizontalToMapDegree(alpha)
+                    convertHorizontalToMapDegree(alpha),
                 );
                 userHeadingMarker?.setLngLat([longitude, latitude]);
             }

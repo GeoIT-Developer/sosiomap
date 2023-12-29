@@ -44,7 +44,7 @@ function UserHeadingComponent({ mapLibre }: { mapLibre: MapLibreType }) {
         mapLibre.myMap,
         mapLibre.mapStatus,
         mapLibre.geoControl,
-        userHeadingMarker.current
+        userHeadingMarker.current,
     );
     return null;
 }

@@ -18,7 +18,7 @@ export default function PageAppBar() {
     const t = useI18n();
     const [channel, setChannel] = useLocalStorage(
         LOCAL_STORAGE.CHAT_CHANNEL,
-        ChatChannelEnum.GENERAL
+        ChatChannelEnum.GENERAL,
     );
     return (
         <Box>

@@ -24,8 +24,8 @@ export default function MyYoutube({
     src,
     className,
     style,
-    width = "100%",
-    height = "500",
+    width = '100%',
+    height = '500',
 }: Props) {
     const youtubeID = getYoutubeVideoId(src);
     return (
@@ -36,8 +36,8 @@ export default function MyYoutube({
             className={className}
             style={style}
             title={title}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            frameBorder='0'
+            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
             allowFullScreen
         />
     );

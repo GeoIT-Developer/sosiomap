@@ -48,7 +48,7 @@ export default function ChatPage({ show = true }: { show?: boolean }) {
     const t = useScopedI18n('unit');
     const [distance, setDistance] = useLocalStorage(
         LOCAL_STORAGE.CHAT_DISTANCE,
-        2
+        2,
     );
 
     return (
