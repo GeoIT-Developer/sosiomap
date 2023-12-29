@@ -17,11 +17,11 @@ export default function DataRecyclerView({
 
     return (
         <List
-            height='75vh'
-            width='100%'
+            height={400}
+            width={300}
             itemCount={data.length}
             itemSize={50}
-            className='w-full'
+            className='!w-full'
             style={style}
         >
             {Row}
