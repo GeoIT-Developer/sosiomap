@@ -4,15 +4,6 @@
 echo '🏗️👷 Styling, testing and building your project before committing'
 
 # Check Prettier standards
-npm run format ||
-(
-    echo '🤢🤮 Formatting file Failed.';
-    false;
-)
-
-echo '🏗️👷 Styling, testing and building your project before committing'
-
-# Check Prettier standards
 npm run check:format ||
 (
     echo '🤢🤮 Prettier Check Failed. Run yarn run format, add changes and try commit again';
