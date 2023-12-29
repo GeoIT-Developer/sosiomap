@@ -14,6 +14,7 @@ import BasicMenu from '@/components/menu/BasicMenu';
 import MyImage from '@/components/preview/MyImage';
 import { ASSETS } from '@/utils/constant';
 import { useSession } from 'next-auth/react';
+import useAccessToken from '@/hooks/useAccessToken';
 
 type UseChangeLocaleType = typeof useChangeLocale;
 type NewLocaleType = Parameters<ReturnType<UseChangeLocaleType>>[0];
@@ -23,6 +24,10 @@ export default function PageAppBar() {
     const changeLocale = useChangeLocale();
     const { mode, toggleColorMode } = useThemeMode();
     const session = useSession();
+
+    const accessToken = useAccessToken();
+
+    console.log('AAAAA', accessToken);
 
     return (
         <Box>

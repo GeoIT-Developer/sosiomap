@@ -133,10 +133,8 @@ export default function BottomNavBar({
         }
     }, [geoLocation.error, geoLocation.loading, locationStatus]);
 
-    console.log('BBBBBB');
-
     const MainButton = (fabProps: ObjectLiteral) => {
-        // Do this to remove warning
+        // Did this to remove warning
         const { showLabel, ...restProps } = fabProps;
         return (
             <Fab
@@ -159,10 +157,6 @@ export default function BottomNavBar({
             sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
             elevation={5}
         >
-            {/* <p className='h-80'>
-                {JSON.stringify(geoLocation.location, undefined, 2)}
-                {JSON.stringify(geoLocation.orientation, undefined, 2)}
-            </p> */}
             <BottomNavigation
                 showLabels={false}
                 value={hashRouter}

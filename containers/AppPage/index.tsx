@@ -2,7 +2,6 @@
 
 import Box from '@mui/material/Box';
 import { useScopedI18n } from '@/locales/client';
-import { useRouter } from 'next/navigation';
 import MenuPage from '@/containers/MenuPage';
 import ExplorePage from '@/containers/ExplorePage';
 import HomePage from '@/containers/HomePage';
@@ -11,20 +10,12 @@ import ProfilePage from '@/containers/ProfilePage';
 import MainMap from '@/components/map/main';
 import useHashRouter from '@/hooks/useHashRouter';
 import BottomNavBar, { LIST_ROUTE } from './BottomNavBar';
-import { useEffect, useMemo, useState } from 'react';
 import BasemapProvider from '@/contexts/BasemapContext';
 import { MapLibreProvider } from '@/contexts/MapLibreContext';
 
-export default function MainLayout() {
-    const router = useRouter();
+export default function AppPage() {
     const t = useScopedI18n('navigation');
     const [hashRouter, setHashRouter] = useHashRouter();
-
-    // useEffect(() => {
-    //     if (hashRouter === LIST_ROUTE.HOME) {
-    //         window.scrollTo(0, 1);
-    //     }
-    // }, [hashRouter]);
 
     return (
         <Box sx={{ pb: 7 }}>

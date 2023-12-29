@@ -13,6 +13,8 @@ type BasemapType = {
     attribution: string;
 };
 
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || '';
+
 export const BASEMAP: {
     PRIMARY: BasemapType[];
     CARTO: BasemapType[];
@@ -74,7 +76,7 @@ export const BASEMAP: {
             id: 'mapbox_streets',
             name: 'Streets',
             tiles: [
-                `https://api.mapbox.com/styles/v1/mapbox/streets-v12/tiles/{z}/{x}/{y}?access_token=${process.env.NEXT_PUBLIC_MAPBOX_TOKEN}`,
+                `https://api.mapbox.com/styles/v1/mapbox/streets-v12/tiles/{z}/{x}/{y}?access_token=${MAPBOX_TOKEN}`,
             ],
             attribution:
                 "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Mapbox</a> <a href='http://www.openstreetmap.org/about/' target='_blank'>© OpenStreetMap</a> <a class='mapbox-improve-map' href='https://apps.mapbox.com/feedback/?owner=mapbox&amp;id=satellite-v9' target='_blank' rel='noopener nofollow'>Improve this map</a> <a href='https://www.maxar.com/' target='_blank'>© Maxar</a>",
@@ -83,7 +85,7 @@ export const BASEMAP: {
             id: 'mapbox_satellite',
             name: 'Satellite',
             tiles: [
-                `https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v12/tiles/{z}/{x}/{y}?access_token=${process.env.NEXT_PUBLIC_MAPBOX_TOKEN}`,
+                `https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v12/tiles/{z}/{x}/{y}?access_token=${MAPBOX_TOKEN}`,
             ],
             attribution:
                 "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Mapbox</a> <a href='http://www.openstreetmap.org/about/' target='_blank'>© OpenStreetMap</a> <a class='mapbox-improve-map' href='https://apps.mapbox.com/feedback/?owner=mapbox&amp;id=satellite-v9' target='_blank' rel='noopener nofollow'>Improve this map</a> <a href='https://www.maxar.com/' target='_blank'>© Maxar</a>",
@@ -92,7 +94,7 @@ export const BASEMAP: {
             id: 'mapbox_outdoors',
             name: 'Outdoors',
             tiles: [
-                `https://api.mapbox.com/styles/v1/mapbox/outdoors-v12/tiles/{z}/{x}/{y}?access_token=${process.env.NEXT_PUBLIC_MAPBOX_TOKEN}`,
+                `https://api.mapbox.com/styles/v1/mapbox/outdoors-v12/tiles/{z}/{x}/{y}?access_token=${MAPBOX_TOKEN}`,
             ],
             attribution:
                 "<a href='https://www.mapbox.com/about/maps/' target='_blank'>© Mapbox</a> <a href='http://www.openstreetmap.org/about/' target='_blank'>© OpenStreetMap</a> <a class='mapbox-improve-map' href='https://apps.mapbox.com/feedback/?owner=mapbox&amp;id=satellite-v9' target='_blank' rel='noopener nofollow'>Improve this map</a> <a href='https://www.maxar.com/' target='_blank'>© Maxar</a>",
