@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import LoadingState from '@/types/loading-state.enum';
 import useDeviceOrientation from './useDeviceOrientation';
 import { GeolocateControl, Map, Marker } from 'maplibre-gl';
+import { convertHorizontalToMapDegree } from '@/utils/helper';
 
 const useUserHeading = (
     myMap: Map | null,
@@ -31,7 +32,9 @@ const useUserHeading = (
         const alpha = deviceOrientation.alpha || 0;
         if (alpha !== null) {
             const bearing = myMap?.getBearing() || 0;
-            userHeadingMarker?.setRotation(alpha - bearing);
+            userHeadingMarker?.setRotation(
+                convertHorizontalToMapDegree(alpha) - bearing,
+            );
         }
     }, [deviceOrientation.alpha, myMap, userHeadingMarker]);
 };
