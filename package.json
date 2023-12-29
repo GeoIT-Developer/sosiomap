@@ -18,7 +18,19 @@
         "check:format": "prettier --check .",
         "prepare": "husky install",
         "format": "prettier --write . && echo 'Prettier completed'",
+        "precommit": "lint-staged",
         "lint-staged": "echo 'Lint-staged completed'"
+    },
+    "lint-staged": {
+        "*.{js,jsx,ts,tsx}": [
+            "npm run format",
+            "git add"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm run precommit"
+        }
     },
     "dependencies": {
         "@emotion/cache": "^11.11.0",
