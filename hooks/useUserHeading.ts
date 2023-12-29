@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import LoadingState from '@/types/loading-state.enum';
 import { convertHorizontalToMapDegree } from '@/utils/helper';
 import useDeviceOrientation from './useDeviceOrientation';
@@ -11,12 +11,11 @@ const useUserHeading = (
     userHeadingMarker: Marker | null,
 ) => {
     const deviceOrientation = useDeviceOrientation();
-    const location = useRef({ latitude: 0, longitude: 0 });
 
     useEffect(() => {
         function updateLocation(event: any) {
             const { latitude, longitude } = event.coords;
-            location.current = { latitude, longitude };
+            userHeadingMarker?.setLngLat([longitude, latitude]);
         }
 
         if (myMap && mapStatus === LoadingState.SUCCESS) {
@@ -27,14 +26,12 @@ const useUserHeading = (
                 geoControl.off('geolocate', updateLocation);
             }
         };
-    }, [geoControl, mapStatus, myMap]);
+    }, [geoControl, mapStatus, myMap, userHeadingMarker]);
 
     useEffect(() => {
         const alpha = deviceOrientation.alpha || 90;
-        const { latitude, longitude } = location.current;
-        if (latitude && longitude && alpha) {
+        if (alpha) {
             userHeadingMarker?.setRotation(convertHorizontalToMapDegree(alpha));
-            userHeadingMarker?.setLngLat([longitude, latitude]);
         }
     }, [deviceOrientation.alpha, userHeadingMarker]);
 };
