@@ -5,9 +5,13 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { useI18n } from '@/locales/client';
 import MyImage from '@/components/preview/MyImage';
+import { useTheme } from '@mui/material';
 
 export default function PageAppBar() {
     const t = useI18n();
+    const theme = useTheme();
+    const isLightMode = theme.palette.mode === 'light';
+
     return (
         <Box>
             <AppBar position='sticky'>
@@ -16,7 +20,9 @@ export default function PageAppBar() {
                         size='large'
                         edge='start'
                         color='inherit'
-                        aria-label='open drawer'
+                        className={`!mr-2 ${
+                            isLightMode ? '!bg-white !bg-opacity-75' : ''
+                        }`}
                     >
                         <MyImage src='/logo.svg' alt='logo' className='h-8' />
                     </IconButton>
