@@ -25,10 +25,20 @@ export default function PageAppBar() {
                                     className: '!text-white',
                                 }}
                                 placeholder={t('navigation.explore')}
+                                color='success'
                             />
                         )}
                         size='small'
                         className='w-full'
+                        sx={{
+                            color: 'white',
+                            '& .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'white',
+                            },
+                            '& .MuiSvgIcon-root': {
+                                color: 'white',
+                            },
+                        }}
                     />
                 </Toolbar>
             </AppBar>

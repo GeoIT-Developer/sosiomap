@@ -35,8 +35,9 @@ const useResponsive = () => {
     );
 
     useEffect(() => {
-        const handler = () =>
+        const handler = () => {
             setCurrentDisplaySize(determineDisplaySize(window.innerWidth));
+        };
         setTimeout(() => {
             handler();
         }, 100);

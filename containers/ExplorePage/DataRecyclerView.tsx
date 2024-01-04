@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 import { FixedSizeList as List } from 'react-window';
 import { ListItem, ListItemText } from '@mui/material';
 
@@ -20,7 +20,7 @@ export default function DataRecyclerView({
             height={400}
             width={300}
             itemCount={data.length}
-            itemSize={50}
+            itemSize={80}
             className='!w-full'
             style={style}
         >

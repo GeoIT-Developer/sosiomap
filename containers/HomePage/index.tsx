@@ -1,7 +1,13 @@
 import {
     Autocomplete,
+    Avatar,
     Badge,
     Fab,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemButton,
+    ListItemText,
     Paper,
     Stack,
     TextField,
@@ -13,6 +19,10 @@ import { toast } from 'react-toastify';
 import SensorsIcon from '@mui/icons-material/Sensors';
 import AddLocationAltOutlined from '@mui/icons-material/AddLocationAltOutlined';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import SimpleDialog from '@/components/dialog/SimpleDialog';
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
+import PinDropIcon from '@mui/icons-material/PinDrop';
+import PolylineIcon from '@mui/icons-material/Polyline';
 
 export default function HomePage() {
     return (
@@ -61,13 +71,69 @@ export default function HomePage() {
             </Stack>
 
             <Stack spacing={2} className='absolute z-10 bottom-4 right-4'>
-                <Fab
-                    aria-label='edit'
-                    size='medium'
-                    onClick={() => toast('Wow so easy!')}
+                <SimpleDialog
+                    title='Create New POI'
+                    triggerButton={
+                        <Fab
+                            aria-label='edit'
+                            size='medium'
+                            // onClick={() => toast('Wow so easy!')}
+                        >
+                            <AddLocationAltOutlined />
+                        </Fab>
+                    }
                 >
-                    <AddLocationAltOutlined />
-                </Fab>
+                    <List sx={{ pt: 0 }}>
+                        <ListItem disableGutters>
+                            <ListItemButton
+                                autoFocus
+                                // onClick={() =>
+                                //     handleListItemClick('addAccount')
+                                // }
+                            >
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        <GpsFixedIcon />
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={'Use My current Location'}
+                                />
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem disableGutters>
+                            <ListItemButton
+                                autoFocus
+                                // onClick={() =>
+                                //     handleListItemClick('addAccount')
+                                // }
+                            >
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        <PinDropIcon />
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText primary={'Choose on Map'} />
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem disableGutters>
+                            <ListItemButton
+                                autoFocus
+                                // onClick={() =>
+                                //     handleListItemClick('addAccount')
+                                // }
+                            >
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        <PolylineIcon />
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText primary={'Draw on Map'} />
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                </SimpleDialog>
+
                 <Fab
                     color='primary'
                     aria-label='edit'

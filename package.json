@@ -45,6 +45,7 @@
         "axios": "^1.6.2",
         "dayjs": "^1.11.10",
         "maplibre-gl": "^3.6.2",
+        "material-icons": "^1.13.12",
         "next": "14.0.4",
         "next-auth": "^4.24.5",
         "next-international": "^1.1.4",

@@ -1,7 +1,7 @@
 {
     "app": {
-        "name": "Sosiomap",
-        "description": "Sosiomap is an application..."
+        "name": "SosioMap",
+        "description": "A map based social media apps to share and discuss everything around you"
     },
     "label": {
         "message": "Message",
@@ -16,7 +16,11 @@
         "menu": "Menu",
         "explore": "Explore",
         "chat": "Chat",
-        "profile": "Profile"
+        "profile": "Profile",
+        "about": "About",
+        "privacy_policy": "Privacy Policy",
+        "terms_and_conditions": "Terms and Conditions",
+        "clear_data": "Clear Data"
     },
     "map": {
         "map_style": "Map Style"

@@ -1,38 +1,21 @@
-import { Box, IconButton, TextField } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
-import { ChangeEvent, useState } from 'react';
-import { toast } from 'react-toastify';
-import { useScopedI18n } from '@/locales/client';
+import { Avatar, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 
 export default function MessageBox() {
-    const t = useScopedI18n('label');
-    const [message, setMessage] = useState('');
-
-    const onChangeMessage = (e: ChangeEvent<HTMLInputElement>) => {
-        const eVal = e.target.value;
-        if (eVal.length < 200) {
-            setMessage(eVal);
-        }
-    };
-
-    const onClickSend = () => {
-        toast(message);
-        setMessage('');
-    };
-
     return (
-        <Box className='py-2 px-4 flex items-end'>
-            <TextField
-                variant='standard'
-                className='flex-grow'
-                placeholder={t('message')}
-                multiline
-                value={message}
-                onChange={onChangeMessage}
+        <ListItem>
+            <ListItemAvatar>
+                <Avatar>N</Avatar>
+            </ListItemAvatar>
+            <ListItemText
+                primary='Hallo'
+                primaryTypographyProps={{
+                    className: '!text-base ',
+                }}
+                secondary='23-12-2023'
+                secondaryTypographyProps={{
+                    className: '!text-xs ',
+                }}
             />
-            <IconButton color='primary' aria-label='send' onClick={onClickSend}>
-                <SendIcon />
-            </IconButton>
-        </Box>
+        </ListItem>
     );
 }

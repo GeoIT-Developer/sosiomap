@@ -1,14 +1,5 @@
 import useWindowHeight from '@/hooks/useWindowHeight';
-import {
-    Avatar,
-    Box,
-    Divider,
-    Grid,
-    ListItemAvatar,
-    ListItemButton,
-    ListItemText,
-    Paper,
-} from '@mui/material';
+import { Box, Divider, Grid, Paper, Typography } from '@mui/material';
 import PageAppBar from './PageAppBar';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
@@ -32,7 +23,13 @@ import {
     yellow,
     grey,
     lime,
+    deepPurple,
 } from '@mui/material/colors';
+import MenuButton from './MenuButton';
+import usePageLoaded from '@/hooks/usePageLoaded';
+import SingleAccordion from '@/components/accordion/SingleAccordion';
+import FeedIcon from '@mui/icons-material/Feed';
+import HideImageIcon from '@mui/icons-material/HideImage';
 
 const PEMILU_2024 = [
     {
@@ -65,6 +62,11 @@ const PEMILU_2024 = [
         icon: <HighlightOffIcon sx={{ color: 'white' }} />,
         bg_color: red[900],
     },
+    {
+        label: 'Spanduk Ilegal',
+        icon: <HideImageIcon sx={{ color: 'white' }} />,
+        bg_color: red[900],
+    },
 ];
 
 const MAIN_FEATURE = [
@@ -77,6 +79,11 @@ const MAIN_FEATURE = [
         label: 'Events',
         icon: <CelebrationIcon sx={{ color: grey[900] }} />,
         bg_color: amber[600],
+    },
+    {
+        label: 'News',
+        icon: <FeedIcon sx={{ color: 'white' }} />,
+        bg_color: deepPurple[400],
     },
     {
         label: 'Traffic',
@@ -112,76 +119,122 @@ const MAIN_FEATURE = [
 
 export default function MenuPage({ show = true }: { show?: boolean }) {
     const { fragmentHeightStyle } = useWindowHeight();
+
+    const pageLoaded = usePageLoaded(show);
+    if (!show && !pageLoaded) {
+        return null;
+    }
+
     return (
         <div className={show ? '' : 'hidden'}>
             <PageAppBar />
             <Paper
-                className='overflow-y-auto !rounded-none'
+                className='overflow-y-auto !rounded-none pb-4'
                 style={{ height: fragmentHeightStyle }}
             >
                 <Box>
-                    <Divider className='py-4'>Main Feature</Divider>
+                    <Divider className='py-4'>Main Topics</Divider>
                     <Grid
                         container
-                        spacing={{ xs: 2, md: 3 }}
-                        columns={{ xs: 4, sm: 8, md: 12 }}
+                        spacing={{ xs: 2 }}
+                        columns={{ xs: 4 }}
                         className='px-4'
                     >
                         {MAIN_FEATURE.map((item, idx) => {
                             return (
                                 <Grid key={idx} item xs={1}>
-                                    <ListItemButton className='flex-col !text-center'>
-                                        <ListItemAvatar>
-                                            <Avatar
-                                                className='mx-auto'
-                                                sx={{ bgcolor: item.bg_color }}
-                                            >
-                                                {item.icon}
-                                            </Avatar>
-                                        </ListItemAvatar>
-                                        <ListItemText
-                                            primary={item.label}
-                                            primaryTypographyProps={{
-                                                className: '!text-xs ',
-                                            }}
-                                        />
-                                    </ListItemButton>
+                                    <MenuButton
+                                        label={item.label}
+                                        bgColor={item.bg_color}
+                                        icon={item.icon}
+                                    />
                                 </Grid>
                             );
                         })}
                     </Grid>
+                    <Box className='px-2'>
+                        <SingleAccordion
+                            type='compact'
+                            title={<Typography>&#9432; Info</Typography>}
+                        >
+                            <Typography variant='body2'>
+                                Main Feature is a Nulla facilisi. Phasellus
+                                sollicitudin nulla et quam mattis feugiat.
+                                Aliquam eget maximus est, id dignissim quam.
+                            </Typography>
+                            <Box className='flex'>
+                                <Typography
+                                    sx={{
+                                        width: '30%',
+                                        flexShrink: 0,
+                                        // color: 'text.secondary',
+                                        fontWeight: 'bold',
+                                    }}
+                                    variant='body2'
+                                >
+                                    Users
+                                </Typography>
+                                <Typography variant='body2'>
+                                    You are currently not an owner. You are
+                                    currently not an owner. You are currently
+                                    not an owner. You are currently not an owner
+                                    You are currently not an owner
+                                </Typography>
+                            </Box>
+                        </SingleAccordion>
+                    </Box>
                 </Box>
                 <Box>
                     <Divider className='py-4'>Pemilu 2024</Divider>
                     <Grid
                         container
-                        spacing={{ xs: 2, md: 3 }}
-                        columns={{ xs: 4, sm: 8, md: 12 }}
+                        spacing={{ xs: 2 }}
+                        columns={{ xs: 4 }}
                         className='px-4'
                     >
                         {PEMILU_2024.map((item, idx) => {
                             return (
                                 <Grid key={idx} item xs={1}>
-                                    <ListItemButton className='flex-col !text-center'>
-                                        <ListItemAvatar>
-                                            <Avatar
-                                                className='mx-auto'
-                                                sx={{ bgcolor: item.bg_color }}
-                                            >
-                                                {item.icon}
-                                            </Avatar>
-                                        </ListItemAvatar>
-                                        <ListItemText
-                                            primary={item.label}
-                                            primaryTypographyProps={{
-                                                className: '!text-xs ',
-                                            }}
-                                        />
-                                    </ListItemButton>
+                                    <MenuButton
+                                        label={item.label}
+                                        bgColor={item.bg_color}
+                                        icon={item.icon}
+                                    />
                                 </Grid>
                             );
                         })}
                     </Grid>
+                    <Box className='px-2'>
+                        <SingleAccordion
+                            type='compact'
+                            title={<Typography>&#9432; Info</Typography>}
+                        >
+                            <Typography variant='body2'>
+                                Main Feature is a Nulla facilisi. Phasellus
+                                sollicitudin nulla et quam mattis feugiat.
+                                Aliquam eget maximus est, id dignissim quam.
+                            </Typography>
+                            <Box className='flex'>
+                                <Typography
+                                    sx={{
+                                        width: '30%',
+                                        flexShrink: 0,
+                                        // color: 'text.secondary',
+                                        fontWeight: 'bold',
+                                    }}
+                                    variant='body2'
+                                >
+                                    Users
+                                </Typography>
+                                <Typography variant='body2'>
+                                    You are currently not an owner. You are
+                                    currently not an owner. You are currently
+                                    not an owner. You are currently not an owner
+                                    You are currently not an owner
+                                </Typography>
+                            </Box>
+                        </SingleAccordion>
+                    </Box>
                 </Box>
             </Paper>
         </div>

@@ -12,9 +12,10 @@ import { useChangeLocale, useScopedI18n } from '@/locales/client';
 import { LIST_COUNTRY } from '@/locales/country';
 import BasicMenu from '@/components/menu/BasicMenu';
 import MyImage from '@/components/preview/MyImage';
-import { ASSETS } from '@/utils/constant';
+import { ASSETS, ROUTE } from '@/utils/constant';
 import { useSession } from 'next-auth/react';
-import useAccessToken from '@/hooks/useAccessToken';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useRouter } from 'next/navigation';
 
 type UseChangeLocaleType = typeof useChangeLocale;
 type NewLocaleType = Parameters<ReturnType<UseChangeLocaleType>>[0];
@@ -24,10 +25,30 @@ export default function PageAppBar() {
     const changeLocale = useChangeLocale();
     const { mode, toggleColorMode } = useThemeMode();
     const session = useSession();
+    const router = useRouter();
 
-    const accessToken = useAccessToken();
-
-    console.log('AAAAA', accessToken);
+    const LIST_MORE_MENU = [
+        {
+            id: 'about',
+            label: t('about'),
+            url: ROUTE.ABOUT.URL,
+        },
+        {
+            id: 'privacy-policy',
+            label: t('privacy_policy'),
+            url: ROUTE.PRIVACY_POLICY.URL,
+        },
+        {
+            id: 'terms-and-conditions',
+            label: t('terms_and_conditions'),
+            url: ROUTE.TERMS_AND_CONDITIONS.URL,
+        },
+        {
+            id: 'clear_data',
+            label: t('clear_data'),
+            url: ROUTE.CLEAR_DATA.URL,
+        },
+    ];
 
     return (
         <Box>
@@ -81,6 +102,25 @@ export default function PageAppBar() {
                                             className='mr-4'
                                         />
                                         {item.locale}
+                                    </MenuItem>
+                                );
+                            })}
+                        </BasicMenu>
+                        <BasicMenu
+                            menuID='more'
+                            menuButton={
+                                <IconButton size='medium' color='inherit'>
+                                    <MoreVertIcon />
+                                </IconButton>
+                            }
+                        >
+                            {LIST_MORE_MENU.map((item) => {
+                                return (
+                                    <MenuItem
+                                        key={item.id}
+                                        onClick={() => router.push(item.url)}
+                                    >
+                                        {item.label}
                                     </MenuItem>
                                 );
                             })}

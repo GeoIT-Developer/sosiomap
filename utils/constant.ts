@@ -25,17 +25,17 @@ export const ROUTE = {
             URL: '#explore',
         },
     },
-    PROFILE: {
-        URL: '/profile',
+    ABOUT: {
+        URL: '/about',
     },
-    MENU: {
-        URL: '/menu',
+    PRIVACY_POLICY: {
+        URL: '/privacy-policy',
     },
-    CHAT: {
-        URL: '/chat',
+    TERMS_AND_CONDITIONS: {
+        URL: '/terms-and-conditions',
     },
-    EXPLORE: {
-        URL: '/explore',
+    CLEAR_DATA: {
+        URL: '/clear-data',
     },
 };
 

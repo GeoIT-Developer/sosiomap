@@ -183,7 +183,7 @@ export default function MainMap({
                     className='absolute top-1/2 left-1/2 z-10 transform -translate-x-1/2 -translate-y-1/2'
                 />
             )}
-            <div ref={mapContainer} className={`absolute w-full h-full`} />
+            <div ref={mapContainer} className={`w-full h-full`} />
         </div>
     );
 }

@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import MenuIcon from '@mui/icons-material/Menu';
 import { useI18n } from '@/locales/client';
+import MyImage from '@/components/preview/MyImage';
 
 export default function PageAppBar() {
     const t = useI18n();
@@ -18,7 +18,7 @@ export default function PageAppBar() {
                         color='inherit'
                         aria-label='open drawer'
                     >
-                        <MenuIcon />
+                        <MyImage src='/logo.svg' alt='logo' className='h-8' />
                     </IconButton>
                     <Typography variant='h6' noWrap>
                         {t('app.name')}

@@ -12,34 +12,74 @@ import useHashRouter from '@/hooks/useHashRouter';
 import BottomNavBar, { LIST_ROUTE } from './BottomNavBar';
 import BasemapProvider from '@/contexts/BasemapContext';
 import { MapLibreProvider } from '@/contexts/MapLibreContext';
+import useWideScreen from '@/hooks/useWideScreen';
 
 export default function AppPage() {
     const t = useScopedI18n('navigation');
     const [hashRouter, setHashRouter] = useHashRouter();
 
+    const isWide = useWideScreen();
+
     return (
         <Box sx={{ pb: 7 }}>
-            <MenuPage show={hashRouter === LIST_ROUTE.MENU} />
-            <ExplorePage show={hashRouter === LIST_ROUTE.EXPLORE} />
-            <ChatPage show={hashRouter === LIST_ROUTE.CHAT} />
-            <ProfilePage show={hashRouter === LIST_ROUTE.PROFILE} />
+            {isWide && (
+                <Box display='flex'>
+                    <Box width='365px'>
+                        <MenuPage
+                            show={
+                                hashRouter === LIST_ROUTE.MENU ||
+                                hashRouter === LIST_ROUTE.HOME
+                            }
+                        />
+                        <ExplorePage show={hashRouter === LIST_ROUTE.EXPLORE} />
+                        <ChatPage show={hashRouter === LIST_ROUTE.CHAT} />
+                        <ProfilePage show={hashRouter === LIST_ROUTE.PROFILE} />
+                    </Box>
 
-            <BasemapProvider>
-                <MapLibreProvider>
-                    <MainMap
-                        className={
-                            hashRouter !== LIST_ROUTE.HOME ? '-z-10' : ''
-                        }
-                    >
-                        <HomePage />
-                    </MainMap>
+                    <Box flex='1'>
+                        <BasemapProvider>
+                            <MapLibreProvider>
+                                <MainMap className='!relative'>
+                                    <HomePage />
+                                </MainMap>
 
-                    <BottomNavBar
-                        hashRouter={hashRouter}
-                        setHashRouter={setHashRouter}
-                    />
-                </MapLibreProvider>
-            </BasemapProvider>
+                                <BottomNavBar
+                                    hashRouter={hashRouter}
+                                    setHashRouter={setHashRouter}
+                                />
+                            </MapLibreProvider>
+                        </BasemapProvider>
+                    </Box>
+                </Box>
+            )}
+
+            {!isWide && (
+                <>
+                    <MenuPage show={hashRouter === LIST_ROUTE.MENU} />
+                    <ExplorePage show={hashRouter === LIST_ROUTE.EXPLORE} />
+                    <ChatPage show={hashRouter === LIST_ROUTE.CHAT} />
+                    <ProfilePage show={hashRouter === LIST_ROUTE.PROFILE} />
+
+                    <BasemapProvider>
+                        <MapLibreProvider>
+                            <MainMap
+                                className={
+                                    hashRouter !== LIST_ROUTE.HOME
+                                        ? '-z-10'
+                                        : ''
+                                }
+                            >
+                                <HomePage />
+                            </MainMap>
+
+                            <BottomNavBar
+                                hashRouter={hashRouter}
+                                setHashRouter={setHashRouter}
+                            />
+                        </MapLibreProvider>
+                    </BasemapProvider>
+                </>
+            )}
         </Box>
     );
 }

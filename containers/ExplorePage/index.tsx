@@ -1,7 +1,8 @@
-import { Box, Paper } from '@mui/material';
+import { Paper } from '@mui/material';
 import PageAppBar from './PageAppBar';
 import useWindowHeight from '@/hooks/useWindowHeight';
 import DataRecyclerView from './DataRecyclerView';
+import usePageLoaded from '@/hooks/usePageLoaded';
 
 const generateSampleData = () => {
     const data = [];
@@ -15,6 +16,12 @@ const sampleData = generateSampleData();
 
 export default function ExplorePage({ show = true }: { show?: boolean }) {
     const { fragmentHeightStyle } = useWindowHeight();
+
+    const pageLoaded = usePageLoaded(show);
+    if (!show && !pageLoaded) {
+        return null;
+    }
+
     return (
         <div className={show ? '' : 'hidden'}>
             <PageAppBar />

@@ -39,7 +39,15 @@ export default function PageAppBar() {
                         onChange={(e) =>
                             setChannel(e.target.value as ChatChannelEnum)
                         }
-                        className='!text-white'
+                        sx={{
+                            color: 'white',
+                            '& .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'white',
+                            },
+                            '& .MuiSvgIcon-root': {
+                                color: 'white',
+                            },
+                        }}
                     >
                         <MenuItem value={ChatChannelEnum.GENERAL}>
                             {t('label.general')}

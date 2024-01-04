@@ -1,22 +1,13 @@
-import {
-    Box,
-    Divider,
-    IconButton,
-    Paper,
-    Slider,
-    Stack,
-    TextField,
-    Typography,
-} from '@mui/material';
+import { Box, Divider, Paper, Slider, Stack, Typography } from '@mui/material';
 import PageAppBar from './PageAppBar';
 import useWindowHeight from '@/hooks/useWindowHeight';
 import NeedLogin from '@/components/auth/NeedLogin';
 import { useScopedI18n } from '@/locales/client';
-import { useState } from 'react';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { LOCAL_STORAGE } from '@/utils/constant';
-import SendIcon from '@mui/icons-material/Send';
 import MessageBox from './MessageBox';
+import MessageAction from './MessageAction';
+import usePageLoaded from '@/hooks/usePageLoaded';
 
 function calculateValue(value: number) {
     switch (value) {
@@ -51,6 +42,11 @@ export default function ChatPage({ show = true }: { show?: boolean }) {
         2,
     );
 
+    const pageLoaded = usePageLoaded(show);
+    if (!show && !pageLoaded) {
+        return null;
+    }
+
     return (
         <div className={show ? '' : 'hidden'}>
             <PageAppBar />
@@ -84,13 +80,13 @@ export default function ChatPage({ show = true }: { show?: boolean }) {
                 <Divider light />
                 <Box flex='1' overflow='auto'>
                     {Array.from({ length: 50 }).map((_, index) => (
-                        <p key={index}>Halo-{index}</p>
+                        <MessageBox key={index} />
                     ))}
                 </Box>
 
                 <Divider light />
                 <NeedLogin className='pt-2 pb-4'>
-                    <MessageBox />
+                    <MessageAction />
                 </NeedLogin>
             </Paper>
         </div>

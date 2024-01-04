@@ -3,7 +3,7 @@
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
-import { Fab } from '@mui/material';
+import { Box, Fab } from '@mui/material';
 import NavigationIcon from '@mui/icons-material/Navigation';
 import AppsIcon from '@mui/icons-material/Apps';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
@@ -20,6 +20,7 @@ import { getDeviceOrientationOnce } from '@/hooks/useDeviceOrientation';
 import useGeolocation from '@/hooks/useGeolocation';
 import { toast } from 'react-toastify';
 import { ObjectLiteral } from '@/types/object-literal.interface';
+import useWideScreen from '@/hooks/useWideScreen';
 
 export const LIST_ROUTE = {
     HOME: ROUTE.HOME.MAP.URL,
@@ -50,6 +51,7 @@ export default function BottomNavBar({
     );
     const { myMap, mapStatus, geoControl } = useMapLibreContext();
     const geoLocation = useGeolocation();
+    const isWide = useWideScreen();
 
     useEffect(() => {
         const handleOnDrag = () => {
@@ -153,39 +155,56 @@ export default function BottomNavBar({
 
     locationStatusPrevValue = locationStatus;
     return (
-        <Paper
-            sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
-            elevation={5}
-        >
-            <BottomNavigation
-                showLabels={false}
-                value={hashRouter}
-                onChange={(_event, eVal) => {
-                    onChangePage(eVal);
+        <>
+            <Paper
+                sx={{
+                    position: 'fixed',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
                 }}
+                elevation={5}
             >
-                <BottomNavigationAction
-                    label={t('menu')}
-                    icon={<AppsIcon />}
-                    value={LIST_ROUTE.MENU}
-                />
-                <BottomNavigationAction
-                    label={t('explore')}
-                    icon={<TravelExploreIcon />}
-                    value={LIST_ROUTE.EXPLORE}
-                />
-                <MainButton />
-                <BottomNavigationAction
-                    label={t('chat')}
-                    icon={<ChatIcon />}
-                    value={LIST_ROUTE.CHAT}
-                />
-                <BottomNavigationAction
-                    label={t('profile')}
-                    icon={<AccountCircleIcon />}
-                    value={LIST_ROUTE.PROFILE}
-                />
-            </BottomNavigation>
-        </Paper>
+                <Box className='flex'>
+                    <BottomNavigation
+                        showLabels={false}
+                        value={hashRouter}
+                        onChange={(_event, eVal) => {
+                            onChangePage(eVal);
+                        }}
+                        sx={{
+                            width: isWide ? '365px' : '100%',
+                        }}
+                    >
+                        <BottomNavigationAction
+                            label={t('menu')}
+                            icon={<AppsIcon />}
+                            value={LIST_ROUTE.MENU}
+                        />
+                        <BottomNavigationAction
+                            label={t('explore')}
+                            icon={<TravelExploreIcon />}
+                            value={LIST_ROUTE.EXPLORE}
+                        />
+                        {!isWide && <MainButton />}
+                        <BottomNavigationAction
+                            label={t('chat')}
+                            icon={<ChatIcon />}
+                            value={LIST_ROUTE.CHAT}
+                        />
+                        <BottomNavigationAction
+                            label={t('profile')}
+                            icon={<AccountCircleIcon />}
+                            value={LIST_ROUTE.PROFILE}
+                        />
+                    </BottomNavigation>
+                    {isWide && (
+                        <Paper className='flex-grow text-center'>
+                            <MainButton />
+                        </Paper>
+                    )}
+                </Box>
+            </Paper>
+        </>
     );
 }

@@ -13,17 +13,18 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NextAuthProvider from '@/contexts/NextAuthContext';
 import GoogleAnalytics from '@/components/layout/GoogleAnalytics';
+import 'material-icons/iconfont/material-icons.css';
 
 export const metadata: Metadata = {
     title: 'SosioMap',
     description:
-        'SosioMap is an application that combine social media to fix the social problems',
+        'A map based social media apps to share and discuss everything around you',
     manifest: '/manifest.json',
     icons: '/favicon.ico',
 };
 
 export const viewport: Viewport = {
-    themeColor: 'red',
+    themeColor: '#cc0004',
 };
 
 export default function RootLayout({
