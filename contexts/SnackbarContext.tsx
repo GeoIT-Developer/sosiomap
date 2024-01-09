@@ -108,7 +108,6 @@ export function useSnackbar(initialValue?: SettingState) {
     const { toastOpen, setOptions } = useContext(SnackbarContext);
 
     const open = (message?: ReactNode, options?: SettingState) => {
-        console.log('II', initialValue, options);
         setOptions({
             ...INITIAL_SETTING,
             type: undefined,

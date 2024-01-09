@@ -78,7 +78,7 @@ export default function BottomNavBar({
     }
 
     function onMainButtonClicked() {
-        if (hashRouter === LIST_ROUTE.HOME) {
+        if (hashRouter === LIST_ROUTE.HOME || isWide) {
             if (locationStatus === LocationStatusEnum.NAVIGATING) {
                 setLocationStatus(LocationStatusEnum.FIXED);
                 if (myMap) {
@@ -114,7 +114,7 @@ export default function BottomNavBar({
                 }
             } else {
                 geoLocation.requestGeolocation();
-                geoControl.trigger();
+                geoControl?.trigger();
                 setLocationStatus(LocationStatusEnum.FIXED);
             }
         } else {
@@ -141,7 +141,11 @@ export default function BottomNavBar({
         return (
             <Fab
                 {...restProps}
-                color={hashRouter === LIST_ROUTE.HOME ? 'primary' : undefined}
+                color={
+                    hashRouter === LIST_ROUTE.HOME || isWide
+                        ? 'primary'
+                        : undefined
+                }
                 size='small'
                 aria-label={t('home')}
                 onClick={onMainButtonClicked}

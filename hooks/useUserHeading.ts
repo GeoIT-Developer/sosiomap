@@ -7,7 +7,7 @@ import { convertHorizontalToMapDegree } from '@/utils/helper';
 const useUserHeading = (
     myMap: Map | null,
     mapStatus: LoadingState,
-    geoControl: GeolocateControl,
+    geoControl: GeolocateControl | undefined,
     userHeadingMarker: Marker | null,
 ) => {
     const deviceOrientation = useDeviceOrientation();
@@ -19,7 +19,7 @@ const useUserHeading = (
         }
 
         if (myMap && mapStatus === LoadingState.SUCCESS) {
-            geoControl.on('geolocate', updateLocation);
+            geoControl?.on('geolocate', updateLocation);
         }
         return () => {
             if (geoControl) {

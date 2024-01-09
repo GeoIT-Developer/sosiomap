@@ -30,7 +30,9 @@
             "geolocation_not_supported": "Informasi lokasi tidak tersedia pada perangkat ini!!",
             "geolocation_unavailable": "Informasi lokasi tidak ditemukan!",
             "geolocation_timeout": "Waktu tunggu permintaan lokasi habis!",
-            "geolocation_denied": "Harap aktifkan lokasi GPS anda!"
+            "geolocation_denied": "Harap aktifkan lokasi GPS anda!",
+            "message_at_least_minimum": "Pesan setidaknya memiliki 5 karakter!",
+            "feature_need_geolocation": "Data lokasi harus dihidupkan untuk menggunakan fitur ini!"
         },
         "info": {
             "login_to_continue": "Masuk untuk melanjutkan!"

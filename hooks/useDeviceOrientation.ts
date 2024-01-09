@@ -16,6 +16,11 @@ export async function getDeviceOrientationOnce(): Promise<DeviceOrientation> {
 
             // Remove the event listener after getting the orientation
             window.removeEventListener('deviceorientation', handleOrientation);
+            // @ts-ignore
+            window.removeEventListener(
+                'deviceorientationabsolute',
+                handleOrientation,
+            );
 
             // Resolve the promise with the orientation data
             resolve({ alpha, beta, gamma });
@@ -23,6 +28,11 @@ export async function getDeviceOrientationOnce(): Promise<DeviceOrientation> {
 
         if (window.DeviceOrientationEvent) {
             try {
+                // @ts-ignore
+                window.addEventListener(
+                    'deviceorientationabsolute',
+                    handleOrientation,
+                );
                 window.addEventListener('deviceorientation', handleOrientation);
             } catch (error: any) {
                 console.error('Error:', error.message);
@@ -44,9 +54,17 @@ const useDeviceOrientation = () => {
 
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
+        let isAbsolute: boolean | undefined = undefined;
+
+        setTimeout(() => {
+            if (isAbsolute === undefined) {
+                isAbsolute = false;
+            }
+        }, 1500);
 
         const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
             clearTimeout(timeoutId);
+            isAbsolute = true;
 
             timeoutId = setTimeout(() => {
                 setOrientation({
@@ -57,10 +75,29 @@ const useDeviceOrientation = () => {
             }, 10);
         };
 
-        window.addEventListener('deviceorientation', handleDeviceOrientation);
+        // @ts-ignore
+        window.addEventListener(
+            'deviceorientationabsolute',
+            handleDeviceOrientation,
+        );
+
+        setTimeout(() => {
+            if (isAbsolute === false) {
+                window.addEventListener(
+                    'deviceorientation',
+                    handleDeviceOrientation,
+                );
+            }
+        }, 1550);
+
         return () => {
             window.removeEventListener(
                 'deviceorientation',
+                handleDeviceOrientation,
+            );
+            // @ts-ignore
+            window.removeEventListener(
+                'deviceorientationabsolute',
                 handleDeviceOrientation,
             );
             clearTimeout(timeoutId);

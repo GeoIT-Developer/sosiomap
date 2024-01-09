@@ -24,7 +24,12 @@ export default function PageAppBar() {
                             isLightMode ? '!bg-white !bg-opacity-75' : ''
                         }`}
                     >
-                        <MyImage src='/logo.svg' alt='logo' className='h-8' />
+                        <MyImage
+                            src='/logo.svg'
+                            alt='logo'
+                            className='h-8'
+                            style={{ fill: 'white' }}
+                        />
                     </IconButton>
                     <Typography variant='h6' noWrap>
                         {t('app.name')}

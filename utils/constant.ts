@@ -2,6 +2,7 @@ export const LOCAL_STORAGE = {
     THEME: 'theme',
     BASEMAP: 'basemap',
     MAP_INITIAL: 'map-initial',
+    LASK_KNOWN_LOCATION: 'last-known-location',
     CHAT_DISTANCE: 'chat-distance',
     CHAT_CHANNEL: 'chat-channel',
 };

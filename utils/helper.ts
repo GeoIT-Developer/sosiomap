@@ -9,7 +9,7 @@ export function capitalizeWords(str: string) {
 
 export function convertHorizontalToMapDegree(horizontalDegree: number) {
     const normalizedDegree = ((horizontalDegree % 360) + 360) % 360;
-    const verticalAlignedDegree = (normalizedDegree - 180) % 360;
+    const verticalAlignedDegree = normalizedDegree % 360;
     const mapDegree = (360 - verticalAlignedDegree) % 360;
     return mapDegree;
 }
@@ -26,4 +26,8 @@ export function truncateText(text: string, maxLength: number) {
         return text.slice(0, maxLength) + '...';
     }
     return text;
+}
+
+export function getUserAgent() {
+    return navigator.userAgent;
 }

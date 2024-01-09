@@ -24,12 +24,16 @@ import {
     grey,
     lime,
     deepPurple,
+    orange,
 } from '@mui/material/colors';
 import MenuButton from './MenuButton';
 import usePageLoaded from '@/hooks/usePageLoaded';
 import SingleAccordion from '@/components/accordion/SingleAccordion';
 import FeedIcon from '@mui/icons-material/Feed';
 import HideImageIcon from '@mui/icons-material/HideImage';
+import AddIcon from '@mui/icons-material/Add';
+import ModeOfTravelIcon from '@mui/icons-material/ModeOfTravel';
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 
 const PEMILU_2024 = [
     {
@@ -86,6 +90,11 @@ const MAIN_FEATURE = [
         bg_color: deepPurple[400],
     },
     {
+        label: 'Tourism',
+        icon: <ModeOfTravelIcon sx={{ color: grey[900] }} />,
+        bg_color: lime['A700'],
+    },
+    {
         label: 'Traffic',
         icon: <TrafficIcon sx={{ color: 'white' }} />,
         bg_color: blueGrey[600],
@@ -114,6 +123,11 @@ const MAIN_FEATURE = [
         label: 'Promo',
         icon: <DiscountIcon sx={{ color: grey[900] }} />,
         bg_color: yellow['A200'],
+    },
+    {
+        label: 'Q&A',
+        icon: <LiveHelpIcon sx={{ color: 'white' }} />,
+        bg_color: orange[900],
     },
 ];
 
@@ -203,6 +217,65 @@ export default function MenuPage({ show = true }: { show?: boolean }) {
                                 </Grid>
                             );
                         })}
+                    </Grid>
+                    <Box className='px-2'>
+                        <SingleAccordion
+                            type='compact'
+                            title={<Typography>&#9432; Info</Typography>}
+                        >
+                            <Typography variant='body2'>
+                                Main Feature is a Nulla facilisi. Phasellus
+                                sollicitudin nulla et quam mattis feugiat.
+                                Aliquam eget maximus est, id dignissim quam.
+                            </Typography>
+                            <Box className='flex'>
+                                <Typography
+                                    sx={{
+                                        width: '30%',
+                                        flexShrink: 0,
+                                        // color: 'text.secondary',
+                                        fontWeight: 'bold',
+                                    }}
+                                    variant='body2'
+                                >
+                                    Users
+                                </Typography>
+                                <Typography variant='body2'>
+                                    You are currently not an owner. You are
+                                    currently not an owner. You are currently
+                                    not an owner. You are currently not an owner
+                                    You are currently not an owner
+                                </Typography>
+                            </Box>
+                        </SingleAccordion>
+                    </Box>
+                </Box>
+                <Box>
+                    <Divider className='py-4'>Open Topics</Divider>
+                    <Grid
+                        container
+                        spacing={{ xs: 2 }}
+                        columns={{ xs: 4 }}
+                        className='px-4'
+                    >
+                        {/* {PEMILU_2024.map((item, idx) => {
+                            return (
+                                <Grid key={idx} item xs={1}>
+                                    <MenuButton
+                                        label={item.label}
+                                        bgColor={item.bg_color}
+                                        icon={item.icon}
+                                    />
+                                </Grid>
+                            );
+                        })} */}
+                        <Grid item xs={1}>
+                            <MenuButton
+                                label='Create Topic'
+                                bgColor={grey[300]}
+                                icon={<AddIcon sx={{ color: grey[900] }} />}
+                            />
+                        </Grid>
                     </Grid>
                     <Box className='px-2'>
                         <SingleAccordion

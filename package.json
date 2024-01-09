@@ -41,9 +41,11 @@
         "@mui/icons-material": "^5.15.1",
         "@mui/material": "^5.15.1",
         "@mui/material-nextjs": "^5.15.0",
+        "@tanstack/react-query": "^5.17.1",
         "@turf/turf": "^6.5.0",
-        "axios": "^1.6.2",
+        "axios": "^1.6.4",
         "dayjs": "^1.11.10",
+        "font-gis": "^1.0.5",
         "maplibre-gl": "^3.6.2",
         "material-icons": "^1.13.12",
         "next": "14.0.4",
@@ -56,6 +58,7 @@
         "react-window": "^1.8.10"
     },
     "devDependencies": {
+        "@tanstack/eslint-plugin-query": "^5.17.1",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",

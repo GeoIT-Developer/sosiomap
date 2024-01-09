@@ -9,21 +9,14 @@ type MapLibreType = {
     mapContainer: RefObject<HTMLDivElement> | null;
     mapStatus: LoadingState;
     myMap: Map | null;
-    geoControl: GeolocateControl;
+    geoControl: GeolocateControl | undefined;
 };
 
 const MapLibreContext = createContext<MapLibreType>({
     mapContainer: null,
     mapStatus: LoadingState.UNDEFINED,
     myMap: null,
-    geoControl: new MapLibreGL.GeolocateControl({
-        positionOptions: {
-            enableHighAccuracy: true,
-        },
-        trackUserLocation: true,
-        showUserLocation: true,
-        showAccuracyCircle: true,
-    }),
+    geoControl: undefined,
 });
 
 function UserHeadingComponent({ mapLibre }: { mapLibre: MapLibreType }) {

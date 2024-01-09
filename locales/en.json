@@ -30,7 +30,9 @@
             "geolocation_not_supported": "Get location is not supported in this device!",
             "geolocation_unavailable": "Location information is unavailable!",
             "geolocation_timeout": "Get location request timed out!",
-            "geolocation_denied": "Please enable location services!"
+            "geolocation_denied": "Please enable location services!",
+            "message_at_least_minimum": "The message should be at least 5 characters long!",
+            "feature_need_geolocation": "Location data must be activated to use this feature!"
         },
         "info": {
             "login_to_continue": "Please login to continue!"
