@@ -64,3 +64,9 @@ export function isValidURL(url: string) {
     const urlPattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/\S*)?$/i;
     return urlPattern.test(url);
 }
+
+export function fileToObjectURL(file: File) {
+    const blob = new Blob([file], { type: file.type });
+    const objURL = URL.createObjectURL(blob);
+    return objURL;
+}

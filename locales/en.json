@@ -14,7 +14,8 @@
         "ok": "OK",
         "cancel": "Cancel",
         "logout": "Logout",
-        "send": "Send"
+        "send": "Send",
+        "post": "Post"
     },
     "navigation": {
         "home": "Home",

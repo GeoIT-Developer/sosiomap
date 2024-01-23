@@ -89,7 +89,7 @@ export default function NewPostPage() {
                         color='inherit'
                         endIcon={<SendIcon />}
                     >
-                        {t('button.send')}
+                        {t('button.post')}
                     </Button>
                 }
             />
@@ -101,7 +101,7 @@ export default function NewPostPage() {
                     container
                     spacing={{ xs: 2 }}
                     columns={{ xs: 1, md: 2 }}
-                    className='p-4'
+                    className='p-0 py-4 md:p-4'
                 >
                     <Grid item xs={1}>
                         <Paper className='p-4'>

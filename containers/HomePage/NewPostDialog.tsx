@@ -82,7 +82,7 @@ export default function NewPostDialog({
                                 {t('post.choose_location')}
                             </InputLabel>
                             {geolocation.error && (
-                                <Alert severity='error'>
+                                <Alert severity='error' className='mx-4 mb-2'>
                                     <AlertTitle>{geolocation.error}</AlertTitle>
                                     {t(
                                         'message.error.feature_need_geolocation',

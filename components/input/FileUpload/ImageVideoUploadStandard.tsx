@@ -11,6 +11,7 @@ import MyVideo from '@/components/preview/MyVideo';
 import { useI18n } from '@/locales/client';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import Counter from 'yet-another-react-lightbox/plugins/counter';
+import { fileToObjectURL } from '@/utils/helper';
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -131,7 +132,7 @@ export default function ImageVideoUploadStandard({
                             const fileArrayURL = maxFilesArray.map((item) => {
                                 return {
                                     file: item,
-                                    url: URL.createObjectURL(item),
+                                    url: fileToObjectURL(item),
                                 };
                             });
                             setEFiles((oldState) => {

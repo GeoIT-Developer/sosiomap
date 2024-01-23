@@ -8,7 +8,7 @@ import {
     InputLabel,
     TextField,
 } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type Props = {
     showLabel?: boolean;
@@ -35,6 +35,7 @@ export default function SelectTopic({
 }: Props) {
     const t = useI18n();
     const activeTopic = useActiveTopic();
+    const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {
         if (initialValue) {
@@ -58,6 +59,8 @@ export default function SelectTopic({
                 className={className}
                 value={selectedTopic}
                 onChange={(_e, val) => onSelectTopic(val)}
+                inputValue={inputValue}
+                onInputChange={(_e, val) => setInputValue(val)}
                 options={activeTopic}
                 getOptionLabel={(option) => option.label}
                 isOptionEqualToValue={(option, value) => value.id === option.id}

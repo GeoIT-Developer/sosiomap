@@ -14,6 +14,7 @@ import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import Counter from 'yet-another-react-lightbox/plugins/counter';
 import Captions from 'yet-another-react-lightbox/plugins/captions';
+import { fileToObjectURL } from '@/utils/helper';
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -229,7 +230,7 @@ export default function ImageVideoUploadCarousel({
                                     (item) => {
                                         return {
                                             file: item,
-                                            url: URL.createObjectURL(item),
+                                            url: fileToObjectURL(item),
                                             caption: '',
                                         };
                                     },

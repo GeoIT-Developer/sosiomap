@@ -14,7 +14,8 @@
         "ok": "OK",
         "cancel": "Batal",
         "logout": "Keluar",
-        "send": "Kirim"
+        "send": "Kirim",
+        "post": "Bagikan"
     },
     "navigation": {
         "home": "Beranda",
