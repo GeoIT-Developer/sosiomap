@@ -126,7 +126,10 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
                                         variant='outlined'
                                         size='small'
                                         fullWidth
-                                        value={accessToken?.preferred_username}
+                                        value={
+                                            accessToken?.preferred_username ||
+                                            ''
+                                        }
                                         disabled
                                     />
                                 </Box>
@@ -136,7 +139,7 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
                                         variant='outlined'
                                         size='small'
                                         fullWidth
-                                        value={accessToken?.name}
+                                        value={accessToken?.name || ''}
                                         disabled
                                     />
                                 </Box>
@@ -148,7 +151,7 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
                                         variant='outlined'
                                         size='small'
                                         fullWidth
-                                        value={accessToken?.email}
+                                        value={accessToken?.email || ''}
                                         disabled
                                     />
                                 </Box>
