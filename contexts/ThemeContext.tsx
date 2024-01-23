@@ -5,6 +5,8 @@ import { ReactChildrenProps } from '@/types/react-children.props';
 import { LOCAL_STORAGE } from '@/utils/constant';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import React, { createContext, useContext, useMemo } from 'react';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 type ThemeModeType = 'light' | 'dark';
 
@@ -55,7 +57,9 @@ export default function ThemeContext({ children }: ReactChildrenProps) {
         >
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                {children}
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    {children}
+                </LocalizationProvider>
             </ThemeProvider>
         </ColorModeContext.Provider>
     );

@@ -8,7 +8,7 @@ function useLocalStorage<T>(key: string, initialValue: T) {
         if (storedValue) {
             setValue(JSON.parse(storedValue));
         }
-    }, [initialValue, key]);
+    }, [key]);
 
     const setStoredValue = useCallback(
         (newValue: T | ((prevValue: T) => T)) => {

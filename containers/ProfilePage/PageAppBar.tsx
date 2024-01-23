@@ -3,12 +3,18 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { IconButton, MenuItem } from '@mui/material';
+import {
+    Divider,
+    IconButton,
+    ListItemIcon,
+    ListItemText,
+    MenuItem,
+} from '@mui/material';
 import GTranslateIcon from '@mui/icons-material/GTranslate';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { useThemeMode } from '@/contexts/ThemeContext';
-import { useChangeLocale, useScopedI18n } from '@/locales/client';
+import { useChangeLocale, useI18n } from '@/locales/client';
 import { LIST_COUNTRY } from '@/locales/country';
 import BasicMenu from '@/components/menu/BasicMenu';
 import MyImage from '@/components/preview/MyImage';
@@ -16,12 +22,14 @@ import { ASSETS, ROUTE } from '@/utils/constant';
 import { useSession } from 'next-auth/react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useRouter } from 'next/navigation';
+import PhonelinkEraseIcon from '@mui/icons-material/PhonelinkErase';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 type UseChangeLocaleType = typeof useChangeLocale;
 type NewLocaleType = Parameters<ReturnType<UseChangeLocaleType>>[0];
 
 export default function PageAppBar() {
-    const t = useScopedI18n('navigation');
+    const t = useI18n();
     const changeLocale = useChangeLocale();
     const { mode, toggleColorMode } = useThemeMode();
     const session = useSession();
@@ -30,23 +38,27 @@ export default function PageAppBar() {
     const LIST_MORE_MENU = [
         {
             id: 'about',
-            label: t('about'),
+            label: t('navigation.about'),
             url: ROUTE.ABOUT.URL,
         },
         {
             id: 'privacy-policy',
-            label: t('privacy_policy'),
+            label: t('navigation.privacy_policy'),
             url: ROUTE.PRIVACY_POLICY.URL,
         },
         {
             id: 'terms-and-conditions',
-            label: t('terms_and_conditions'),
+            label: t('navigation.terms_and_conditions'),
             url: ROUTE.TERMS_AND_CONDITIONS.URL,
         },
         {
+            divider: true,
+        },
+        {
             id: 'clear_data',
-            label: t('clear_data'),
+            label: t('navigation.clear_data'),
             url: ROUTE.CLEAR_DATA.URL,
+            icon: <PhonelinkEraseIcon fontSize='small' />,
         },
     ];
 
@@ -60,7 +72,7 @@ export default function PageAppBar() {
                         sx={{ mr: 2 }}
                     />
                     <Typography variant='h6' noWrap component='div'>
-                        {session.data?.user.name || t('profile')}
+                        {session.data?.user.name || t('navigation.profile')}
                     </Typography>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box>
@@ -114,16 +126,39 @@ export default function PageAppBar() {
                                 </IconButton>
                             }
                         >
-                            {LIST_MORE_MENU.map((item) => {
-                                return (
-                                    <MenuItem
-                                        key={item.id}
-                                        onClick={() => router.push(item.url)}
-                                    >
-                                        {item.label}
-                                    </MenuItem>
-                                );
+                            {LIST_MORE_MENU.map((item, idx) => {
+                                if (item.id) {
+                                    return (
+                                        <MenuItem
+                                            key={item.id}
+                                            onClick={() =>
+                                                router.push(item.url)
+                                            }
+                                        >
+                                            {item.icon && (
+                                                <ListItemIcon>
+                                                    {item.icon}
+                                                </ListItemIcon>
+                                            )}
+
+                                            <ListItemText>
+                                                {item.label}
+                                            </ListItemText>
+                                        </MenuItem>
+                                    );
+                                }
+                                return <Divider key={idx} />;
                             })}
+                            {session.status === 'authenticated' && (
+                                <MenuItem onClick={() => console.log('LOGOUT')}>
+                                    <ListItemIcon>
+                                        <LogoutIcon fontSize='small' />
+                                    </ListItemIcon>
+                                    <ListItemText>
+                                        {t('button.logout')}
+                                    </ListItemText>
+                                </MenuItem>
+                            )}
                         </BasicMenu>
                     </Box>
                 </Toolbar>

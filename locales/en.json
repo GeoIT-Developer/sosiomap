@@ -6,10 +6,15 @@
     "label": {
         "message": "Message",
         "general": "General",
-        "local": "Local"
+        "local": "Local",
+        "info": "Info"
     },
     "button": {
-        "login": "Login"
+        "login": "Login",
+        "ok": "OK",
+        "cancel": "Cancel",
+        "logout": "Logout",
+        "send": "Send"
     },
     "navigation": {
         "home": "Home",
@@ -20,10 +25,16 @@
         "about": "About",
         "privacy_policy": "Privacy Policy",
         "terms_and_conditions": "Terms and Conditions",
-        "clear_data": "Clear Data"
+        "clear_data": "Clear Data",
+        "download_data": "Download Data"
     },
     "map": {
         "map_style": "Map Style"
+    },
+    "profile": {
+        "username": "Username",
+        "name": "Name",
+        "email": "Email"
     },
     "message": {
         "error": {
@@ -32,13 +43,89 @@
             "geolocation_timeout": "Get location request timed out!",
             "geolocation_denied": "Please enable location services!",
             "message_at_least_minimum": "The message should be at least 5 characters long!",
-            "feature_need_geolocation": "Location data must be activated to use this feature!"
+            "feature_need_geolocation": "Location data must be activated to use this feature!",
+            "max_file": "Maximum number of files is {max} files!"
         },
         "info": {
-            "login_to_continue": "Please login to continue!"
+            "login_to_continue": "Please login to continue!",
+            "coming_soon": "Coming Soon!"
         }
     },
     "unit": {
         "km": "km"
+    },
+    "post": {
+        "new_post": "New Post",
+        "use_current_location": "Use My Current Location",
+        "choose_on_map": "Choose on Map",
+        "draw_on_map": "Draw on Map",
+        "use_approximate_location": "Use Approximate Location",
+        "choose_topic": "Choose Topic",
+        "choose_location": "Choose Location",
+        "start_date": "Start Date",
+        "end_date": "End Date",
+        "type": {
+            "standard": "Standard",
+            "carousel": "Carousel",
+            "custom": "Custom"
+        },
+        "url": {
+            "social_media_post": "Social Media Post",
+            "social_media_post_desc": "Paste the URL of the social media post you want to connect with.",
+            "news_website": "News Website",
+            "other": "Other..."
+        },
+        "title_optional": "Title (optional)",
+        "what_do_you_want_to_share_today": "What do you want to share today?",
+        "caption_optional": "Caption (optional)"
+    },
+    "topic": {
+        "create_topic": "Create Topic",
+        "main_topics": "Main Topics",
+        "main_topics_desc": "Main Topics is a common topics that you can share and discuss in this apps.",
+        "pemilu_2024": "Pemilu 2024",
+        "pemilu_2024_desc": "Pemilu 2024 is an Indonesia events for choosing President and Legislative Candidates in 2024.",
+        "open_topics": "Open Topics",
+        "open_topics_desc": "Create your own topic and share it in Open Topics section. You can find topic that created by other user too.",
+        "main": {
+            "user_stories": "User Stories",
+            "events": "Events",
+            "news": "News",
+            "tourism": "Tourism",
+            "traffic": "Traffic",
+            "environment": "Environment",
+            "disaster": "Disaster",
+            "social": "Social",
+            "marketplace": "Marketplace",
+            "promo": "Promo",
+            "q_and_a": "Q&A",
+            "user_stories_desc": "Share your stories and other activities here.",
+            "events_desc": "Discover and share information about community events.",
+            "news_desc": "Stay updated with the latest news.",
+            "tourism_desc": "Discuss and share information related to tourism.",
+            "traffic_desc": "Get and share information about traffic conditions, accident, and other transportations things.",
+            "environment_desc": "Discuss and share information about the surrounding environment.",
+            "disaster_desc": "Get and share information about disasters.",
+            "social_desc": "Engage in social interactions and share social activities.",
+            "marketplace_desc": "Find, buy and sell any product around your location.",
+            "promo_desc": "Share promotions and discount information.",
+            "q_and_a_desc": "Ask questions and share answers."
+        },
+        "pemilu2024": {
+            "dpr": "DPR",
+            "dpd": "DPD",
+            "dprd_provinsi": "DPRD Province",
+            "dprd_kab_kota": "DPRD Reg/City",
+            "voting": "Voting",
+            "kecurangan": "Fraud",
+            "spanduk_ilegal": "Illegal Banner",
+            "dpr_desc": "Find and check DPR legislative candidates in your area.",
+            "dpd_desc": "Find and check DPD legislative candidates in your area.",
+            "dprd_provinsi_desc": "Find and check DPRD Province legislative candidates in your area.",
+            "dprd_kab_kota_desc": "Find and check DPRD Regency/City legislative candidates in your area.",
+            "voting_desc": "Voting for President candidates.",
+            "kecurangan_desc": "Report and share fraud or cheating of any President, Political Party, and/or Legislative Candidates.",
+            "spanduk_ilegal_desc": "Report and share Illegal Banner that installed in your area."
+        }
     }
 }

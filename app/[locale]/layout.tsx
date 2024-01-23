@@ -14,6 +14,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import NextAuthProvider from '@/contexts/NextAuthContext';
 import GoogleAnalytics from '@/components/layout/GoogleAnalytics';
 import 'material-icons/iconfont/material-icons.css';
+import 'yet-another-react-lightbox/styles.css';
+import 'yet-another-react-lightbox/plugins/counter.css';
+import 'yet-another-react-lightbox/plugins/thumbnails.css';
+import 'yet-another-react-lightbox/plugins/captions.css';
 
 export const metadata: Metadata = {
     title: 'SosioMap',

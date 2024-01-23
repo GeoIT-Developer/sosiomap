@@ -3,6 +3,7 @@
 type Props = {
     alt: string;
     src: string;
+    id?: string;
     srcSet?: string;
     className?: string;
     style?: React.CSSProperties;
@@ -13,6 +14,7 @@ type Props = {
 export default function MyImage({
     alt,
     src,
+    id,
     srcSet,
     className,
     style,
@@ -21,6 +23,7 @@ export default function MyImage({
 }: Props) {
     return (
         <img
+            id={id}
             src={src}
             srcSet={srcSet}
             alt={alt}

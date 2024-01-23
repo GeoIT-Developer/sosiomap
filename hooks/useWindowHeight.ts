@@ -22,11 +22,14 @@ const useWindowHeight = () => {
 
     const heightString = height === 0 ? '100vh' : height + 'px';
     const heightStyle = `calc(${heightString} - 56px)`;
+    const heightStyleAppBar = `calc(${heightString} - ${
+        responsive >= DisplaySize.Tablet ? '64px' : '56px'
+    })`;
     const fragmentHeightStyle = `calc(${heightString} - 56px - ${
         responsive >= DisplaySize.Tablet ? '64px' : '56px'
     })`;
 
-    return { height, heightStyle, fragmentHeightStyle };
+    return { height, heightStyle, fragmentHeightStyle, heightStyleAppBar };
 };
 
 export default useWindowHeight;

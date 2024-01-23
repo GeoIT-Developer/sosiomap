@@ -5,6 +5,7 @@ export const LOCAL_STORAGE = {
     LASK_KNOWN_LOCATION: 'last-known-location',
     CHAT_DISTANCE: 'chat-distance',
     CHAT_CHANNEL: 'chat-channel',
+    ACTIVE_TOPIC: 'active-topic',
 };
 
 export const ROUTE = {
@@ -38,9 +39,47 @@ export const ROUTE = {
     CLEAR_DATA: {
         URL: '/clear-data',
     },
+    DOWNLOAD_DATA: {
+        URL: '/download-data',
+    },
+    POST: {
+        NEW: {
+            URL: '/post/new',
+        },
+    },
 };
 
 export const ASSETS = {
     FLAG_IMAGE: '/img/flag/',
     BASEMAP_IMAGE: '/img/basemap/',
+    MARKER: '/img/marker/',
+    ICON: '/img/icon/',
+    PLACEHOLDER: '/img/placeholder/',
+};
+
+export const IDs = {
+    // MAIN_MAP_CONTAINER: 'main-map-container',
+};
+
+export const QUERY = {
+    LOCATION: 'location',
+    LNG: 'lng',
+    LAT: 'lat',
+    TOPIC: 'topic',
+};
+
+export const MAX_LENGTH = {
+    POST: {
+        STANDARD: {
+            TITLE: 120,
+            BODY: 2200,
+            MAX_FILE: 4,
+        },
+        CAROUSEL: {
+            TITLE: 120,
+            BODY: 2200,
+            MAX_FILE: 10,
+            CAPTION: 280,
+        },
+    },
 };

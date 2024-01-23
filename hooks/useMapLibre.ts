@@ -99,7 +99,12 @@ const useMapLibre = (options?: MapOptions) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [basemapStyle, options]);
 
-    return { mapContainer, mapStatus, myMap: map.current, geoControl };
+    return {
+        mapContainer,
+        mapStatus,
+        myMap: map.current,
+        geoControl,
+    };
 };
 
 export default useMapLibre;

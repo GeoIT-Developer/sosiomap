@@ -6,10 +6,15 @@
     "label": {
         "message": "Pesan",
         "general": "Umum",
-        "local": "Lokal"
+        "local": "Lokal",
+        "info": "Info"
     },
     "button": {
-        "login": "Masuk"
+        "login": "Masuk",
+        "ok": "OK",
+        "cancel": "Batal",
+        "logout": "Keluar",
+        "send": "Kirim"
     },
     "navigation": {
         "home": "Beranda",
@@ -20,10 +25,16 @@
         "about": "Tentang",
         "privacy_policy": "Kebijakan Pribadi",
         "terms_and_conditions": "Syarat dan Ketentuan",
-        "clear_data": "Hapus Data"
+        "clear_data": "Hapus Data",
+        "download_data": "Unduh Data"
     },
     "map": {
         "map_style": "Gaya Peta"
+    },
+    "profile": {
+        "username": "Nama Pengguna",
+        "name": "Nama",
+        "email": "Surel"
     },
     "message": {
         "error": {
@@ -32,13 +43,89 @@
             "geolocation_timeout": "Waktu tunggu permintaan lokasi habis!",
             "geolocation_denied": "Harap aktifkan lokasi GPS anda!",
             "message_at_least_minimum": "Pesan setidaknya memiliki 5 karakter!",
-            "feature_need_geolocation": "Data lokasi harus dihidupkan untuk menggunakan fitur ini!"
+            "feature_need_geolocation": "Data lokasi harus dihidupkan untuk menggunakan fitur ini!",
+            "max_file": "Jumlah berkas yang dapat dipilih adalah {max} berkas!"
         },
         "info": {
-            "login_to_continue": "Masuk untuk melanjutkan!"
+            "login_to_continue": "Masuk untuk melanjutkan!",
+            "coming_soon": "Segera Hadir!"
         }
     },
     "unit": {
         "km": "km"
+    },
+    "post": {
+        "new_post": "Buat Postingan",
+        "use_current_location": "Gunakan Lokasi Saya",
+        "choose_on_map": "Pilih di Peta",
+        "draw_on_map": "Gambar di Peta",
+        "use_approximate_location": "Gunakan Lokasi Perkiraan",
+        "choose_topic": "Pilih Topik",
+        "choose_location": "Pilih Lokasi",
+        "start_date": "Tanggal Awal",
+        "end_date": "Tanggal Akhir",
+        "type": {
+            "standard": "Standar",
+            "carousel": "Karousel",
+            "custom": "Kustom"
+        },
+        "url": {
+            "social_media_post": "Postingan Sosial Media",
+            "social_media_post_desc": "Tempelkan URL dari postingan sosial media yang ingin Anda hubungkan.",
+            "news_website": "Situs Berita",
+            "other": "Lain-lain..."
+        },
+        "title_optional": "Judul (opsional)",
+        "what_do_you_want_to_share_today": "Apa yang ingin Anda bagikan hari ini?",
+        "caption_optional": "Deskripsi singkat (opsional)"
+    },
+    "topic": {
+        "create_topic": "Buat Topik",
+        "main_topics": "Topik Utama",
+        "main_topics_desc": "Topik Utama adalah topik yang umum dan bisa Anda gunakan untuk berbagi dan berdiskusi di aplikasi ini.",
+        "pemilu_2024": "Pemilu 2024",
+        "pemilu_2024_desc": "Pemilu 2024 adalah kegiatan 5 tahunan di Indonesia untuk memilih Presiden dan Anggota Legislatif di tahun 2024.",
+        "open_topics": "Topik Terbuka",
+        "open_topics_desc": "Buat dan bagikan topik Anda di bagian Topik Terbuka. Di sini Anda dapat menemukan topik yang dibuat oleh pengguna lain.",
+        "main": {
+            "user_stories": "Cerita Pengguna",
+            "events": "Acara / Kegiatan",
+            "news": "Berita",
+            "tourism": "Pariwisata",
+            "traffic": "Lalu Lintas",
+            "environment": "Lingkungan",
+            "disaster": "Bencana Alam",
+            "social": "Sosial",
+            "marketplace": "Jual Beli",
+            "promo": "Promo",
+            "q_and_a": "Tanya Jawab",
+            "user_stories_desc": "Bagikan kegiatan dan aktivitasmu disini.",
+            "events_desc": "Temukan dan bagikan informasi tentang acara disekitarmu.",
+            "news_desc": "Temukan berita terbaru disekitarmu.",
+            "tourism_desc": "Diskusikan dan bagikan informasi terkait pariwisata.",
+            "traffic_desc": "Dapatkan dan bagikan informasi kondisi lalu lintas, kecelakaan, dan keadaan transportasi lainnya.",
+            "environment_desc": "Diskusikan dan bagikan informasi tentang lingkungan sekitar.",
+            "disaster_desc": "Dapatkan dan bagikan informasi tentang bencana.",
+            "social_desc": "Terlibat dalam interaksi sosial dan berbagi aktivitas sosial.",
+            "marketplace_desc": "Temukan, jual dan beli beraneka macam produk disekitar Anda.",
+            "promo_desc": "Bagikan informasi promosi dan diskon.",
+            "q_and_a_desc": "Ajukan pertanyaan dan bagikan jawaban."
+        },
+        "pemilu2024": {
+            "dpr": "DPR",
+            "dpd": "DPD",
+            "dprd_provinsi": "DPRD Provinsi",
+            "dprd_kab_kota": "DPRD Kab/Kota",
+            "voting": "Voting",
+            "kecurangan": "Kecurangan",
+            "spanduk_ilegal": "Spanduk Ilegal",
+            "dpr_desc": "Temukan dan periksa calon legislatif DPR di daerah Anda.",
+            "dpd_desc": "Temukan dan periksa calon legislatif DPD di daerah Anda.",
+            "dprd_provinsi_desc": "Temukan dan periksa calon legislatif DPRD Provinsi di daerah Anda.",
+            "dprd_kab_kota_desc": "Temukan dan periksa calon legislatif DPRD Kabupaten/Kota di daerah Anda.",
+            "voting_desc": "Pilih dan voting Calon Presiden.",
+            "kecurangan_desc": "Lapor dan bagikan kecurangan atau penipuan dari Calon Presiden, Partai Politik, dan/atau Calon Legislatif.",
+            "spanduk_ilegal_desc": "Lapor dan bagikan Spanduk Ilegal yang dipasang di daerah Anda."
+        }
     }
 }

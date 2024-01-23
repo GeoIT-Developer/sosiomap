@@ -13,6 +13,8 @@ import useMapLibre from '@/hooks/useMapLibre';
 import LoadingState from '@/types/loading-state.enum';
 import { CircularProgress } from '@mui/material';
 import { useMapLibreContext } from '@/contexts/MapLibreContext';
+import MyImage from '@/components/preview/MyImage';
+import { ASSETS, IDs } from '@/utils/constant';
 // import { MainContext } from '@/container/HomePage';
 // import * as turf from '@turf/turf';
 
@@ -183,6 +185,7 @@ export default function MainMap({
                     className='absolute top-1/2 left-1/2 z-10 transform -translate-x-1/2 -translate-y-1/2'
                 />
             )}
+
             <div ref={mapContainer} className={`w-full h-full`} />
         </div>
     );
