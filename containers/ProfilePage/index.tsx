@@ -72,7 +72,7 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
                     </Box>
                     <Box className='w-full text-center'>
                         <MyImage
-                            src={`${ASSETS.PLACEHOLDER}profile.svg`}
+                            src={`${ASSETS.PLACEHOLDER}profile.png`}
                             alt='profile'
                             className='mx-auto w-[5rem] rounded-full mt-[-2.5rem] p-0.5 bg-primary'
                         />
