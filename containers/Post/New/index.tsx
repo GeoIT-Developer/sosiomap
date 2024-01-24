@@ -101,7 +101,7 @@ export default function NewPostPage() {
                     container
                     spacing={{ xs: 2 }}
                     columns={{ xs: 1, md: 2 }}
-                    className='p-0 py-4 md:p-4'
+                    className='px-0 py-4 md:px-4'
                 >
                     <Grid item xs={1}>
                         <Paper className='p-4'>

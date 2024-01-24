@@ -75,6 +75,7 @@ export default function NewPostDialog({
                         onSelectTopic={(val) => setSelectedTopic(val)}
                         labelClass='mx-4'
                         className='my-4 mx-4'
+                        readOnly
                     />
                     {selectedTopic?.id && (
                         <>

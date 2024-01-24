@@ -20,6 +20,7 @@ type Props = {
     initialValue?: string;
     disableClearable?: boolean;
     disabled?: boolean;
+    readOnly?: boolean;
 };
 
 export default function SelectTopic({
@@ -32,6 +33,7 @@ export default function SelectTopic({
     initialValue,
     disableClearable,
     disabled,
+    readOnly,
 }: Props) {
     const t = useI18n();
     const activeTopic = useActiveTopic();
@@ -98,6 +100,7 @@ export default function SelectTopic({
                         inputProps={{
                             ...params.inputProps,
                             autoComplete: 'new-password', // disable autocomplete and autofill
+                            readOnly: readOnly,
                         }}
                     />
                 )}
