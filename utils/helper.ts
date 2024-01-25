@@ -90,5 +90,11 @@ export function stringToColor(string: string) {
 }
 
 export function nameToInitial(name: string) {
-    return `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
+    if (!name) return '-';
+    const nameSplit = name.split(' ');
+    if (nameSplit.length >= 2) {
+        return `${nameSplit[0][0]}${nameSplit[1][0]}`;
+    } else {
+        return `${nameSplit[0][0]}`;
+    }
 }

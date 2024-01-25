@@ -70,7 +70,10 @@ export default function BasemapDrawer({
                                 <ToggleButtonGroup
                                     value={basemap}
                                     exclusive
-                                    onChange={(_e, val) => setBasemap(val)}
+                                    onChange={(_e, val) => {
+                                        if (!val) return;
+                                        setBasemap(val);
+                                    }}
                                     aria-label={key}
                                 >
                                     {BASEMAP[key as keyof typeof BASEMAP].map(

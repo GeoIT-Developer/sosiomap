@@ -50,6 +50,8 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
         setProfileTab(newValue);
     };
 
+    const eName = accessToken?.name || accessToken?.preferred_username || '';
+
     if (!show && !pageLoaded) {
         return null;
     }
@@ -79,20 +81,12 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
                                 height: '5rem',
                                 fontSize: 'xx-large',
                                 fontWeight: 'bold',
-                                bgcolor: stringToColor(
-                                    accessToken?.name ||
-                                        accessToken?.preferred_username ||
-                                        '',
-                                ),
+                                bgcolor: stringToColor(eName),
                             }}
                             className='mx-auto mt-[-2.5rem] !p-0.5 bg-primary'
                             alt={accessToken?.name || 'profile'}
                         >
-                            {nameToInitial(
-                                accessToken?.name ||
-                                    accessToken?.preferred_username ||
-                                    '',
-                            )}
+                            {nameToInitial(eName)}
                         </Avatar>
                         <Typography variant='body1'>
                             {session.data?.user.name}
