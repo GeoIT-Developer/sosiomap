@@ -345,6 +345,7 @@ export const useActiveTopic = () => {
         mainTopic.map((item) => item.id),
     );
     const [activeTopic, setActiveTopic] = useState<TopicType[]>([]);
+    const [refresh, setRefresh] = useState(0);
 
     useEffect(() => {
         function getActiveTopic() {
@@ -358,7 +359,11 @@ export const useActiveTopic = () => {
 
         const newActiveTopic = getActiveTopic();
         setActiveTopic(newActiveTopic);
-    }, []);
+    }, [refresh]);
 
-    return activeTopic;
+    function onRefresh() {
+        setRefresh(new Date().getTime());
+    }
+
+    return { activeTopic, refreshTopic: onRefresh };
 };

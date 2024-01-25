@@ -36,7 +36,7 @@ export default function SelectTopic({
     readOnly,
 }: Props) {
     const t = useI18n();
-    const activeTopic = useActiveTopic();
+    const { activeTopic } = useActiveTopic();
     const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {

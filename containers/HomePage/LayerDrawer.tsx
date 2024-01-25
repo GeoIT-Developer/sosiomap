@@ -20,7 +20,7 @@ export default function LayerDrawer({
 }) {
     const t = useScopedI18n('map');
     const [openDrawer, setOpenDrawer] = useState(false);
-    const activeTopic = useActiveTopic();
+    const { activeTopic, refreshTopic } = useActiveTopic();
     const isWide = useWideScreen();
 
     const toggleDrawer =
@@ -35,6 +35,7 @@ export default function LayerDrawer({
             }
 
             setOpenDrawer(open);
+            if (open) refreshTopic();
         };
 
     const clonedButton = cloneElement(menuButton, {
