@@ -1,9 +1,11 @@
 import { ReactElement, cloneElement, useState } from 'react';
-import { Avatar, Box, Drawer, Fab, Icon } from '@mui/material';
+import { Avatar, Box, Fab, Icon } from '@mui/material';
 import useWideScreen from '@/hooks/useWideScreen';
 import LayersIcon from '@mui/icons-material/Layers';
 import { useActiveTopic } from '@/hooks/useTopic';
 import SingleAccordion from '@/components/accordion/SingleAccordion';
+import CommonDrawer from '@/components/drawer/CommonDrawer';
+import { useScopedI18n } from '@/locales/client';
 
 const defaultButton = (
     <Fab color='default' aria-label='layers' size='small'>
@@ -16,6 +18,7 @@ export default function LayerDrawer({
 }: {
     menuButton?: ReactElement;
 }) {
+    const t = useScopedI18n('map');
     const [openDrawer, setOpenDrawer] = useState(false);
     const activeTopic = useActiveTopic();
     const isWide = useWideScreen();
@@ -41,15 +44,16 @@ export default function LayerDrawer({
     return (
         <>
             {clonedButton}
-            <Drawer
+            <CommonDrawer
                 anchor={isWide ? 'right' : 'bottom'}
                 open={openDrawer}
-                onClose={toggleDrawer(false)}
+                toggleDrawer={toggleDrawer}
+                title={t('layers')}
             >
                 <Box
-                    className='min-h-[35vh] p-4 text-center'
+                    className='min-h-[35vh] text-center'
                     style={
-                        isWide ? { maxWidth: '400px' } : { maxHeight: '80vh' }
+                        isWide ? { maxWidth: '400px' } : { maxHeight: '100vh' }
                     }
                 >
                     {activeTopic.map((item, idx) => {
@@ -85,7 +89,7 @@ export default function LayerDrawer({
                         );
                     })}
                 </Box>
-            </Drawer>
+            </CommonDrawer>
         </>
     );
 }

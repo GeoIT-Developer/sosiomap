@@ -41,6 +41,7 @@ type Props = {
     description?: string;
     value: SocialMediaURLType;
     onChange: (val: SocialMediaURLType) => void;
+    defaultOpen?: boolean;
 };
 
 export default function SocialMediaPost({
@@ -48,6 +49,7 @@ export default function SocialMediaPost({
     description,
     value,
     onChange,
+    defaultOpen,
 }: Props) {
     const t = useScopedI18n('post.url');
 
@@ -56,31 +58,31 @@ export default function SocialMediaPost({
             id: 'instagram',
             label: 'Instagram',
             icon: `${ASSETS.ICON}instagram.png`,
-            embed: <InstagramEmbed url={value.instagram} width={400} />,
+            embed: <InstagramEmbed url={value.instagram} width={325} />,
         },
         {
             id: 'tiktok',
             label: 'TikTok',
             icon: `${ASSETS.ICON}tiktok.ico`,
-            embed: <TikTokEmbed url={value.tiktok} width={400} />,
+            embed: <TikTokEmbed url={value.tiktok} width={325} />,
         },
         {
             id: 'twitter',
             label: 'Twitter',
             icon: `${ASSETS.ICON}twitter.ico`,
-            embed: <TwitterEmbed url={value.twitter} width={400} />,
+            embed: <TwitterEmbed url={value.twitter} width={325} />,
         },
         {
             id: 'facebook',
             label: 'Facebook',
             icon: `${ASSETS.ICON}facebook.ico`,
-            embed: <FacebookEmbed url={value.facebook} width={400} />,
+            embed: <FacebookEmbed url={value.facebook} width={325} />,
         },
         {
             id: 'youtube',
             label: 'YouTube',
             icon: `${ASSETS.ICON}youtube.png`,
-            embed: <YouTubeEmbed url={value.youtube} width={400} />,
+            embed: <YouTubeEmbed url={value.youtube} width={325} />,
         },
         {
             id: 'news_website',
@@ -97,6 +99,7 @@ export default function SocialMediaPost({
     return (
         <SingleAccordion
             title={title || <>&#128279; {t('social_media_post')}</>}
+            defaultOpen={defaultOpen}
         >
             <Typography variant='body2' className='!mb-8 !-mt-2'>
                 &#9432; {description || t('social_media_post_desc')}

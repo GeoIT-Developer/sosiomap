@@ -7,6 +7,7 @@ import {
     Avatar,
     DialogContent,
     Fab,
+    IconButton,
     InputLabel,
     List,
     ListItem,
@@ -27,6 +28,7 @@ import SelectTopic from '@/components/input/SelectTopic';
 import ShareLocationIcon from '@mui/icons-material/ShareLocation';
 import ChooseLocationEnum from '@/types/choose-location.enum';
 import { toast } from 'react-toastify';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface SimpleDialogProps {
     setShowMarker: (_args: boolean) => void;
@@ -68,6 +70,18 @@ export default function NewPostDialog({
                 <DialogTitle className='!px-4'>
                     {t('post.new_post')}
                 </DialogTitle>
+                <IconButton
+                    aria-label='close'
+                    onClick={handleClose}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                    }}
+                >
+                    <CloseIcon />
+                </IconButton>
                 <DialogContent className='min-w-64 !p-0'>
                     <SelectTopic
                         size='medium'

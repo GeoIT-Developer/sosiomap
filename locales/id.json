@@ -30,7 +30,8 @@
         "download_data": "Unduh Data"
     },
     "map": {
-        "map_style": "Gaya Peta"
+        "map_style": "Tampilan Peta",
+        "layers": "Layer"
     },
     "profile": {
         "username": "Nama Pengguna",

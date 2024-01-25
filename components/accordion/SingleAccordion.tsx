@@ -8,9 +8,15 @@ interface Props {
     children: ReactNode;
     title: ReactNode;
     type?: 'standard' | 'compact';
+    defaultOpen?: boolean;
 }
 
-export default function SingleAccordion({ title, children, type }: Props) {
+export default function SingleAccordion({
+    title,
+    children,
+    type,
+    defaultOpen,
+}: Props) {
     return (
         <Accordion
             sx={
@@ -25,6 +31,7 @@ export default function SingleAccordion({ title, children, type }: Props) {
                       }
                     : {}
             }
+            defaultExpanded={defaultOpen}
         >
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}

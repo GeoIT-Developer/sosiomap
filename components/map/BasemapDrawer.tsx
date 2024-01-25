@@ -2,7 +2,6 @@ import { Fragment, ReactElement, cloneElement, useState } from 'react';
 import {
     Box,
     Divider,
-    Drawer,
     Fab,
     Stack,
     ToggleButton,
@@ -15,6 +14,7 @@ import { ASSETS } from '@/utils/constant';
 import { useScopedI18n } from '@/locales/client';
 import { capitalizeWords } from '@/utils/helper';
 import useWideScreen from '@/hooks/useWideScreen';
+import CommonDrawer from '../drawer/CommonDrawer';
 
 const defaultButton = (
     <Fab color='default' aria-label='basemaps' size='small'>
@@ -53,10 +53,10 @@ export default function BasemapDrawer({
     return (
         <>
             {clonedButton}
-            <Drawer
+            <CommonDrawer
                 anchor={isWide ? 'right' : 'bottom'}
                 open={openDrawer}
-                onClose={toggleDrawer(false)}
+                toggleDrawer={toggleDrawer}
             >
                 <Box className='min-h-[35vh] p-4 text-center'>
                     {Object.keys(BASEMAP).map((key) => {
@@ -103,7 +103,7 @@ export default function BasemapDrawer({
                         );
                     })}
                 </Box>
-            </Drawer>
+            </CommonDrawer>
         </>
     );
 }

@@ -30,7 +30,8 @@
         "download_data": "Download Data"
     },
     "map": {
-        "map_style": "Map Style"
+        "map_style": "Map Style",
+        "layers": "Layers"
     },
     "profile": {
         "username": "Username",

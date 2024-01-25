@@ -82,4 +82,8 @@ export const MAX_LENGTH = {
             CAPTION: 280,
         },
     },
+    TOPIC: {
+        LABEL: 64,
+        DESCRIPTION: 280,
+    },
 };
