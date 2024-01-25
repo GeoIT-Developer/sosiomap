@@ -1,5 +1,6 @@
 import {
     Alert,
+    Avatar,
     Box,
     InputLabel,
     Paper,
@@ -23,6 +24,7 @@ import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import { ASSETS } from '@/utils/constant';
 import { useI18n } from '@/locales/client';
+import { nameToInitial, stringToColor } from '@/utils/helper';
 
 enum ProfileTabEnum {
     DETAIL = 'detail',
@@ -71,11 +73,27 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
                         />
                     </Box>
                     <Box className='w-full text-center'>
-                        <MyImage
-                            src={`${ASSETS.PLACEHOLDER}profile.png`}
-                            alt='profile'
-                            className='mx-auto w-[5rem] rounded-full mt-[-2.5rem] p-0.5 bg-primary'
-                        />
+                        <Avatar
+                            sx={{
+                                width: '5rem',
+                                height: '5rem',
+                                fontSize: 'xx-large',
+                                fontWeight: 'bold',
+                                bgcolor: stringToColor(
+                                    accessToken?.name ||
+                                        accessToken?.preferred_username ||
+                                        '',
+                                ),
+                            }}
+                            className='mx-auto mt-[-2.5rem] !p-0.5 bg-primary'
+                            alt={accessToken?.name || 'profile'}
+                        >
+                            {nameToInitial(
+                                accessToken?.name ||
+                                    accessToken?.preferred_username ||
+                                    '',
+                            )}
+                        </Avatar>
                         <Typography variant='body1'>
                             {session.data?.user.name}
                         </Typography>
