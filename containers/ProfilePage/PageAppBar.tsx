@@ -24,6 +24,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useRouter } from 'next/navigation';
 import PhonelinkEraseIcon from '@mui/icons-material/PhonelinkErase';
 import LogoutIcon from '@mui/icons-material/Logout';
+import useLogout from '@/hooks/useLogout';
 
 type UseChangeLocaleType = typeof useChangeLocale;
 type NewLocaleType = Parameters<ReturnType<UseChangeLocaleType>>[0];
@@ -34,6 +35,7 @@ export default function PageAppBar() {
     const { mode, toggleColorMode } = useThemeMode();
     const session = useSession();
     const router = useRouter();
+    const logout = useLogout();
 
     const LIST_MORE_MENU = [
         {
@@ -150,7 +152,7 @@ export default function PageAppBar() {
                                 return <Divider key={idx} />;
                             })}
                             {session.status === 'authenticated' && (
-                                <MenuItem onClick={() => console.log('LOGOUT')}>
+                                <MenuItem onClick={() => logout.signout()}>
                                     <ListItemIcon>
                                         <LogoutIcon fontSize='small' />
                                     </ListItemIcon>

@@ -6,13 +6,11 @@ interface DataType {
     name: string;
     email: string;
     sub: string;
-    nip: string;
-    access_token: string;
-    roles: string[];
     iat: number;
     exp: number;
     jti: string;
-    access_token_expired: number;
+    access_token: string;
+    id_token: string;
 }
 
 interface User {
