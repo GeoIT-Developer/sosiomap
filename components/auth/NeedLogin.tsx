@@ -7,7 +7,7 @@ import {
     Typography,
 } from '@mui/material';
 import { signIn, useSession } from 'next-auth/react';
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, ReactNode, useEffect } from 'react';
 
 type NeedLoginReturnType = 'hide' | 'message' | 'default';
 
@@ -32,6 +32,13 @@ export default function NeedLogin({
     const onClickLogin = () => {
         signIn('keycloak');
     };
+
+    useEffect(() => {
+        if (session?.data?.error === 'RefreshAccessTokenError') {
+            // Force sign in to resolve the error
+            onClickLogin();
+        }
+    }, [session]);
 
     return (
         <>

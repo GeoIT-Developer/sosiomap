@@ -11,6 +11,9 @@ interface DataType {
     jti: string;
     access_token: string;
     id_token: string;
+    refresh_token: string;
+    expires_at: number;
+    error?: 'RefreshAccessTokenError';
 }
 
 interface User {
