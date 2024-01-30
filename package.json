@@ -45,6 +45,7 @@
         "@tanstack/react-query": "^5.17.1",
         "@turf/turf": "^6.5.0",
         "axios": "^1.6.4",
+        "cookies-next": "^4.1.1",
         "dayjs": "^1.11.10",
         "font-gis": "^1.0.5",
         "maplibre-gl": "^3.6.2",
