@@ -16,7 +16,7 @@ const authOptions: AuthOptions = {
             clientId: process.env.NEXTAUTH_CLIENT_ID || '',
             clientSecret: process.env.NEXTAUTH_MY_SECRET || '',
             issuer: `${process.env.NEXTAUTH_URL_IAM}realms/${process.env.NEXTAUTH_REALM_IAM}`,
-            authorization: { params: { scope: 'openid' } },
+            authorization: { params: { scope: 'openid offline_access' } },
         }),
     ],
     callbacks: {
