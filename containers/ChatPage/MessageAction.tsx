@@ -5,6 +5,10 @@ import { toast } from 'react-toastify';
 import { useI18n } from '@/locales/client';
 import { getUserAgent } from '@/utils/helper';
 import { GeolocationHook } from '@/hooks/useGeolocation';
+import API from '@/configs/api';
+import useLocalStorageFunc from '@/hooks/useLocalStorageFunc';
+import { LOCAL_STORAGE } from '@/utils/constant';
+import { ChatChannelEnum } from './PageAppBar';
 
 const MIN_MESSAGE_LENGTH = 5;
 const MAX_MESSAGE_LENGTH = 200;
@@ -16,6 +20,11 @@ export default function MessageAction({
 }) {
     const t = useI18n();
     const [message, setMessage] = useState('');
+
+    const channelStorage = useLocalStorageFunc(
+        LOCAL_STORAGE.CHAT_CHANNEL,
+        ChatChannelEnum.GENERAL,
+    );
 
     const onChangeMessage = (e: ChangeEvent<HTMLInputElement>) => {
         const eVal = e.target.value;
@@ -40,14 +49,24 @@ export default function MessageAction({
         }
         geolocation
             .getLatestGeolocation()
-            .then((res) => {
+            .then((resLoc) => {
                 const userAgent = getUserAgent();
                 console.log('SEND CHAT', {
                     message,
                     userAgent,
-                    location: res,
+                    location: resLoc,
                 });
-                setMessage('');
+                API.postChat(
+                    resLoc.latitude,
+                    resLoc.longitude,
+                    channelStorage.getItem(),
+                    message,
+                )
+                    .then((res) => {
+                        console.log(res);
+                        setMessage('');
+                    })
+                    .catch((err) => console.log(err));
             })
             .catch((err) => {
                 toast(err);

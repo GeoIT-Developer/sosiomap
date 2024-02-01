@@ -9,7 +9,7 @@ import { useI18n } from '@/locales/client';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { LOCAL_STORAGE } from '@/utils/constant';
 
-enum ChatChannelEnum {
+export enum ChatChannelEnum {
     GENERAL = 'general',
     LOCAL = 'local',
 }

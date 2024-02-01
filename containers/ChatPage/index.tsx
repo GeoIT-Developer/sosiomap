@@ -8,7 +8,7 @@ import {
     Stack,
     Typography,
 } from '@mui/material';
-import PageAppBar from './PageAppBar';
+import PageAppBar, { ChatChannelEnum } from './PageAppBar';
 import useWindowHeight from '@/hooks/useWindowHeight';
 import NeedLogin from '@/components/auth/NeedLogin';
 import { useI18n } from '@/locales/client';
@@ -18,7 +18,10 @@ import MessageBox from './MessageBox';
 import MessageAction from './MessageAction';
 import usePageLoaded from '@/hooks/usePageLoaded';
 import useGeolocation from '@/hooks/useGeolocation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import API from '@/configs/api';
+import useLocalStorageFunc from '@/hooks/useLocalStorageFunc';
+import { ListChatInterface } from '@/types/list-chat.interface';
 
 function calculateValue(value: number) {
     switch (value) {
@@ -53,11 +56,35 @@ export default function ChatPage({ show = true }: { show?: boolean }) {
         LOCAL_STORAGE.CHAT_DISTANCE,
         2,
     );
+    const [listChat, setListChat] = useState<ListChatInterface[]>([]);
+
+    const channelStorage = useLocalStorageFunc(
+        LOCAL_STORAGE.CHAT_CHANNEL,
+        ChatChannelEnum.GENERAL,
+    );
 
     useEffect(() => {
         geolocation.requestGeolocation();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [show]);
+
+    useEffect(() => {
+        if (!show) return;
+        if (!geolocation.location?.latitude || !geolocation.location?.latitude)
+            return;
+        API.getPublicChat(
+            geolocation.location?.latitude,
+            geolocation.location?.longitude,
+            channelStorage.getItem(),
+            calculateValue(distance),
+        )
+            .then((res) => {
+                setListChat(res?.data?.data || []);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [distance, show]);
 
     const pageLoaded = usePageLoaded(show);
     if (!show && !pageLoaded) {
@@ -102,8 +129,14 @@ export default function ChatPage({ show = true }: { show?: boolean }) {
                 </Stack>
                 <Divider light />
                 <Box flex='1' overflow='auto'>
-                    {Array.from({ length: 50 }).map((_, index) => (
-                        <MessageBox key={index} />
+                    {listChat.map((item, index) => (
+                        <MessageBox
+                            key={index}
+                            name={item.name}
+                            username={item.username}
+                            body={item.body}
+                            createdAt={item.created_at}
+                        />
                     ))}
                 </Box>
 
