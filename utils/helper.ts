@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { LngLat } from 'maplibre-gl';
 import { ReadonlyURLSearchParams } from 'next/navigation';
+import CryptoJS from 'crypto-js';
 
 export const keycloakJWTDecode = (token: string) => {
     return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
@@ -132,3 +133,33 @@ export const getDateLabel = (eDate: string) => {
         return dayjs(eDate).format('MMMM D, YYYY');
     }
 };
+
+export function encrypt(inputData: any, stringify: boolean = false) {
+    const theKey = process.env.NEXT_PUBLIC_ENCRYPTION_KEY || '';
+    const theData = stringify ? JSON.stringify(inputData) : inputData;
+    const encrypted = CryptoJS.AES.encrypt(theData, theKey);
+    return encrypted.toString();
+}
+
+export function decrypt(encryptedData: string, parse: boolean = false) {
+    const theKey = process.env.NEXT_PUBLIC_ENCRYPTION_KEY || '';
+    const decrypted = CryptoJS.AES.decrypt(encryptedData, theKey);
+    const strDecrypted = decrypted.toString(CryptoJS.enc.Utf8);
+    return parse ? JSON.parse(strDecrypted) : strDecrypted;
+}
+
+export function checkSecretCoordinate(
+    secret: string,
+    lat: number,
+    lon: number,
+) {
+    if (!secret) return false;
+    const { latitude, longitude }: GeolocationCoordinates = decrypt(
+        secret,
+        true,
+    );
+    if (Number(latitude) === Number(lat) && Number(longitude) === Number(lon)) {
+        return true;
+    }
+    return false;
+}

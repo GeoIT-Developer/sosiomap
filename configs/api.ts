@@ -1,6 +1,7 @@
 import { getCookie } from 'cookies-next';
 import axios from 'axios';
-import { COOKIE } from '@/utils/constant';
+import { COOKIE, LOCAL_STORAGE } from '@/utils/constant';
+import { encrypt } from '@/utils/helper';
 
 const HOST = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -12,6 +13,15 @@ HOST.interceptors.request.use(
         const tokenCookie = getCookie(COOKIE.TOKEN);
         if (tokenCookie) {
             config.headers['Authorization'] = 'Bearer ' + tokenCookie;
+        }
+        const lastKnownLocation = localStorage.getItem(
+            LOCAL_STORAGE.LASK_KNOWN_LOCATION,
+        );
+        if (lastKnownLocation) {
+            config.headers['Secret'] = encrypt(
+                JSON.parse(lastKnownLocation),
+                true,
+            );
         }
         return config;
     },
