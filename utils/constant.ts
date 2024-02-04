@@ -90,4 +90,8 @@ export const MAX_LENGTH = {
         LABEL: 64,
         DESCRIPTION: 280,
     },
+    CHAT: {
+        MIN_CHAT: 5,
+        MAX_CHAT: 200,
+    },
 };

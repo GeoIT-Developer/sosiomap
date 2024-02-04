@@ -7,11 +7,12 @@ import { getUserAgent } from '@/utils/helper';
 import { GeolocationHook } from '@/hooks/useGeolocation';
 import API from '@/configs/api';
 import useLocalStorageFunc from '@/hooks/useLocalStorageFunc';
-import { LOCAL_STORAGE } from '@/utils/constant';
+import { LOCAL_STORAGE, MAX_LENGTH } from '@/utils/constant';
 import { ChatChannelEnum } from './PageAppBar';
+import useWideScreen from '@/hooks/useWideScreen';
 
-const MIN_MESSAGE_LENGTH = 5;
-const MAX_MESSAGE_LENGTH = 200;
+const MIN_MESSAGE_LENGTH = MAX_LENGTH.CHAT.MIN_CHAT;
+const MAX_MESSAGE_LENGTH = MAX_LENGTH.CHAT.MAX_CHAT;
 
 export default function MessageAction({
     geolocation,
@@ -20,6 +21,7 @@ export default function MessageAction({
 }) {
     const t = useI18n();
     const [message, setMessage] = useState('');
+    const isWide = useWideScreen();
 
     const channelStorage = useLocalStorageFunc(
         LOCAL_STORAGE.CHAT_CHANNEL,
@@ -73,6 +75,13 @@ export default function MessageAction({
             });
     };
 
+    const handleEnterKeyPress = (event: any) => {
+        if (isWide && event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            onClickSend();
+        }
+    };
+
     return (
         <Box className='py-2 px-4 flex items-end'>
             <TextField
@@ -82,6 +91,7 @@ export default function MessageAction({
                 multiline
                 value={message}
                 onChange={onChangeMessage}
+                onKeyDown={handleEnterKeyPress}
             />
             <IconButton color='primary' aria-label='send' onClick={onClickSend}>
                 <SendIcon />

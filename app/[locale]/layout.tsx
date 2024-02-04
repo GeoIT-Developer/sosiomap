@@ -18,6 +18,7 @@ import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/counter.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import 'yet-another-react-lightbox/plugins/captions.css';
+import 'react-virtualized/styles.css';
 
 export const metadata: Metadata = {
     title: 'SosioMap',

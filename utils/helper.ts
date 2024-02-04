@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { LngLat } from 'maplibre-gl';
 import { ReadonlyURLSearchParams } from 'next/navigation';
 
@@ -98,3 +99,36 @@ export function nameToInitial(name: string) {
         return `${nameSplit[0][0]}`;
     }
 }
+
+export function isValidEmail(email: string) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+export function extractUsernameFromEmail(str: string) {
+    if (isValidEmail(str)) {
+        const username = str.split('@')[0];
+        return username;
+    } else {
+        return str;
+    }
+}
+
+export function formatDateTime(utcString: string, format: string = 'HH:mm') {
+    const parsedDate = dayjs(utcString).format(format);
+    return parsedDate;
+}
+
+export const getDateLabel = (eDate: string) => {
+    const today = dayjs().format('YYYY-MM-DD');
+    const yesterday = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
+    const inputDate = dayjs(eDate).format('YYYY-MM-DD');
+
+    if (inputDate === today) {
+        return 'Today';
+    } else if (inputDate === yesterday) {
+        return 'Yesterday';
+    } else {
+        return dayjs(eDate).format('MMMM D, YYYY');
+    }
+};

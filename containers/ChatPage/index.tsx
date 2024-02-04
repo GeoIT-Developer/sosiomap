@@ -14,7 +14,6 @@ import NeedLogin from '@/components/auth/NeedLogin';
 import { useI18n } from '@/locales/client';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { LOCAL_STORAGE } from '@/utils/constant';
-import MessageBox from './MessageBox';
 import MessageAction from './MessageAction';
 import usePageLoaded from '@/hooks/usePageLoaded';
 import useGeolocation from '@/hooks/useGeolocation';
@@ -22,6 +21,9 @@ import { useEffect, useState } from 'react';
 import API from '@/configs/api';
 import useLocalStorageFunc from '@/hooks/useLocalStorageFunc';
 import { ListChatInterface } from '@/types/list-chat.interface';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import MessageWindow from './MessageWindow';
+import MainFab from '@/components/button/MainFab';
 
 function calculateValue(value: number) {
     switch (value) {
@@ -128,16 +130,17 @@ export default function ChatPage({ show = true }: { show?: boolean }) {
                     />
                 </Stack>
                 <Divider light />
-                <Box flex='1' overflow='auto'>
-                    {listChat.map((item, index) => (
-                        <MessageBox
-                            key={index}
-                            name={item.name}
-                            username={item.username}
-                            body={item.body}
-                            createdAt={item.created_at}
-                        />
-                    ))}
+                <Box className='relative'>
+                    <MainFab
+                        size='small'
+                        aria-label='refresh'
+                        className='!absolute top-1 right-1'
+                    >
+                        <RefreshIcon />
+                    </MainFab>
+                </Box>
+                <Box flex='1' overflow='auto' className='py-1'>
+                    <MessageWindow messages={listChat.slice().reverse()} />
                 </Box>
 
                 <Divider light />
