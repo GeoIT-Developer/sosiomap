@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-function useRefresh() {
-    const [value, setValue] = useState(new Date().getTime());
+function useRefresh(): [number, () => void] {
+    const [value, setValue] = useState(Date.now());
 
     const setRefresh = () => {
-        setValue(new Date().getTime());
+        setValue(Date.now());
     };
 
     return [value, setRefresh];

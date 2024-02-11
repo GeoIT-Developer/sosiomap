@@ -29,10 +29,8 @@ const determineDisplaySize = (width: number) => {
     }
 };
 
-const useResponsive = () => {
-    const [currentDisplaySize, setCurrentDisplaySize] = useState(
-        determineDisplaySize(DisplaySize.MobileL),
-    );
+const useResponsive = (): number | undefined => {
+    const [currentDisplaySize, setCurrentDisplaySize] = useState<DisplaySize>();
 
     useEffect(() => {
         const handler = () => {

@@ -56,6 +56,10 @@
     "unit": {
         "km": "km"
     },
+    "date": {
+        "today": "Today",
+        "yesterday": "Yesterday"
+    },
     "post": {
         "new_post": "New Post",
         "use_current_location": "Use My Current Location",

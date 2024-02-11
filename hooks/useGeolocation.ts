@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import useLocalStorageFunc from './useLocalStorageFunc';
 import { LOCAL_STORAGE } from '@/utils/constant';
 
-interface MyLocation {
+export interface MyLocation {
     accuracy: number;
     altitude: number | null;
     altitudeAccuracy: number | null;

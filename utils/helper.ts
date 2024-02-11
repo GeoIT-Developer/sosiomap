@@ -120,15 +120,19 @@ export function formatDateTime(utcString: string, format: string = 'HH:mm') {
     return parsedDate;
 }
 
-export const getDateLabel = (eDate: string) => {
+export function formatDistance(distance: number) {
+    return distance.toFixed(1);
+}
+
+export const getDateLabel = (eDate: string): 'today' | 'yesterday' | string => {
     const today = dayjs().format('YYYY-MM-DD');
     const yesterday = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
     const inputDate = dayjs(eDate).format('YYYY-MM-DD');
 
     if (inputDate === today) {
-        return 'Today';
+        return 'today';
     } else if (inputDate === yesterday) {
-        return 'Yesterday';
+        return 'yesterday';
     } else {
         return dayjs(eDate).format('MMMM D, YYYY');
     }

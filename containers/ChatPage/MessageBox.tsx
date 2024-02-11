@@ -1,6 +1,8 @@
+import { useScopedI18n } from '@/locales/client';
 import {
     extractUsernameFromEmail,
     formatDateTime,
+    formatDistance,
     nameToInitial,
     stringToColor,
 } from '@/utils/helper';
@@ -19,6 +21,7 @@ type Props = {
     name: string;
     body: string;
     createdAt: string;
+    distance: number;
     style?: React.CSSProperties;
 };
 
@@ -27,8 +30,10 @@ export default function MessageBox({
     name,
     body,
     createdAt,
+    distance,
     style,
 }: Props) {
+    const t = useScopedI18n('unit');
     return (
         <Box style={style}>
             <ListItem className='!items-start'>
@@ -62,7 +67,8 @@ export default function MessageBox({
                                 variant='caption'
                                 className='text-right !text-xs !-mt-1.5 block'
                             >
-                                {formatDateTime(createdAt, 'HH:mm')}
+                                {formatDistance(distance)}
+                                {t('km')} | {formatDateTime(createdAt, 'HH:mm')}
                             </Typography>
                         </>
                     }

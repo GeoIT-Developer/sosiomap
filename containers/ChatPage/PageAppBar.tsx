@@ -13,8 +13,11 @@ export enum ChatChannelEnum {
     GENERAL = 'general',
     LOCAL = 'local',
 }
+type Props = {
+    onRefresh: () => void;
+};
 
-export default function PageAppBar() {
+export default function PageAppBar({ onRefresh }: Props) {
     const t = useI18n();
     const [channel, setChannel] = useLocalStorage(
         LOCAL_STORAGE.CHAT_CHANNEL,
@@ -36,9 +39,10 @@ export default function PageAppBar() {
                     <Select
                         value={channel}
                         size='small'
-                        onChange={(e) =>
-                            setChannel(e.target.value as ChatChannelEnum)
-                        }
+                        onChange={(e) => {
+                            setChannel(e.target.value as ChatChannelEnum);
+                            onRefresh();
+                        }}
                         sx={{
                             color: 'white',
                             '& .MuiOutlinedInput-notchedOutline': {

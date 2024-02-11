@@ -2,6 +2,7 @@ import {
     Alert,
     AlertTitle,
     Box,
+    CircularProgress,
     Divider,
     Paper,
     Slider,
@@ -16,16 +17,20 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import { LOCAL_STORAGE } from '@/utils/constant';
 import MessageAction from './MessageAction';
 import usePageLoaded from '@/hooks/usePageLoaded';
-import useGeolocation from '@/hooks/useGeolocation';
+import useGeolocation, { MyLocation } from '@/hooks/useGeolocation';
 import { useEffect, useState } from 'react';
 import API from '@/configs/api';
 import useLocalStorageFunc from '@/hooks/useLocalStorageFunc';
-import { ListChatInterface } from '@/types/list-chat.interface';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import MessageWindow from './MessageWindow';
 import MainFab from '@/components/button/MainFab';
+import { ChatDataInterface } from '@/types/api/responses/chat-data.interface';
+import useAPI from '@/hooks/useAPI';
+import { GetPublicChatParamsInterface } from '@/types/api/params/get-public-chat.interface';
+import useRefresh from '@/hooks/useRefresh';
+import { ObjectLiteral } from '@/types/object-literal.interface';
 
-function calculateValue(value: number) {
+function valueKeyToDistance(value: number) {
     switch (value) {
         case 1:
             return 2;
@@ -44,49 +49,61 @@ function calculateValue(value: number) {
     }
 }
 
-const marks = [1, 2, 3, 4, 5, 6].map((value) => ({
+const distanceKey = [1, 2, 3, 4, 5, 6].map((value) => ({
     value,
-    // label: calculateValue(value),
 }));
 
 export default function ChatPage({ show = true }: { show?: boolean }) {
     const { fragmentHeightStyle } = useWindowHeight();
     const geolocation = useGeolocation();
-
     const t = useI18n();
+    const [refresh, setRefresh] = useRefresh();
+
     const [distance, setDistance] = useLocalStorage(
         LOCAL_STORAGE.CHAT_DISTANCE,
         2,
     );
-    const [listChat, setListChat] = useState<ListChatInterface[]>([]);
+    const [listChat, setListChat] = useState<ChatDataInterface[]>([]);
 
     const channelStorage = useLocalStorageFunc(
         LOCAL_STORAGE.CHAT_CHANNEL,
         ChatChannelEnum.GENERAL,
     );
+    const lastLocationStorage = useLocalStorageFunc<null | MyLocation>(
+        LOCAL_STORAGE.LASK_KNOWN_LOCATION,
+        null,
+    );
+
+    const apiPublicChat = useAPI<
+        ObjectLiteral,
+        GetPublicChatParamsInterface,
+        ChatDataInterface[]
+    >(API.getPublicChat, {
+        listkey: 'data',
+        onSuccess: (_raw, res) => {
+            setListChat((res?.list || []).slice().reverse());
+        },
+    });
 
     useEffect(() => {
+        if (!show) return;
         geolocation.requestGeolocation();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [show]);
 
     useEffect(() => {
         if (!show) return;
-        if (!geolocation.location?.latitude || !geolocation.location?.latitude)
-            return;
-        API.getPublicChat(
-            geolocation.location?.latitude,
-            geolocation.location?.longitude,
-            channelStorage.getItem(),
-            calculateValue(distance),
-        )
-            .then((res) => {
-                setListChat(res?.data?.data || []);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [distance, show]);
+        const myLoc = lastLocationStorage.getItem();
+        if (!myLoc?.latitude || !myLoc.longitude) return;
+
+        apiPublicChat.call({
+            lat: myLoc.latitude,
+            lon: myLoc.longitude,
+            channel: channelStorage.getItem(),
+            distance: valueKeyToDistance(distance),
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [distance, show, refresh]);
 
     const pageLoaded = usePageLoaded(show);
     if (!show && !pageLoaded) {
@@ -95,7 +112,7 @@ export default function ChatPage({ show = true }: { show?: boolean }) {
 
     return (
         <div className={show ? '' : 'hidden'}>
-            <PageAppBar />
+            <PageAppBar onRefresh={setRefresh} />
             <Paper
                 className='flex flex-col !rounded-none'
                 style={{ height: fragmentHeightStyle }}
@@ -112,7 +129,7 @@ export default function ChatPage({ show = true }: { show?: boolean }) {
                     className='px-4 items-center mr-2'
                 >
                     <Typography variant='body1' className='flex-shrink'>
-                        {calculateValue(distance)}
+                        {valueKeyToDistance(distance)}
                         {t('unit.km')}
                     </Typography>
                     <Slider
@@ -120,9 +137,9 @@ export default function ChatPage({ show = true }: { show?: boolean }) {
                         getAriaValueText={(value) => `${value}${t('unit.km')}`}
                         min={1}
                         max={6}
-                        scale={calculateValue}
+                        scale={valueKeyToDistance}
                         step={null}
-                        marks={marks}
+                        marks={distanceKey}
                         size='medium'
                         onChange={(_e, value) => setDistance(Number(value))}
                         value={distance}
@@ -135,17 +152,25 @@ export default function ChatPage({ show = true }: { show?: boolean }) {
                         size='small'
                         aria-label='refresh'
                         className='!absolute top-1 right-1'
+                        onClick={setRefresh}
                     >
-                        <RefreshIcon />
+                        {apiPublicChat.loading ? (
+                            <CircularProgress size={24} />
+                        ) : (
+                            <RefreshIcon />
+                        )}
                     </MainFab>
                 </Box>
                 <Box flex='1' overflow='auto' className='py-1'>
-                    <MessageWindow messages={listChat.slice().reverse()} />
+                    <MessageWindow messages={listChat} />
                 </Box>
 
                 <Divider light />
                 <NeedLogin className='pt-2 pb-4'>
-                    <MessageAction geolocation={geolocation} />
+                    <MessageAction
+                        geolocation={geolocation}
+                        onRefresh={setRefresh}
+                    />
                 </NeedLogin>
             </Paper>
         </div>

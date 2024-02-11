@@ -2,6 +2,8 @@ import { getCookie } from 'cookies-next';
 import axios from 'axios';
 import { COOKIE, LOCAL_STORAGE } from '@/utils/constant';
 import { encrypt } from '@/utils/helper';
+import { GetPublicChatParamsInterface } from '@/types/api/params/get-public-chat.interface';
+import { PostChatParamsInterface } from '@/types/api/params/post-chat.interface';
 
 const HOST = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -31,12 +33,12 @@ HOST.interceptors.request.use(
 );
 
 const API = {
-    getPublicChat: (
-        lat: number,
-        lon: number,
-        channel: string,
-        distance?: number,
-    ) =>
+    getPublicChat: ({
+        lat,
+        lon,
+        channel,
+        distance = 10,
+    }: GetPublicChatParamsInterface) =>
         HOST.get(`chats`, {
             params: {
                 lon,
@@ -46,7 +48,7 @@ const API = {
             },
         }),
 
-    postChat: (lat: number, lon: number, channel: string, body: string) =>
+    postChat: ({ lat, lon, channel, body }: PostChatParamsInterface) =>
         HOST.post(`chats`, {
             body,
             channel,

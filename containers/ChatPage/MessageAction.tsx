@@ -3,25 +3,42 @@ import SendIcon from '@mui/icons-material/Send';
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useI18n } from '@/locales/client';
-import { getUserAgent } from '@/utils/helper';
 import { GeolocationHook } from '@/hooks/useGeolocation';
 import API from '@/configs/api';
 import useLocalStorageFunc from '@/hooks/useLocalStorageFunc';
 import { LOCAL_STORAGE, MAX_LENGTH } from '@/utils/constant';
 import { ChatChannelEnum } from './PageAppBar';
 import useWideScreen from '@/hooks/useWideScreen';
+import useAPI from '@/hooks/useAPI';
+import { ObjectLiteral } from '@/types/object-literal.interface';
+import { PostChatParamsInterface } from '@/types/api/params/post-chat.interface';
 
 const MIN_MESSAGE_LENGTH = MAX_LENGTH.CHAT.MIN_CHAT;
 const MAX_MESSAGE_LENGTH = MAX_LENGTH.CHAT.MAX_CHAT;
 
-export default function MessageAction({
-    geolocation,
-}: {
+type Props = {
+    onRefresh: () => void;
     geolocation: GeolocationHook;
-}) {
+};
+
+export default function MessageAction({ geolocation, onRefresh }: Props) {
     const t = useI18n();
     const [message, setMessage] = useState('');
     const isWide = useWideScreen();
+    const apiPostChat = useAPI<ObjectLiteral, PostChatParamsInterface>(
+        API.postChat,
+        {
+            onSuccess: () => {
+                setMessage('');
+                onRefresh();
+            },
+            onError: (err) => {
+                toast.error(err, {
+                    theme: 'colored',
+                });
+            },
+        },
+    );
 
     const channelStorage = useLocalStorageFunc(
         LOCAL_STORAGE.CHAT_CHANNEL,
@@ -52,23 +69,12 @@ export default function MessageAction({
         geolocation
             .getLatestGeolocation()
             .then((resLoc) => {
-                const userAgent = getUserAgent();
-                console.log('SEND CHAT', {
-                    message,
-                    userAgent,
-                    location: resLoc,
+                apiPostChat.call({
+                    lat: resLoc.latitude,
+                    lon: resLoc.longitude,
+                    channel: channelStorage.getItem(),
+                    body: message,
                 });
-                API.postChat(
-                    resLoc.latitude,
-                    resLoc.longitude,
-                    channelStorage.getItem(),
-                    message,
-                )
-                    .then((res) => {
-                        console.log(res);
-                        setMessage('');
-                    })
-                    .catch((err) => console.log(err));
             })
             .catch((err) => {
                 toast(err);
@@ -93,7 +99,12 @@ export default function MessageAction({
                 onChange={onChangeMessage}
                 onKeyDown={handleEnterKeyPress}
             />
-            <IconButton color='primary' aria-label='send' onClick={onClickSend}>
+            <IconButton
+                color='primary'
+                aria-label='send'
+                onClick={onClickSend}
+                disabled={apiPostChat.loading}
+            >
                 <SendIcon />
             </IconButton>
         </Box>

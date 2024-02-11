@@ -56,6 +56,10 @@
     "unit": {
         "km": "km"
     },
+    "date": {
+        "today": "Hari Ini",
+        "yesterday": "Kemarin"
+    },
     "post": {
         "new_post": "Buat Postingan",
         "use_current_location": "Gunakan Lokasi Saya",

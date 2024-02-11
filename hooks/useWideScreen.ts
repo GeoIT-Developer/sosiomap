@@ -3,10 +3,11 @@ import useResponsive from './useResponsive';
 import DisplaySize from '@/types/display-size.enum';
 
 const useWideScreen = () => {
-    const [isWide, setIsWide] = useState(false);
+    const [isWide, setIsWide] = useState<boolean>();
     const responsive = useResponsive();
 
     useEffect(() => {
+        if (!responsive) return;
         if (responsive >= DisplaySize.TabletL) {
             setIsWide(true);
         } else {

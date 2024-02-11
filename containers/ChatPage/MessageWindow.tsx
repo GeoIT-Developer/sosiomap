@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
 import MessageBox from './MessageBox';
-import { ListChatInterface } from '@/types/list-chat.interface';
 import { Box, Chip, Divider } from '@mui/material';
 import { formatDateTime, getDateLabel } from '@/utils/helper';
 import {
@@ -11,6 +10,8 @@ import {
 } from 'react-virtualized';
 import { GridCoreProps } from 'react-virtualized/dist/es/Grid';
 import { MeasuredCellParent } from 'react-virtualized/dist/es/CellMeasurer';
+import { useScopedI18n } from '@/locales/client';
+import { ChatDataInterface } from '@/types/api/responses/chat-data.interface';
 
 const cache = new CellMeasurerCache({
     fixedWidth: true,
@@ -18,12 +19,13 @@ const cache = new CellMeasurerCache({
 });
 
 type Props = {
-    messages: ListChatInterface[];
+    messages: ChatDataInterface[];
 };
 
 export default function MessageWindow({ messages }: Props) {
+    const t = useScopedI18n('date');
     const listRef = useRef<List>(null);
-    const [topRow, setTopRow] = useState<ListChatInterface | null>(null);
+    const [topRow, setTopRow] = useState<ChatDataInterface | null>(null);
 
     // Scroll to the bottom of the list when messages change
     useEffect(() => {
@@ -33,6 +35,13 @@ export default function MessageWindow({ messages }: Props) {
     }, [messages]);
 
     let currentDate: string = '';
+
+    function getFormatDateLabel(eDate: string) {
+        const eLabel = eDate ? getDateLabel(eDate) : '';
+        return eLabel === 'today' || eLabel === 'yesterday'
+            ? t(eLabel)
+            : eLabel;
+    }
 
     function RowRenderer({
         index,
@@ -66,13 +75,14 @@ export default function MessageWindow({ messages }: Props) {
                         return (
                             <Box key={index} style={style}>
                                 <Divider className='pt-2'>
-                                    {getDateLabel(item.created_at)}
+                                    {getFormatDateLabel(item.created_at)}
                                 </Divider>
                                 <MessageBox
                                     name={item.name}
                                     username={item.username}
                                     body={item.body}
                                     createdAt={item.created_at}
+                                    distance={item.distance}
                                 />
                             </Box>
                         );
@@ -85,6 +95,7 @@ export default function MessageWindow({ messages }: Props) {
                             username={item.username}
                             body={item.body}
                             createdAt={item.created_at}
+                            distance={item.distance}
                             style={style}
                         />
                     );
@@ -97,7 +108,7 @@ export default function MessageWindow({ messages }: Props) {
         <>
             {topRow && (
                 <Box className='absolute top-0 text-center z-10 w-full'>
-                    <Chip label={getDateLabel(topRow.created_at)} />
+                    <Chip label={getFormatDateLabel(topRow.created_at)} />
                 </Box>
             )}
 

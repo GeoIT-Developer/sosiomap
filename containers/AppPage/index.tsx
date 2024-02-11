@@ -1,7 +1,6 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import { useScopedI18n } from '@/locales/client';
 import MenuPage from '@/containers/MenuPage';
 import ExplorePage from '@/containers/ExplorePage';
 import HomePage from '@/containers/HomePage';
@@ -15,14 +14,13 @@ import { MapLibreProvider } from '@/contexts/MapLibreContext';
 import useWideScreen from '@/hooks/useWideScreen';
 
 export default function AppPage() {
-    const t = useScopedI18n('navigation');
     const [hashRouter, setHashRouter] = useHashRouter();
 
     const isWide = useWideScreen();
 
     return (
         <Box sx={{ pb: 7 }}>
-            {isWide && (
+            {isWide === true && (
                 <Box display='flex'>
                     <Box width='365px'>
                         <MenuPage
@@ -53,7 +51,7 @@ export default function AppPage() {
                 </Box>
             )}
 
-            {!isWide && (
+            {isWide === false && (
                 <>
                     <MenuPage show={hashRouter === LIST_ROUTE.MENU} />
                     <ExplorePage show={hashRouter === LIST_ROUTE.EXPLORE} />
