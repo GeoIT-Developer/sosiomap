@@ -51,6 +51,9 @@
         "info": {
             "login_to_continue": "Please login to continue!",
             "coming_soon": "Coming Soon!"
+        },
+        "success": {
+            "success": "Success"
         }
     },
     "unit": {
@@ -62,6 +65,7 @@
     },
     "post": {
         "new_post": "New Post",
+        "view_post": "View Post",
         "use_current_location": "Use My Current Location",
         "choose_on_map": "Choose on Map",
         "draw_on_map": "Draw on Map",
@@ -70,6 +74,7 @@
         "choose_location": "Choose Location",
         "start_date": "Start Date",
         "end_date": "End Date",
+        "date_time": "Date & Time",
         "type": {
             "standard": "Standard",
             "carousel": "Carousel",
@@ -83,14 +88,15 @@
         },
         "title_optional": "Title (optional)",
         "what_do_you_want_to_share_today": "What do you want to share today?",
-        "caption_optional": "Caption (optional)"
+        "caption_optional": "Caption (optional)",
+        "comment": "Comment"
     },
     "topic": {
         "create_topic": "Create Topic",
         "main_topics": "Main Topics",
         "main_topics_desc": "Main Topics is a common topics that you can share and discuss in this apps.",
         "pemilu_2024": "Pemilu 2024",
-        "pemilu_2024_desc": "Pemilu 2024 is an Indonesia events for choosing President and Legislative Candidates in 2024.",
+        "pemilu_2024_desc": "Pemilu 2024 is an Indonesia events for choosing President and Legislative Candidates in 2024. Note: We are not affiliated with KPU or Bawaslu.",
         "open_topics": "Open Topics",
         "open_topics_desc": "Create your own topic and share it in Open Topics section. You can find topic that created by other user too.",
         "main": {

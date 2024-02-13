@@ -67,7 +67,7 @@ export const IDs = {
 
 export const QUERY = {
     LOCATION: 'location',
-    LNG: 'lng',
+    LON: 'lon',
     LAT: 'lat',
     TOPIC: 'topic',
 };

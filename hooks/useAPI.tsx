@@ -12,12 +12,12 @@ type ArgsProps<DataType, ParamsType, ListType, MetaType> = {
             meta?: MetaType;
         },
     ) => void;
-    onError?: (err: any, params?: any) => void;
+    onError?: (err: any, params?: ParamsType) => void;
     dataKey?: string;
     listkey?: string;
     metaKey?: string;
     callOnFirstRender?: boolean;
-    callOnFirstRenderParams?: any;
+    callOnFirstRenderParams?: ParamsType;
 };
 
 const useAPI = <

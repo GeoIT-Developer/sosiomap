@@ -9,14 +9,14 @@ import {
 import { signIn, useSession } from 'next-auth/react';
 import { CSSProperties, ReactNode, useEffect } from 'react';
 
-type NeedLoginReturnType = 'hide' | 'message' | 'default';
+type NeedLoginReturnType = 'hide' | 'message' | 'default' | 'custom' | 'login';
 
 type NeedLoginProps = {
     children: ReactNode;
     type?: NeedLoginReturnType;
     className?: string;
     style?: CSSProperties;
-    message?: string;
+    message?: ReactNode;
 };
 
 export default function NeedLogin({
@@ -78,6 +78,16 @@ export default function NeedLogin({
                                 )}
                             </Stack>
                         </Box>
+                    )}
+                    {type === 'custom' && message}
+                    {type === 'login' && (
+                        <Button
+                            variant='contained'
+                            className='w-min'
+                            onClick={onClickLogin}
+                        >
+                            {t('button.login')}
+                        </Button>
                     )}
                 </>
             )}

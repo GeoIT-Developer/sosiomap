@@ -217,7 +217,8 @@ export default function ImageVideoUploadCarousel({
                         <VisuallyHiddenInput
                             ref={fileInputRef}
                             type='file'
-                            accept='image/*, video/*'
+                            accept='image/*'
+                            // accept='image/*, video/*'
                             onChange={(e) => {
                                 const filesArray: File[] = Array.from(
                                     e.target.files || [],

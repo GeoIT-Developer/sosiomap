@@ -123,7 +123,8 @@ export default function ImageVideoUploadStandard({
                     <VisuallyHiddenInput
                         ref={fileInputRef}
                         type='file'
-                        accept='image/*, video/*'
+                        // accept='image/*, video/*'
+                        accept='image/*'
                         onChange={(e) => {
                             const filesArray: File[] = Array.from(
                                 e.target.files || [],

@@ -2,6 +2,7 @@ import {
     Autocomplete,
     Badge,
     Button,
+    CircularProgress,
     Fab,
     Paper,
     Stack,
@@ -15,15 +16,23 @@ import SensorsIcon from '@mui/icons-material/Sensors';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import NewPostDialog from './NewPostDialog';
 import MyImage from '@/components/preview/MyImage';
-import { ASSETS, QUERY, ROUTE } from '@/utils/constant';
+import { ASSETS, LOCAL_STORAGE, QUERY, ROUTE } from '@/utils/constant';
 import { useEffect, useState } from 'react';
 import { useMapLibreContext } from '@/contexts/MapLibreContext';
 import { getLngLat } from '@/utils/helper';
 import { useI18n } from '@/locales/client';
 import { useRouter } from 'next/navigation';
-import { TopicType } from '@/hooks/useTopic';
+import { TopicType, useActiveTopic } from '@/hooks/useTopic';
 import ChooseLocationEnum from '@/types/choose-location.enum';
 import LayerDrawer from './LayerDrawer';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import useAPI from '@/hooks/useAPI';
+import API from '@/configs/api';
+import { ObjectLiteral } from '@/types/object-literal.interface';
+import { GetPublicMapPostParamsInterface } from '@/types/api/params/get-public-map-post.interface';
+import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interface';
+import useLocalStorageFunc from '@/hooks/useLocalStorageFunc';
+import { MyLocation } from '@/hooks/useGeolocation';
 
 export default function HomePage() {
     const t = useI18n();
@@ -32,6 +41,11 @@ export default function HomePage() {
     const { myMap } = useMapLibreContext();
     const [center, setCenter] = useState({ lng: 0, lat: 0 });
     const [selectedTopic, setSelectedTopic] = useState<TopicType | null>(null);
+    const { activeTopic, refreshTopic } = useActiveTopic();
+    const locationStorage = useLocalStorageFunc<MyLocation | null>(
+        LOCAL_STORAGE.LASK_KNOWN_LOCATION,
+        null,
+    );
 
     useEffect(() => {
         if (!showMarker) return;
@@ -63,9 +77,34 @@ export default function HomePage() {
     function onClickOKMarker() {
         setShowMarker(false);
         router.push(
-            `${ROUTE.POST.NEW.URL}?${QUERY.LOCATION}=${ChooseLocationEnum.CHOOSE_ON_MAP}&${QUERY.LNG}=${center.lng}&${QUERY.LAT}=${center.lat}&${QUERY.TOPIC}=${selectedTopic?.id}`,
+            `${ROUTE.POST.NEW.URL}?${QUERY.LOCATION}=${ChooseLocationEnum.CHOOSE_ON_MAP}&${QUERY.LON}=${center.lng}&${QUERY.LAT}=${center.lat}&${QUERY.TOPIC}=${selectedTopic?.id}`,
         );
     }
+
+    const apiQueryPost = useAPI<
+        ObjectLiteral,
+        GetPublicMapPostParamsInterface,
+        MapPostDataInterface
+    >(API.getPublicMapPost, {
+        listkey: 'data',
+    });
+
+    function refreshMapPost() {
+        apiQueryPost.call({
+            topic_ids: activeTopic.map((item) => item.id).join('|'),
+            lat: locationStorage.getItem()?.latitude || 0,
+            lon: locationStorage.getItem()?.longitude || 0,
+        });
+    }
+
+    useEffect(() => {
+        if (!activeTopic.length) {
+            apiQueryPost.clearData();
+            return;
+        }
+        refreshMapPost();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [activeTopic]);
 
     return (
         <>
@@ -136,10 +175,13 @@ export default function HomePage() {
                     aria-label='notification'
                     size='small'
                     className='flex-shrink'
+                    onClick={refreshMapPost}
                 >
-                    <Badge badgeContent={2} color='error'>
-                        <NotificationsIcon />
-                    </Badge>
+                    {apiQueryPost.loading ? (
+                        <CircularProgress size={24} />
+                    ) : (
+                        <RefreshIcon />
+                    )}
                 </Fab>
             </Stack>
 

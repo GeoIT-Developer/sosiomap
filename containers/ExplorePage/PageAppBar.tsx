@@ -39,6 +39,7 @@ export default function PageAppBar() {
                                 color: 'white',
                             },
                         }}
+                        disabled
                     />
                 </Toolbar>
             </AppBar>

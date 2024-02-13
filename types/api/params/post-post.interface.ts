@@ -1,0 +1,42 @@
+import ChooseLocationEnum from '@/types/choose-location.enum';
+import PostTypeEnum from '@/types/post-type.enum';
+
+export interface PostPostParamsInterface {
+    topic_id: string;
+    location_type: ChooseLocationEnum;
+    lat: number;
+    lon: number;
+    title?: string;
+    body: string;
+    post_type: PostTypeEnum;
+    start_date?: string;
+    end_date?: string;
+    date_time?: string;
+    url_instagram_post?: string;
+    url_tiktok_post?: string;
+    url_twitter_post?: string;
+    url_facebook_post?: string;
+    url_youtube_post?: string;
+    url_news_website_post?: string;
+    url_other?: string;
+    media_1?: File;
+    media_2?: File;
+    media_3?: File;
+    media_4?: File;
+    media_5?: File;
+    media_6?: File;
+    media_7?: File;
+    media_8?: File;
+    media_9?: File;
+    media_10?: File;
+    media_1_caption?: string;
+    media_2_caption?: string;
+    media_3_caption?: string;
+    media_4_caption?: string;
+    media_5_caption?: string;
+    media_6_caption?: string;
+    media_7_caption?: string;
+    media_8_caption?: string;
+    media_9_caption?: string;
+    media_10_caption?: string;
+}

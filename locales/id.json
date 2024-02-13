@@ -51,6 +51,9 @@
         "info": {
             "login_to_continue": "Masuk untuk melanjutkan!",
             "coming_soon": "Segera Hadir!"
+        },
+        "success": {
+            "success": "Berhasil"
         }
     },
     "unit": {
@@ -62,6 +65,7 @@
     },
     "post": {
         "new_post": "Buat Postingan",
+        "view_post": "Lihat Postingan",
         "use_current_location": "Gunakan Lokasi Saya",
         "choose_on_map": "Pilih di Peta",
         "draw_on_map": "Gambar di Peta",
@@ -70,6 +74,7 @@
         "choose_location": "Pilih Lokasi",
         "start_date": "Tanggal Awal",
         "end_date": "Tanggal Akhir",
+        "date_time": "Tanggal dan Waktu",
         "type": {
             "standard": "Standar",
             "carousel": "Karousel",
@@ -83,14 +88,15 @@
         },
         "title_optional": "Judul (opsional)",
         "what_do_you_want_to_share_today": "Apa yang ingin Anda bagikan hari ini?",
-        "caption_optional": "Deskripsi singkat (opsional)"
+        "caption_optional": "Deskripsi singkat (opsional)",
+        "comment": "Komentar"
     },
     "topic": {
         "create_topic": "Buat Topik",
         "main_topics": "Topik Utama",
         "main_topics_desc": "Topik Utama adalah topik yang umum dan bisa Anda gunakan untuk berbagi dan berdiskusi di aplikasi ini.",
         "pemilu_2024": "Pemilu 2024",
-        "pemilu_2024_desc": "Pemilu 2024 adalah kegiatan 5 tahunan di Indonesia untuk memilih Presiden dan Anggota Legislatif di tahun 2024.",
+        "pemilu_2024_desc": "Pemilu 2024 adalah kegiatan 5 tahunan di Indonesia untuk memilih Presiden dan Anggota Legislatif di tahun 2024. Catatan : Kami tidak bekerja sama dengan KPU maupun Bawaslu.",
         "open_topics": "Topik Terbuka",
         "open_topics_desc": "Buat dan bagikan topik Anda di bagian Topik Terbuka. Di sini Anda dapat menemukan topik yang dibuat oleh pengguna lain.",
         "main": {

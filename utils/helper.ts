@@ -2,6 +2,9 @@ import dayjs from 'dayjs';
 import { LngLat } from 'maplibre-gl';
 import { ReadonlyURLSearchParams } from 'next/navigation';
 import CryptoJS from 'crypto-js';
+import imageCompression from 'browser-image-compression';
+// @ts-ignore
+import * as turf from '@turf/turf';
 
 export const keycloakJWTDecode = (token: string) => {
     return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
@@ -166,4 +169,86 @@ export function checkSecretCoordinate(
         return true;
     }
     return false;
+}
+
+export async function compressImage(imageFile: File): Promise<File> {
+    const options = {
+        maxSizeMB: 0.65,
+        maxWidthOrHeight: 1080,
+        useWebWorker: true,
+        maxIteration: 20,
+    };
+    return await imageCompression(imageFile, options);
+}
+
+export function sensorLocation(coor: number, precision: number = 2) {
+    return Number(coor.toFixed(precision));
+}
+
+export function calculateManhattanDistance(
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number,
+) {
+    const horizontal1 = turf.point([lon1, lat1]);
+    const horizontal2 = turf.point([lon2, lat1]);
+    const horizontalDistance = turf.distance(horizontal1, horizontal2, {
+        units: 'kilometers',
+    });
+
+    const vertical1 = turf.point([lon1, lat1]);
+    const vertical2 = turf.point([lon1, lat2]);
+    const verticalDistance = turf.distance(vertical1, vertical2, {
+        units: 'kilometers',
+    });
+
+    return Number((horizontalDistance + verticalDistance).toFixed(3));
+}
+
+export function addMinioPrefix(path: string) {
+    return process.env.NEXT_PUBLIC_OBJECT_STORAGE_URL + path;
+}
+
+export function extensionToMimeType(extension: string): string | undefined {
+    const mimeTypes: { [key: string]: string } = {
+        jpg: 'image/jpeg',
+        jpeg: 'image/jpeg',
+        png: 'image/png',
+        gif: 'image/gif',
+        bmp: 'image/bmp',
+        tiff: 'image/tiff',
+        pdf: 'application/pdf',
+        doc: 'application/msword',
+        docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        xls: 'application/vnd.ms-excel',
+        xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ppt: 'application/vnd.ms-powerpoint',
+        pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        txt: 'text/plain',
+        html: 'text/html',
+        css: 'text/css',
+        js: 'application/javascript',
+        json: 'application/json',
+        xml: 'application/xml',
+        zip: 'application/zip',
+        tar: 'application/x-tar',
+    };
+
+    const lowercasedExtension = extension.toLowerCase();
+    return mimeTypes[lowercasedExtension];
+}
+
+export function getFileExtensionFromUrl(url: string): string {
+    const lastDotIndex = url.lastIndexOf('.');
+    if (lastDotIndex !== -1) {
+        const extension = url.slice(lastDotIndex + 1).toLowerCase();
+        return extension;
+    }
+    return '';
+}
+
+export function getMimeTypeFromURL(url: string) {
+    const extension = getFileExtensionFromUrl(url);
+    return extensionToMimeType(extension) || '';
 }

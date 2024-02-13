@@ -1,9 +1,5 @@
-import { Button, Stack, TextField } from '@mui/material';
-import SocialMediaPost, {
-    SocialMediaURLType,
-    initialSocialMediaURLType,
-} from './SocialMediaPost';
-import { useState } from 'react';
+import { Stack, TextField } from '@mui/material';
+import SocialMediaPost, { SocialMediaURLType } from './SocialMediaPost';
 import { useI18n } from '@/locales/client';
 import ImageVideoUploadStandard, {
     TheFileType,
@@ -12,16 +8,27 @@ import { MAX_LENGTH } from '@/utils/constant';
 
 const MaxLength = MAX_LENGTH.POST.STANDARD;
 
-export default function StandardPost() {
+type InputDataType = {
+    title: string;
+    body: string;
+};
+
+type Props = {
+    valueSocialMediaURL: SocialMediaURLType;
+    onChangeSocialMediaURL: (val: SocialMediaURLType) => void;
+    valueInputData: InputDataType;
+    onChangeInputData: (val: InputDataType) => void;
+    onChangeInputFiles: (val: TheFileType[]) => void;
+};
+
+export default function StandardPost({
+    valueSocialMediaURL,
+    onChangeSocialMediaURL,
+    valueInputData,
+    onChangeInputData,
+    onChangeInputFiles,
+}: Props) {
     const t = useI18n();
-    const [socialMediaURL, setSocialMediaURL] = useState<SocialMediaURLType>(
-        initialSocialMediaURLType,
-    );
-    const [inputData, setInputData] = useState({
-        title: '',
-        body: '',
-    });
-    const [inputFiles, setInputFiles] = useState<TheFileType[]>([]);
     return (
         <>
             <Stack spacing={2}>
@@ -29,14 +36,14 @@ export default function StandardPost() {
                     label={t('post.title_optional')}
                     variant='outlined'
                     fullWidth
-                    value={inputData.title}
+                    value={valueInputData.title}
                     onChange={(e) => {
                         const eVal = e.target.value;
                         if (eVal.length > MaxLength.TITLE) return;
-                        setInputData((oldState) => ({
-                            ...oldState,
+                        onChangeInputData({
                             title: e.target.value,
-                        }));
+                            body: valueInputData.body,
+                        });
                     }}
                 />
                 <TextField
@@ -45,32 +52,24 @@ export default function StandardPost() {
                     placeholder={t('post.what_do_you_want_to_share_today')}
                     multiline
                     maxRows={16}
-                    value={inputData.body}
+                    value={valueInputData.body}
                     onChange={(e) => {
                         const eVal = e.target.value;
                         if (eVal.length > MaxLength.BODY) return;
-                        setInputData((oldState) => ({
-                            ...oldState,
+                        onChangeInputData({
+                            title: valueInputData.title,
                             body: e.target.value,
-                        }));
+                        });
                     }}
                 />
                 <ImageVideoUploadStandard
                     maxFile={MaxLength.MAX_FILE}
-                    onFilesChange={(files) => setInputFiles(files)}
+                    onFilesChange={(files) => onChangeInputFiles(files)}
                 />
                 <SocialMediaPost
-                    value={socialMediaURL}
-                    onChange={(val) => setSocialMediaURL(val)}
+                    value={valueSocialMediaURL}
+                    onChange={(val) => onChangeSocialMediaURL(val)}
                 />
-                <Button
-                    variant='contained'
-                    onClick={() =>
-                        console.log(inputData, inputFiles, socialMediaURL)
-                    }
-                >
-                    Send
-                </Button>
             </Stack>
         </>
     );

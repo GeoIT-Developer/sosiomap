@@ -49,8 +49,9 @@ export type TopicType = {
         drawOnMap?: boolean;
     };
     date?: {
-        start_date?: boolean;
-        end_date?: boolean;
+        startDate?: boolean;
+        endDate?: boolean;
+        dateTime?: boolean;
         timeless?: boolean;
         transient?: boolean;
     };
@@ -59,7 +60,7 @@ export type TopicType = {
 export const useMainTopic = () => {
     const t = useScopedI18n('topic');
     const mainTopic: TopicType[] = useMemo(
-        () => [
+        (): TopicType[] => [
             {
                 id: 'user_stories',
                 label: t('main.user_stories'),
@@ -89,8 +90,8 @@ export const useMainTopic = () => {
                     chooseOnMap: true,
                 },
                 date: {
-                    start_date: true,
-                    end_date: true,
+                    startDate: true,
+                    endDate: true,
                 },
             },
             {
@@ -107,6 +108,7 @@ export const useMainTopic = () => {
                 },
                 date: {
                     transient: true,
+                    dateTime: true,
                 },
             },
             {
@@ -139,6 +141,7 @@ export const useMainTopic = () => {
                 },
                 date: {
                     transient: true,
+                    dateTime: true,
                 },
             },
             {
@@ -171,6 +174,7 @@ export const useMainTopic = () => {
                 },
                 date: {
                     transient: true,
+                    dateTime: true,
                 },
             },
             {
@@ -187,6 +191,7 @@ export const useMainTopic = () => {
                 },
                 date: {
                     transient: true,
+                    dateTime: true,
                 },
             },
             {
@@ -202,8 +207,8 @@ export const useMainTopic = () => {
                     chooseOnMap: true,
                 },
                 date: {
-                    start_date: true,
-                    end_date: true,
+                    startDate: true,
+                    endDate: true,
                 },
             },
             {
@@ -219,8 +224,8 @@ export const useMainTopic = () => {
                     chooseOnMap: true,
                 },
                 date: {
-                    start_date: true,
-                    end_date: true,
+                    startDate: true,
+                    endDate: true,
                 },
             },
             {
@@ -236,8 +241,8 @@ export const useMainTopic = () => {
                     chooseOnMap: true,
                 },
                 date: {
-                    start_date: true,
-                    end_date: true,
+                    startDate: true,
+                    endDate: true,
                 },
             },
         ],
@@ -250,7 +255,7 @@ export const usePemiluTopic = () => {
     const t = useScopedI18n('topic');
 
     const pemilu2024: TopicType[] = useMemo(
-        () => [
+        (): TopicType[] => [
             {
                 id: 'dpr',
                 label: t('pemilu2024.dpr'),
