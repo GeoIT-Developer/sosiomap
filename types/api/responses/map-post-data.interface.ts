@@ -14,6 +14,9 @@ export interface MapPostDataInterface {
     username: string;
     name: string;
     title?: string;
+    start_date?: string;
+    end_date?: string;
+    date_time?: string;
 }
 
 interface Location {
