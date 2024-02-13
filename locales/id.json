@@ -89,7 +89,8 @@
         "title_optional": "Judul (opsional)",
         "what_do_you_want_to_share_today": "Apa yang ingin Anda bagikan hari ini?",
         "caption_optional": "Deskripsi singkat (opsional)",
-        "comment": "Komentar"
+        "comment": "Komentar",
+        "add_comment": "Tambah Komentar"
     },
     "topic": {
         "create_topic": "Buat Topik",

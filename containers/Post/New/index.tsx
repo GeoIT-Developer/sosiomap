@@ -18,9 +18,7 @@ import {
 } from '@mui/material';
 import useWindowHeight from '@/hooks/useWindowHeight';
 import NeedLogin from '@/components/auth/NeedLogin';
-import { useSession } from 'next-auth/react';
-import useAccessToken from '@/hooks/useAccessToken';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { QUERY, ROUTE } from '@/utils/constant';
 import BackAppBar from '@/components/layout/appbar/BackAppBar';
 import { useI18n } from '@/locales/client';
@@ -58,12 +56,9 @@ export default function NewPostPage() {
     const t = useI18n();
     const router = useRouter();
     const history = useHistoryContext();
-    const pathname = usePathname();
     const geolocation = useGeolocation();
     const searchParams = useSearchParams();
     const { heightStyleAppBar } = useWindowHeight();
-    const session = useSession();
-    const accessToken = useAccessToken();
     const [selectedTopic, setSelectedTopic] = useState<TopicType | null>(null);
     const [selectedLocation, setSelectedLocation] = useState<string>(
         searchParams.get(QUERY.LOCATION) || '',

@@ -157,14 +157,22 @@ export default function SimplePost({ post, style, userLocation }: Props) {
                 toggleDrawer={toggleDrawer}
                 title={t('post.view_post')}
             >
-                <Box className='!min-h-[85vh]'>
-                    {post.post_type === PostTypeEnum.STANDARD && (
-                        <StandardPost post={post} userLocation={userLocation} />
-                    )}
-                    {post.post_type === PostTypeEnum.CAROUSEL && (
-                        <CarouselPost post={post} userLocation={userLocation} />
-                    )}
-                </Box>
+                {openDrawer && (
+                    <Box className='!min-h-[85vh]'>
+                        {post.post_type === PostTypeEnum.STANDARD && (
+                            <StandardPost
+                                post={post}
+                                userLocation={userLocation}
+                            />
+                        )}
+                        {post.post_type === PostTypeEnum.CAROUSEL && (
+                            <CarouselPost
+                                post={post}
+                                userLocation={userLocation}
+                            />
+                        )}
+                    </Box>
+                )}
             </CommonDrawer>
         </>
     );

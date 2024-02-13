@@ -1,7 +1,6 @@
 import {
     Avatar,
     Box,
-    Divider,
     ListItem,
     ListItemAvatar,
     ListItemText,
@@ -9,9 +8,8 @@ import {
     Typography,
 } from '@mui/material';
 import { useI18n } from '@/locales/client';
-import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interface';
 import {
-    calculateManhattanDistance,
+    addMinioPrefix,
     extractUsernameFromEmail,
     formatDateTime,
     formatDistance,
@@ -19,20 +17,15 @@ import {
     nameToInitial,
     stringToColor,
 } from '@/utils/helper';
-import { MyLocation } from '@/hooks/useGeolocation';
-import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
-import ImageVideoStandard from './ImageVideoStandard';
-import SocialMediaPost from './SocialMediaPost';
-import CommentPage from '../Comment';
+import { CommentDataInterface } from '@/types/api/responses/comment-data.interface';
+import ImageVideoStandard from '../View/ImageVideoStandard';
+import SocialMediaPost from '../View/SocialMediaPost';
 
 type Props = {
-    post: MapPostDataInterface;
-    userLocation: MyLocation | null;
+    comment: CommentDataInterface;
 };
 
-export default function StandardPost({ post, userLocation }: Props) {
+export default function CommentBox({ comment }: Props) {
     const t = useI18n();
     return (
         <Box>
@@ -41,18 +34,18 @@ export default function StandardPost({ post, userLocation }: Props) {
                     <Avatar
                         sx={{
                             fontWeight: 'bold',
-                            bgcolor: stringToColor(post.name),
+                            bgcolor: stringToColor(comment.name),
                         }}
                     >
-                        {nameToInitial(post.name)}
+                        {nameToInitial(comment.name)}
                     </Avatar>
                 </ListItemAvatar>
                 <ListItemText
                     primary={
                         <>
-                            {post.name}
+                            {comment.name}
                             <span className='ml-1 text-slate-500'>
-                                @{extractUsernameFromEmail(post.username)}
+                                @{extractUsernameFromEmail(comment.username)}
                             </span>
                         </>
                     }
@@ -61,24 +54,24 @@ export default function StandardPost({ post, userLocation }: Props) {
                     }}
                     secondary={
                         <Stack spacing={1}>
-                            {post.title && (
+                            {comment.title && (
                                 <Typography
                                     component='p'
                                     variant='body1'
                                     className='block break-all whitespace-pre-line'
                                 >
-                                    {post.title}
+                                    {comment.title}
                                 </Typography>
                             )}
 
                             <Typography component='p' variant='body2'>
-                                {post.body}
+                                {comment.body}
                             </Typography>
 
                             <Box>
                                 <ImageVideoStandard
-                                    media={post.media.map((item) => ({
-                                        url: item.file_url,
+                                    media={comment.media.map((item) => ({
+                                        url: addMinioPrefix(item.file_url),
                                         fileType: getMimeTypeFromURL(
                                             item.file_url,
                                         ),
@@ -87,29 +80,17 @@ export default function StandardPost({ post, userLocation }: Props) {
                                 />
                             </Box>
 
-                            <Stack direction='row' spacing={2}>
-                                <TextsmsOutlinedIcon fontSize='small' />
-                                <FavoriteBorderOutlinedIcon fontSize='small' />
-                                <BarChartOutlinedIcon fontSize='small' />
-                            </Stack>
                             <Typography
                                 component='time'
                                 variant='caption'
-                                className='text-right !text-xs !-mt-4 block'
+                                className='text-right !text-xs !mt-0 block'
                             >
                                 {formatDateTime(
-                                    post.createdAt,
+                                    comment.createdAt,
                                     'HH:mm, DD MMM',
                                 )}
                                 {' | '}
-                                {formatDistance(
-                                    calculateManhattanDistance(
-                                        userLocation?.latitude || 0,
-                                        userLocation?.longitude || 0,
-                                        post.location.coordinates[1],
-                                        post.location.coordinates[0],
-                                    ),
-                                )}
+                                {formatDistance(comment.distance)}
                                 {t('unit.km')}
                             </Typography>
                         </Stack>
@@ -119,9 +100,7 @@ export default function StandardPost({ post, userLocation }: Props) {
                     }}
                 />
             </ListItem>
-            <SocialMediaPost postUrlProps={post.post_url} />
-            <Divider className='!mt-2'>{t('post.comment')}</Divider>
-            <CommentPage postId={post._id} />
+            <SocialMediaPost postUrlProps={comment.post_url} />
         </Box>
     );
 }

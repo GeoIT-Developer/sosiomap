@@ -25,6 +25,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import ImageVideoCarousel from './ImageVideoCarousel';
 import SocialMediaPost from './SocialMediaPost';
+import CommentPage from '../Comment';
 
 type Props = {
     post: MapPostDataInterface;
@@ -118,8 +119,9 @@ export default function CarouselPost({ post, userLocation }: Props) {
                     }}
                 />
             </ListItem>
-            <SocialMediaPost post={post} />
+            <SocialMediaPost postUrlProps={post.post_url} />
             <Divider className='!mt-2'>{t('post.comment')}</Divider>
+            <CommentPage postId={post._id} />
         </Box>
     );
 }

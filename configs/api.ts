@@ -6,12 +6,12 @@ import { GetPublicChatParamsInterface } from '@/types/api/params/get-public-chat
 import { PostChatParamsInterface } from '@/types/api/params/post-chat.interface';
 import { PostPostParamsInterface } from '@/types/api/params/post-post.interface';
 import { GetPublicMapPostParamsInterface } from '@/types/api/params/get-public-map-post.interface';
+import { PostCommentParamsInterface } from '@/types/api/params/post-comment.interface';
 
 const HOST = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
-/// request interceptors
 HOST.interceptors.request.use(
     (config) => {
         const tokenCookie = getCookie(COOKIE.TOKEN);
@@ -85,6 +85,23 @@ const API = {
                 topic_ids,
             },
         }),
+
+    postComment: (params: PostCommentParamsInterface) => {
+        const formData = new FormData();
+        Object.keys(params).forEach((key) => {
+            const eVal = params[key as keyof PostCommentParamsInterface];
+            if (typeof eVal === 'number') {
+                formData.append(key, String(eVal));
+            } else {
+                if (eVal) {
+                    formData.append(key, eVal);
+                }
+            }
+        });
+        return HOST.post(`comments`, formData);
+    },
+
+    getPublicComment: (postId: string) => HOST.get(`comments/${postId}`),
 };
 
 export default API;

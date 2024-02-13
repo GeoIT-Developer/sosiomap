@@ -12,20 +12,17 @@ import {
     YouTubeEmbed,
 } from 'react-social-media-embed';
 import TabPanel, { a11yProps } from '@/components/tab/TabPanel';
-import {
-    MapPostDataInterface,
-    PostUrlType,
-} from '@/types/api/responses/map-post-data.interface';
+import { PostUrlType } from '@/types/api/responses/map-post-data.interface';
 import { useEffect, useState } from 'react';
 import SocialMediaEnum from '@/types/social-media.enum';
 import CheckIcon from '@mui/icons-material/Check';
 import SingleAccordion from '@/components/accordion/SingleAccordion';
 
 type Props = {
-    post: MapPostDataInterface;
+    postUrlProps: PostUrlType;
 };
 
-export default function SocialMediaPost({ post }: Props) {
+export default function SocialMediaPost({ postUrlProps }: Props) {
     const t = useScopedI18n('post.url');
 
     const [activeTab, setActiveTab] = useState<SocialMediaEnum | ''>('');
@@ -39,16 +36,15 @@ export default function SocialMediaPost({ post }: Props) {
     };
 
     useEffect(() => {
-        const ePostUrl = post.post_url;
-        if (ePostUrl) {
-            delete ePostUrl._id;
-            setPostUrl(ePostUrl);
-            const objKey = Object.keys(ePostUrl);
+        if (postUrlProps) {
+            delete postUrlProps._id;
+            setPostUrl(postUrlProps);
+            const objKey = Object.keys(postUrlProps);
             const activeKey =
                 objKey.length > 0 ? (objKey[0] as SocialMediaEnum) : '';
             setActiveTab(activeKey);
         }
-    }, [post]);
+    }, [postUrlProps]);
 
     return (
         <>
