@@ -66,6 +66,7 @@
     "post": {
         "new_post": "Buat Postingan",
         "view_post": "Lihat Postingan",
+        "nearby_post": "Postingan Terdekat",
         "use_current_location": "Gunakan Lokasi Saya",
         "choose_on_map": "Pilih di Peta",
         "draw_on_map": "Gambar di Peta",

@@ -1,9 +1,10 @@
 import {
     Autocomplete,
-    Badge,
     Button,
     CircularProgress,
     Fab,
+    ListItem,
+    ListItemText,
     Paper,
     Stack,
     TextField,
@@ -12,14 +13,12 @@ import {
 import BasemapDrawer from '@/components/map/BasemapDrawer';
 import SearchIcon from '@mui/icons-material/Search';
 import { toast } from 'react-toastify';
-import SensorsIcon from '@mui/icons-material/Sensors';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import NewPostDialog from './NewPostDialog';
 import MyImage from '@/components/preview/MyImage';
 import { ASSETS, LOCAL_STORAGE, QUERY, ROUTE } from '@/utils/constant';
 import { useEffect, useState } from 'react';
 import { useMapLibreContext } from '@/contexts/MapLibreContext';
-import { getLngLat } from '@/utils/helper';
+import { getLngLat, getMapLibreCoordinate, truncateText } from '@/utils/helper';
 import { useI18n } from '@/locales/client';
 import { useRouter } from 'next/navigation';
 import { TopicType, useActiveTopic } from '@/hooks/useTopic';
@@ -33,6 +32,17 @@ import { GetPublicMapPostParamsInterface } from '@/types/api/params/get-public-m
 import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interface';
 import useLocalStorageFunc from '@/hooks/useLocalStorageFunc';
 import { MyLocation } from '@/hooks/useGeolocation';
+import useTermDebounce from '@/hooks/useTermDebounce';
+import API_VENDOR from '@/configs/api.vendor';
+import {
+    FeatureInterface,
+    SearchOSMInterface,
+} from '@/types/api/responses/search-osm.interface';
+import { getValObject } from '@/utils';
+import MapLibreGL, { MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
+import PostDrawer from '../Post/View/PostDrawer';
+import ScanDrawer from './ScanDrawer';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 export default function HomePage() {
     const t = useI18n();
@@ -41,11 +51,39 @@ export default function HomePage() {
     const { myMap } = useMapLibreContext();
     const [center, setCenter] = useState({ lng: 0, lat: 0 });
     const [selectedTopic, setSelectedTopic] = useState<TopicType | null>(null);
-    const { activeTopic, refreshTopic } = useActiveTopic();
+    const { activeTopic } = useActiveTopic();
     const locationStorage = useLocalStorageFunc<MyLocation | null>(
         LOCAL_STORAGE.LASK_KNOWN_LOCATION,
         null,
     );
+    const [locationStore] = useLocalStorage<MyLocation | null>(
+        LOCAL_STORAGE.LASK_KNOWN_LOCATION,
+        null,
+    );
+    const [searchTxt, setSearchTxt] = useTermDebounce('', 850);
+    const [inputSearch, setInputSearch] = useState('');
+
+    const { list: listOptions, ...apiSearchOSM } = useAPI<
+        SearchOSMInterface,
+        string,
+        FeatureInterface[]
+    >(API_VENDOR.searchOSM, {
+        listkey: 'data.features',
+        onError: (err) => {
+            toast.error(err, { theme: 'colored' });
+        },
+    });
+
+    useEffect(() => {
+        setSearchTxt(inputSearch);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [inputSearch]);
+
+    useEffect(() => {
+        if (!searchTxt) return;
+        apiSearchOSM.call(searchTxt);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchTxt]);
 
     useEffect(() => {
         if (!showMarker) return;
@@ -81,10 +119,10 @@ export default function HomePage() {
         );
     }
 
-    const apiQueryPost = useAPI<
+    const { list: listMapPost, ...apiQueryPost } = useAPI<
         ObjectLiteral,
         GetPublicMapPostParamsInterface,
-        MapPostDataInterface
+        MapPostDataInterface[]
     >(API.getPublicMapPost, {
         listkey: 'data',
     });
@@ -105,6 +143,131 @@ export default function HomePage() {
         refreshMapPost();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeTopic]);
+
+    const [selectedPost, setSelectedPost] = useState<MapPostDataInterface>(
+        {} as MapPostDataInterface,
+    );
+    const [openDrawer, setOpenDrawer] = useState(false);
+    const toggleDrawer =
+        (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+            if (
+                event &&
+                event.type === 'keydown' &&
+                ((event as React.KeyboardEvent).key === 'Tab' ||
+                    (event as React.KeyboardEvent).key === 'Shift')
+            ) {
+                return;
+            }
+            setOpenDrawer(open);
+        };
+    useEffect(() => {
+        const layerSrc = 'map-post-src';
+        const layerId = 'map-post-layer';
+
+        const popup = new MapLibreGL.Popup({
+            closeButton: false,
+            closeOnClick: false,
+            className: 'text-xl text-black font-bold !my-0',
+        });
+
+        const onClickLayer = (
+            e: MapMouseEvent & {
+                features?: MapGeoJSONFeature[] | undefined;
+            } & Object,
+        ) => {
+            if (myMap) {
+                myMap.getCanvas().style.cursor = 'pointer';
+                if (!e.features) return;
+                const postId = e.features[0].properties._id;
+                const findPost = listMapPost?.find(
+                    (item) => item._id === postId,
+                );
+                if (findPost) {
+                    setSelectedPost(findPost);
+                    toggleDrawer(true)(e as any);
+                }
+            }
+        };
+        const setCursorPointer = (
+            e: MapMouseEvent & {
+                features?: MapGeoJSONFeature[] | undefined;
+            } & Object,
+        ) => {
+            if (myMap) {
+                myMap.getCanvas().style.cursor = 'pointer';
+                const eFeature = getMapLibreCoordinate(e);
+                if (!eFeature) return;
+
+                popup
+                    .setLngLat(eFeature.coordinates)
+                    .setHTML(
+                        truncateText(eFeature.properties.title || '', 25) ||
+                            truncateText(eFeature.properties.body || '', 25),
+                    )
+                    .addTo(myMap);
+            }
+        };
+        const removeCursorPointer = () => {
+            if (myMap) {
+                myMap.getCanvas().style.cursor = '';
+                popup.remove();
+            }
+        };
+
+        if (myMap) {
+            myMap.on('load', () => {
+                console.log('AAAAA');
+                if (myMap.getLayer(layerId)) {
+                    myMap.removeLayer(layerId);
+                }
+                if (myMap.getSource(layerSrc)) {
+                    myMap.removeSource(layerSrc);
+                }
+                myMap.addSource(layerSrc, {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: (listMapPost || []).map((item) => {
+                            return {
+                                type: 'Feature',
+                                geometry: item.location,
+                                properties: {
+                                    ...item,
+                                    color:
+                                        activeTopic.find(
+                                            (it) => it.id === item.topic_id,
+                                        )?.bgColor || 'red',
+                                },
+                            };
+                        }),
+                    },
+                });
+                myMap.addLayer({
+                    id: layerId,
+                    type: 'circle',
+                    source: layerSrc,
+                    paint: {
+                        'circle-color': ['get', 'color'],
+                        'circle-radius': 6,
+                        'circle-stroke-color': 'white',
+                        'circle-stroke-width': 2,
+                    },
+                });
+
+                myMap.on('mouseenter', layerId, setCursorPointer);
+                myMap.on('mouseleave', layerId, removeCursorPointer);
+
+                myMap.on('click', layerId, onClickLayer);
+            });
+        }
+        return () => {
+            if (myMap) {
+                myMap.off('mouseenter', layerId, setCursorPointer);
+                myMap.off('mouseleave', layerId, removeCursorPointer);
+                myMap.off('click', layerId, onClickLayer);
+            }
+        };
+    }, [activeTopic, listMapPost, myMap]);
 
     return (
         <>
@@ -153,9 +316,31 @@ export default function HomePage() {
             >
                 <Paper className='!rounded-full flex-grow'>
                     <Autocomplete
-                        freeSolo
-                        disableClearable
-                        options={[].map((item) => item)}
+                        options={(listOptions || []).map((item) => item)}
+                        getOptionLabel={(option) =>
+                            getValObject(
+                                option,
+                                'properties.display_name',
+                                option,
+                            )
+                        }
+                        renderOption={(props, option) => {
+                            // @ts-ignore
+                            const { key, ...otherProps } = props;
+                            return (
+                                <ListItem
+                                    key={option.properties.osm_id}
+                                    {...otherProps}
+                                >
+                                    <ListItemText
+                                        primary={option.properties.name}
+                                        secondary={
+                                            option.properties.display_name
+                                        }
+                                    />
+                                </ListItem>
+                            );
+                        }}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -166,9 +351,19 @@ export default function HomePage() {
                                     startAdornment: <SearchIcon className='' />,
                                 }}
                                 placeholder='Search'
+                                onChange={(e) => setInputSearch(e.target.value)}
+                                value={inputSearch}
                             />
                         )}
                         size='small'
+                        onChange={(_e, opt) => {
+                            const bbox = opt?.bbox;
+                            if (!bbox) return;
+                            myMap?.fitBounds(bbox, {
+                                essential: true,
+                            });
+                        }}
+                        loading={apiSearchOSM.loading}
                     />
                 </Paper>
                 <Fab
@@ -199,19 +394,17 @@ export default function HomePage() {
                     />
                 )}
 
-                <Fab
-                    color='primary'
-                    aria-label='edit'
-                    size='medium'
-                    onClick={() =>
-                        toast.error('ERRR', {
-                            theme: 'colored',
-                        })
-                    }
-                >
-                    <SensorsIcon />
-                </Fab>
+                <ScanDrawer
+                    posts={listMapPost || []}
+                    userLocation={locationStore}
+                />
             </Stack>
+            <PostDrawer
+                userLocation={locationStore}
+                toggleDrawer={toggleDrawer}
+                openDrawer={openDrawer}
+                post={selectedPost}
+            />
         </>
     );
 }

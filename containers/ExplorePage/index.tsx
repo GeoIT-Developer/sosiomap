@@ -9,17 +9,16 @@ import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interf
 import API from '@/configs/api';
 import { useEffect, useState } from 'react';
 import { useActiveTopic } from '@/hooks/useTopic';
-import useLocalStorageFunc from '@/hooks/useLocalStorageFunc';
 import { MyLocation } from '@/hooks/useGeolocation';
 import { LOCAL_STORAGE } from '@/utils/constant';
 import ExploreWindow from './ExploreWindow';
-import { addMinioPrefix } from '@/utils/helper';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 export default function ExplorePage({ show = true }: { show?: boolean }) {
     const { fragmentHeightStyle } = useWindowHeight();
 
     const { activeTopic, refreshTopic } = useActiveTopic();
-    const locationStorage = useLocalStorageFunc<MyLocation | null>(
+    const [locationStorage] = useLocalStorage<MyLocation | null>(
         LOCAL_STORAGE.LASK_KNOWN_LOCATION,
         null,
     );
@@ -32,24 +31,15 @@ export default function ExplorePage({ show = true }: { show?: boolean }) {
     >(API.getPublicMapPost, {
         listkey: 'data',
         onSuccess: (_raw, res) => {
-            const eList: MapPostDataInterface[] = (res?.list || []).map(
-                (item) => {
-                    const eMedia = item.media.map((med) => ({
-                        ...med,
-                        file_url: addMinioPrefix(med.file_url),
-                    }));
-                    return { ...item, media: eMedia };
-                },
-            );
-            setListMapPost(eList);
+            setListMapPost(res?.list || []);
         },
     });
 
     function refreshMapPost() {
         apiQueryPost.call({
             topic_ids: activeTopic.map((item) => item.id).join('|'),
-            lat: locationStorage.getItem()?.latitude || 0,
-            lon: locationStorage.getItem()?.longitude || 0,
+            lat: locationStorage?.latitude || 0,
+            lon: locationStorage?.longitude || 0,
         });
     }
 
@@ -84,7 +74,7 @@ export default function ExplorePage({ show = true }: { show?: boolean }) {
             >
                 <ExploreWindow
                     posts={listMapPost || []}
-                    userLocation={locationStorage.getItem()}
+                    userLocation={locationStorage}
                 />
             </Paper>
         </div>

@@ -66,6 +66,7 @@
     "post": {
         "new_post": "New Post",
         "view_post": "View Post",
+        "nearby_post": "Nearby Post",
         "use_current_location": "Use My Current Location",
         "choose_on_map": "Choose on Map",
         "draw_on_map": "Draw on Map",

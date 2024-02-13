@@ -9,7 +9,6 @@ import {
 } from '@mui/material';
 import { useI18n } from '@/locales/client';
 import {
-    addMinioPrefix,
     extractUsernameFromEmail,
     formatDateTime,
     formatDistance,
@@ -71,7 +70,7 @@ export default function CommentBox({ comment }: Props) {
                             <Box>
                                 <ImageVideoStandard
                                     media={comment.media.map((item) => ({
-                                        url: addMinioPrefix(item.file_url),
+                                        url: item.file_url,
                                         fileType: getMimeTypeFromURL(
                                             item.file_url,
                                         ),

@@ -62,6 +62,7 @@ export default function NewPostDialog({
             <Fab
                 aria-label='new_post'
                 size='medium'
+                color='primary'
                 onClick={() => setOpen(true)}
             >
                 <AddLocationAltOutlined />

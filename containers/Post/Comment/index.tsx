@@ -130,13 +130,15 @@ export default function CommentPage({ postId }: Props) {
         <Stack spacing={2}>
             <NeedLogin>
                 <SingleAccordion title={t('post.add_comment')}>
-                    <StandardPost
-                        valueInputData={inputData}
-                        valueSocialMediaURL={socialMediaURL}
-                        onChangeInputData={setInputData}
-                        onChangeInputFiles={setInputFiles}
-                        onChangeSocialMediaURL={setSocialMediaURL}
-                    />
+                    <Box className='max-w-[350px]'>
+                        <StandardPost
+                            valueInputData={inputData}
+                            valueSocialMediaURL={socialMediaURL}
+                            onChangeInputData={setInputData}
+                            onChangeInputFiles={setInputFiles}
+                            onChangeSocialMediaURL={setSocialMediaURL}
+                        />
+                    </Box>
                     <Box className='text-end mt-4'>
                         <Button
                             onClick={onClickSend}

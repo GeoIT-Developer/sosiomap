@@ -1,10 +1,17 @@
 import dayjs from 'dayjs';
-import { LngLat } from 'maplibre-gl';
+import {
+    LngLat,
+    MapGeoJSONFeature,
+    MapMouseEvent,
+    Properties,
+} from 'maplibre-gl';
 import { ReadonlyURLSearchParams } from 'next/navigation';
 import CryptoJS from 'crypto-js';
 import imageCompression from 'browser-image-compression';
 // @ts-ignore
 import * as turf from '@turf/turf';
+
+export const myTurf = turf;
 
 export const keycloakJWTDecode = (token: string) => {
     return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
@@ -251,4 +258,22 @@ export function getFileExtensionFromUrl(url: string): string {
 export function getMimeTypeFromURL(url: string) {
     const extension = getFileExtensionFromUrl(url);
     return extensionToMimeType(extension) || '';
+}
+
+export function getMapLibreCoordinate(
+    e: MapMouseEvent & {
+        features?: MapGeoJSONFeature[] | undefined;
+    } & Object,
+) {
+    if (!e.features) return;
+    // @ts-ignore
+    const coordinates = e.features[0].geometry.coordinates.slice();
+    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+    }
+    var point = turf.point([-75.343, 39.984], 'ss');
+    return {
+        coordinates,
+        properties: e.features[0].properties,
+    };
 }

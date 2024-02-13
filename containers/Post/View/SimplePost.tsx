@@ -24,12 +24,8 @@ import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import ImageVideoSimple from './ImageVideoSimple';
-import CommonDrawer from '@/components/drawer/CommonDrawer';
-import useWideScreen from '@/hooks/useWideScreen';
 import { useState } from 'react';
-import PostTypeEnum from '@/types/post-type.enum';
-import StandardPost from './StandardPost';
-import CarouselPost from './CarouselPost';
+import PostDrawer from './PostDrawer';
 
 type Props = {
     post: MapPostDataInterface;
@@ -39,10 +35,7 @@ type Props = {
 
 export default function SimplePost({ post, style, userLocation }: Props) {
     const t = useI18n();
-
     const [openDrawer, setOpenDrawer] = useState(false);
-    const isWide = useWideScreen();
-
     const toggleDrawer =
         (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
             if (event) {
@@ -151,29 +144,12 @@ export default function SimplePost({ post, style, userLocation }: Props) {
                 <Divider />
             </Box>
 
-            <CommonDrawer
-                anchor={isWide ? 'right' : 'bottom'}
-                open={openDrawer}
+            <PostDrawer
+                post={post}
+                userLocation={userLocation}
                 toggleDrawer={toggleDrawer}
-                title={t('post.view_post')}
-            >
-                {openDrawer && (
-                    <Box className='!min-h-[85vh]'>
-                        {post.post_type === PostTypeEnum.STANDARD && (
-                            <StandardPost
-                                post={post}
-                                userLocation={userLocation}
-                            />
-                        )}
-                        {post.post_type === PostTypeEnum.CAROUSEL && (
-                            <CarouselPost
-                                post={post}
-                                userLocation={userLocation}
-                            />
-                        )}
-                    </Box>
-                )}
-            </CommonDrawer>
+                openDrawer={openDrawer}
+            />
         </>
     );
 }

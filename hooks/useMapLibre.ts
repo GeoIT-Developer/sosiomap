@@ -24,6 +24,7 @@ const useMapLibre = (options?: MapOptions) => {
     const [mapStatus, setMapStatus] = useState<LoadingState>(
         LoadingState.UNDEFINED,
     );
+    const [eMap, setEMap] = useState<Map | null>(null);
 
     useEffect(() => {
         if (!mapContainer.current) return;
@@ -89,6 +90,7 @@ const useMapLibre = (options?: MapOptions) => {
         };
 
         map.current.on('moveend', handleMoveEnd);
+        setEMap(map.current);
 
         return () => {
             if (map.current) {
@@ -102,7 +104,7 @@ const useMapLibre = (options?: MapOptions) => {
     return {
         mapContainer,
         mapStatus,
-        myMap: map.current,
+        myMap: eMap,
         geoControl,
     };
 };

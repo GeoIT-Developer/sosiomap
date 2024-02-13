@@ -27,6 +27,7 @@ type Props = {
     toggleDrawer: (
         open: boolean,
     ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
+    keepMounted?: boolean;
 };
 
 export default function CommonDrawer({
@@ -36,6 +37,7 @@ export default function CommonDrawer({
     anchor,
     open,
     toggleDrawer,
+    keepMounted = true,
 }: Props) {
     return (
         <SwipeableDrawer
@@ -46,7 +48,7 @@ export default function CommonDrawer({
             swipeAreaWidth={drawerBleeding}
             disableSwipeToOpen={drawerBleeding > 0 ? false : true}
             ModalProps={{
-                keepMounted: true,
+                keepMounted: keepMounted,
             }}
         >
             <StyledBox
