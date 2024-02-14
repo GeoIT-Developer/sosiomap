@@ -18,10 +18,7 @@ export type ParamsKPUType = {
 };
 
 const API_VENDOR = {
-    // searchOSM: (txt: string) => HOST.get(`/api/kpu/`, { params: { txt } }),
     searchOSM: (txt: string) => HOST.get(`/api/osm`, { params: { txt } }),
-    getDataDPD: ({ id, timestamp }: { id: string; timestamp: string }) =>
-        HOST.get(`/api/kpu`, { params: { id, timestamp, type: 'DPD' } }),
     getDataKPU: ({ id, timestamp, type }: ParamsKPUType) =>
         HOST.get(`/api/kpu`, { params: { id, timestamp, type } }),
 };

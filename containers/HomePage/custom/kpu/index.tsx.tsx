@@ -482,7 +482,7 @@ export default function KPULayer() {
                 toggleDrawer={toggleDrawer}
                 title={drawerTitle}
             >
-                <Box className='!min-h-[85vh]'>
+                <Box className='!min-h-[65vh]'>
                     <DataGrid
                         disableRowSelectionOnClick
                         disableColumnFilter
