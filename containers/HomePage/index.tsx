@@ -21,7 +21,7 @@ import { useMapLibreContext } from '@/contexts/MapLibreContext';
 import { getLngLat, getMapLibreCoordinate, truncateText } from '@/utils/helper';
 import { useI18n } from '@/locales/client';
 import { useRouter } from 'next/navigation';
-import { TopicType, useActiveTopic } from '@/hooks/useTopic';
+import { TopicType } from '@/hooks/useTopic';
 import ChooseLocationEnum from '@/types/choose-location.enum';
 import LayerDrawer from './LayerDrawer';
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -43,15 +43,17 @@ import MapLibreGL, { MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
 import PostDrawer from '../Post/View/PostDrawer';
 import ScanDrawer from './ScanDrawer';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import KPULayer from './custom/kpu/index.tsx';
+import { useActiveTopicContext } from '../AppPage';
 
-export default function HomePage() {
+export default function HomePage({ show = true }: { show?: boolean }) {
     const t = useI18n();
     const router = useRouter();
     const [showMarker, setShowMarker] = useState(false);
     const { myMap } = useMapLibreContext();
     const [center, setCenter] = useState({ lng: 0, lat: 0 });
     const [selectedTopic, setSelectedTopic] = useState<TopicType | null>(null);
-    const { activeTopic } = useActiveTopic();
+    const { activeTopicType } = useActiveTopicContext();
     const locationStorage = useLocalStorageFunc<MyLocation | null>(
         LOCAL_STORAGE.LASK_KNOWN_LOCATION,
         null,
@@ -62,6 +64,8 @@ export default function HomePage() {
     );
     const [searchTxt, setSearchTxt] = useTermDebounce('', 850);
     const [inputSearch, setInputSearch] = useState('');
+
+    console.log('RERENDER');
 
     const { list: listOptions, ...apiSearchOSM } = useAPI<
         SearchOSMInterface,
@@ -129,20 +133,21 @@ export default function HomePage() {
 
     function refreshMapPost() {
         apiQueryPost.call({
-            topic_ids: activeTopic.map((item) => item.id).join('|'),
+            topic_ids: activeTopicType.map((item) => item.id).join('|'),
             lat: locationStorage.getItem()?.latitude || 0,
             lon: locationStorage.getItem()?.longitude || 0,
         });
     }
 
     useEffect(() => {
-        if (!activeTopic.length) {
+        if (!show) return;
+        if (!activeTopicType.length) {
             apiQueryPost.clearData();
             return;
         }
         refreshMapPost();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activeTopic]);
+    }, [activeTopicType, show]);
 
     const [selectedPost, setSelectedPost] = useState<MapPostDataInterface>(
         {} as MapPostDataInterface,
@@ -213,61 +218,66 @@ export default function HomePage() {
                 popup.remove();
             }
         };
+        const onMapLoad = () => {
+            if (!myMap) return;
+            if (myMap.getLayer(layerId)) {
+                myMap.removeLayer(layerId);
+            }
+            if (myMap.getSource(layerSrc)) {
+                myMap.removeSource(layerSrc);
+            }
+            myMap.addSource(layerSrc, {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: (listMapPost || []).map((item) => {
+                        return {
+                            type: 'Feature',
+                            geometry: item.location,
+                            properties: {
+                                ...item,
+                                color:
+                                    activeTopicType.find(
+                                        (it) => it.id === item.topic_id,
+                                    )?.bgColor || 'red',
+                            },
+                        };
+                    }),
+                },
+            });
+            myMap.addLayer({
+                id: layerId,
+                type: 'circle',
+                source: layerSrc,
+                paint: {
+                    'circle-color': ['get', 'color'],
+                    'circle-radius': 6,
+                    'circle-stroke-color': 'white',
+                    'circle-stroke-width': 2,
+                },
+            });
+
+            myMap.on('mouseenter', layerId, setCursorPointer);
+            myMap.on('mouseleave', layerId, removeCursorPointer);
+
+            myMap.on('click', layerId, onClickLayer);
+        };
 
         if (myMap) {
-            myMap.on('load', () => {
-                console.log('AAAAA');
-                if (myMap.getLayer(layerId)) {
-                    myMap.removeLayer(layerId);
-                }
-                if (myMap.getSource(layerSrc)) {
-                    myMap.removeSource(layerSrc);
-                }
-                myMap.addSource(layerSrc, {
-                    type: 'geojson',
-                    data: {
-                        type: 'FeatureCollection',
-                        features: (listMapPost || []).map((item) => {
-                            return {
-                                type: 'Feature',
-                                geometry: item.location,
-                                properties: {
-                                    ...item,
-                                    color:
-                                        activeTopic.find(
-                                            (it) => it.id === item.topic_id,
-                                        )?.bgColor || 'red',
-                                },
-                            };
-                        }),
-                    },
-                });
-                myMap.addLayer({
-                    id: layerId,
-                    type: 'circle',
-                    source: layerSrc,
-                    paint: {
-                        'circle-color': ['get', 'color'],
-                        'circle-radius': 6,
-                        'circle-stroke-color': 'white',
-                        'circle-stroke-width': 2,
-                    },
-                });
-
-                myMap.on('mouseenter', layerId, setCursorPointer);
-                myMap.on('mouseleave', layerId, removeCursorPointer);
-
-                myMap.on('click', layerId, onClickLayer);
-            });
+            myMap.on('load', onMapLoad);
+            if (myMap.loaded()) {
+                onMapLoad();
+            }
         }
         return () => {
             if (myMap) {
                 myMap.off('mouseenter', layerId, setCursorPointer);
                 myMap.off('mouseleave', layerId, removeCursorPointer);
                 myMap.off('click', layerId, onClickLayer);
+                myMap.off('load', onMapLoad);
             }
         };
-    }, [activeTopic, listMapPost, myMap]);
+    }, [activeTopicType, listMapPost, myMap]);
 
     return (
         <>
@@ -405,6 +415,8 @@ export default function HomePage() {
                 openDrawer={openDrawer}
                 post={selectedPost}
             />
+
+            <KPULayer />
         </>
     );
 }

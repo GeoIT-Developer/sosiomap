@@ -1,5 +1,12 @@
 import useWindowHeight from '@/hooks/useWindowHeight';
-import { Box, Divider, Grid, Paper, Typography } from '@mui/material';
+import {
+    Box,
+    Divider,
+    Grid,
+    IconButton,
+    Paper,
+    Typography,
+} from '@mui/material';
 import PageAppBar from './PageAppBar';
 import { grey } from '@mui/material/colors';
 import MenuButton from './MenuButton';
@@ -8,19 +15,62 @@ import SingleAccordion from '@/components/accordion/SingleAccordion';
 import AddIcon from '@mui/icons-material/Add';
 import { TopicType, useMainTopic, usePemiluTopic } from '@/hooks/useTopic';
 import { useI18n } from '@/locales/client';
-import useLocalStorage from '@/hooks/useLocalStorage';
-import { LOCAL_STORAGE } from '@/utils/constant';
 import { toast } from 'react-toastify';
+import MyImage from '@/components/preview/MyImage';
+import { useActiveTopicContext } from '../AppPage';
+
+const PEMILU_ASSEST = '/img/pemilu';
+
+const LIST_BACKLINK_PEMILU = [
+    {
+        label: 'Kawal Pemilu',
+        url: 'https://kawalpemilu.org/',
+        logo: `${PEMILU_ASSEST}/kawalpemilu.png`,
+    },
+    {
+        label: 'JagaSuara 2024',
+        url: 'https://jagasuara2024.com/',
+        logo: `${PEMILU_ASSEST}/jagasuara2024.png`,
+    },
+    {
+        label: 'Warga Jaga Suara',
+        url: 'https://wargajagasuara.com/',
+        logo: `${PEMILU_ASSEST}/wargajagasuara.png`,
+    },
+    {
+        label: 'Bijak Memilih',
+        url: 'https://www.bijakmemilih.id/',
+        logo: `${PEMILU_ASSEST}/bijakmemilih.png`,
+    },
+    {
+        label: 'Kawula 17',
+        url: 'https://kawula17.id/',
+        logo: `${PEMILU_ASSEST}/kawula17.png`,
+    },
+    {
+        label: 'Rekan Jejak',
+        url: 'https://rekamjejak.net/',
+        logo: `${PEMILU_ASSEST}/rekamjejak.png`,
+    },
+    {
+        label: 'Rumah Pemilu',
+        url: 'https://rumahpemilu.org/',
+        logo: `${PEMILU_ASSEST}/rumahpemilu.png`,
+    },
+    {
+        label: 'Info Pemilu',
+        url: 'https://infopemilu.kpu.go.id/',
+        logo: `${PEMILU_ASSEST}/kpu.png`,
+    },
+];
 
 export default function MenuPage({ show = true }: { show?: boolean }) {
     const t = useI18n();
     const { fragmentHeightStyle } = useWindowHeight();
     const mainTopic = useMainTopic();
     const pemiluTopic = usePemiluTopic();
-    const [activeTopic, setActiveTopic] = useLocalStorage(
-        LOCAL_STORAGE.ACTIVE_TOPIC,
-        mainTopic.map((item) => item.id),
-    );
+    const { activeTopic, setActiveTopic, refreshTopic } =
+        useActiveTopicContext();
 
     function onClickTopic(topic: TopicType, lastChecked: boolean) {
         if (!lastChecked) {
@@ -30,6 +80,7 @@ export default function MenuPage({ show = true }: { show?: boolean }) {
                 oldState.filter((item) => item !== topic.id),
             );
         }
+        refreshTopic();
     }
 
     const pageLoaded = usePageLoaded(show);
@@ -128,6 +179,49 @@ export default function MenuPage({ show = true }: { show?: boolean }) {
                                             onClickTopic(item, isChecked)
                                         }
                                     />
+                                </Grid>
+                            );
+                        })}
+                    </Grid>
+                    <Divider className='py-4'>
+                        {t('topic.pemilu_2024_backlink')}
+                    </Divider>
+                    <Grid
+                        container
+                        spacing={{ xs: 2 }}
+                        columns={{ xs: 4 }}
+                        className='px-4'
+                    >
+                        {LIST_BACKLINK_PEMILU.map((item, idx) => {
+                            return (
+                                <Grid key={idx} item xs={1}>
+                                    <IconButton
+                                        key={idx}
+                                        className='w-fit h-fit !rounded-md !p-0'
+                                        onClick={() =>
+                                            window.open(item.url, '_blank')
+                                        }
+                                    >
+                                        <Box>
+                                            <MyImage
+                                                src={item.logo}
+                                                alt={item.logo}
+                                                style={{
+                                                    width: '4.5rem',
+                                                    height: '4.5rem',
+                                                    objectFit: 'contain',
+                                                    borderRadius: '0.5rem',
+                                                }}
+                                                className='!bg-gray-600'
+                                            />
+                                            <Typography
+                                                variant='caption'
+                                                className='!block !text-xs'
+                                            >
+                                                {item.label}
+                                            </Typography>
+                                        </Box>
+                                    </IconButton>
                                 </Grid>
                             );
                         })}

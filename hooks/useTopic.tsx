@@ -257,17 +257,17 @@ export const usePemiluTopic = () => {
     const pemilu2024: TopicType[] = useMemo(
         (): TopicType[] => [
             {
-                id: 'dpr',
-                label: t('pemilu2024.dpr'),
-                description: t('pemilu2024.dpr_desc'),
+                id: 'dpd',
+                label: t('pemilu2024.dpd'),
+                description: t('pemilu2024.dpd_desc'),
                 group: t('pemilu_2024'),
                 icon: <AccountBalanceIcon sx={{ color: 'white' }} />,
                 bgColor: indigo[500],
             },
             {
-                id: 'dpd',
-                label: t('pemilu2024.dpd'),
-                description: t('pemilu2024.dpd_desc'),
+                id: 'dpr',
+                label: t('pemilu2024.dpr'),
+                description: t('pemilu2024.dpr_desc'),
                 group: t('pemilu_2024'),
                 icon: <AccountBalanceIcon sx={{ color: 'white' }} />,
                 bgColor: indigo[500],

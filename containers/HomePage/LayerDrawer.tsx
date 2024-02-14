@@ -2,10 +2,10 @@ import { ReactElement, cloneElement, useState } from 'react';
 import { Avatar, Box, Fab, Icon } from '@mui/material';
 import useWideScreen from '@/hooks/useWideScreen';
 import LayersIcon from '@mui/icons-material/Layers';
-import { useActiveTopic } from '@/hooks/useTopic';
 import SingleAccordion from '@/components/accordion/SingleAccordion';
 import CommonDrawer from '@/components/drawer/CommonDrawer';
 import { useScopedI18n } from '@/locales/client';
+import { useActiveTopicContext } from '../AppPage';
 
 const defaultButton = (
     <Fab color='default' aria-label='layers' size='small'>
@@ -20,7 +20,7 @@ export default function LayerDrawer({
 }) {
     const t = useScopedI18n('map');
     const [openDrawer, setOpenDrawer] = useState(false);
-    const { activeTopic, refreshTopic } = useActiveTopic();
+    const { activeTopicType } = useActiveTopicContext();
     const isWide = useWideScreen();
 
     const toggleDrawer =
@@ -35,7 +35,6 @@ export default function LayerDrawer({
             }
 
             setOpenDrawer(open);
-            if (open) refreshTopic();
         };
 
     const clonedButton = cloneElement(menuButton, {
@@ -57,7 +56,7 @@ export default function LayerDrawer({
                         isWide ? { maxWidth: '400px' } : { maxHeight: '100vh' }
                     }
                 >
-                    {activeTopic.map((item, idx) => {
+                    {activeTopicType.map((item) => {
                         return (
                             <SingleAccordion
                                 title={
@@ -83,7 +82,7 @@ export default function LayerDrawer({
                                         {item.label}
                                     </>
                                 }
-                                key={idx}
+                                key={item.id}
                             >
                                 {item.description}
                             </SingleAccordion>

@@ -277,3 +277,14 @@ export function getMapLibreCoordinate(
         properties: e.features[0].properties,
     };
 }
+
+export function getLastCharFromString(
+    inputString: string,
+    length: number,
+): string {
+    if (inputString.length >= length) {
+        return inputString.substring(inputString.length - length);
+    } else {
+        return inputString;
+    }
+}

@@ -62,7 +62,7 @@ export default function MessageWindow({ messages }: Props) {
                 parent={parent}
                 rowIndex={index}
             >
-                {() => {
+                {({ registerChild }) => {
                     const item = messages[index];
 
                     const itemDate = formatDateTime(
@@ -73,7 +73,15 @@ export default function MessageWindow({ messages }: Props) {
                     if (isNewDate) {
                         currentDate = itemDate;
                         return (
-                            <Box key={index} style={style}>
+                            <div
+                                key={index}
+                                style={style}
+                                ref={(element): void => {
+                                    if (element && registerChild) {
+                                        registerChild(element);
+                                    }
+                                }}
+                            >
                                 <Divider className='pt-2'>
                                     {getFormatDateLabel(item.created_at)}
                                 </Divider>
@@ -84,20 +92,28 @@ export default function MessageWindow({ messages }: Props) {
                                     createdAt={item.created_at}
                                     distance={item.distance}
                                 />
-                            </Box>
+                            </div>
                         );
                     }
 
                     return (
-                        <MessageBox
+                        <div
+                            ref={(element): void => {
+                                if (element && registerChild) {
+                                    registerChild(element);
+                                }
+                            }}
                             key={index}
-                            name={item.name}
-                            username={item.username}
-                            body={item.body}
-                            createdAt={item.created_at}
-                            distance={item.distance}
                             style={style}
-                        />
+                        >
+                            <MessageBox
+                                name={item.name}
+                                username={item.username}
+                                body={item.body}
+                                createdAt={item.created_at}
+                                distance={item.distance}
+                            />
+                        </div>
                     );
                 }}
             </CellMeasurer>

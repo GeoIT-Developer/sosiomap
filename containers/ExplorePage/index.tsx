@@ -8,16 +8,16 @@ import { GetPublicMapPostParamsInterface } from '@/types/api/params/get-public-m
 import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interface';
 import API from '@/configs/api';
 import { useEffect, useState } from 'react';
-import { useActiveTopic } from '@/hooks/useTopic';
 import { MyLocation } from '@/hooks/useGeolocation';
 import { LOCAL_STORAGE } from '@/utils/constant';
 import ExploreWindow from './ExploreWindow';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { useActiveTopicContext } from '../AppPage';
 
 export default function ExplorePage({ show = true }: { show?: boolean }) {
     const { fragmentHeightStyle } = useWindowHeight();
 
-    const { activeTopic, refreshTopic } = useActiveTopic();
+    const { activeTopicType } = useActiveTopicContext();
     const [locationStorage] = useLocalStorage<MyLocation | null>(
         LOCAL_STORAGE.LASK_KNOWN_LOCATION,
         null,
@@ -37,7 +37,7 @@ export default function ExplorePage({ show = true }: { show?: boolean }) {
 
     function refreshMapPost() {
         apiQueryPost.call({
-            topic_ids: activeTopic.map((item) => item.id).join('|'),
+            topic_ids: activeTopicType.map((item) => item.id).join('|'),
             lat: locationStorage?.latitude || 0,
             lon: locationStorage?.longitude || 0,
         });
@@ -45,20 +45,13 @@ export default function ExplorePage({ show = true }: { show?: boolean }) {
 
     useEffect(() => {
         if (!show) return;
-        if (!activeTopic.length) {
+        if (!activeTopicType.length) {
             apiQueryPost.clearData();
             return;
         }
         refreshMapPost();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activeTopic, show]);
-
-    useEffect(() => {
-        if (show) {
-            refreshTopic();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [show]);
+    }, [activeTopicType, show]);
 
     const pageLoaded = usePageLoaded(show);
     if (!show && !pageLoaded) {

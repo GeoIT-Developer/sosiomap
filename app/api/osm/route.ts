@@ -1,12 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(
-    _request: Request,
-    { params }: { params: { txt: string } },
-) {
+export async function GET(req: NextRequest) {
     try {
+        const txt = req.nextUrl.searchParams.get('txt') as string;
         const response = await fetch(
-            `https://nominatim.openstreetmap.org/search?format=geojson&q=${params.txt}`,
+            `https://nominatim.openstreetmap.org/search?format=geojson&q=${txt}`,
         );
 
         if (!response.ok) {

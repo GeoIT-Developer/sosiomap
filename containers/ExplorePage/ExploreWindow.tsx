@@ -40,16 +40,24 @@ export default function ExploreWindow({ posts, userLocation }: Props) {
                 parent={parent}
                 rowIndex={index}
             >
-                {() => {
+                {({ registerChild }) => {
                     const item = posts[index];
 
                     return (
-                        <SimplePost
+                        <div
+                            ref={(element): void => {
+                                if (element && registerChild) {
+                                    registerChild(element);
+                                }
+                            }}
                             key={index}
-                            post={item}
-                            userLocation={userLocation}
                             style={style}
-                        />
+                        >
+                            <SimplePost
+                                post={item}
+                                userLocation={userLocation}
+                            />
+                        </div>
                     );
                 }}
             </CellMeasurer>

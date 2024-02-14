@@ -8,7 +8,7 @@
 // });
 
 const nextConfig = {
-    reactStrictMode: false,
+    reactStrictMode: true,
     env: {
         NEXTAUTH_URL_IAM: process.env.NEXTAUTH_URL_IAM,
         NEXTAUTH_REALM_IAM: process.env.NEXTAUTH_REALM_IAM,
