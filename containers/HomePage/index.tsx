@@ -65,8 +65,6 @@ export default function HomePage({ show = true }: { show?: boolean }) {
     const [searchTxt, setSearchTxt] = useTermDebounce('', 850);
     const [inputSearch, setInputSearch] = useState('');
 
-    console.log('RERENDER');
-
     const { list: listOptions, ...apiSearchOSM } = useAPI<
         SearchOSMInterface,
         string,
@@ -171,7 +169,7 @@ export default function HomePage({ show = true }: { show?: boolean }) {
 
         const popup = new MapLibreGL.Popup({
             closeButton: false,
-            closeOnClick: false,
+            closeOnClick: true,
             className: 'text-xl text-black font-bold !my-0',
         });
 
@@ -181,9 +179,9 @@ export default function HomePage({ show = true }: { show?: boolean }) {
             } & Object,
         ) => {
             if (myMap) {
-                myMap.getCanvas().style.cursor = 'pointer';
-                if (!e.features) return;
-                const postId = e.features[0].properties._id;
+                const eFeature = getMapLibreCoordinate(e);
+                if (!eFeature) return;
+                const postId = eFeature.properties._id;
                 const findPost = listMapPost?.find(
                     (item) => item._id === postId,
                 );
@@ -223,6 +221,9 @@ export default function HomePage({ show = true }: { show?: boolean }) {
             if (myMap.getLayer(layerId)) {
                 myMap.removeLayer(layerId);
             }
+            if (myMap.getLayer(layerId + '-label')) {
+                myMap.removeLayer(layerId + '-label');
+            }
             if (myMap.getSource(layerSrc)) {
                 myMap.removeSource(layerSrc);
             }
@@ -240,6 +241,9 @@ export default function HomePage({ show = true }: { show?: boolean }) {
                                     activeTopicType.find(
                                         (it) => it.id === item.topic_id,
                                     )?.bgColor || 'red',
+                                label:
+                                    truncateText(item.title || '', 15) ||
+                                    truncateText(item.body || '', 15),
                             },
                         };
                     }),
@@ -254,6 +258,23 @@ export default function HomePage({ show = true }: { show?: boolean }) {
                     'circle-radius': 6,
                     'circle-stroke-color': 'white',
                     'circle-stroke-width': 2,
+                },
+            });
+            myMap.addLayer({
+                id: layerId + '-label',
+                type: 'symbol',
+                source: layerSrc,
+                layout: {
+                    'text-field': ['get', 'label'],
+                    'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+                    'text-radial-offset': 0.5,
+                    'text-justify': 'auto',
+                    'text-size': 14,
+                },
+                paint: {
+                    'text-color': 'black',
+                    'text-halo-color': 'white',
+                    'text-halo-width': 2,
                 },
             });
 

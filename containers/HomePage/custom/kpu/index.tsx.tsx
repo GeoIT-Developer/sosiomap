@@ -1,11 +1,11 @@
-import { Box, Card, Divider } from '@mui/material';
+import { Box, Button, Card, Divider, Stack, Typography } from '@mui/material';
 import { toast } from 'react-toastify';
 import { ReactNode, useEffect, useState } from 'react';
 import { useMapLibreContext } from '@/contexts/MapLibreContext';
 import useAPI from '@/hooks/useAPI';
 import { ObjectLiteral } from '@/types/object-literal.interface';
 import API_VENDOR, { ParamsKPUType } from '@/configs/api.vendor';
-import { MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
+import MapLibreGL, { MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
 import CommonDrawer from '@/components/drawer/CommonDrawer';
 import useWideScreen from '@/hooks/useWideScreen';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
@@ -15,7 +15,8 @@ import {
     getDapilFromString,
 } from '@/utils/kpu-helper';
 import { useActiveTopicContext } from '@/containers/AppPage';
-import { getLastCharFromString } from '@/utils/helper';
+import { getLastCharFromString, getMapLibreCoordinate } from '@/utils/helper';
+import { createRoot } from 'react-dom/client';
 
 const columns: GridColDef[] = [
     {
@@ -113,20 +114,48 @@ export default function KPULayer() {
             } & Object,
         ) => {
             if (myMap) {
-                if (!e.features) return;
-                const properties = e.features[0].properties;
-                const unixTime = Date.now();
-                apiKPU.clearData();
-                apiKPU.call({
-                    id: `${properties.id_provins}${getLastCharFromString(
-                        properties.dapil,
-                        2,
-                    )}`,
-                    timestamp: unixTime,
-                    type: 'DPR',
-                });
-                setDrawerTitle('DPR - ' + properties.alias);
-                toggleDrawer(true)(e as any);
+                const eFeature = getMapLibreCoordinate(e);
+                if (!eFeature) return;
+
+                const placeholder = document.createElement('div');
+                const root = createRoot(placeholder);
+                const eTitle = 'DPR - ' + eFeature.properties.alias;
+                root.render(
+                    <Stack spacing={1}>
+                        <Typography variant='body1'>{eTitle}</Typography>
+                        <Button
+                            size='small'
+                            variant='contained'
+                            onClick={() => {
+                                const properties = eFeature.properties;
+                                const unixTime = Date.now();
+                                apiKPU.clearData();
+                                apiKPU.call({
+                                    id: `${
+                                        properties.id_provins
+                                    }${getLastCharFromString(
+                                        properties.dapil,
+                                        2,
+                                    )}`,
+                                    timestamp: unixTime,
+                                    type: 'DPR',
+                                });
+                                setDrawerTitle(eTitle);
+                                toggleDrawer(true)(e as any);
+                            }}
+                        >
+                            Daftar Calon
+                        </Button>
+                    </Stack>,
+                );
+                new MapLibreGL.Popup({
+                    closeButton: false,
+                    closeOnClick: true,
+                    className: 'text-xl text-black font-bold !my-0',
+                })
+                    .setLngLat(e.lngLat)
+                    .setDOMContent(placeholder)
+                    .addTo(myMap);
             }
         };
 
@@ -207,17 +236,43 @@ export default function KPULayer() {
             } & Object,
         ) => {
             if (myMap) {
-                if (!e.features) return;
-                const properties = e.features[0].properties;
-                const unixTime = Date.now();
-                apiKPU.clearData();
-                apiKPU.call({
-                    id: properties.kdppum,
-                    timestamp: unixTime,
-                    type: 'DPD',
-                });
-                setDrawerTitle('DPD - ' + properties.wadmpr);
-                toggleDrawer(true)(e as any);
+                const eFeature = getMapLibreCoordinate(e);
+                if (!eFeature) return;
+
+                const placeholder = document.createElement('div');
+                const root = createRoot(placeholder);
+                const eTitle = 'DPD - ' + eFeature.properties.wadmpr;
+                root.render(
+                    <Stack spacing={1}>
+                        <Typography variant='body1'>{eTitle}</Typography>
+                        <Button
+                            size='small'
+                            variant='contained'
+                            onClick={() => {
+                                const properties = eFeature.properties;
+                                const unixTime = Date.now();
+                                apiKPU.clearData();
+                                apiKPU.call({
+                                    id: properties.kdppum,
+                                    timestamp: unixTime,
+                                    type: 'DPD',
+                                });
+                                setDrawerTitle(eTitle);
+                                toggleDrawer(true)(e as any);
+                            }}
+                        >
+                            Daftar Calon
+                        </Button>
+                    </Stack>,
+                );
+                new MapLibreGL.Popup({
+                    closeButton: false,
+                    closeOnClick: true,
+                    className: 'text-xl text-black font-bold !my-0',
+                })
+                    .setLngLat(e.lngLat)
+                    .setDOMContent(placeholder)
+                    .addTo(myMap);
             }
         };
 
@@ -301,19 +356,45 @@ export default function KPULayer() {
             } & Object,
         ) => {
             if (myMap) {
-                if (!e.features) return;
-                const properties = e.features[0].properties;
-                const unixTime = Date.now();
-                apiKPU.clearData();
-                apiKPU.call({
-                    id: `${properties.id_provins}${
-                        properties.id_kabkot
-                    }${getDapilFromString(properties.alias)}`,
-                    timestamp: unixTime,
-                    type: 'DPRD_PROV',
-                });
-                setDrawerTitle('DPRD Provinsi - ' + properties.alias);
-                toggleDrawer(true)(e as any);
+                const eFeature = getMapLibreCoordinate(e);
+                if (!eFeature) return;
+
+                const placeholder = document.createElement('div');
+                const root = createRoot(placeholder);
+                const eTitle = 'DPRD Provinsi - ' + eFeature.properties.alias;
+                root.render(
+                    <Stack spacing={1}>
+                        <Typography variant='body1'>{eTitle}</Typography>
+                        <Button
+                            size='small'
+                            variant='contained'
+                            onClick={() => {
+                                const properties = eFeature.properties;
+                                const unixTime = Date.now();
+                                apiKPU.clearData();
+                                apiKPU.call({
+                                    id: `${properties.id_provins}${
+                                        properties.id_kabkot
+                                    }${getDapilFromString(properties.alias)}`,
+                                    timestamp: unixTime,
+                                    type: 'DPRD_PROV',
+                                });
+                                setDrawerTitle(eTitle);
+                                toggleDrawer(true)(e as any);
+                            }}
+                        >
+                            Daftar Calon
+                        </Button>
+                    </Stack>,
+                );
+                new MapLibreGL.Popup({
+                    closeButton: false,
+                    closeOnClick: true,
+                    className: 'text-xl text-black font-bold !my-0',
+                })
+                    .setLngLat(e.lngLat)
+                    .setDOMContent(placeholder)
+                    .addTo(myMap);
             }
         };
 
@@ -397,19 +478,45 @@ export default function KPULayer() {
             } & Object,
         ) => {
             if (myMap) {
-                if (!e.features) return;
-                const properties = e.features[0].properties;
-                const unixTime = Date.now();
-                apiKPU.clearData();
-                apiKPU.call({
-                    id: `${properties.id_provins}${
-                        properties.id_kabkot
-                    }${getDapilFromString(properties.alias)}`,
-                    timestamp: unixTime,
-                    type: 'DPRD_KAB_KOTA',
-                });
-                setDrawerTitle('DPRD Kab/Kota - ' + properties.alias);
-                toggleDrawer(true)(e as any);
+                const eFeature = getMapLibreCoordinate(e);
+                if (!eFeature) return;
+
+                const placeholder = document.createElement('div');
+                const root = createRoot(placeholder);
+                const eTitle = 'DPRD Kab/Kota - ' + eFeature.properties.alias;
+                root.render(
+                    <Stack spacing={1}>
+                        <Typography variant='body1'>{eTitle}</Typography>
+                        <Button
+                            size='small'
+                            variant='contained'
+                            onClick={() => {
+                                const properties = eFeature.properties;
+                                const unixTime = Date.now();
+                                apiKPU.clearData();
+                                apiKPU.call({
+                                    id: `${properties.id_provins}${
+                                        properties.id_kabkot
+                                    }${getDapilFromString(properties.alias)}`,
+                                    timestamp: unixTime,
+                                    type: 'DPRD_KAB_KOTA',
+                                });
+                                setDrawerTitle(eTitle);
+                                toggleDrawer(true)(e as any);
+                            }}
+                        >
+                            Daftar Calon
+                        </Button>
+                    </Stack>,
+                );
+                new MapLibreGL.Popup({
+                    closeButton: false,
+                    closeOnClick: true,
+                    className: 'text-xl text-black font-bold !my-0',
+                })
+                    .setLngLat(e.lngLat)
+                    .setDOMContent(placeholder)
+                    .addTo(myMap);
             }
         };
 
