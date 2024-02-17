@@ -1,7 +1,9 @@
+import TermsAndConditionsPage from '@/containers/AboutPage/TermsAndConditionsPage';
+
 export default async function Home() {
     return (
         <main>
-            <p>Terms and Condition</p>
+            <TermsAndConditionsPage />
         </main>
     );
 }

@@ -8,7 +8,6 @@ import { ListItemIcon, ListItemText, MenuItem, useTheme } from '@mui/material';
 import MyLogo from '@/components/preview/MyLogo';
 import BasicMenu from '@/components/menu/BasicMenu';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { useRouter } from 'next/navigation';
 import { ROUTE } from '@/utils/constant';
 import DownloadIcon from '@mui/icons-material/Download';
 
@@ -16,7 +15,6 @@ export default function PageAppBar() {
     const t = useI18n();
     const theme = useTheme();
     const isLightMode = theme.palette.mode === 'light';
-    const router = useRouter();
 
     return (
         <Box>
@@ -45,7 +43,10 @@ export default function PageAppBar() {
                         >
                             <MenuItem
                                 onClick={() =>
-                                    router.push(ROUTE.DOWNLOAD_DATA.URL)
+                                    window.open(
+                                        ROUTE.DOWNLOAD_DATA.URL,
+                                        '_blank',
+                                    )
                                 }
                             >
                                 <ListItemIcon>

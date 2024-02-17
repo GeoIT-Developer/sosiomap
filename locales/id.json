@@ -1,7 +1,7 @@
 {
     "app": {
         "name": "SosioMap",
-        "description": "Aplikasi sosial media berbasis peta untuk berbagi dan berdiskusi apapun di sekitar kita"
+        "description": "Aplikasi sosial media berbasis peta untuk berbagi dan berdiskusi apapun di sekitar kita~"
     },
     "label": {
         "message": "Pesan",
@@ -46,7 +46,8 @@
             "geolocation_denied": "Harap aktifkan lokasi GPS anda!",
             "message_at_least_minimum": "Pesan setidaknya memiliki 5 karakter!",
             "feature_need_geolocation": "Data lokasi harus dihidupkan untuk menggunakan fitur ini!",
-            "max_file": "Jumlah berkas yang dapat dipilih adalah {max} berkas!"
+            "max_file": "Jumlah berkas yang dapat dipilih adalah {max} berkas!",
+            "no_post_found_in_your_area": "Tidak ada postingan yang ditemukan di area peta Anda sekarang!"
         },
         "info": {
             "login_to_continue": "Masuk untuk melanjutkan!",
@@ -142,5 +143,69 @@
             "kecurangan_desc": "Lapor dan bagikan kecurangan atau penipuan dari Calon Presiden, Partai Politik, dan/atau Calon Legislatif.",
             "spanduk_ilegal_desc": "Lapor dan bagikan Spanduk Ilegal yang dipasang di daerah Anda."
         }
+    },
+    "about": {
+        "desc": "Mulailah perjalanan sosial yang unik bersama SosioMap, sebuah aplikasi inovatif yang dirancang untuk mendekatkan komunitas lokal Anda lebih dari sebelumnya. Terjunlah dalam platform media sosial berbasis peta yang dinamis dan interaktif di mana dunia di sekitar Anda menjadi kanvas untuk berbagi dan membahas segala hal yang penting.",
+        "title_1": "Temukan Sekitar Anda",
+        "desc_1": "SosioMap melampaui media sosial tradisional dengan mengintegrasikan elemen-elemen geografis ke dalam pengalaman sosial Anda. Bagikan dan jelajahi cerita, acara, berita, dan banyak lagi, semuanya berpusat di sekitar lokasi spesifik Anda. Baik Anda penggemar lokal atau pelancong yang ingin terhubung dengan komunitas baru, SosioMap menyediakan ruang sosial yang personal dan mendalam.",
+        "title_2": "Terlibat dalam Percakapan Bermakna",
+        "desc_2": "Ciptakan percakapan bermakna melalui antarmuka pengguna yang ramah pengguna. Mulai dari berbagi cerita pribadi hingga mendiskusikan acara komunitas, SosioMap memfasilitasi berbagai topik yang memenuhi minat Anda dan denyut nadi di sekitar Anda.",
+        "title_3": "Jelajahi Kategori Utama",
+        "desc_3": "Kategori utama SosioMap menawarkan rentang topik yang komprehensif untuk memenuhi setiap aspek kehidupan Anda:",
+        "our_team": "Tim Kami"
+    },
+    "privacy-policy": {
+        "effective_date": "Tanggal Efektif : ",
+        "title_1": "1. Gambaran Umum",
+        "desc_1": "Terima kasih telah memilih SosioMap, aplikasi media sosial berbasis peta yang dirancang untuk meningkatkan pengalaman sosial Anda. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, mengungkapkan, dan melindungi informasi Anda saat Anda menggunakan layanan kami. Dengan menggunakan SosioMap, Anda menyetujui persyaratan yang diuraikan dalam kebijakan ini.",
+        "title_2": "2. Informasi yang Kami Kumpulkan",
+        "title_2_1": "2.1 Informasi Pribadi:",
+        "desc_2_1": "Kami dapat mengumpulkan informasi pribadi seperti nama, alamat email, dan lokasi Anda untuk memberikan pengalaman sosial yang personal dan mendalam. Informasi ini dikumpulkan dengan persetujuan Anda.",
+        "title_2_2": "2.2 Data Penggunaan:",
+        "desc_2_2": "Kami mengumpulkan data tentang interaksi Anda dengan aplikasi, termasuk namun tidak terbatas pada topik yang Anda ikuti, posting yang Anda buat, dan interaksi Anda dengan pengguna lain. Ini membantu kami meningkatkan aplikasi dan menyediakan konten yang relevan.",
+        "title_3": "3. Bagaimana Kami Menggunakan Informasi Anda",
+        "title_3_1": "3.1 Personalisasi:",
+        "desc_3_1": "Kami menggunakan informasi Anda untuk personalisasi pengalaman SosioMap Anda, menyesuaikan konten berdasarkan minat, lokasi, dan interaksi Anda dalam aplikasi.",
+        "title_3_2": "3.2 Komunikasi:",
+        "desc_3_2": "Kami dapat menggunakan informasi kontak Anda untuk mengirimkan pembaruan penting, pemberitahuan, dan informasi relevan tentang aplikasi dan fiturnya.",
+        "title_4": "4. Berbagi Informasi",
+        "title_4_1": "4.1 Interaksi Komunitas:",
+        "desc_4_1": "Informasi profil, posting, dan interaksi Anda dalam aplikasi dapat terlihat oleh pengguna lain sesuai dengan pengaturan privasi Anda.",
+        "title_4_2": "4.2 Layanan Pihak Ketiga:",
+        "desc_4_2": "Kami dapat membagikan informasi non-pribadi dengan layanan pihak ketiga untuk meningkatkan fungsionalitas SosioMap. Namun, informasi pribadi Anda tidak akan dijual atau dibagikan tanpa persetujuan Anda.",
+        "title_5": "5. Keamanan Data",
+        "desc_5": "Kami mengambil langkah-langkah untuk melindungi data Anda dari akses, perubahan, pengungkapan, atau penghancuran yang tidak sah. Namun, tidak ada transmisi data melalui internet yang sepenuhnya aman, dan kami tidak dapat menjamin keamanan mutlak.",
+        "title_6": "6. Privasi Anak-Anak",
+        "desc_6": "SosioMap tidak ditujukan untuk pengguna di bawah usia 13 tahun. Kami tidak sengaja mengumpulkan atau meminta informasi pribadi dari anak-anak. Jika Anda percaya bahwa kami telah mengumpulkan informasi dari seorang anak, harap hubungi kami segera.",
+        "title_7": "7. Perubahan pada Kebijakan Privasi Ini",
+        "desc_7": "Kami berhak memperbarui dan mengubah Kebijakan Privasi ini. Setiap perubahan akan efektif setelah diposting pada kebijakan yang direvisi di aplikasi. Kami mendorong Anda untuk secara berkala meninjau kebijakan ini.",
+        "title_8": "8. Hubungi Kami",
+        "desc_8": "Untuk pertanyaan, kekhawatiran, atau permintaan terkait privasi Anda, silakan hubungi kami di [{email}].",
+        "footer": "Dengan menggunakan SosioMap, Anda mengakui bahwa Anda telah membaca dan memahami Kebijakan Privasi ini dan menyetujui syarat-syaratnya."
+    },
+    "terms-and-conditions": {
+        "effective_date": "Tanggal Efektif : ",
+        "title_1": "1. Penerimaan Ketentuan",
+        "desc_1_1": "1.1 Dengan mengakses atau menggunakan aplikasi SosioMap (\"Aplikasi\"), Anda setuju untuk mematuhi dan terikat oleh Ketentuan ini. Jika Anda tidak setuju dengan ketentuan ini, harap hindari penggunaan Aplikasi.",
+        "title_2": "2. Penggunaan Aplikasi",
+        "desc_2_1": "2.1 Anda harus berusia setidaknya 13 tahun untuk menggunakan Aplikasi. Jika Anda berusia di bawah 13 tahun, harap hentikan penggunaan Aplikasi.",
+        "desc_2_2": "2.2 Anda bertanggung jawab untuk menjaga kerahasiaan informasi akun Anda dan untuk semua kegiatan yang terjadi di bawah akun Anda.",
+        "desc_2_3": "2.3 Anda setuju untuk menggunakan Aplikasi sesuai dengan semua hukum dan peraturan yang berlaku.",
+        "title_3": "3. Konten Pengguna",
+        "desc_3_1": "3.1 Dengan memposting konten di SosioMap, Anda memberikan lisensi non-eksklusif dan bebas royalti kepada Aplikasi untuk menggunakan, mengubah, dan menampilkan konten tersebut untuk tujuan menyediakan dan meningkatkan layanan.",
+        "desc_3_2": "3.2 Anda sepenuhnya bertanggung jawab atas konten yang Anda posting, dan konten tersebut tidak boleh melanggar hak pihak ketiga atau hukum yang berlaku.",
+        "title_4": "4. Privasi",
+        "desc_4_1": "4.1 Penggunaan Aplikasi juga tunduk pada Kebijakan Privasi kami. Dengan menggunakan Aplikasi, Anda menyetujui pengumpulan, penggunaan, dan berbagi informasi sebagaimana dijelaskan dalam Kebijakan Privasi.",
+        "title_5": "5. Kekayaan Intelektual",
+        "desc_5_1": "5.1 Aplikasi beserta kontennya, fitur, dan fungsionalitas aslinya dimiliki oleh SosioMap dan dilindungi oleh hukum hak cipta, merek dagang, paten, rahasia dagang, dan hak kekayaan intelektual atau hak milik lainnya.",
+        "title_6": "6. Pengakhiran",
+        "desc_6_1": "6.1 SosioMap berhak untuk mengakhiri atau menangguhkan akun dan akses Anda ke Aplikasi atas kebijaksanaan sendiri, tanpa pemberitahuan sebelumnya, atas alasan apa pun, termasuk tetapi tidak terbatas pada pelanggaran Ketentuan ini.",
+        "title_7": "7. Perubahan pada Ketentuan",
+        "desc_7_1": "7.1 SosioMap berhak untuk memperbarui dan mengubah Ketentuan ini. Setiap perubahan akan efektif setelah diposting pada ketentuan yang direvisi di Aplikasi. Kewajiban Anda untuk meninjau ketentuan ini secara berkala.",
+        "title_8": "8. Penafian",
+        "desc_8_1": "8.1 Aplikasi disediakan dalam keadaan \"sebagaimana adanya\" dan \"sebagaimana tersedia\". SosioMap tidak membuat pernyataan atau jaminan dari jenis apapun, secara langsung maupun tersirat, mengenai operasi Aplikasi atau informasi, konten, materi, atau produk yang termasuk di dalamnya.",
+        "title_9": "9. Hubungi Kami",
+        "desc_9_1": "9.1 Untuk pertanyaan, kekhawatiran, atau pertanyaan mengenai Ketentuan ini, silakan hubungi kami di [{email}].",
+        "footer": "Dengan menggunakan SosioMap, Anda mengakui bahwa Anda telah membaca dan memahami Ketentuan ini dan setuju untuk mematuhinya."
     }
 }

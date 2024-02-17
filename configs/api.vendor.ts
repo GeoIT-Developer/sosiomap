@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { HOST as HOST_BE } from './api';
 
 const HOST = axios.create();
 
@@ -20,7 +21,7 @@ export type ParamsKPUType = {
 const API_VENDOR = {
     searchOSM: (txt: string) => HOST.get(`/api/osm`, { params: { txt } }),
     getDataKPU: ({ id, timestamp, type }: ParamsKPUType) =>
-        HOST.get(`/api/kpu`, { params: { id, timestamp, type } }),
+        HOST_BE.get(`vendor/kpu`, { params: { id, timestamp, type } }),
 };
 
 export default API_VENDOR;

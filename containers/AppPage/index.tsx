@@ -13,9 +13,10 @@ import BasemapProvider from '@/contexts/BasemapContext';
 import { MapLibreProvider } from '@/contexts/MapLibreContext';
 import useWideScreen from '@/hooks/useWideScreen';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 import { LOCAL_STORAGE } from '@/utils/constant';
 import { TopicType, useActiveTopic, useMainTopic } from '@/hooks/useTopic';
+import { useI18n } from '@/locales/client';
 
 const ActiveTopicContext = createContext<{
     setActiveTopic: (
@@ -37,6 +38,7 @@ export function useActiveTopicContext() {
 }
 
 export default function AppPage() {
+    const t = useI18n();
     const [hashRouter, setHashRouter] = useHashRouter();
     const mainTopic = useMainTopic();
     const [activeTopic, setActiveTopic] = useLocalStorage(
@@ -46,6 +48,28 @@ export default function AppPage() {
     const { activeTopic: activeTopicType, refreshTopic } = useActiveTopic();
 
     const isWide = useWideScreen();
+
+    useEffect(() => {
+        const title = t('app.name');
+        switch (hashRouter) {
+            case LIST_ROUTE.MENU:
+                document.title = title + ' - ' + t('navigation.menu');
+                break;
+            case LIST_ROUTE.CHAT:
+                document.title = title + ' - ' + t('navigation.chat');
+                break;
+            case LIST_ROUTE.EXPLORE:
+                document.title = title + ' - ' + t('navigation.explore');
+                break;
+            case LIST_ROUTE.PROFILE:
+                document.title = title + ' - ' + t('navigation.profile');
+                break;
+
+            default:
+                document.title = title;
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [hashRouter]);
 
     return (
         <ActiveTopicContext.Provider

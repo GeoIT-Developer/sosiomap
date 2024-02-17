@@ -21,10 +21,10 @@ import MyImage from '@/components/preview/MyImage';
 import { ASSETS, ROUTE } from '@/utils/constant';
 import { useSession } from 'next-auth/react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { useRouter } from 'next/navigation';
-import PhonelinkEraseIcon from '@mui/icons-material/PhonelinkErase';
+// import PhonelinkEraseIcon from '@mui/icons-material/PhonelinkErase';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useLogout from '@/hooks/useLogout';
+import { ReactNode } from 'react';
 
 type UseChangeLocaleType = typeof useChangeLocale;
 type NewLocaleType = Parameters<ReturnType<UseChangeLocaleType>>[0];
@@ -34,10 +34,14 @@ export default function PageAppBar() {
     const changeLocale = useChangeLocale();
     const { mode, toggleColorMode } = useThemeMode();
     const session = useSession();
-    const router = useRouter();
     const logout = useLogout();
 
-    const LIST_MORE_MENU = [
+    const LIST_MORE_MENU: {
+        id: string;
+        label: string;
+        url: string;
+        icon?: ReactNode;
+    }[] = [
         {
             id: 'about',
             label: t('navigation.about'),
@@ -53,15 +57,16 @@ export default function PageAppBar() {
             label: t('navigation.terms_and_conditions'),
             url: ROUTE.TERMS_AND_CONDITIONS.URL,
         },
-        {
-            divider: true,
-        },
-        {
-            id: 'clear_data',
-            label: t('navigation.clear_data'),
-            url: ROUTE.CLEAR_DATA.URL,
-            icon: <PhonelinkEraseIcon fontSize='small' />,
-        },
+        // {
+        //     divider: true,
+        // },
+        // {
+        //     id: 'clear_data',
+        //     label: t('navigation.clear_data'),
+        //     url: ROUTE.CLEAR_DATA.URL,
+        //     icon: <PhonelinkEraseIcon fontSize='small' />,
+        //     hide: true,
+        // },
     ];
 
     return (
@@ -128,38 +133,38 @@ export default function PageAppBar() {
                                 </IconButton>
                             }
                         >
-                            {LIST_MORE_MENU.map((item, idx) => {
-                                if (item.id) {
-                                    return (
-                                        <MenuItem
-                                            key={item.id}
-                                            onClick={() =>
-                                                router.push(item.url)
-                                            }
-                                        >
-                                            {item.icon && (
-                                                <ListItemIcon>
-                                                    {item.icon}
-                                                </ListItemIcon>
-                                            )}
+                            {LIST_MORE_MENU.map((item) => {
+                                return (
+                                    <MenuItem
+                                        key={item.id}
+                                        onClick={() =>
+                                            window.open(item.url, '_blank')
+                                        }
+                                    >
+                                        {item.icon && (
+                                            <ListItemIcon>
+                                                {item.icon}
+                                            </ListItemIcon>
+                                        )}
 
-                                            <ListItemText>
-                                                {item.label}
-                                            </ListItemText>
-                                        </MenuItem>
-                                    );
-                                }
-                                return <Divider key={idx} />;
+                                        <ListItemText>
+                                            {item.label}
+                                        </ListItemText>
+                                    </MenuItem>
+                                );
                             })}
                             {session.status === 'authenticated' && (
-                                <MenuItem onClick={() => logout.signout()}>
-                                    <ListItemIcon>
-                                        <LogoutIcon fontSize='small' />
-                                    </ListItemIcon>
-                                    <ListItemText>
-                                        {t('button.logout')}
-                                    </ListItemText>
-                                </MenuItem>
+                                <>
+                                    <Divider />
+                                    <MenuItem onClick={() => logout.signout()}>
+                                        <ListItemIcon>
+                                            <LogoutIcon fontSize='small' />
+                                        </ListItemIcon>
+                                        <ListItemText>
+                                            {t('button.logout')}
+                                        </ListItemText>
+                                    </MenuItem>
+                                </>
                             )}
                         </BasicMenu>
                     </Box>

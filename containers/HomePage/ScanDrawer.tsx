@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { myTurf } from '@/utils/helper';
 import { useMapLibreContext } from '@/contexts/MapLibreContext';
 import useWideScreen from '@/hooks/useWideScreen';
+import { toast } from 'react-toastify';
 
 type Props = {
     userLocation: MyLocation | null;
@@ -58,6 +59,10 @@ export default function ScanDrawer({ userLocation, posts }: Props) {
         setListScanData(filteredData);
         if (filteredData.length > 0) {
             toggleDrawer(true)(e);
+        } else {
+            toast.error(t('message.error.no_post_found_in_your_area'), {
+                theme: 'colored',
+            });
         }
     }
 

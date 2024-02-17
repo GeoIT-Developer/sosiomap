@@ -1,7 +1,9 @@
+import DownloadDataPage from '@/containers/DownloadDataPage';
+
 export default async function Home() {
     return (
         <main>
-            <p>Download Data</p>
+            <DownloadDataPage />
         </main>
     );
 }

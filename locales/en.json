@@ -1,7 +1,7 @@
 {
     "app": {
         "name": "SosioMap",
-        "description": "A map based social media apps to share and discuss everything around you"
+        "description": "A map based social media apps to share and discuss everything around you~"
     },
     "label": {
         "message": "Message",
@@ -46,7 +46,8 @@
             "geolocation_denied": "Please enable location services!",
             "message_at_least_minimum": "The message should be at least 5 characters long!",
             "feature_need_geolocation": "Location data must be activated to use this feature!",
-            "max_file": "Maximum number of files is {max} files!"
+            "max_file": "Maximum number of files is {max} files!",
+            "no_post_found_in_your_area": "No post found in your current map area!"
         },
         "info": {
             "login_to_continue": "Please login to continue!",
@@ -142,5 +143,69 @@
             "kecurangan_desc": "Report and share fraud or cheating of any President, Political Party, and/or Legislative Candidates.",
             "spanduk_ilegal_desc": "Report and share Illegal Banner that installed in your area."
         }
+    },
+    "about": {
+        "desc": "Embark on a unique social journey with SosioMap, an innovative app designed to bring your local community closer than ever before. Immerse yourself in a dynamic and interactive map-based social media platform where the world around you becomes a canvas for sharing and discussing everything that matters.",
+        "title_1": "Discover Your Surroundings",
+        "desc_1": "SosioMap goes beyond traditional social media by integrating geographical elements into your social experience. Share and explore stories, events, news, and more, all centered around your specific location. Whether you're a local enthusiast or a traveler looking to connect with new communities, SosioMap provides a personalized and immersive social space.",
+        "title_2": "Engage in Meaningful Conversations",
+        "desc_2": "Create meaningful conversations through the app's user-friendly interface. From sharing your personal stories to discussing community events, SosioMap fosters a diverse range of topics that cater to your interests and the pulse of your surroundings.",
+        "title_3": "Explore Main Categories",
+        "desc_3": "SosioMap's main categories offer a comprehensive range of topics to cater to every facet of your life:",
+        "our_team": "Our Team"
+    },
+    "privacy-policy": {
+        "effective_date": "Effective Date : ",
+        "title_1": "1. Overview",
+        "desc_1": "Thank you for choosing SosioMap, a map-based social media app designed to enhance your social experience. This Privacy Policy outlines how we collect, use, disclose, and protect your information when you use our services. By using SosioMap, you agree to the terms outlined in this policy.",
+        "title_2": "2. Information We Collect",
+        "title_2_1": "2.1 Personal Information:",
+        "desc_2_1": "We may collect personal information such as your name, email address, and location to provide you with a personalized and immersive social experience. This information is collected with your consent.",
+        "title_2_2": "2.2 Usage Data:",
+        "desc_2_2": "We gather data on how you interact with the app, including but not limited to, the topics you engage with, posts you create, and your interactions with other users. This helps us improve the app and provide relevant content.",
+        "title_3": "3. How We Use Your Information",
+        "title_3_1": "3.1 Personalization:",
+        "desc_3_1": "We use your information to personalize your SosioMap experience, tailoring content based on your interests, location, and interactions within the app.",
+        "title_3_2": "3.2 Communication:",
+        "desc_3_2": "We may use your contact information to send you important updates, notifications, and relevant information about the app and its features.",
+        "title_4": "4. Information Sharing",
+        "title_4_1": "4.1 Community Interaction:",
+        "desc_4_1": "Your profile information, posts, and interactions within the app may be visible to other users according to your privacy settings.",
+        "title_4_2": "4.2 Third-Party Services:",
+        "desc_4_2": "We may share non-personal information with third-party services to enhance the functionality of SosioMap. However, your personal information will not be sold or shared without your consent.",
+        "title_5": "5. Data Security",
+        "desc_5": "We take measures to protect your data from unauthorized access, alteration, disclosure, or destruction. However, no data transmission over the internet is completely secure, and we cannot guarantee absolute security.",
+        "title_6": "6. Children's Privacy",
+        "desc_6": "SosioMap is not intended for users under the age of 13. We do not knowingly collect or solicit personal information from children. If you believe we have collected information from a child, please contact us immediately.",
+        "title_7": "7. Changes to this Privacy Policy",
+        "desc_7": "We reserve the right to update and modify this Privacy Policy. Any changes will be effective upon posting the revised policy on the app. We encourage you to review this policy periodically.",
+        "title_8": "8. Contact Us",
+        "desc_8": "For any questions, concerns, or requests regarding your privacy, please contact us at [{email}].",
+        "footer": "By using SosioMap, you acknowledge that you have read and understood this Privacy Policy and agree to its terms."
+    },
+    "terms-and-conditions": {
+        "effective_date": "Effective Date : ",
+        "title_1": "1. Acceptance of Terms",
+        "desc_1_1": "1.1 By accessing or using the SosioMap application (\"the App\"), you agree to comply with and be bound by these Terms and Conditions. If you do not agree with these terms, please refrain from using the App.",
+        "title_2": "2. Use of the App",
+        "desc_2_1": "2.1 You must be at least 13 years old to use the App. If you are under 13, please discontinue the use of the App.",
+        "desc_2_2": "2.2 You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.",
+        "desc_2_3": "2.3 You agree to use the App in compliance with all applicable laws and regulations.",
+        "title_3": "3. User Content",
+        "desc_3_1": "3.1 By posting content on SosioMap, you grant the App a non-exclusive, royalty-free license to use, modify, and display the content for the purpose of providing and improving the service.",
+        "desc_3_2": "3.2 You are solely responsible for the content you post, and it must not violate any third-party rights or applicable laws.        ",
+        "title_4": "4. Privacy",
+        "desc_4_1": "4.1 Your use of the App is also governed by our Privacy Policy. By using the App, you consent to the collection, use, and sharing of information as described in the Privacy Policy.",
+        "title_5": "5. Intellectual Property",
+        "desc_5_1": "5.1 The App and its original content, features, and functionality are owned by SosioMap and are protected by international copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws.",
+        "title_6": "6. Termination",
+        "desc_6_1": "6.1 SosioMap reserves the right to terminate or suspend your account and access to the App at its sole discretion, without prior notice, for any reason, including but not limited to a breach of these Terms and Conditions.",
+        "title_7": "7. Changes to Terms",
+        "desc_7_1": "7.1 SosioMap reserves the right to update and modify these Terms and Conditions. Any changes will be effective upon posting the revised terms on the App. It is your responsibility to review these terms periodically.",
+        "title_8": "8. Disclaimer",
+        "desc_8_1": "8.1 The App is provided on an \"as-is\" and \"as-available\" basis. SosioMap makes no representations or warranties of any kind, express or implied, regarding the App's operation or the information, content, materials, or products included on the App.",
+        "title_9": "9. Contact Us",
+        "desc_9_1": "9.1 For any questions, concerns, or inquiries regarding these Terms and Conditions, please contact us at [{email}].",
+        "footer": "By using SosioMap, you acknowledge that you have read and understood these Terms and Conditions and agree to abide by them."
     }
 }

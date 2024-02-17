@@ -8,7 +8,7 @@ import { PostPostParamsInterface } from '@/types/api/params/post-post.interface'
 import { GetPublicMapPostParamsInterface } from '@/types/api/params/get-public-map-post.interface';
 import { PostCommentParamsInterface } from '@/types/api/params/post-comment.interface';
 
-const HOST = axios.create({
+export const HOST = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 

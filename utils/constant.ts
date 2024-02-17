@@ -59,6 +59,7 @@ export const ASSETS = {
     MARKER: '/img/marker/',
     ICON: '/img/icon/',
     PLACEHOLDER: '/img/placeholder/',
+    TEAM: '/img/team/',
 };
 
 export const IDs = {

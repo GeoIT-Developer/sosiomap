@@ -129,7 +129,7 @@ export default function KPULayer() {
                             onClick={() => {
                                 const properties = eFeature.properties;
                                 const unixTime = Date.now();
-                                apiKPU.clearData();
+                                setListData([]);
                                 apiKPU.call({
                                     id: `${
                                         properties.id_provins
@@ -251,7 +251,7 @@ export default function KPULayer() {
                             onClick={() => {
                                 const properties = eFeature.properties;
                                 const unixTime = Date.now();
-                                apiKPU.clearData();
+                                setListData([]);
                                 apiKPU.call({
                                     id: properties.kdppum,
                                     timestamp: unixTime,
@@ -371,7 +371,7 @@ export default function KPULayer() {
                             onClick={() => {
                                 const properties = eFeature.properties;
                                 const unixTime = Date.now();
-                                apiKPU.clearData();
+                                setListData([]);
                                 apiKPU.call({
                                     id: `${properties.id_provins}${
                                         properties.id_kabkot
@@ -493,7 +493,7 @@ export default function KPULayer() {
                             onClick={() => {
                                 const properties = eFeature.properties;
                                 const unixTime = Date.now();
-                                apiKPU.clearData();
+                                setListData([]);
                                 apiKPU.call({
                                     id: `${properties.id_provins}${
                                         properties.id_kabkot
