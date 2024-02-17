@@ -14,7 +14,7 @@ const authOptions: AuthOptions = {
     providers: [
         KeycloakProvider({
             clientId: process.env.NEXTAUTH_CLIENT_ID || '',
-            clientSecret: process.env.NEXTAUTH_MY_SECRET || '',
+            clientSecret: process.env.NEXTAUTH_SECRET || '',
             issuer: `${process.env.NEXTAUTH_URL_IAM}realms/${process.env.NEXTAUTH_REALM_IAM}`,
             authorization: { params: { scope: 'openid offline_access' } },
         }),
@@ -45,7 +45,7 @@ const authOptions: AuthOptions = {
                         },
                         body: new URLSearchParams({
                             client_id: process.env.NEXTAUTH_CLIENT_ID || '',
-                            client_secret: process.env.NEXTAUTH_MY_SECRET || '',
+                            client_secret: process.env.NEXTAUTH_SECRET || '',
                             grant_type: 'refresh_token',
                             refresh_token: token.refresh_token || '',
                         }),
