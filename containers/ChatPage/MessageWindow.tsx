@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import MessageBox from './MessageBox';
 import { Box, Chip, Divider } from '@mui/material';
-import { formatDateTime, getDateLabel } from '@/utils/helper';
+import { getDateLabel } from '@/utils/helper';
 import {
     AutoSizer,
     List,
@@ -34,8 +34,6 @@ export default function MessageWindow({ messages }: Props) {
         }
     }, [messages]);
 
-    let currentDate: string = '';
-
     function getFormatDateLabel(eDate: string) {
         const eLabel = eDate ? getDateLabel(eDate) : '';
         return eLabel === 'today' || eLabel === 'yesterday'
@@ -64,14 +62,7 @@ export default function MessageWindow({ messages }: Props) {
             >
                 {({ registerChild }) => {
                     const item = messages[index];
-
-                    const itemDate = formatDateTime(
-                        item.created_at,
-                        'YYYY-MM-DD',
-                    );
-                    const isNewDate = currentDate !== itemDate;
-                    if (isNewDate) {
-                        currentDate = itemDate;
+                    if (item.rootLabelDate) {
                         return (
                             <div
                                 key={index}

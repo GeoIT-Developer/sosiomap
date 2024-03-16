@@ -29,6 +29,7 @@ import useAPI from '@/hooks/useAPI';
 import { GetPublicChatParamsInterface } from '@/types/api/params/get-public-chat.interface';
 import useRefresh from '@/hooks/useRefresh';
 import { ObjectLiteral } from '@/types/object-literal.interface';
+import { formatDateTime } from '@/utils/helper';
 
 function valueKeyToDistance(value: number) {
     switch (value) {
@@ -81,7 +82,21 @@ export default function ChatPage({ show = true }: { show?: boolean }) {
     >(API.getPublicChat, {
         listkey: 'data',
         onSuccess: (_raw, res) => {
-            setListChat((res?.list || []).slice().reverse());
+            const reverseList = (res?.list || []).slice().reverse();
+
+            let currentDate: string = '';
+            const listWithLabel = reverseList.map((item) => {
+                const itemDate = formatDateTime(item.created_at, 'YYYY-MM-DD');
+                const isNewDate = currentDate !== itemDate;
+                let rootLabelDate = false;
+                if (isNewDate) {
+                    currentDate = itemDate;
+                    rootLabelDate = true;
+                }
+                return { ...item, rootLabelDate };
+            });
+
+            setListChat(listWithLabel);
         },
     });
 

@@ -9,4 +9,7 @@ export interface ChatDataInterface {
     created_at: string;
     updated_at?: null | string;
     deleted_at?: null | string;
+
+    // This is for the chat window date label
+    rootLabelDate?: boolean;
 }

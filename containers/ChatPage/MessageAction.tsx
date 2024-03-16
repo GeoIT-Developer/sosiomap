@@ -1,4 +1,4 @@
-import { Box, IconButton, TextField } from '@mui/material';
+import { Box, Button, IconButton, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -12,6 +12,7 @@ import useWideScreen from '@/hooks/useWideScreen';
 import useAPI from '@/hooks/useAPI';
 import { ObjectLiteral } from '@/types/object-literal.interface';
 import { PostChatParamsInterface } from '@/types/api/params/post-chat.interface';
+import MainFab from '@/components/button/MainFab';
 
 const MIN_MESSAGE_LENGTH = MAX_LENGTH.CHAT.MIN_CHAT;
 const MAX_MESSAGE_LENGTH = MAX_LENGTH.CHAT.MAX_CHAT;
@@ -89,9 +90,10 @@ export default function MessageAction({ geolocation, onRefresh }: Props) {
     };
 
     return (
-        <Box className='py-2 px-4 flex items-end'>
+        <Box className='py-2 px-4 flex items-end gap-2'>
             <TextField
-                variant='standard'
+                size='small'
+                variant='outlined'
                 className='flex-grow'
                 placeholder={t('label.message')}
                 multiline
@@ -99,14 +101,15 @@ export default function MessageAction({ geolocation, onRefresh }: Props) {
                 onChange={onChangeMessage}
                 onKeyDown={handleEnterKeyPress}
             />
-            <IconButton
+            <MainFab
+                size='small'
                 color='primary'
                 aria-label='send'
                 onClick={onClickSend}
                 disabled={apiPostChat.loading}
             >
                 <SendIcon />
-            </IconButton>
+            </MainFab>
         </Box>
     );
 }
