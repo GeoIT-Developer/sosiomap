@@ -17,4 +17,7 @@ const nextConfig = {
 };
 
 // module.exports = nextConfig;
-module.exports = withPWA(nextConfig);
+module.exports =
+    process.env.NEXT_PUBLIC_STAGE === 'PRODUCTION'
+        ? withPWA(nextConfig)
+        : nextConfig;

@@ -21,6 +21,9 @@ import MyImage from '@/components/preview/MyImage';
 import { ASSETS, ROUTE } from '@/utils/constant';
 import { useSession } from 'next-auth/react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import PrivacyTipOutlinedIcon from '@mui/icons-material/PrivacyTipOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
 // import PhonelinkEraseIcon from '@mui/icons-material/PhonelinkErase';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useLogout from '@/hooks/useLogout';
@@ -46,16 +49,19 @@ export default function PageAppBar() {
             id: 'about',
             label: t('navigation.about'),
             url: ROUTE.ABOUT.URL,
+            icon: <InfoOutlinedIcon fontSize='small' />,
         },
         {
             id: 'privacy-policy',
             label: t('navigation.privacy_policy'),
             url: ROUTE.PRIVACY_POLICY.URL,
+            icon: <PrivacyTipOutlinedIcon fontSize='small' />,
         },
         {
             id: 'terms-and-conditions',
             label: t('navigation.terms_and_conditions'),
             url: ROUTE.TERMS_AND_CONDITIONS.URL,
+            icon: <StickyNote2OutlinedIcon fontSize='small' />,
         },
         // {
         //     divider: true,

@@ -20,17 +20,52 @@ import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import 'yet-another-react-lightbox/plugins/captions.css';
 import 'react-virtualized/styles.css';
 
+const HEAD = {
+    TITLE: 'SosioMap',
+    DESCRIPTION:
+        'A map based social media apps to share and discuss everything around you~. Embark on a unique social journey with SosioMap, an innovative app designed to bring your local community closer than ever before. Immerse yourself in a dynamic and interactive map-based social media platform where the world around you becomes a canvas for sharing and discussing everything that matters.',
+    ICONS: '/favicon.ico',
+    IMAGE: '/logo512.png',
+    URL: process.env.NEXT_PUBLIC_HOST_URL || '',
+    MANIFEST: '/manifest.json',
+};
+
 export const metadata: Metadata = {
-    title: 'SosioMap',
-    description:
-        'A map based social media apps to share and discuss everything around you',
-    manifest: '/manifest.json',
-    icons: '/favicon.ico',
+    metadataBase: new URL(HEAD.URL),
+    title: HEAD.TITLE,
+    description: HEAD.DESCRIPTION,
+    manifest: HEAD.MANIFEST,
+    icons: HEAD.ICONS,
+    openGraph: {
+        title: HEAD.TITLE,
+        description: HEAD.DESCRIPTION,
+        images: HEAD.IMAGE,
+        url: HEAD.URL,
+        type: 'profile',
+    },
+    twitter: {
+        title: HEAD.TITLE,
+        description: HEAD.DESCRIPTION,
+        images: HEAD.IMAGE,
+        card: 'summary_large_image',
+    },
+    alternates: {
+        canonical: HEAD.URL,
+    },
 };
 
 export const viewport: Viewport = {
     themeColor: '#cc0004',
 };
+
+const SCHEMA_ORG = [
+    {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: HEAD.TITLE,
+        url: HEAD.URL,
+    },
+];
 
 export default function RootLayout({
     children,
@@ -44,6 +79,12 @@ export default function RootLayout({
     return (
         <html lang='en'>
             <body>
+                <script
+                    type='application/ld+json'
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(SCHEMA_ORG[0]),
+                    }}
+                />
                 <GoogleAnalytics />
                 <AppRouterCacheProvider>
                     <I18nProviderClient locale={locale}>
