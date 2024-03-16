@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, TextField } from '@mui/material';
+import { Box, CircularProgress, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -26,6 +26,7 @@ export default function MessageAction({ geolocation, onRefresh }: Props) {
     const t = useI18n();
     const [message, setMessage] = useState('');
     const isWide = useWideScreen();
+    const [loadingSendButton, setLoadingSendButton] = useState(false);
     const apiPostChat = useAPI<ObjectLiteral, PostChatParamsInterface>(
         API.postChat,
         {
@@ -67,6 +68,7 @@ export default function MessageAction({ geolocation, onRefresh }: Props) {
             });
             return;
         }
+        setLoadingSendButton(true);
         geolocation
             .getLatestGeolocation()
             .then((resLoc) => {
@@ -79,7 +81,8 @@ export default function MessageAction({ geolocation, onRefresh }: Props) {
             })
             .catch((err) => {
                 toast(err);
-            });
+            })
+            .finally(() => setLoadingSendButton(false));
     };
 
     const handleEnterKeyPress = (event: any) => {
@@ -106,9 +109,13 @@ export default function MessageAction({ geolocation, onRefresh }: Props) {
                 color='primary'
                 aria-label='send'
                 onClick={onClickSend}
-                disabled={apiPostChat.loading}
+                disabled={loadingSendButton || apiPostChat.loading}
             >
-                <SendIcon />
+                {loadingSendButton || apiPostChat.loading ? (
+                    <CircularProgress size={24} />
+                ) : (
+                    <SendIcon />
+                )}
             </MainFab>
         </Box>
     );
