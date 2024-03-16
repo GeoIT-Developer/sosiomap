@@ -36,7 +36,7 @@ export default function StandardPost({ post, userLocation }: Props) {
     const t = useI18n();
     return (
         <Box>
-            <ListItem className='!items-start cursor-pointer'>
+            <ListItem className='!px-0'>
                 <ListItemAvatar>
                     <Avatar
                         sx={{
@@ -60,48 +60,14 @@ export default function StandardPost({ post, userLocation }: Props) {
                         className: '!text-sm ',
                     }}
                     secondary={
-                        <Stack spacing={1}>
-                            {post.title && (
-                                <Typography
-                                    component='p'
-                                    variant='body1'
-                                    className='block break-all whitespace-pre-line'
-                                >
-                                    {post.title}
-                                </Typography>
-                            )}
-
-                            <Typography component='p' variant='body2'>
-                                {post.body}
-                            </Typography>
-
-                            <Box>
-                                <ImageVideoStandard
-                                    media={post.media.map((item) => ({
-                                        url: item.file_url,
-                                        fileType: getMimeTypeFromURL(
-                                            item.file_url,
-                                        ),
-                                        caption: item.caption,
-                                    }))}
-                                />
-                            </Box>
-
-                            <Stack direction='row' spacing={2}>
-                                <TextsmsOutlinedIcon fontSize='small' />
-                                <FavoriteBorderOutlinedIcon fontSize='small' />
-                                <BarChartOutlinedIcon fontSize='small' />
-                            </Stack>
-                            <Typography
-                                component='time'
-                                variant='caption'
-                                className='text-right !text-xs !-mt-4 block'
-                            >
+                        <div className='justify-between flex'>
+                            <Typography className='!text-xs'>
                                 {formatDateTime(
                                     post.createdAt,
-                                    'HH:mm, DD MMM',
+                                    'DD MMM YYYY - HH:mm',
                                 )}
-                                {' | '}
+                            </Typography>
+                            <Typography className='!text-xs'>
                                 {formatDistance(
                                     calculateManhattanDistance(
                                         userLocation?.latitude || 0,
@@ -112,13 +78,45 @@ export default function StandardPost({ post, userLocation }: Props) {
                                 )}
                                 {t('unit.km')}
                             </Typography>
-                        </Stack>
+                        </div>
                     }
                     secondaryTypographyProps={{
+                        className: '!text-xs ',
                         component: 'div',
                     }}
                 />
             </ListItem>
+            <Stack spacing={1} className='px-0'>
+                {post.title && (
+                    <Typography
+                        component='p'
+                        variant='body1'
+                        className='block break-all whitespace-pre-line'
+                    >
+                        {post.title}
+                    </Typography>
+                )}
+
+                <Typography component='p' variant='body2'>
+                    {post.body}
+                </Typography>
+
+                <Box>
+                    <ImageVideoStandard
+                        media={post.media.map((item) => ({
+                            url: item.file_url,
+                            fileType: getMimeTypeFromURL(item.file_url),
+                            caption: item.caption,
+                        }))}
+                    />
+                </Box>
+
+                <Stack direction='row' spacing={2}>
+                    <TextsmsOutlinedIcon fontSize='small' />
+                    <FavoriteBorderOutlinedIcon fontSize='small' />
+                    <BarChartOutlinedIcon fontSize='small' />
+                </Stack>
+            </Stack>
             <SocialMediaPost postUrlProps={post.post_url} />
             <Divider className='!mt-2'>{t('post.comment')}</Divider>
             <CommentPage postId={post._id} />

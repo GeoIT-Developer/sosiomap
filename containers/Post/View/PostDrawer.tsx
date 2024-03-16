@@ -29,6 +29,7 @@ export default function PostDrawer({
     return (
         <>
             <CommonDrawer
+                key={post._id}
                 anchor={isWide ? 'right' : 'bottom'}
                 open={openDrawer}
                 toggleDrawer={toggleDrawer}

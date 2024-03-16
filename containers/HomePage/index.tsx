@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react';
 import { useMapLibreContext } from '@/contexts/MapLibreContext';
 import { getLngLat, getMapLibreCoordinate, truncateText } from '@/utils/helper';
 import { useI18n } from '@/locales/client';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { TopicType } from '@/hooks/useTopic';
 import ChooseLocationEnum from '@/types/choose-location.enum';
 import LayerDrawer from './LayerDrawer';
@@ -45,6 +45,8 @@ import ScanDrawer from './ScanDrawer';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import KPULayer from './custom/kpu/index.tsx';
 import { useActiveTopicContext } from '../AppPage';
+import NewStoryButton from './NewStoryButton';
+import useQueryParams from '@/hooks/useQueryParams';
 
 export default function HomePage({ show = true }: { show?: boolean }) {
     const t = useI18n();
@@ -64,6 +66,9 @@ export default function HomePage({ show = true }: { show?: boolean }) {
     );
     const [searchTxt, setSearchTxt] = useTermDebounce('', 850);
     const [inputSearch, setInputSearch] = useState('');
+
+    const queryParams = useQueryParams();
+    const searchParams = useSearchParams();
 
     const { list: listOptions, ...apiSearchOSM } = useAPI<
         SearchOSMInterface,
@@ -152,7 +157,8 @@ export default function HomePage({ show = true }: { show?: boolean }) {
     );
     const [openDrawer, setOpenDrawer] = useState(false);
     const toggleDrawer =
-        (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+        (open: boolean, post?: MapPostDataInterface) =>
+        (event: React.KeyboardEvent | React.MouseEvent) => {
             if (
                 event &&
                 event.type === 'keydown' &&
@@ -162,7 +168,24 @@ export default function HomePage({ show = true }: { show?: boolean }) {
                 return;
             }
             setOpenDrawer(open);
+            if (open) {
+                if (post?._id) {
+                    queryParams.addParam('post-id', post._id);
+                }
+            } else {
+                queryParams.clearParams();
+            }
         };
+
+    useEffect(() => {
+        if (!openDrawer) return;
+        const postId = selectedPost._id;
+        const postIdParams = searchParams.get('post-id');
+        if (postIdParams !== postId) {
+            setOpenDrawer(false);
+        }
+    }, [searchParams]);
+
     useEffect(() => {
         const layerSrc = 'map-post-src';
         const layerId = 'map-post-layer';
@@ -187,7 +210,7 @@ export default function HomePage({ show = true }: { show?: boolean }) {
                 );
                 if (findPost) {
                     setSelectedPost(findPost);
-                    toggleDrawer(true)(e as any);
+                    toggleDrawer(true, findPost)(e as any);
                 }
             }
         };
@@ -417,6 +440,8 @@ export default function HomePage({ show = true }: { show?: boolean }) {
             </Stack>
 
             <Stack spacing={2} className='absolute z-10 bottom-4 right-4'>
+                {!showMarker && <NewStoryButton />}
+
                 {!showMarker && (
                     <NewPostDialog
                         setShowMarker={setShowMarker}

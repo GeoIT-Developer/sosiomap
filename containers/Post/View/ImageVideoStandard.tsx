@@ -61,7 +61,7 @@ export default function ImageVideoStandard({ media }: Props) {
                 className='overflow-x-auto py-2'
                 style={{ minWidth: '300px' }}
             >
-                {media.slice(0, 2).map((item, idx) => {
+                {media.map((item, idx) => {
                     return (
                         <IconButton
                             key={idx}
@@ -103,32 +103,6 @@ export default function ImageVideoStandard({ media }: Props) {
                         </IconButton>
                     );
                 })}
-
-                {media.length > 2 && (
-                    <IconButton
-                        onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setOpenLightBox({
-                                open: true,
-                                index: 3,
-                            });
-                        }}
-                        className='w-fit h-fit !rounded-none !p-0 !text-center !bg-slate-700'
-                    >
-                        <Typography
-                            variant='body1'
-                            className='!text-6xl pt-3'
-                            style={{
-                                width: '5rem',
-                                height: '5rem',
-                                borderRadius: '0.5rem',
-                            }}
-                        >
-                            +{media.length - 2}
-                        </Typography>
-                    </IconButton>
-                )}
             </Stack>
         </Stack>
     );

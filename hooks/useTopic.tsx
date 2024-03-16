@@ -57,12 +57,18 @@ export type TopicType = {
     };
 };
 
+export const TOPIC = {
+    USER_STORIES: {
+        id: 'user_stories',
+    },
+};
+
 export const useMainTopic = () => {
     const t = useScopedI18n('topic');
     const mainTopic: TopicType[] = useMemo(
         (): TopicType[] => [
             {
-                id: 'user_stories',
+                id: TOPIC.USER_STORIES.id,
                 label: t('main.user_stories'),
                 description: t('main.user_stories_desc'),
                 group: t('main_topics'),

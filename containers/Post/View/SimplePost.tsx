@@ -24,8 +24,10 @@ import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import ImageVideoSimple from './ImageVideoSimple';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PostDrawer from './PostDrawer';
+import useQueryParams from '@/hooks/useQueryParams';
+import { useSearchParams } from 'next/navigation';
 
 type Props = {
     post: MapPostDataInterface;
@@ -36,6 +38,10 @@ type Props = {
 export default function SimplePost({ post, style, userLocation }: Props) {
     const t = useI18n();
     const [openDrawer, setOpenDrawer] = useState(false);
+
+    const queryParams = useQueryParams();
+    const searchParams = useSearchParams();
+
     const toggleDrawer =
         (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
             if (event) {
@@ -50,15 +56,26 @@ export default function SimplePost({ post, style, userLocation }: Props) {
                 return;
             }
             setOpenDrawer(open);
+            if (open) {
+                queryParams.addParam('post-id', post._id);
+            } else {
+                queryParams.clearParams();
+            }
         };
+
+    useEffect(() => {
+        if (!openDrawer) return;
+        const postId = post._id;
+        const postIdParams = searchParams.get('post-id');
+        if (postIdParams !== postId) {
+            setOpenDrawer(false);
+        }
+    }, [searchParams]);
 
     return (
         <>
             <Box style={style}>
-                <ListItem
-                    className='!items-start cursor-pointer'
-                    onClick={toggleDrawer(true)}
-                >
+                <ListItem>
                     <ListItemAvatar>
                         <Avatar
                             sx={{
@@ -82,48 +99,14 @@ export default function SimplePost({ post, style, userLocation }: Props) {
                             className: '!text-sm ',
                         }}
                         secondary={
-                            <Stack spacing={1}>
-                                {post.title && (
-                                    <Typography
-                                        component='p'
-                                        variant='body1'
-                                        className='block break-all whitespace-pre-line'
-                                    >
-                                        {post.title}
-                                    </Typography>
-                                )}
-
-                                <Typography component='p' variant='body2'>
-                                    {post.body}
-                                </Typography>
-
-                                <Box>
-                                    <ImageVideoSimple
-                                        media={post.media.map((item) => ({
-                                            url: item.file_url,
-                                            fileType: getMimeTypeFromURL(
-                                                item.file_url,
-                                            ),
-                                            caption: item.caption,
-                                        }))}
-                                    />
-                                </Box>
-
-                                <Stack direction='row' spacing={2}>
-                                    <TextsmsOutlinedIcon fontSize='small' />
-                                    <FavoriteBorderOutlinedIcon fontSize='small' />
-                                    <BarChartOutlinedIcon fontSize='small' />
-                                </Stack>
-                                <Typography
-                                    component='time'
-                                    variant='caption'
-                                    className='text-right !text-xs !-mt-4 block'
-                                >
+                            <div className='justify-between flex'>
+                                <Typography className='!text-xs'>
                                     {formatDateTime(
                                         post.createdAt,
-                                        'HH:mm, DD MMM',
+                                        'DD MMM YYYY - HH:mm',
                                     )}
-                                    {' | '}
+                                </Typography>
+                                <Typography className='!text-xs'>
                                     {formatDistance(
                                         calculateManhattanDistance(
                                             userLocation?.latitude || 0,
@@ -134,13 +117,49 @@ export default function SimplePost({ post, style, userLocation }: Props) {
                                     )}
                                     {t('unit.km')}
                                 </Typography>
-                            </Stack>
+                            </div>
                         }
                         secondaryTypographyProps={{
+                            className: '!text-xs ',
                             component: 'div',
                         }}
                     />
                 </ListItem>
+                <Stack
+                    spacing={1}
+                    className='px-4 pb-4 cursor-pointer'
+                    onClick={toggleDrawer(true)}
+                >
+                    {post.title && (
+                        <Typography
+                            component='p'
+                            variant='body1'
+                            className='block break-all whitespace-pre-line'
+                        >
+                            {post.title}
+                        </Typography>
+                    )}
+
+                    <Typography component='p' variant='body2'>
+                        {post.body}
+                    </Typography>
+
+                    <Box>
+                        <ImageVideoSimple
+                            media={post.media.map((item) => ({
+                                url: item.file_url,
+                                fileType: getMimeTypeFromURL(item.file_url),
+                                caption: item.caption,
+                            }))}
+                        />
+                    </Box>
+
+                    <Stack direction='row' spacing={2}>
+                        <TextsmsOutlinedIcon fontSize='small' />
+                        <FavoriteBorderOutlinedIcon fontSize='small' />
+                        <BarChartOutlinedIcon fontSize='small' />
+                    </Stack>
+                </Stack>
                 <Divider />
             </Box>
 

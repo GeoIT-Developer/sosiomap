@@ -1,10 +1,17 @@
-import { Stack, TextField } from '@mui/material';
+import {
+    Checkbox,
+    FormControlLabel,
+    FormGroup,
+    Stack,
+    TextField,
+} from '@mui/material';
 import SocialMediaPost, { SocialMediaURLType } from './SocialMediaPost';
 import { useI18n } from '@/locales/client';
 import { MAX_LENGTH } from '@/utils/constant';
 import ImageVideoUploadCarousel, {
     TheFileType,
 } from '@/components/input/FileUpload/ImageVideoUploadCarousel';
+import { useState } from 'react';
 
 const MaxLength = MAX_LENGTH.POST.CAROUSEL;
 
@@ -29,23 +36,32 @@ export default function CarouselPost({
     onChangeInputFiles,
 }: Props) {
     const t = useI18n();
+
+    const [showField, setShowField] = useState({
+        title: false,
+        socialMediaPost: false,
+    });
+
     return (
         <>
             <Stack spacing={2}>
-                <TextField
-                    label={t('post.title_optional')}
-                    variant='outlined'
-                    fullWidth
-                    value={valueInputData.title}
-                    onChange={(e) => {
-                        const eVal = e.target.value;
-                        if (eVal.length > MaxLength.TITLE) return;
-                        onChangeInputData({
-                            title: e.target.value,
-                            body: valueInputData.body,
-                        });
-                    }}
-                />
+                {showField.title && (
+                    <TextField
+                        label={t('post.title_optional')}
+                        variant='outlined'
+                        fullWidth
+                        value={valueInputData.title}
+                        onChange={(e) => {
+                            const eVal = e.target.value;
+                            if (eVal.length > MaxLength.TITLE) return;
+                            onChangeInputData({
+                                title: e.target.value,
+                                body: valueInputData.body,
+                            });
+                        }}
+                    />
+                )}
+
                 <ImageVideoUploadCarousel
                     maxFile={MaxLength.MAX_FILE}
                     onFilesChange={(files) => onChangeInputFiles(files)}
@@ -67,10 +83,45 @@ export default function CarouselPost({
                         });
                     }}
                 />
-                <SocialMediaPost
-                    value={valueSocialMediaURL}
-                    onChange={(val) => onChangeSocialMediaURL(val)}
-                />
+
+                <FormGroup row>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={showField.title}
+                                onChange={(e) =>
+                                    setShowField((oldState) => ({
+                                        ...oldState,
+                                        title: e.target.checked,
+                                    }))
+                                }
+                            />
+                        }
+                        label={t('post.title')}
+                    />
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={showField.socialMediaPost}
+                                onChange={(e) =>
+                                    setShowField((oldState) => ({
+                                        ...oldState,
+                                        socialMediaPost: e.target.checked,
+                                    }))
+                                }
+                            />
+                        }
+                        label={t('post.url.social_media_post')}
+                    />
+                </FormGroup>
+
+                {showField.socialMediaPost && (
+                    <SocialMediaPost
+                        defaultOpen
+                        value={valueSocialMediaURL}
+                        onChange={(val) => onChangeSocialMediaURL(val)}
+                    />
+                )}
             </Stack>
         </>
     );
