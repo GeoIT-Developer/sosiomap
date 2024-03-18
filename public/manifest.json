@@ -23,12 +23,6 @@
             "type": "image/png",
             "sizes": "512x512",
             "purpose": "any"
-        },
-        {
-            "src": "/img/logo/logo-circle-192.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "maskable"
         }
     ]
 }
