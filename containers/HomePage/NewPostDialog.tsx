@@ -5,6 +5,7 @@ import {
     Alert,
     AlertTitle,
     Avatar,
+    CircularProgress,
     DialogContent,
     Fab,
     IconButton,
@@ -50,7 +51,6 @@ export default function NewPostDialog({
         if (open) {
             geolocation.requestGeolocation();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [open]);
 
     const handleClose = () => {
@@ -104,6 +104,11 @@ export default function NewPostDialog({
                                         'message.error.feature_need_geolocation',
                                     )}
                                 </Alert>
+                            )}
+                            {geolocation.loading && (
+                                <div className='w-full my-1'>
+                                    <CircularProgress className='mx-auto' />
+                                </div>
                             )}
                             {geolocation.permissionGranted && (
                                 <List sx={{ pt: 0 }}>

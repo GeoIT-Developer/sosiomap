@@ -20,7 +20,7 @@ export default function MyLogo({
 
     return (
         <MyImage
-            src='/logo.svg'
+            src='/img/logo/logo.svg'
             alt='logo'
             className={className}
             style={{ filter }}
