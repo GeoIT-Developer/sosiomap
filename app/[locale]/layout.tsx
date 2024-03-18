@@ -25,7 +25,7 @@ const HEAD = {
     DESCRIPTION:
         'A map based social media apps to share and discuss everything around you~. Embark on a unique social journey with SosioMap, an innovative app designed to bring your local community closer than ever before. Immerse yourself in a dynamic and interactive map-based social media platform where the world around you becomes a canvas for sharing and discussing everything that matters.',
     ICONS: '/favicon.ico',
-    IMAGE: '/logo512.png',
+    IMAGE: '/img/logo/logo-512.png',
     URL: process.env.NEXT_PUBLIC_HOST_URL || '',
     MANIFEST: '/manifest.json',
 };
