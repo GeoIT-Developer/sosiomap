@@ -13,6 +13,8 @@ body {
 
 :root {
     --full-height: 100vh;
+    --primary-color: #cc0004;
+    --secondary-color: #f5a200;
 }
 
 /* START SCROLLBAR DESIGN */
@@ -50,4 +52,17 @@ body {
     border-right: 8px solid transparent;
     border-bottom: 40px solid rgba(52, 148, 244, 0.85);
     border-radius: 10px;
+}
+
+.bg-pattern-polkadot {
+    background-color: transparent !important;
+    background-image: radial-gradient(
+            var(--primary-color) 0.65px,
+            transparent 0.65px
+        ),
+        radial-gradient(var(--primary-color) 0.65px, transparent 0.65px) !important;
+    background-size: 40px 28px;
+    background-position:
+        0 0,
+        14px 14px;
 }
