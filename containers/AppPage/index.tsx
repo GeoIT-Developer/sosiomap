@@ -1,11 +1,7 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import MenuPage from '@/containers/MenuPage';
-import ExplorePage from '@/containers/ExplorePage';
 import HomePage from '@/containers/HomePage';
-import ChatPage from '@/containers/ChatPage';
-import ProfilePage from '@/containers/ProfilePage';
 import MainMap from '@/components/map/main';
 import useHashRouter from '@/hooks/useHashRouter';
 import BottomNavBar, { LIST_ROUTE } from './BottomNavBar';
@@ -17,6 +13,12 @@ import { createContext, useContext, useEffect } from 'react';
 import { LOCAL_STORAGE } from '@/utils/constant';
 import { TopicType, useActiveTopic, useMainTopic } from '@/hooks/useTopic';
 import { useI18n } from '@/locales/client';
+import dynamic from 'next/dynamic';
+
+const MenuPage = dynamic(() => import('@/containers/MenuPage'));
+const ExplorePage = dynamic(() => import('@/containers/ExplorePage'));
+const ChatPage = dynamic(() => import('@/containers/ChatPage'));
+const ProfilePage = dynamic(() => import('@/containers/ProfilePage'));
 
 const ActiveTopicContext = createContext<{
     setActiveTopic: (

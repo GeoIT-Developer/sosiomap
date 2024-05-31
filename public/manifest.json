@@ -7,6 +7,7 @@
     "display": "standalone",
     "theme_color": "#cc0004",
     "background_color": "#cc0004",
+    "id": "com.sosiomap.app",
     "icons": [
         {
             "src": "favicon.ico",
@@ -30,5 +31,15 @@
             "type": "image/png",
             "purpose": "maskable"
         }
+    ],
+    "categories": [
+        "entertainment",
+        "food",
+        "government",
+        "lifestyle",
+        "news",
+        "productivity",
+        "social",
+        "travel"
     ]
 }
