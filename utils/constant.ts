@@ -50,6 +50,21 @@ export const ROUTE = {
         NEW: {
             URL: '/post/new',
         },
+        DETAIL: {
+            URL: '/post/[post-id]',
+            setURL: (id: string) => `/post/${id}`,
+        },
+    },
+    USER: {
+        DETAIL: {
+            URL: '/user/[username]',
+            setURL: (username: string) => `/user/${username}`,
+        },
+    },
+    SETTING: {
+        ACCOUNT_DELETION: {
+            URL: '/setting/account-deletion',
+        },
     },
 };
 

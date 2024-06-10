@@ -13,9 +13,11 @@
         "login": "Login",
         "ok": "OK",
         "cancel": "Cancel",
+        "close": "Close",
         "logout": "Logout",
         "send": "Send",
-        "post": "Post"
+        "post": "Post",
+        "submit": "Submit"
     },
     "navigation": {
         "home": "Home",
@@ -27,7 +29,8 @@
         "privacy_policy": "Privacy Policy",
         "terms_and_conditions": "Terms and Conditions",
         "clear_data": "Clear Data",
-        "download_data": "Download Data"
+        "download_data": "Download Data",
+        "account_deletion": "Account Deletion"
     },
     "map": {
         "map_style": "Map Style",
@@ -47,7 +50,8 @@
             "message_at_least_minimum": "The message should be at least 5 characters long!",
             "feature_need_geolocation": "Location data must be activated to use this feature!",
             "max_file": "Maximum number of files is {max} files!",
-            "no_post_found_in_your_area": "No post found in your current map area!"
+            "no_post_found_in_your_area": "No post found in your current map area!",
+            "invalid_email_or_username": "Invalid email or username!"
         },
         "info": {
             "login_to_continue": "Please login to continue!",
@@ -95,6 +99,34 @@
         "media": "Media",
         "comment": "Comment",
         "add_comment": "Add Comment"
+    },
+    "setting": {
+        "account_deletion": {
+            "title": "Request Account Deletion",
+            "desc": "We're sorry to see you go! Before you proceed with deleting your account, please take a moment to review the information below:",
+            "title_1": "What You Should Know:",
+            "desc_1_1": "Permanent Deletion: Once you delete your account, all your data will be permanently removed and cannot be recovered.",
+            "desc_1_2": "Data Loss: This includes all your personal information, settings, preferences, and any content you've created or uploaded.",
+            "desc_1_3": "Service Access: You will no longer be able to access any services, features, or content associated with your account.",
+            "title_2": "Alternatives to Deletion:",
+            "desc_2": "If you're experiencing issues or have concerns, we'd love to help! Here are some alternatives you might consider:",
+            "desc_2_1": "Pause Your Account: Temporarily deactivate your account and return at any time.",
+            "desc_2_2": "Contact Support: Reach out to our support team for assistance with any problems you're facing.",
+            "title_3": "How to Delete Your Account:",
+            "desc_3_1": "Insert your email address and username.",
+            "desc_3_2": "Confirm your decision by clicking the button below.",
+            "desc_3_3": "Follow the instructions to complete the process.",
+            "desc_4": "If you're certain you want to delete your account, input and click the button below:",
+            "button_delete": "Delete My Account",
+            "desc_5": "Thank you for being a part of our app. We hope to see you again in the future!",
+            "write_delete_desc": "To delete your account, please type the phrase \"{phrase}\" in the field below and click the submit button. This action is irreversible and will permanently remove all your data from our system.",
+            "write_delete": "I confirm to delete my account",
+            "invalid_phrase": "The phrase you're inputting is not valid!",
+            "status": "Status",
+            "requested_at": "Requested At",
+            "button_withdraw": "Withdraw Request",
+            "withdraw_request_desc": "Are you sure you want to withdraw your account deletion request?"
+        }
     },
     "topic": {
         "create_topic": "Create Topic",

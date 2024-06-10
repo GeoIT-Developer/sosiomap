@@ -2,6 +2,8 @@ import {
     Alert,
     Avatar,
     Box,
+    Button,
+    Divider,
     InputLabel,
     Paper,
     Stack,
@@ -22,9 +24,10 @@ import MyImage from '@/components/preview/MyImage';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import ViewListIcon from '@mui/icons-material/ViewList';
-import { ASSETS } from '@/utils/constant';
+import { ASSETS, ROUTE } from '@/utils/constant';
 import { useI18n } from '@/locales/client';
 import { nameToInitial, stringToColor } from '@/utils/helper';
+import { useRouter } from 'next/navigation';
 
 enum ProfileTabEnum {
     DETAIL = 'detail',
@@ -38,6 +41,7 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
     const session = useSession();
     const accessToken = useAccessToken();
     const pageLoaded = usePageLoaded(show);
+    const router = useRouter();
 
     const [profileTab, setProfileTab] = useState<ProfileTabEnum>(
         ProfileTabEnum.DETAIL,
@@ -167,6 +171,20 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
                                         disabled
                                     />
                                 </Box>
+                                <Divider className='!mt-10' />
+
+                                <Button
+                                    variant='outlined'
+                                    onClick={() =>
+                                        router.push(
+                                            ROUTE.SETTING.ACCOUNT_DELETION.URL,
+                                        )
+                                    }
+                                >
+                                    {t(
+                                        'setting.account_deletion.button_delete',
+                                    )}
+                                </Button>
                             </Stack>
                         </TabPanel>
                         <TabPanel

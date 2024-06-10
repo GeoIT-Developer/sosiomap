@@ -102,6 +102,17 @@ const API = {
     },
 
     getPublicComment: (postId: string) => HOST.get(`comments/${postId}`),
+
+    getRequestAccountDeletion: () =>
+        HOST.get(`account/request-account-deletion`),
+
+    postRequestAccountDeletion: () =>
+        HOST.post(`account/request-account-deletion`),
+
+    putRequestAccountDeletion: (requestId: string) =>
+        HOST.put(`account/request-account-deletion`, {
+            request_id: requestId,
+        }),
 };
 
 export default API;

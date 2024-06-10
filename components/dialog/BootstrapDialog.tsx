@@ -1,12 +1,15 @@
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import { ReactNode } from 'react';
-import { styled } from '@mui/material/styles';
+import { Breakpoint, styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { DialogContent } from '@mui/material';
+import { DialogActions, DialogContent } from '@mui/material';
 
 const BootstrapDialogStyle = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialogTitle-root': {
+        padding: theme.spacing(2),
+    },
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
     },
@@ -21,6 +24,8 @@ interface BootstrapDialogProps {
     open: boolean;
     handleClose: () => void;
     className?: string;
+    maxWidth?: Breakpoint;
+    action?: ReactNode;
 }
 
 export default function BootstrapDialog({
@@ -29,6 +34,8 @@ export default function BootstrapDialog({
     open,
     handleClose,
     className = '',
+    maxWidth = 'lg',
+    action,
 }: BootstrapDialogProps) {
     return (
         <>
@@ -37,7 +44,7 @@ export default function BootstrapDialog({
                 open={open}
                 className={className}
                 fullWidth
-                maxWidth='lg'
+                maxWidth={maxWidth}
             >
                 {title && (
                     <>
@@ -57,6 +64,7 @@ export default function BootstrapDialog({
                     </>
                 )}
                 <DialogContent>{children}</DialogContent>
+                {action && <DialogActions>{action}</DialogActions>}
             </BootstrapDialogStyle>
         </>
     );
