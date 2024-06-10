@@ -117,8 +117,10 @@ export default function AccountDeletionPage() {
 
     function onClickDelete() {
         if (
-            accessToken?.email !== inputData.email ||
-            accessToken.preferred_username !== inputData.username
+            String(accessToken?.email).toLowerCase() !==
+                inputData.email.toLowerCase() ||
+            String(accessToken?.preferred_username).toLowerCase() !==
+                inputData.username.toLowerCase()
         ) {
             toast.error(t('message.error.invalid_email_or_username'), {
                 theme: 'colored',
@@ -389,7 +391,6 @@ export default function AccountDeletionPage() {
                                 )}
                             </DialogContentText>
                             <TextField
-                                autoFocus
                                 required
                                 margin='dense'
                                 placeholder={t(
