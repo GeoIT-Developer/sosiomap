@@ -148,6 +148,12 @@ export const getDateLabel = (eDate: string): 'today' | 'yesterday' | string => {
     }
 };
 
+export const getDateTimeString = (eDate: string | null | undefined): string => {
+    if (!eDate) return '';
+    const inputDate = dayjs(eDate).format('YYYY-MM-DD HH:mm:ss');
+    return inputDate;
+};
+
 export function encrypt(inputData: any, stringify: boolean = false) {
     const theKey = process.env.NEXT_PUBLIC_ENCRYPTION_KEY || '';
     const theData = stringify ? JSON.stringify(inputData) : inputData;

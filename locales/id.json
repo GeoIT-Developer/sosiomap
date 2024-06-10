@@ -13,9 +13,11 @@
         "login": "Masuk",
         "ok": "OK",
         "cancel": "Batal",
+        "close": "Tutup",
         "logout": "Keluar",
         "send": "Kirim",
-        "post": "Bagikan"
+        "post": "Bagikan",
+        "submit": "Kirim"
     },
     "navigation": {
         "home": "Beranda",
@@ -27,7 +29,8 @@
         "privacy_policy": "Kebijakan Pribadi",
         "terms_and_conditions": "Syarat dan Ketentuan",
         "clear_data": "Hapus Data",
-        "download_data": "Unduh Data"
+        "download_data": "Unduh Data",
+        "account_deletion": "Hapus Akun"
     },
     "map": {
         "map_style": "Tampilan Peta",
@@ -47,7 +50,8 @@
             "message_at_least_minimum": "Pesan setidaknya memiliki 5 karakter!",
             "feature_need_geolocation": "Data lokasi harus dihidupkan untuk menggunakan fitur ini!",
             "max_file": "Jumlah berkas yang dapat dipilih adalah {max} berkas!",
-            "no_post_found_in_your_area": "Tidak ada postingan yang ditemukan di area peta Anda sekarang!"
+            "no_post_found_in_your_area": "Tidak ada postingan yang ditemukan di area peta Anda sekarang!",
+            "invalid_email_or_username": "Surel atau nama pengguna tidak valid!"
         },
         "info": {
             "login_to_continue": "Masuk untuk melanjutkan!",
@@ -95,6 +99,34 @@
         "media": "Media",
         "comment": "Komentar",
         "add_comment": "Tambah Komentar"
+    },
+    "setting": {
+        "account_deletion": {
+            "title": "Permintaan Penghapusan Akun",
+            "desc": "Kami sedih melihat Anda pergi! Sebelum Anda melanjutkan dengan menghapus akun Anda, harap luangkan waktu sejenak untuk meninjau informasi di bawah ini:",
+            "title_1": "Yang Perlu Anda Ketahui:",
+            "desc_1_1": "Penghapusan Permanen: Setelah Anda menghapus akun Anda, semua data Anda akan dihapus secara permanen dan tidak dapat dipulihkan.",
+            "desc_1_2": "Kehilangan Data: Ini termasuk semua informasi pribadi Anda, pengaturan, preferensi, dan konten apa pun yang telah Anda buat atau unggah.",
+            "desc_1_3": "Akses Layanan: Anda tidak akan dapat lagi mengakses layanan, fitur, atau konten apa pun yang terkait dengan akun Anda.",
+            "title_2": "Alternatif untuk Penghapusan:",
+            "desc_2": "Jika Anda mengalami masalah atau memiliki kekhawatiran, kami dengan senang hati akan membantu! Berikut beberapa alternatif yang dapat Anda pertimbangkan:",
+            "desc_2_1": "Nonaktifkan Akun Anda: Nonaktifkan sementara akun Anda dan kembali kapan saja.",
+            "desc_2_2": "Hubungi Dukungan: Hubungi tim dukungan kami untuk mendapatkan bantuan dengan masalah apa pun yang Anda hadapi.",
+            "title_3": "Cara Menghapus Akun Anda:",
+            "desc_3_1": "Masukkan alamat email dan nama pengguna Anda.",
+            "desc_3_2": "Konfirmasikan keputusan Anda dengan mengklik tombol di bawah.",
+            "desc_3_3": "Ikuti instruksi untuk menyelesaikan proses.",
+            "desc_4": "Jika Anda yakin ingin menghapus akun Anda, isi dan klik tombol di bawah:",
+            "button_delete": "Hapus Akun Saya",
+            "desc_5": "Terima kasih telah menjadi bagian dari aplikasi kami. Kami harap dapat melihat Anda kembali di masa depan!",
+            "write_delete_desc": "Untuk menghapus akun Anda, silakan ketik kalimat \"{phrase}\" di kolom di bawah ini dan klik tombol kirim. Tindakan ini tidak dapat dibatalkan dan akan menghapus semua data Anda dari sistem kami secara permanen.",
+            "write_delete": "Saya mengkonfirmasi untuk menghapus akun saya",
+            "invalid_phrase": "Kalimat yang Anda ketik tidak sesuai!",
+            "status": "Status",
+            "requested_at": "Diminta Pada",
+            "button_withdraw": "Tarik Permintaan",
+            "withdraw_request_desc": "Apa Anda yakin untuk menarik dan membatalkan permintaan hapus akun?"
+        }
     },
     "topic": {
         "create_topic": "Buat Topik",
