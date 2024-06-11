@@ -8,30 +8,6 @@
     "theme_color": "#cc0004",
     "background_color": "#cc0004",
     "id": "com.sosiomap.app",
-    "icons": [
-        {
-            "src": "favicon.ico",
-            "sizes": "64x64 32x32 24x24 16x16",
-            "type": "image/x-icon"
-        },
-        {
-            "src": "/img/logo/logo-192.png",
-            "type": "image/png",
-            "sizes": "192x192"
-        },
-        {
-            "src": "/img/logo/logo-512.png",
-            "type": "image/png",
-            "sizes": "512x512",
-            "purpose": "any"
-        },
-        {
-            "src": "/img/logo/logo-512-maskable.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "maskable"
-        }
-    ],
     "categories": [
         "entertainment",
         "food",
@@ -41,5 +17,36 @@
         "productivity",
         "social",
         "travel"
+    ],
+    "icons": [
+        {
+            "src": "favicon.ico",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "/img/logo/logo-192-rounded.png",
+            "type": "image/png",
+            "sizes": "192x192",
+            "purpose": "any"
+        },
+        {
+            "src": "/img/logo/logo-192.png",
+            "type": "image/png",
+            "sizes": "192x192",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/img/logo/logo-512-rounded.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any"
+        },
+        {
+            "src": "/img/logo/logo-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
     ]
 }
