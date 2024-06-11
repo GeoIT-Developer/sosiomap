@@ -3,9 +3,9 @@
         "relation": ["delegate_permission/common.handle_all_urls"],
         "target": {
             "namespace": "android_app",
-            "package_name": "com.sosiomap.app",
+            "package_name": "com.sosiomap.twa",
             "sha256_cert_fingerprints": [
-                "F8:DE:51:82:78:9A:FC:9B:BF:E0:89:7C:0E:13:59:19:FD:B9:3E:7E:6C:B1:55:61:C0:88:0C:BD:D0:71:61:50"
+                "A5:F6:B9:14:4C:DC:29:84:46:A2:71:98:5E:F2:95:47:BF:09:DC:92:71:34:17:49:F0:9B:2B:86:0B:B2:59:2B"
             ]
         }
     }
