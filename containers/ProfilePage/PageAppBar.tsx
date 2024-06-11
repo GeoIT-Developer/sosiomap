@@ -159,19 +159,21 @@ export default function PageAppBar() {
                                     </MenuItem>
                                 );
                             })}
-                            {session.status === 'authenticated' && (
-                                <>
-                                    <Divider />
-                                    <MenuItem onClick={() => logout.signout()}>
+                            {session.status === 'authenticated' &&
+                                [
+                                    <Divider key='divider' />,
+                                    <MenuItem
+                                        key='logout'
+                                        onClick={() => logout.signout()}
+                                    >
                                         <ListItemIcon>
                                             <LogoutIcon fontSize='small' />
                                         </ListItemIcon>
                                         <ListItemText>
                                             {t('button.logout')}
                                         </ListItemText>
-                                    </MenuItem>
-                                </>
-                            )}
+                                    </MenuItem>,
+                                ].map((item) => item)}
                         </BasicMenu>
                     </Box>
                 </Toolbar>
