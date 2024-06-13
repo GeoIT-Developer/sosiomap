@@ -68,6 +68,46 @@ export const ROUTE = {
     },
 };
 
+export const ROUTE_EXTERNAL = {
+    PLAY_STORE: {
+        LABEL: 'Google Play Store',
+        URL: 'https://play.google.com/store/apps/details?id=com.sosiomap.twa',
+    },
+    LINKEDIN: {
+        URL: 'https://linkedin.com/company/sosiomap',
+    },
+    INSTAGRAM: {
+        URL: 'https://www.instagram.com/sosiomap',
+    },
+    X_TWITTER: {
+        URL: 'https://x.com/sosiomap',
+    },
+    GEOIT_DEVELOPER: {
+        URL: 'https://geoit.dev/',
+    },
+    GITHUB_ALF: {
+        URL: 'https://github.com/Alf-Anas',
+    },
+    LINKEDIN_ALF: {
+        URL: 'https://www.linkedin.com/in/alfadila-anas/',
+    },
+    YOUTUBE_ALF: {
+        URL: 'https://www.youtube.com/channel/UCom_vFWnb6-1TWgtMg4lt1g',
+    },
+    INSTAGRAM_ALF: {
+        URL: 'https://www.instagram.com/alf.anas_',
+    },
+    X_TWITTER_ALF: {
+        URL: 'https://x.com/alf_anas',
+    },
+};
+
+export const CONTACT = {
+    EMAIL: {
+        ADDRESS: 'info@geoit.dev',
+    },
+};
+
 export const ASSETS = {
     FLAG_IMAGE: '/img/flag/',
     BASEMAP_IMAGE: '/img/basemap/',

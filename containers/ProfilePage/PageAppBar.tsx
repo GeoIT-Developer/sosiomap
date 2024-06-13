@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ShopIcon from '@mui/icons-material/Shop';
 import {
     Divider,
     IconButton,
@@ -18,7 +19,7 @@ import { useChangeLocale, useI18n } from '@/locales/client';
 import { LIST_COUNTRY } from '@/locales/country';
 import BasicMenu from '@/components/menu/BasicMenu';
 import MyImage from '@/components/preview/MyImage';
-import { ASSETS, ROUTE } from '@/utils/constant';
+import { ASSETS, ROUTE, ROUTE_EXTERNAL } from '@/utils/constant';
 import { useSession } from 'next-auth/react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PrivacyTipOutlinedIcon from '@mui/icons-material/PrivacyTipOutlined';
@@ -44,28 +45,35 @@ export default function PageAppBar() {
         label: string;
         url: string;
         icon?: ReactNode;
-    }[] = [
-        {
-            id: 'about',
-            label: t('navigation.about'),
-            url: ROUTE.ABOUT.URL,
-            icon: <InfoOutlinedIcon fontSize='small' />,
-        },
-        {
-            id: 'privacy-policy',
-            label: t('navigation.privacy_policy'),
-            url: ROUTE.PRIVACY_POLICY.URL,
-            icon: <PrivacyTipOutlinedIcon fontSize='small' />,
-        },
-        {
-            id: 'terms-and-conditions',
-            label: t('navigation.terms_and_conditions'),
-            url: ROUTE.TERMS_AND_CONDITIONS.URL,
-            icon: <StickyNote2OutlinedIcon fontSize='small' />,
-        },
-        // {
-        //     divider: true,
-        // },
+    }[][] = [
+        [
+            {
+                id: 'about',
+                label: t('navigation.about'),
+                url: ROUTE.ABOUT.URL,
+                icon: <InfoOutlinedIcon fontSize='small' />,
+            },
+            {
+                id: 'privacy-policy',
+                label: t('navigation.privacy_policy'),
+                url: ROUTE.PRIVACY_POLICY.URL,
+                icon: <PrivacyTipOutlinedIcon fontSize='small' />,
+            },
+            {
+                id: 'terms-and-conditions',
+                label: t('navigation.terms_and_conditions'),
+                url: ROUTE.TERMS_AND_CONDITIONS.URL,
+                icon: <StickyNote2OutlinedIcon fontSize='small' />,
+            },
+        ],
+        [
+            {
+                id: 'play-store',
+                label: ROUTE_EXTERNAL.PLAY_STORE.LABEL,
+                url: ROUTE_EXTERNAL.PLAY_STORE.URL,
+                icon: <ShopIcon fontSize='small' />,
+            },
+        ],
         // {
         //     id: 'clear_data',
         //     label: t('navigation.clear_data'),
@@ -139,25 +147,32 @@ export default function PageAppBar() {
                                 </IconButton>
                             }
                         >
-                            {LIST_MORE_MENU.map((item) => {
-                                return (
-                                    <MenuItem
-                                        key={item.id}
-                                        onClick={() =>
-                                            window.open(item.url, '_blank')
-                                        }
-                                    >
-                                        {item.icon && (
-                                            <ListItemIcon>
-                                                {item.icon}
-                                            </ListItemIcon>
-                                        )}
+                            {LIST_MORE_MENU.map((groupMenu, idx) => {
+                                const groupItems: JSX.Element[] = [
+                                    <Divider key={idx} />,
+                                ];
 
-                                        <ListItemText>
-                                            {item.label}
-                                        </ListItemText>
-                                    </MenuItem>
-                                );
+                                groupMenu.map((item) => {
+                                    groupItems.push(
+                                        <MenuItem
+                                            key={item.id}
+                                            onClick={() =>
+                                                window.open(item.url, '_blank')
+                                            }
+                                        >
+                                            {item.icon && (
+                                                <ListItemIcon>
+                                                    {item.icon}
+                                                </ListItemIcon>
+                                            )}
+
+                                            <ListItemText>
+                                                {item.label}
+                                            </ListItemText>
+                                        </MenuItem>,
+                                    );
+                                });
+                                return groupItems;
                             })}
                             {session.status === 'authenticated' &&
                                 [

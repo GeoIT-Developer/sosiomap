@@ -28,6 +28,7 @@ import { ASSETS, ROUTE } from '@/utils/constant';
 import { useI18n } from '@/locales/client';
 import { nameToInitial, stringToColor } from '@/utils/helper';
 import { useRouter } from 'next/navigation';
+import SocialMediaFooter from '../AboutPage/SocialMediaFooter';
 
 enum ProfileTabEnum {
     DETAIL = 'detail',
@@ -205,6 +206,7 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
                         </TabPanel>
                     </Box>
                 </NeedLogin>
+                <SocialMediaFooter />
             </Paper>
         </div>
     );
