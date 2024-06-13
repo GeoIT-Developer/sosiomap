@@ -17,7 +17,8 @@
         "logout": "Keluar",
         "send": "Kirim",
         "post": "Bagikan",
-        "submit": "Kirim"
+        "submit": "Kirim",
+        "edit": "Ubah"
     },
     "navigation": {
         "home": "Beranda",

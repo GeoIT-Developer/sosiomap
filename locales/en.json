@@ -17,7 +17,8 @@
         "logout": "Logout",
         "send": "Send",
         "post": "Post",
-        "submit": "Submit"
+        "submit": "Submit",
+        "edit": "Edit"
     },
     "navigation": {
         "home": "Home",

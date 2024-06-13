@@ -2,14 +2,9 @@ import {
     Alert,
     Avatar,
     Box,
-    Button,
-    Divider,
-    InputLabel,
     Paper,
-    Stack,
     Tab,
     Tabs,
-    TextField,
     Typography,
 } from '@mui/material';
 import PageAppBar from './PageAppBar';
@@ -24,11 +19,12 @@ import MyImage from '@/components/preview/MyImage';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import ViewListIcon from '@mui/icons-material/ViewList';
-import { ASSETS, ROUTE } from '@/utils/constant';
+import { ASSETS } from '@/utils/constant';
 import { useI18n } from '@/locales/client';
 import { nameToInitial, stringToColor } from '@/utils/helper';
 import { useRouter } from 'next/navigation';
 import SocialMediaFooter from '../AboutPage/SocialMediaFooter';
+import DetailTab from './tab/DetailTab';
 
 enum ProfileTabEnum {
     DETAIL = 'detail',
@@ -134,59 +130,7 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
                             value={profileTab}
                             index={ProfileTabEnum.DETAIL}
                         >
-                            <Stack spacing={2} className='p-4'>
-                                <Box className='w-full'>
-                                    <InputLabel>
-                                        {t('profile.username')}
-                                    </InputLabel>
-                                    <TextField
-                                        variant='outlined'
-                                        size='small'
-                                        fullWidth
-                                        value={
-                                            accessToken?.preferred_username ||
-                                            ''
-                                        }
-                                        disabled
-                                    />
-                                </Box>
-                                <Box className='w-full'>
-                                    <InputLabel>{t('profile.name')}</InputLabel>
-                                    <TextField
-                                        variant='outlined'
-                                        size='small'
-                                        fullWidth
-                                        value={accessToken?.name || ''}
-                                        disabled
-                                    />
-                                </Box>
-                                <Box className='w-full'>
-                                    <InputLabel>
-                                        {t('profile.email')}
-                                    </InputLabel>
-                                    <TextField
-                                        variant='outlined'
-                                        size='small'
-                                        fullWidth
-                                        value={accessToken?.email || ''}
-                                        disabled
-                                    />
-                                </Box>
-                                <Divider className='!mt-10' />
-
-                                <Button
-                                    variant='outlined'
-                                    onClick={() =>
-                                        router.push(
-                                            ROUTE.SETTING.ACCOUNT_DELETION.URL,
-                                        )
-                                    }
-                                >
-                                    {t(
-                                        'setting.account_deletion.button_delete',
-                                    )}
-                                </Button>
-                            </Stack>
+                            <DetailTab />
                         </TabPanel>
                         <TabPanel
                             value={profileTab}
