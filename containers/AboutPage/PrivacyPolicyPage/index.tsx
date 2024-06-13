@@ -1,11 +1,12 @@
 'use client';
 
-import { Box, Paper, Stack, Typography } from '@mui/material';
+import { Box, Link, Paper, Stack, Typography } from '@mui/material';
 import useWindowHeight from '@/hooks/useWindowHeight';
 import BackAppBar from '@/components/layout/appbar/BackAppBar';
 import { useI18n } from '@/locales/client';
 import { useEffect } from 'react';
 import dayjs from 'dayjs';
+import { CONTACT } from '@/utils/constant';
 
 export default function PrivacyPolicyPage() {
     const t = useI18n();
@@ -114,7 +115,13 @@ export default function PrivacyPolicyPage() {
                         <Typography variant='body1'>
                             {/* @ts-ignore */}
                             {t('privacy-policy.desc_8', {
-                                email: 'alf.anas@geoit.dev',
+                                email: (
+                                    <Link
+                                        href={`mailto:${CONTACT.EMAIL.ADDRESS}`}
+                                    >
+                                        {CONTACT.EMAIL.ADDRESS}
+                                    </Link>
+                                ),
                             })}
                         </Typography>
 

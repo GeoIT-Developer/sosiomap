@@ -1,16 +1,27 @@
 'use client';
 
-import { Avatar, Box, Divider, Paper, Stack, Typography } from '@mui/material';
+import {
+    Avatar,
+    Box,
+    Divider,
+    IconButton,
+    Paper,
+    Stack,
+    Typography,
+} from '@mui/material';
 import useWindowHeight from '@/hooks/useWindowHeight';
 import BackAppBar from '@/components/layout/appbar/BackAppBar';
 import { useI18n } from '@/locales/client';
 import { useEffect } from 'react';
 import { useMainTopic } from '@/hooks/useTopic';
-import { ASSETS } from '@/utils/constant';
+import { ASSETS, ROUTE_EXTERNAL } from '@/utils/constant';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import LanguageIcon from '@mui/icons-material/Language';
+import SocialMediaFooter from './SocialMediaFooter';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import XIcon from '@mui/icons-material/X';
 
 export default function AboutPage() {
     const t = useI18n();
@@ -78,6 +89,7 @@ export default function AboutPage() {
                                 </Box>
                             );
                         })}
+                        <SocialMediaFooter />
                     </Stack>
                 </Paper>
                 <Paper className='max-w-2xl mx-auto p-4 mt-4'>
@@ -97,16 +109,20 @@ export default function AboutPage() {
                             <br />
                             Front End Developer
                             <br />
-                            <LinkedInIcon
+                            <IconButton
+                                aria-label='LinkedIn'
                                 onClick={() =>
                                     window.open(
-                                        'https://www.linkedin.com/in/alfadila-anas/',
+                                        ROUTE_EXTERNAL.LINKEDIN_ALF.URL,
                                         '_blank',
                                     )
                                 }
-                            />
+                            >
+                                <LinkedInIcon />
+                            </IconButton>
                         </Typography>
                         <Divider />
+
                         <Avatar
                             alt='Dila : Back End Developer'
                             src={`${ASSETS.TEAM}backend.jpg`}
@@ -118,16 +134,20 @@ export default function AboutPage() {
                             <br />
                             Back End Developer
                             <br />
-                            <YouTubeIcon
+                            <IconButton
+                                aria-label='YouTube'
                                 onClick={() =>
                                     window.open(
-                                        'https://www.youtube.com/channel/UCom_vFWnb6-1TWgtMg4lt1g',
+                                        ROUTE_EXTERNAL.YOUTUBE_ALF.URL,
                                         '_blank',
                                     )
                                 }
-                            />
+                            >
+                                <YouTubeIcon />
+                            </IconButton>
                         </Typography>
                         <Divider />
+
                         <Avatar
                             alt='Anas : DevOps Engineer'
                             src={`${ASSETS.TEAM}devops.jpg`}
@@ -139,13 +159,70 @@ export default function AboutPage() {
                             <br />
                             DevOps Engineer
                             <br />
-                            <LanguageIcon
+                            <IconButton
+                                aria-label='Website'
                                 onClick={() =>
-                                    window.open('https://geoit.dev/', '_blank')
+                                    window.open(
+                                        ROUTE_EXTERNAL.GEOIT_DEVELOPER.URL,
+                                        '_blank',
+                                    )
                                 }
-                            />
+                            >
+                                <LanguageIcon />
+                            </IconButton>
                         </Typography>
                         <Divider />
+
+                        <Avatar
+                            alt='Alan : Marketing Specialist'
+                            src={`${ASSETS.TEAM}marketing.jpg`}
+                            sx={{ width: '10rem', height: '10rem' }}
+                            className='!mx-auto'
+                        />
+                        <Typography variant='body1'>
+                            <b>Alan</b>
+                            <br />
+                            Marketing Specialist
+                            <br />
+                            <IconButton
+                                aria-label='Instagram'
+                                onClick={() =>
+                                    window.open(
+                                        ROUTE_EXTERNAL.INSTAGRAM_ALF.URL,
+                                        '_blank',
+                                    )
+                                }
+                            >
+                                <InstagramIcon />
+                            </IconButton>
+                        </Typography>
+                        <Divider />
+
+                        <Avatar
+                            alt='Fadil : Graphic Designer'
+                            src={`${ASSETS.TEAM}designer.png`}
+                            sx={{ width: '10rem', height: '10rem' }}
+                            className='!mx-auto'
+                        />
+                        <Typography variant='body1'>
+                            <b>Fadil</b>
+                            <br />
+                            Graphic Designer
+                            <br />
+                            <IconButton
+                                aria-label='X/Twitter'
+                                onClick={() =>
+                                    window.open(
+                                        ROUTE_EXTERNAL.X_TWITTER_ALF.URL,
+                                        '_blank',
+                                    )
+                                }
+                            >
+                                <XIcon />
+                            </IconButton>
+                        </Typography>
+                        <Divider />
+
                         <Avatar
                             alt='[ADA] : Digital Assistant'
                             src={`${ASSETS.TEAM}digital.png`}
@@ -157,14 +234,17 @@ export default function AboutPage() {
                             <br />
                             Digital Assistant
                             <br />
-                            <GitHubIcon
+                            <IconButton
+                                aria-label='GitHub'
                                 onClick={() =>
                                     window.open(
-                                        'https://github.com/Alf-Anas',
+                                        ROUTE_EXTERNAL.GITHUB_ALF.URL,
                                         '_blank',
                                     )
                                 }
-                            />
+                            >
+                                <GitHubIcon />
+                            </IconButton>
                         </Typography>
                         <Divider />
                     </Stack>
