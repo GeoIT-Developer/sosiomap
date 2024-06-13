@@ -12,6 +12,8 @@ export const LOCAL_STORAGE = {
     ACTIVE_TOPIC: 'active-topic',
 };
 
+export const KEYCLOAK_BASE = `${process.env.NEXTAUTH_URL_IAM}realms/${process.env.NEXTAUTH_REALM_IAM}`;
+
 export const ROUTE = {
     HOME: {
         URL: '/',
@@ -64,6 +66,11 @@ export const ROUTE = {
     SETTING: {
         ACCOUNT_DELETION: {
             URL: '/setting/account-deletion',
+        },
+    },
+    KEYCLOAK: {
+        EDIT_PROFILE: {
+            URL: `${KEYCLOAK_BASE}/account/#/personal-info`,
         },
     },
 };

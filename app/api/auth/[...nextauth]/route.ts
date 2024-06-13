@@ -10,12 +10,14 @@ declare module 'next-auth/jwt' {
     }
 }
 
+const KEYCLOAK_BASE = `${process.env.NEXTAUTH_URL_IAM}realms/${process.env.NEXTAUTH_REALM_IAM}`;
+
 const authOptions: AuthOptions = {
     providers: [
         KeycloakProvider({
             clientId: process.env.NEXTAUTH_CLIENT_ID || '',
             clientSecret: process.env.NEXTAUTH_SECRET || '',
-            issuer: `${process.env.NEXTAUTH_URL_IAM}realms/${process.env.NEXTAUTH_REALM_IAM}`,
+            issuer: KEYCLOAK_BASE,
             authorization: { params: { scope: 'openid offline_access' } },
         }),
     ],
@@ -38,7 +40,7 @@ const authOptions: AuthOptions = {
                 // If the access token has expired, try to refresh it
                 try {
                     // We need the `token_endpoint`.
-                    const refreshTokenUrl = `${process.env.NEXTAUTH_URL_IAM}realms/${process.env.NEXTAUTH_REALM_IAM}/protocol/openid-connect/token`;
+                    const refreshTokenUrl = `${KEYCLOAK_BASE}/protocol/openid-connect/token`;
                     const response = await fetch(refreshTokenUrl, {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
