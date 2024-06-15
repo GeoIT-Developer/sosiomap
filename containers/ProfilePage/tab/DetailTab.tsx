@@ -8,17 +8,29 @@ import {
     TextField,
 } from '@mui/material';
 import useAccessToken from '@/hooks/useAccessToken';
-import { ROUTE } from '@/utils/constant';
+import { LOCAL_STORAGE, ROUTE } from '@/utils/constant';
 import { useI18n } from '@/locales/client';
 import { useRouter } from 'next/navigation';
 import EditIcon from '@mui/icons-material/Edit';
 import BasicMenu from '@/components/menu/BasicMenu';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { signIn } from 'next-auth/react';
+import useVisibilityChange from '@/hooks/useVisibilityChange';
+import useLocalStorageFunc from '@/hooks/useLocalStorageFunc';
 
 export default function DetailTab() {
     const t = useI18n();
     const accessToken = useAccessToken();
     const router = useRouter();
+
+    const localStorageRefresh = useLocalStorageFunc(
+        LOCAL_STORAGE.REFRESH_SIGN_IN,
+        false,
+    );
+
+    useVisibilityChange(LOCAL_STORAGE.REFRESH_SIGN_IN, () =>
+        signIn('keycloak'),
+    );
 
     return (
         <Stack spacing={2} className='p-4'>
@@ -58,9 +70,10 @@ export default function DetailTab() {
                     color='warning'
                     size='small'
                     startIcon={<EditIcon />}
-                    onClick={() =>
-                        window.open(ROUTE.KEYCLOAK.EDIT_PROFILE.URL, '_blank')
-                    }
+                    onClick={() => {
+                        localStorageRefresh.setItem(true);
+                        window.open(ROUTE.KEYCLOAK.EDIT_PROFILE.URL, '_blank');
+                    }}
                 >
                     {t('button.edit')}
                 </Button>

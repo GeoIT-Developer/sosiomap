@@ -294,3 +294,9 @@ export function getLastCharFromString(
         return inputString;
     }
 }
+
+export function isTWA(): boolean {
+    return document.referrer.includes(
+        `android-app://${process.env.NEXT_PUBLIC_PACKAGE_NAME || ''}`,
+    );
+}

@@ -29,6 +29,7 @@ import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useLogout from '@/hooks/useLogout';
 import { ReactNode } from 'react';
+import { isTWA } from '@/utils/helper';
 
 type UseChangeLocaleType = typeof useChangeLocale;
 type NewLocaleType = Parameters<ReturnType<UseChangeLocaleType>>[0];
@@ -66,14 +67,6 @@ export default function PageAppBar() {
                 icon: <StickyNote2OutlinedIcon fontSize='small' />,
             },
         ],
-        [
-            {
-                id: 'play-store',
-                label: ROUTE_EXTERNAL.PLAY_STORE.LABEL,
-                url: ROUTE_EXTERNAL.PLAY_STORE.URL,
-                icon: <ShopIcon fontSize='small' />,
-            },
-        ],
         // {
         //     id: 'clear_data',
         //     label: t('navigation.clear_data'),
@@ -82,6 +75,17 @@ export default function PageAppBar() {
         //     hide: true,
         // },
     ];
+
+    if (!isTWA()) {
+        LIST_MORE_MENU.unshift([
+            {
+                id: 'play-store',
+                label: ROUTE_EXTERNAL.PLAY_STORE.LABEL,
+                url: ROUTE_EXTERNAL.PLAY_STORE.URL,
+                icon: <ShopIcon fontSize='small' />,
+            },
+        ]);
+    }
 
     return (
         <Box>

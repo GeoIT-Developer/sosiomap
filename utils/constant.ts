@@ -10,6 +10,7 @@ export const LOCAL_STORAGE = {
     CHAT_DISTANCE: 'chat-distance',
     CHAT_CHANNEL: 'chat-channel',
     ACTIVE_TOPIC: 'active-topic',
+    REFRESH_SIGN_IN: 'refresh-sign-in',
 };
 
 export const KEYCLOAK_BASE = `${process.env.NEXTAUTH_URL_IAM}realms/${process.env.NEXTAUTH_REALM_IAM}`;

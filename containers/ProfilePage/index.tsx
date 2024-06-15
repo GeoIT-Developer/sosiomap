@@ -22,7 +22,6 @@ import ViewListIcon from '@mui/icons-material/ViewList';
 import { ASSETS } from '@/utils/constant';
 import { useI18n } from '@/locales/client';
 import { nameToInitial, stringToColor } from '@/utils/helper';
-import { useRouter } from 'next/navigation';
 import SocialMediaFooter from '../AboutPage/SocialMediaFooter';
 import DetailTab from './tab/DetailTab';
 
@@ -38,7 +37,6 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
     const session = useSession();
     const accessToken = useAccessToken();
     const pageLoaded = usePageLoaded(show);
-    const router = useRouter();
 
     const [profileTab, setProfileTab] = useState<ProfileTabEnum>(
         ProfileTabEnum.DETAIL,
