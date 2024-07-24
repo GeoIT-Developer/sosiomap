@@ -15,6 +15,8 @@ const useAccessToken = () => {
         }
     }, [session.data?.access_token]);
 
+    console.log(session);
+
     return token;
 };
 

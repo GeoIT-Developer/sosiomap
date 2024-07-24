@@ -1,4 +1,3 @@
-import { styled } from '@mui/material/styles';
 import { Badge, IconButton, Stack, TextField } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { useEffect, useRef, useState } from 'react';
@@ -15,18 +14,7 @@ import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import Counter from 'yet-another-react-lightbox/plugins/counter';
 import Captions from 'yet-another-react-lightbox/plugins/captions';
 import { fileToObjectURL } from '@/utils/helper';
-
-const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-});
+import VisuallyHiddenInput from './VisuallyHiddenInput';
 
 export type TheFileType = { file: File; url: string; caption: string };
 
