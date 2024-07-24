@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 type ArgsProps<DataType, ParamsType, ListType, MetaType> = {
     onSuccess?: (
         raw: any,
-        res?: {
+        res: {
             params?: ParamsType;
-            data?: DataType;
+            data: DataType;
             list?: ListType;
             meta?: MetaType;
         },
@@ -56,7 +56,7 @@ const useAPI = <
                 if (args?.onSuccess) {
                     const parse: {
                         params?: ParamsType;
-                        data?: DataType;
+                        data: DataType;
                         list?: ListType;
                         meta?: MetaType;
                     } = {

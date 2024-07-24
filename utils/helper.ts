@@ -8,7 +8,6 @@ import {
 import { ReadonlyURLSearchParams } from 'next/navigation';
 import CryptoJS from 'crypto-js';
 import imageCompression from 'browser-image-compression';
-// @ts-ignore
 import * as turf from '@turf/turf';
 
 export const myTurf = turf;
@@ -246,6 +245,13 @@ export function extensionToMimeType(extension: string): string | undefined {
         xml: 'application/xml',
         zip: 'application/zip',
         tar: 'application/x-tar',
+        mp4: 'video/mp4',
+        avi: 'video/x-msvideo',
+        mov: 'video/quicktime',
+        wmv: 'video/x-ms-wmv',
+        flv: 'video/x-flv',
+        mkv: 'video/x-matroska',
+        webm: 'video/webm',
     };
 
     const lowercasedExtension = extension.toLowerCase();
@@ -277,7 +283,6 @@ export function getMapLibreCoordinate(
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
-    var point = turf.point([-75.343, 39.984], 'ss');
     return {
         coordinates,
         properties: e.features[0].properties,

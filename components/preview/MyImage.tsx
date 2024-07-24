@@ -1,37 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 
-type Props = {
-    alt: string;
-    src: string;
-    id?: string;
-    srcSet?: string;
-    className?: string;
-    style?: React.CSSProperties;
-    width?: number | string;
-    height?: number | string;
-};
+interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {}
 
 export default function MyImage({
     alt,
     src,
-    id,
-    srcSet,
-    className,
-    style,
-    width,
-    height,
+    loading = 'lazy',
+    ...restProps
 }: Props) {
-    return (
-        <img
-            id={id}
-            src={src}
-            srcSet={srcSet}
-            alt={alt}
-            className={className}
-            style={style}
-            loading='lazy'
-            width={width}
-            height={height}
-        />
-    );
+    return <img alt={alt} src={src} loading={loading} {...restProps} />;
 }

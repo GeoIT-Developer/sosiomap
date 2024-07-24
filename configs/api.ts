@@ -113,6 +113,22 @@ const API = {
         HOST.put(`account/request-account-deletion`, {
             request_id: requestId,
         }),
+
+    putProfilePhoto: (file: File) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        return HOST.put(`profile/photo`, formData);
+    },
+
+    putProfileCoverPhoto: (file: File) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        return HOST.put(`profile/cover`, formData);
+    },
+
+    getProfile: () => {
+        return HOST.get(`profile`);
+    },
 };
 
 export default API;
