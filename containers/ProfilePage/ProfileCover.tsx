@@ -3,9 +3,10 @@ import { alpha } from '@mui/material/styles';
 import { useRef, useState } from 'react';
 import MyImage from '@/components/preview/MyImage';
 import { ASSETS } from '@/utils/constant';
-import { useScopedI18n } from '@/locales/client';
+import { useI18n } from '@/locales/client';
 import {
     addMinioPrefix,
+    compressImage,
     fileToObjectURL,
     getMimeTypeFromURL,
 } from '@/utils/helper';
@@ -30,7 +31,7 @@ export default function ProfileCover({
     photoURL: string | undefined;
     onRefresh: () => void;
 }) {
-    const t = useScopedI18n('button');
+    const t = useI18n();
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [imgFileURL, setImgFileURL] = useState<string>('');
     const [openCropper, setOpenCropper] = useState(false);
@@ -46,6 +47,11 @@ export default function ProfileCover({
             onSuccess: () => {
                 onRefresh();
             },
+            onError: (err) => {
+                toast.error(err, {
+                    theme: 'colored',
+                });
+            },
         },
     );
 
@@ -58,8 +64,19 @@ export default function ProfileCover({
         if (!croppedArea || !imgFileURL) return;
         cropImage(imgFileURL, croppedArea, 0.8)
             .then((res) => {
-                apiUpdateCover.call(res?.file);
-                onCloseDialog();
+                const eFIle = res?.file;
+                if (eFIle) {
+                    compressImage(eFIle)
+                        .then((compressedFile) => {
+                            apiUpdateCover.call(compressedFile);
+                            onCloseDialog();
+                        })
+                        .catch((err) => {
+                            throw new Error(err);
+                        });
+                } else {
+                    throw new Error(t('message.error.failed_to_process_file'));
+                }
             })
             .catch((err) => {
                 toast.error(err, {
@@ -123,12 +140,14 @@ export default function ProfileCover({
                 maxWidth='md'
                 action={
                     <>
-                        <Button onClick={onCloseDialog}>{t('cancel')}</Button>
+                        <Button onClick={onCloseDialog}>
+                            {t('button.cancel')}
+                        </Button>
                         <Button
                             onClick={onClickSave}
                             disabled={apiUpdateCover.loading}
                         >
-                            {t('save')}
+                            {t('button.save')}
                         </Button>
                     </>
                 }

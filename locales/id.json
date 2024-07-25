@@ -53,7 +53,8 @@
             "feature_need_geolocation": "Data lokasi harus dihidupkan untuk menggunakan fitur ini!",
             "max_file": "Jumlah berkas yang dapat dipilih adalah {max} berkas!",
             "no_post_found_in_your_area": "Tidak ada postingan yang ditemukan di area peta Anda sekarang!",
-            "invalid_email_or_username": "Surel atau nama pengguna tidak valid!"
+            "invalid_email_or_username": "Surel atau nama pengguna tidak valid!",
+            "failed_to_process_file": "Gagal untuk memproses berkas!"
         },
         "info": {
             "login_to_continue": "Masuk untuk melanjutkan!",

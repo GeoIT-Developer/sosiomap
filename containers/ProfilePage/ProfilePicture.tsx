@@ -1,9 +1,10 @@
 import { Avatar, Box, Button, IconButton } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import { useRef, useState } from 'react';
-import { useScopedI18n } from '@/locales/client';
+import { useI18n } from '@/locales/client';
 import {
     addMinioPrefix,
+    compressImage,
     fileToObjectURL,
     getMimeTypeFromURL,
     nameToInitial,
@@ -32,7 +33,7 @@ export default function ProfilePicture({
     photoURL: string | undefined;
     onRefresh: () => void;
 }) {
-    const t = useScopedI18n('button');
+    const t = useI18n();
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [imgFileURL, setImgFileURL] = useState<string>('');
     const [openCropper, setOpenCropper] = useState(false);
@@ -48,6 +49,11 @@ export default function ProfilePicture({
             onSuccess: () => {
                 onRefresh();
             },
+            onError: (err) => {
+                toast.error(err, {
+                    theme: 'colored',
+                });
+            },
         },
     );
 
@@ -60,8 +66,19 @@ export default function ProfilePicture({
         if (!croppedArea || !imgFileURL) return;
         cropImage(imgFileURL, croppedArea, 0.8)
             .then((res) => {
-                apiUpdatePhoto.call(res?.file);
-                onCloseDialog();
+                const eFIle = res?.file;
+                if (eFIle) {
+                    compressImage(eFIle)
+                        .then((compressedFile) => {
+                            apiUpdatePhoto.call(compressedFile);
+                            onCloseDialog();
+                        })
+                        .catch((err) => {
+                            throw new Error(err);
+                        });
+                } else {
+                    throw new Error(t('message.error.failed_to_process_file'));
+                }
             })
             .catch((err) => {
                 toast.error(err, {
@@ -138,12 +155,14 @@ export default function ProfilePicture({
                 maxWidth='md'
                 action={
                     <>
-                        <Button onClick={onCloseDialog}>{t('cancel')}</Button>
+                        <Button onClick={onCloseDialog}>
+                            {t('button.cancel')}
+                        </Button>
                         <Button
                             onClick={onClickSave}
                             disabled={apiUpdatePhoto.loading}
                         >
-                            {t('save')}
+                            {t('button.save')}
                         </Button>
                     </>
                 }

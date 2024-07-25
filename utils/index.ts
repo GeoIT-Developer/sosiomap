@@ -79,7 +79,7 @@ export const errorResponse = (err: any, arrayBuffer = false): string => {
                 const resAsString = new TextDecoder().decode(err.response.data);
                 const resAsJSON = JSON.parse(resAsString);
                 if (resAsJSON?.error) {
-                    return 'Dokumen Gagal di panggil : ' + resAsJSON?.message;
+                    return 'Failed to access document : ' + resAsJSON?.message;
                 } else {
                     return 'Error : ' + resAsJSON?.message;
                 }
@@ -108,12 +108,13 @@ export const getFileOrError = (datas: any, type = 'application/pdf') => {
         if (resAsJSON?.error) {
             return {
                 success: false,
-                message: 'File Gagal di panggil : ' + errorResponse(resAsJSON),
+                message:
+                    'Failed to open the file : ' + errorResponse(resAsJSON),
             };
         } else {
             return {
                 success: false,
-                message: 'File Tidak tersedia : ' + errorResponse(resAsJSON),
+                message: 'File not found : ' + errorResponse(resAsJSON),
             };
         }
     } catch (err) {
