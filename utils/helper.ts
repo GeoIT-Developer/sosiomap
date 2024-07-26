@@ -52,6 +52,11 @@ export function getLngLat(coor: LngLat | undefined | null) {
     return { lng: parseFloat(lng.toFixed(6)), lat: parseFloat(lat.toFixed(6)) };
 }
 
+export function getCurrentPath() {
+    const { pathname, hash } = window.location;
+    return `${pathname}${hash}`;
+}
+
 export function updateSearchParams(
     searchParams: ReadonlyURLSearchParams,
     key: string,

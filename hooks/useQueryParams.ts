@@ -1,22 +1,26 @@
 import { useHistoryContext } from '@/contexts/HistoryContext';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 type QueryParams = Record<string, string>;
 
+function getCurrentPath(params: QueryParams) {
+    const newParams = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+        newParams.set(key, value);
+    });
+
+    const { pathname, hash } = window.location;
+    return `${pathname}?${newParams.toString()}${hash}`;
+}
+
 function useQueryParams() {
+    const searchParams = useSearchParams();
     const history = useHistoryContext();
     const router = useRouter();
 
     const setQueryParams = (params: QueryParams) => {
-        const newParams = new URLSearchParams();
-        Object.entries(params).forEach(([key, value]) => {
-            newParams.set(key, value);
-        });
-        router.push(
-            `${window.location.pathname}?${newParams.toString()}${
-                window.location.hash
-            }`,
-        );
+        const currentPath = getCurrentPath(params);
+        router.push(currentPath);
     };
 
     const addParam = (key: string, value: string) => {
@@ -34,7 +38,9 @@ function useQueryParams() {
     const removeParam = (key: string) => {
         const queryParams = new URLSearchParams(window.location.search);
         queryParams.delete(key);
-        setQueryParams(Object.fromEntries(queryParams));
+
+        const currentPath = getCurrentPath(Object.fromEntries(queryParams));
+        history.onBackFullPath(currentPath);
     };
 
     const clearParams = () => {
@@ -47,6 +53,7 @@ function useQueryParams() {
         replaceParam,
         removeParam,
         clearParams,
+        searchParams,
     };
 }
 

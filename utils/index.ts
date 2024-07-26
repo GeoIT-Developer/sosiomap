@@ -50,6 +50,35 @@ export function getLastElement<T>(arr: T[]) {
     }
 }
 
+export function areObjectsEqual(
+    obj1: ObjectLiteral,
+    obj2: ObjectLiteral,
+): boolean {
+    // Get the keys of both objects
+    const keys1 = Object.keys(obj1);
+    const keys2 = Object.keys(obj2);
+
+    // Check if both objects have the same number of keys
+    if (keys1.length !== keys2.length) {
+        return false;
+    }
+
+    // Sort the keys to ensure order does not matter
+    keys1.sort();
+    keys2.sort();
+
+    // Compare each key and value in both objects
+    for (let i = 0; i < keys1.length; i++) {
+        const key = keys1[i];
+        if (key !== keys2[i] || obj1[key] !== obj2[key]) {
+            return false;
+        }
+    }
+
+    // If all keys and values match, the objects are equal
+    return true;
+}
+
 export function downloadFile(
     eData: any,
     type: string,

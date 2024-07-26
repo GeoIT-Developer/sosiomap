@@ -136,6 +136,13 @@ export const QUERY = {
     TOPIC: 'topic',
 };
 
+export const POPUP_PARAMS = {
+    IMAGE_VIEWER: {
+        KEY: 'image-viewer',
+        VALUE: 'open',
+    },
+};
+
 export const MAX_LENGTH = {
     POST: {
         STANDARD: {
