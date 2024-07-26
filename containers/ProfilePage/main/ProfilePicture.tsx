@@ -1,10 +1,9 @@
-import { Avatar, Box, Button, IconButton } from '@mui/material';
+import { Avatar, Box, IconButton } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import { useEffect, useRef, useState } from 'react';
 import { useI18n } from '@/locales/client';
 import {
     addMinioPrefix,
-    compressImage,
     fileToObjectURL,
     getMimeTypeFromURL,
     nameToInitial,
@@ -12,15 +11,14 @@ import {
 } from '@/utils/helper';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import VisuallyHiddenInput from '@/components/input/FileUpload/VisuallyHiddenInput';
-import ImageCropper from '@/components/editor/ImageCropper';
-import BootstrapDialog from '@/components/dialog/BootstrapDialog';
-import { Area } from 'react-easy-crop';
-import { cropImage } from '@/utils/cropImage';
 import useAPI from '@/hooks/useAPI';
 import API from '@/configs/api';
 import { toast } from 'react-toastify';
 import { ProfileDataInterface } from '@/types/api/responses/profile-data.interface';
 import ImageViewer, { MediaType } from '@/components/preview/ImageViewer';
+import PopupImageCropper, {
+    usePopupImageCropper,
+} from '@/components/editor/PopupImageCropper';
 
 export default function ProfilePicture({
     name,
@@ -33,10 +31,10 @@ export default function ProfilePicture({
 }) {
     const t = useI18n();
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const [imgFileURL, setImgFileURL] = useState<string>('');
-    const [openCropper, setOpenCropper] = useState(false);
-    const [croppedArea, setCroppedArea] = useState<Area>();
     const [media, setMedia] = useState<MediaType[]>([]);
+    const popupImageCropperHooks = usePopupImageCropper();
+    const { onCloseDialog, setOpenCropper, setImgFileURL, processImage } =
+        popupImageCropperHooks;
 
     const apiUpdatePhoto = useAPI<ProfileDataInterface, File>(
         API.putProfilePhoto,
@@ -63,28 +61,11 @@ export default function ProfilePicture({
         }
     }, [photoURL]);
 
-    function onCloseDialog() {
-        setOpenCropper(false);
-        setImgFileURL('');
-    }
-
     function onClickSave() {
-        if (!croppedArea || !imgFileURL) return;
-        cropImage(imgFileURL, croppedArea, 0.8)
-            .then((res) => {
-                const eFIle = res?.file;
-                if (eFIle) {
-                    compressImage(eFIle)
-                        .then((compressedFile) => {
-                            apiUpdatePhoto.call(compressedFile);
-                            onCloseDialog();
-                        })
-                        .catch((err) => {
-                            throw new Error(err);
-                        });
-                } else {
-                    throw new Error(t('message.error.failed_to_process_file'));
-                }
+        processImage()
+            .then((eFile) => {
+                apiUpdatePhoto.call(eFile);
+                onCloseDialog();
             })
             .catch((err) => {
                 toast.error(err, {
@@ -156,34 +137,12 @@ export default function ProfilePicture({
                     }}
                 />
             </IconButton>
-            <BootstrapDialog
-                open={openCropper}
-                handleClose={onCloseDialog}
-                maxWidth='md'
-                action={
-                    <>
-                        <Button onClick={onCloseDialog}>
-                            {t('button.cancel')}
-                        </Button>
-                        <Button
-                            onClick={onClickSave}
-                            disabled={apiUpdatePhoto.loading}
-                        >
-                            {t('button.save')}
-                        </Button>
-                    </>
-                }
-            >
-                <Box className='min-h-[50vh] relative'>
-                    <ImageCropper
-                        imageURL={imgFileURL}
-                        aspect={1 / 1}
-                        onCropComplete={(_croppedArea, croppedAreaPixels) => {
-                            setCroppedArea(croppedAreaPixels);
-                        }}
-                    />
-                </Box>
-            </BootstrapDialog>
+            <PopupImageCropper
+                aspectRatio={1 / 1}
+                isLoading={apiUpdatePhoto.loading}
+                onSave={onClickSave}
+                hooks={popupImageCropperHooks}
+            />
         </Box>
     );
 }

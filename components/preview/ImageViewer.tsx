@@ -37,6 +37,7 @@ export default function ImageViewer({ media, children }: Props) {
         },
     });
 
+    // Close the dialog when back using navigation
     useEffect(() => {
         if (!openLightBox.open) return;
         const popupParamsValue = queryParams.searchParams.get(
@@ -86,6 +87,7 @@ export default function ImageViewer({ media, children }: Props) {
 
     function handleOpenLightbox() {
         setOpenLightBox({ index: 0, open: true });
+        // Add params when open the dialog
         queryParams.addParam(
             POPUP_PARAMS.IMAGE_VIEWER.KEY,
             POPUP_PARAMS.IMAGE_VIEWER.VALUE,
@@ -94,6 +96,7 @@ export default function ImageViewer({ media, children }: Props) {
 
     function handleCloseLightbox(lastIndex = 0) {
         setOpenLightBox({ index: lastIndex, open: false });
+        // Remove params when close the dialog
         queryParams.removeParam(POPUP_PARAMS.IMAGE_VIEWER.KEY);
     }
 

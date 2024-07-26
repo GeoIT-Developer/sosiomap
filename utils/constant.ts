@@ -141,6 +141,10 @@ export const POPUP_PARAMS = {
         KEY: 'image-viewer',
         VALUE: 'open',
     },
+    IMAGE_CROPPER: {
+        KEY: 'image-cropper',
+        VALUE: 'open',
+    },
 };
 
 export const MAX_LENGTH = {

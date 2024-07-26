@@ -1,15 +1,4 @@
-import {
-    Alert,
-    Avatar,
-    Box,
-    Fab,
-    IconButton,
-    Paper,
-    Tab,
-    Tabs,
-    Typography,
-} from '@mui/material';
-import { alpha } from '@mui/material/styles';
+import { Alert, Box, Paper, Tab, Tabs, Typography } from '@mui/material';
 import PageAppBar from './PageAppBar';
 import useWindowHeight from '@/hooks/useWindowHeight';
 import NeedLogin from '@/components/auth/NeedLogin';
@@ -18,25 +7,18 @@ import usePageLoaded from '@/hooks/usePageLoaded';
 import useAccessToken from '@/hooks/useAccessToken';
 import TabPanel, { a11yProps } from '@/components/tab/TabPanel';
 import { useEffect, useState } from 'react';
-import MyImage from '@/components/preview/MyImage';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import ViewListIcon from '@mui/icons-material/ViewList';
-import { ASSETS } from '@/utils/constant';
 import { useI18n } from '@/locales/client';
-import { nameToInitial, stringToColor } from '@/utils/helper';
 import SocialMediaFooter from '../AboutPage/SocialMediaFooter';
 import DetailTab from './tab/DetailTab';
-import EditIcon from '@mui/icons-material/Edit';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import ProfilePicture from './ProfilePicture';
-import ProfileCover from './ProfileCover';
 import useRefresh from '@/hooks/useRefresh';
 import useAPI from '@/hooks/useAPI';
 import API from '@/configs/api';
-import { ObjectLiteral } from '@/types/object-literal.interface';
 import { ProfileDataInterface } from '@/types/api/responses/profile-data.interface';
+import ProfileCover from './main/ProfileCover';
+import ProfilePicture from './main/ProfilePicture';
 
 enum ProfileTabEnum {
     DETAIL = 'detail',
