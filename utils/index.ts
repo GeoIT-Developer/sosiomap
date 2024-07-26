@@ -50,6 +50,35 @@ export function getLastElement<T>(arr: T[]) {
     }
 }
 
+export function areObjectsEqual(
+    obj1: ObjectLiteral,
+    obj2: ObjectLiteral,
+): boolean {
+    // Get the keys of both objects
+    const keys1 = Object.keys(obj1);
+    const keys2 = Object.keys(obj2);
+
+    // Check if both objects have the same number of keys
+    if (keys1.length !== keys2.length) {
+        return false;
+    }
+
+    // Sort the keys to ensure order does not matter
+    keys1.sort();
+    keys2.sort();
+
+    // Compare each key and value in both objects
+    for (let i = 0; i < keys1.length; i++) {
+        const key = keys1[i];
+        if (key !== keys2[i] || obj1[key] !== obj2[key]) {
+            return false;
+        }
+    }
+
+    // If all keys and values match, the objects are equal
+    return true;
+}
+
 export function downloadFile(
     eData: any,
     type: string,
@@ -79,7 +108,7 @@ export const errorResponse = (err: any, arrayBuffer = false): string => {
                 const resAsString = new TextDecoder().decode(err.response.data);
                 const resAsJSON = JSON.parse(resAsString);
                 if (resAsJSON?.error) {
-                    return 'Dokumen Gagal di panggil : ' + resAsJSON?.message;
+                    return 'Failed to access document : ' + resAsJSON?.message;
                 } else {
                     return 'Error : ' + resAsJSON?.message;
                 }
@@ -108,12 +137,13 @@ export const getFileOrError = (datas: any, type = 'application/pdf') => {
         if (resAsJSON?.error) {
             return {
                 success: false,
-                message: 'File Gagal di panggil : ' + errorResponse(resAsJSON),
+                message:
+                    'Failed to open the file : ' + errorResponse(resAsJSON),
             };
         } else {
             return {
                 success: false,
-                message: 'File Tidak tersedia : ' + errorResponse(resAsJSON),
+                message: 'File not found : ' + errorResponse(resAsJSON),
             };
         }
     } catch (err) {

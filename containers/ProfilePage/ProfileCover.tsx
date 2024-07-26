@@ -1,11 +1,12 @@
 import { Box, Button, IconButton } from '@mui/material';
 import { alpha } from '@mui/material/styles';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import MyImage from '@/components/preview/MyImage';
 import { ASSETS } from '@/utils/constant';
-import { useScopedI18n } from '@/locales/client';
+import { useI18n } from '@/locales/client';
 import {
     addMinioPrefix,
+    compressImage,
     fileToObjectURL,
     getMimeTypeFromURL,
 } from '@/utils/helper';
@@ -19,9 +20,7 @@ import useAPI from '@/hooks/useAPI';
 import { ProfileDataInterface } from '@/types/api/responses/profile-data.interface';
 import API from '@/configs/api';
 import { toast } from 'react-toastify';
-import SimpleLightbox, {
-    SimpleLightboxType,
-} from '@/components/preview/SimpleLightbox';
+import ImageViewer, { MediaType } from '@/components/preview/ImageViewer';
 
 export default function ProfileCover({
     photoURL,
@@ -30,15 +29,12 @@ export default function ProfileCover({
     photoURL: string | undefined;
     onRefresh: () => void;
 }) {
-    const t = useScopedI18n('button');
+    const t = useI18n();
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [imgFileURL, setImgFileURL] = useState<string>('');
     const [openCropper, setOpenCropper] = useState(false);
     const [croppedArea, setCroppedArea] = useState<Area>();
-    const [openLightBox, setOpenLightBox] = useState<SimpleLightboxType>({
-        open: false,
-        index: 0,
-    });
+    const [media, setMedia] = useState<MediaType[]>([]);
 
     const apiUpdateCover = useAPI<ProfileDataInterface, File>(
         API.putProfileCoverPhoto,
@@ -46,8 +42,24 @@ export default function ProfileCover({
             onSuccess: () => {
                 onRefresh();
             },
+            onError: (err) => {
+                toast.error(err, {
+                    theme: 'colored',
+                });
+            },
         },
     );
+
+    useEffect(() => {
+        if (photoURL) {
+            setMedia([
+                {
+                    url: addMinioPrefix(photoURL),
+                    fileType: getMimeTypeFromURL(photoURL),
+                },
+            ]);
+        }
+    }, [photoURL]);
 
     function onCloseDialog() {
         setOpenCropper(false);
@@ -58,8 +70,19 @@ export default function ProfileCover({
         if (!croppedArea || !imgFileURL) return;
         cropImage(imgFileURL, croppedArea, 0.8)
             .then((res) => {
-                apiUpdateCover.call(res?.file);
-                onCloseDialog();
+                const eFIle = res?.file;
+                if (eFIle) {
+                    compressImage(eFIle)
+                        .then((compressedFile) => {
+                            apiUpdateCover.call(compressedFile);
+                            onCloseDialog();
+                        })
+                        .catch((err) => {
+                            throw new Error(err);
+                        });
+                } else {
+                    throw new Error(t('message.error.failed_to_process_file'));
+                }
             })
             .catch((err) => {
                 toast.error(err, {
@@ -70,20 +93,18 @@ export default function ProfileCover({
 
     return (
         <Box className='aspect-[3/1] w-full overflow-hidden relative'>
-            <MyImage
-                src={
-                    photoURL
-                        ? addMinioPrefix(photoURL)
-                        : `${ASSETS.PLACEHOLDER}profile_cover.jpg`
-                }
-                alt='cover'
-                className='w-full object-cover h-full pb-0.5 bg-primary'
-                onClick={() => {
-                    if (photoURL) {
-                        setOpenLightBox({ index: 0, open: true });
+            <ImageViewer media={media}>
+                <MyImage
+                    src={
+                        photoURL
+                            ? addMinioPrefix(photoURL)
+                            : `${ASSETS.PLACEHOLDER}profile_cover.jpg`
                     }
-                }}
-            />
+                    alt='cover'
+                    className='w-full object-cover h-full pb-0.5 bg-primary'
+                />
+            </ImageViewer>
+
             <IconButton
                 aria-label='edit-profile-cover'
                 size='small'
@@ -123,12 +144,14 @@ export default function ProfileCover({
                 maxWidth='md'
                 action={
                     <>
-                        <Button onClick={onCloseDialog}>{t('cancel')}</Button>
+                        <Button onClick={onCloseDialog}>
+                            {t('button.cancel')}
+                        </Button>
                         <Button
                             onClick={onClickSave}
                             disabled={apiUpdateCover.loading}
                         >
-                            {t('save')}
+                            {t('button.save')}
                         </Button>
                     </>
                 }
@@ -143,19 +166,6 @@ export default function ProfileCover({
                     />
                 </Box>
             </BootstrapDialog>
-
-            {photoURL && (
-                <SimpleLightbox
-                    media={[
-                        {
-                            url: addMinioPrefix(photoURL),
-                            fileType: getMimeTypeFromURL(photoURL),
-                        },
-                    ]}
-                    openLightBox={openLightBox}
-                    setOpenLightBox={setOpenLightBox}
-                />
-            )}
         </Box>
     );
 }

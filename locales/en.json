@@ -53,7 +53,8 @@
             "feature_need_geolocation": "Location data must be activated to use this feature!",
             "max_file": "Maximum number of files is {max} files!",
             "no_post_found_in_your_area": "No post found in your current map area!",
-            "invalid_email_or_username": "Invalid email or username!"
+            "invalid_email_or_username": "Invalid email or username!",
+            "failed_to_process_file": "Failed to process file!"
         },
         "info": {
             "login_to_continue": "Please login to continue!",

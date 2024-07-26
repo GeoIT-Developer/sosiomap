@@ -1,9 +1,10 @@
 import { Avatar, Box, Button, IconButton } from '@mui/material';
 import { alpha } from '@mui/material/styles';
-import { useRef, useState } from 'react';
-import { useScopedI18n } from '@/locales/client';
+import { useEffect, useRef, useState } from 'react';
+import { useI18n } from '@/locales/client';
 import {
     addMinioPrefix,
+    compressImage,
     fileToObjectURL,
     getMimeTypeFromURL,
     nameToInitial,
@@ -19,9 +20,7 @@ import useAPI from '@/hooks/useAPI';
 import API from '@/configs/api';
 import { toast } from 'react-toastify';
 import { ProfileDataInterface } from '@/types/api/responses/profile-data.interface';
-import SimpleLightbox, {
-    SimpleLightboxType,
-} from '@/components/preview/SimpleLightbox';
+import ImageViewer, { MediaType } from '@/components/preview/ImageViewer';
 
 export default function ProfilePicture({
     name,
@@ -32,15 +31,12 @@ export default function ProfilePicture({
     photoURL: string | undefined;
     onRefresh: () => void;
 }) {
-    const t = useScopedI18n('button');
+    const t = useI18n();
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [imgFileURL, setImgFileURL] = useState<string>('');
     const [openCropper, setOpenCropper] = useState(false);
     const [croppedArea, setCroppedArea] = useState<Area>();
-    const [openLightBox, setOpenLightBox] = useState<SimpleLightboxType>({
-        open: false,
-        index: 0,
-    });
+    const [media, setMedia] = useState<MediaType[]>([]);
 
     const apiUpdatePhoto = useAPI<ProfileDataInterface, File>(
         API.putProfilePhoto,
@@ -48,8 +44,24 @@ export default function ProfilePicture({
             onSuccess: () => {
                 onRefresh();
             },
+            onError: (err) => {
+                toast.error(err, {
+                    theme: 'colored',
+                });
+            },
         },
     );
+
+    useEffect(() => {
+        if (photoURL) {
+            setMedia([
+                {
+                    url: addMinioPrefix(photoURL),
+                    fileType: getMimeTypeFromURL(photoURL),
+                },
+            ]);
+        }
+    }, [photoURL]);
 
     function onCloseDialog() {
         setOpenCropper(false);
@@ -60,8 +72,19 @@ export default function ProfilePicture({
         if (!croppedArea || !imgFileURL) return;
         cropImage(imgFileURL, croppedArea, 0.8)
             .then((res) => {
-                apiUpdatePhoto.call(res?.file);
-                onCloseDialog();
+                const eFIle = res?.file;
+                if (eFIle) {
+                    compressImage(eFIle)
+                        .then((compressedFile) => {
+                            apiUpdatePhoto.call(compressedFile);
+                            onCloseDialog();
+                        })
+                        .catch((err) => {
+                            throw new Error(err);
+                        });
+                } else {
+                    throw new Error(t('message.error.failed_to_process_file'));
+                }
             })
             .catch((err) => {
                 toast.error(err, {
@@ -73,16 +96,17 @@ export default function ProfilePicture({
     return (
         <Box className='relative w-fit mx-auto'>
             {photoURL ? (
-                <Avatar
-                    sx={{
-                        width: '5rem',
-                        height: '5rem',
-                    }}
-                    className='mx-auto mt-[-2.5rem] !p-0.5'
-                    alt={name}
-                    src={addMinioPrefix(photoURL)}
-                    onClick={() => setOpenLightBox({ index: 0, open: true })}
-                />
+                <ImageViewer media={media}>
+                    <Avatar
+                        sx={{
+                            width: '5rem',
+                            height: '5rem',
+                        }}
+                        className='mx-auto mt-[-2.5rem] border-2 border-primary border-solid'
+                        alt={name}
+                        src={addMinioPrefix(photoURL)}
+                    />
+                </ImageViewer>
             ) : (
                 <Avatar
                     sx={{
@@ -138,12 +162,14 @@ export default function ProfilePicture({
                 maxWidth='md'
                 action={
                     <>
-                        <Button onClick={onCloseDialog}>{t('cancel')}</Button>
+                        <Button onClick={onCloseDialog}>
+                            {t('button.cancel')}
+                        </Button>
                         <Button
                             onClick={onClickSave}
                             disabled={apiUpdatePhoto.loading}
                         >
-                            {t('save')}
+                            {t('button.save')}
                         </Button>
                     </>
                 }
@@ -158,18 +184,6 @@ export default function ProfilePicture({
                     />
                 </Box>
             </BootstrapDialog>
-            {photoURL && (
-                <SimpleLightbox
-                    media={[
-                        {
-                            url: addMinioPrefix(photoURL),
-                            fileType: getMimeTypeFromURL(photoURL),
-                        },
-                    ]}
-                    openLightBox={openLightBox}
-                    setOpenLightBox={setOpenLightBox}
-                />
-            )}
         </Box>
     );
 }
