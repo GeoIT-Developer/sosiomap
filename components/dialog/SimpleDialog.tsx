@@ -1,7 +1,13 @@
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import { ReactElement, ReactNode, cloneElement, useState } from 'react';
+import {
+    ReactElement,
+    ReactNode,
+    cloneElement,
+    useEffect,
+    useState,
+} from 'react';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -19,14 +25,17 @@ interface SimpleDialogProps {
     children: ReactNode;
     title?: ReactNode;
     triggerButton?: ReactElement;
+    keepMounted?: boolean | 'on-open';
 }
 
 export default function SimpleDialog({
     title,
     children,
     triggerButton = <Button variant='outlined'>Open</Button>,
+    keepMounted: keepMountedSetting,
 }: SimpleDialogProps) {
     const [open, setOpen] = useState(false);
+    const [keepMounted, setKeepMounted] = useState(false);
 
     const handleClose = () => {
         setOpen(false);
@@ -36,10 +45,22 @@ export default function SimpleDialog({
         onClick: () => setOpen(true),
     });
 
+    useEffect(() => {
+        if (keepMountedSetting === true) {
+            setKeepMounted(true);
+        } else if (keepMountedSetting === 'on-open' && open) {
+            setKeepMounted(true);
+        }
+    }, [keepMountedSetting, open]);
+
     return (
         <>
             {clonedButton}
-            <BootstrapDialog onClose={handleClose} open={open}>
+            <BootstrapDialog
+                onClose={handleClose}
+                open={open}
+                keepMounted={keepMounted}
+            >
                 {title && (
                     <>
                         <DialogTitle>{title}</DialogTitle>

@@ -1,4 +1,4 @@
-import { Alert, Box, Divider, Tab, Tabs } from '@mui/material';
+import { Box, Divider, Tab, Tabs } from '@mui/material';
 import MyImage from '@/components/preview/MyImage';
 import { ASSETS } from '@/utils/constant';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
@@ -15,8 +15,8 @@ import TabPanel, { a11yProps } from '@/components/tab/TabPanel';
 import { PostUrlType } from '@/types/api/responses/map-post-data.interface';
 import { useEffect, useState } from 'react';
 import SocialMediaEnum from '@/types/social-media.enum';
-import CheckIcon from '@mui/icons-material/Check';
 import SingleAccordion from '@/components/accordion/SingleAccordion';
+import LinkPreview from '@/components/preview/LinkPreview';
 
 type Props = {
     postUrlProps: PostUrlType;
@@ -235,16 +235,9 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
                     className='text-center'
                 >
                     <Box className='mx-auto w-fit'>
-                        <Alert
-                            icon={<CheckIcon fontSize='inherit' />}
-                            severity='success'
-                            className='max-w-[325px] whitespace-normal break-all'
-                            onClick={() =>
-                                window.open(postUrl?.news_website, '_blank')
-                            }
-                        >
-                            {postUrl?.news_website}
-                        </Alert>
+                        {postUrl?.news_website && (
+                            <LinkPreview url={postUrl?.news_website} />
+                        )}
                     </Box>
                 </TabPanel>
                 <TabPanel
@@ -253,16 +246,7 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
                     className='text-center'
                 >
                     <Box className='mx-auto w-fit'>
-                        <Alert
-                            icon={<CheckIcon fontSize='inherit' />}
-                            severity='success'
-                            className='max-w-[325px] whitespace-normal break-all'
-                            onClick={() =>
-                                window.open(postUrl?.other, '_blank')
-                            }
-                        >
-                            {postUrl?.other}
-                        </Alert>
+                        {postUrl?.other && <LinkPreview url={postUrl?.other} />}
                     </Box>
                 </TabPanel>
             </Box>

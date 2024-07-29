@@ -15,6 +15,7 @@ import {
     TwitterEmbed,
     YouTubeEmbed,
 } from 'react-social-media-embed';
+import LinkPreview from '@/components/preview/LinkPreview';
 
 export type SocialMediaURLType = {
     instagram: string;
@@ -157,8 +158,26 @@ export default function SocialMediaPost({
                                             <PreviewIcon />
                                         </IconButton>
                                     }
+                                    keepMounted='on-open'
                                 >
                                     <Box className='bg-white'>{item.embed}</Box>
+                                </SimpleDialog>
+                            )}
+                            {isValidURL(value[itemID]) && !item.embed && (
+                                <SimpleDialog
+                                    title={
+                                        <Box className='flex'>
+                                            {item.icon}
+                                            <span>{item.label}</span>
+                                        </Box>
+                                    }
+                                    triggerButton={
+                                        <IconButton>
+                                            <PreviewIcon />
+                                        </IconButton>
+                                    }
+                                >
+                                    <LinkPreview url={value[itemID]} />
                                 </SimpleDialog>
                             )}
                         </Box>

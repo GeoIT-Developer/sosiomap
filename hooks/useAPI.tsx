@@ -19,7 +19,24 @@ type ArgsProps<DataType, ParamsType, ListType, MetaType> = {
     callOnFirstRender?: boolean;
     callOnFirstRenderParams?: ParamsType;
 };
-
+/**
+ * A custom hook to manage API calls and state.
+ *
+ * @template DataType The type of the data returned by the API.
+ * @template ParamsType The type of the parameters passed to the API.
+ * @template ListType The type of the list returned by the API.
+ * @template MetaType The type of the metadata returned by the API.
+ *
+ * @param {Function} API The API function to be called.
+ * @param {ArgsProps<DataType, ParamsType, ListType, MetaType>} [args] Optional arguments for the API call.
+ *
+ * @returns {Object} The state and handlers for managing API calls.
+ * @returns {DataType | null} data The data returned by the API.
+ * @returns {ListType | null} list The list returned by the API.
+ * @returns {MetaType | null} meta The metadata returned by the API.
+ * @returns {boolean} loading The loading state of the API call.
+ * @returns {string | null} error The error state of the API call.
+ */
 const useAPI = <
     DataType,
     ParamsType = ObjectLiteral,

@@ -55,8 +55,9 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
     });
 
     useEffect(() => {
+        if (!pageLoaded) return;
         apiProfile.call();
-    }, [refresh]);
+    }, [refresh, pageLoaded]);
 
     if (!show && !pageLoaded) {
         return null;
