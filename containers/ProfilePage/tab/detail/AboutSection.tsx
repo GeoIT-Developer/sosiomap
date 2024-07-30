@@ -31,7 +31,7 @@ export default function AboutSection({ profile }: Props) {
     return (
         <Stack spacing={1} className='px-4'>
             <Box className='w-full'>
-                <Typography variant='body2' className='break-all !text-xs'>
+                <Typography variant='body2' className='break-all !text-sm'>
                     {profile?.about || t('profile.default_about_section')}
                 </Typography>
             </Box>
@@ -39,7 +39,7 @@ export default function AboutSection({ profile }: Props) {
                 <Link
                     href={`tel:${profile.phone_number}`}
                     underline='hover'
-                    className='!text-xs flex gap-1 items-center w-fit'
+                    className='!text-sm flex gap-1 items-center w-fit'
                 >
                     <PhoneAndroidIcon fontSize='small' />
                     <span>{profile.phone_number}</span>
@@ -49,7 +49,7 @@ export default function AboutSection({ profile }: Props) {
                 <Link
                     href={`mailto:${profile.email}`}
                     underline='hover'
-                    className='!text-xs flex gap-1 items-center w-fit'
+                    className='!text-sm flex gap-1 items-center w-fit'
                 >
                     <EmailIcon fontSize='small' />
                     <span>{profile.email}</span>
@@ -59,7 +59,7 @@ export default function AboutSection({ profile }: Props) {
                 <Link
                     href={profile.website}
                     underline='hover'
-                    className='!text-xs flex gap-1 items-center w-fit'
+                    className='!text-sm flex gap-1 items-center w-fit'
                     target='_blank'
                     rel='noopener'
                 >
