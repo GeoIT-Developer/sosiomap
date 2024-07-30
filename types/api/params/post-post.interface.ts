@@ -17,6 +17,7 @@ export interface PostPostParamsInterface {
     url_twitter_post?: string;
     url_facebook_post?: string;
     url_youtube_post?: string;
+    url_linkedin_post?: string;
     url_news_website_post?: string;
     url_other?: string;
     media_1?: File;

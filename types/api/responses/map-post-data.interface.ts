@@ -30,6 +30,7 @@ export interface PostUrlType {
     twitter?: string;
     facebook?: string;
     youtube?: string;
+    linkedin?: string;
     news_website?: string;
     other?: string;
     _id?: string;

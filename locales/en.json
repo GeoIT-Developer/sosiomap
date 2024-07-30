@@ -7,7 +7,8 @@
         "message": "Message",
         "general": "General",
         "local": "Local",
-        "info": "Info"
+        "info": "Info",
+        "account": "Account"
     },
     "button": {
         "login": "Login",
@@ -41,7 +42,31 @@
     "profile": {
         "username": "Username",
         "name": "Name",
-        "email": "Email"
+        "email": "Email",
+        "edit_profile": "Edit Profile",
+        "share_profile": "Share Profile",
+        "default_about_section": "Hey there! Welcome to my profile.",
+        "message_the_data_will_be_publicly_accessible": "Please note that any data you enter here will be publicly accessible. Make sure not to include sensitive or personal information.",
+        "bio": "Bio",
+        "website": "Website",
+        "phone_number": "Phone Number",
+        "social_media_account": "Social Media Account",
+        "instagram": "Instagram",
+        "facebook": "Facebook",
+        "twitter": "Twitter",
+        "tiktok": "TikTok",
+        "youtube": "YouTube",
+        "linkedin": "LinkedIn",
+        "whatsapp": "WhatsApp",
+        "telegram": "Telegram",
+        "discord": "Discord",
+        "github": "GitHub",
+        "spotify": "Spotify",
+        "pinterest": "Pinterest",
+        "reddit": "Reddit",
+        "type_your_username": "Type your username",
+        "type_your_phone_number": "Type your phone number",
+        "type_your_account_url": "Type your account URL"
     },
     "message": {
         "error": {
@@ -55,14 +80,19 @@
             "no_post_found_in_your_area": "No post found in your current map area!",
             "invalid_email_or_username": "Invalid email or username!",
             "failed_to_process_file": "Failed to process file!",
-            "file_not_found": "File not found!"
+            "file_not_found": "File not found!",
+            "invalid_email_format": "Invalid email format!",
+            "invalid_phone_number_format": "Invalid phone number format!",
+            "invalid_username_format": "Invalid username format!",
+            "invalid_url_format": "Invalid URL format!"
         },
         "info": {
             "login_to_continue": "Please login to continue!",
             "coming_soon": "Coming Soon!"
         },
         "success": {
-            "success": "Success"
+            "success": "Success",
+            "saved": "Saved"
         }
     },
     "unit": {

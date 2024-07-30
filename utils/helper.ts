@@ -1,10 +1,5 @@
 import dayjs from 'dayjs';
-import {
-    LngLat,
-    MapGeoJSONFeature,
-    MapMouseEvent,
-    Properties,
-} from 'maplibre-gl';
+import { LngLat, MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
 import { ReadonlyURLSearchParams } from 'next/navigation';
 import CryptoJS from 'crypto-js';
 import imageCompression from 'browser-image-compression';
@@ -127,6 +122,20 @@ export function extractUsernameFromEmail(str: string) {
     } else {
         return str;
     }
+}
+
+export function isValidPhoneNumber(phoneNumber: string): boolean {
+    // Define a regex pattern for phone number validation
+    // This example pattern is for a general international phone number format
+    const phoneNumberPattern = /^[+]?[1-9]\d{1,16}$/;
+    return phoneNumberPattern.test(phoneNumber);
+}
+
+export function isValidUsername(username: string): boolean {
+    // Define a regex pattern for username validation
+    // Example: Alphanumeric characters, underscores, hyphens, and dots, with length between 3 and 30 characters
+    const usernamePattern = /^[a-zA-Z0-9._-]{3,30}$/;
+    return usernamePattern.test(username);
 }
 
 export function formatDateTime(utcString: string, format: string = 'HH:mm') {

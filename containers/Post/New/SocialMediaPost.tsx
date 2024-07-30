@@ -11,10 +11,12 @@ import SimpleDialog from '@/components/dialog/SimpleDialog';
 import {
     FacebookEmbed,
     InstagramEmbed,
+    LinkedInEmbed,
     TikTokEmbed,
     TwitterEmbed,
     YouTubeEmbed,
 } from 'react-social-media-embed';
+import LinkPreview from '@/components/preview/LinkPreview';
 
 export type SocialMediaURLType = {
     instagram: string;
@@ -22,6 +24,7 @@ export type SocialMediaURLType = {
     twitter: string;
     facebook: string;
     youtube: string;
+    linkedin: string;
     news_website: string;
     other: string;
 };
@@ -32,6 +35,7 @@ export const initialSocialMediaURLType = {
     twitter: '',
     facebook: '',
     youtube: '',
+    linkedin: '',
     news_website: '',
     other: '',
 };
@@ -83,6 +87,12 @@ export default function SocialMediaPost({
             label: 'YouTube',
             icon: `${ASSETS.ICON}youtube.png`,
             embed: <YouTubeEmbed url={value.youtube} width={325} />,
+        },
+        {
+            id: 'linkedin',
+            label: 'LinkedIn',
+            icon: `${ASSETS.ICON}linkedin.ico`,
+            embed: <LinkedInEmbed url={value.linkedin} width={325} />,
         },
         {
             id: 'news_website',
@@ -159,6 +169,23 @@ export default function SocialMediaPost({
                                     }
                                 >
                                     <Box className='bg-white'>{item.embed}</Box>
+                                </SimpleDialog>
+                            )}
+                            {isValidURL(value[itemID]) && !item.embed && (
+                                <SimpleDialog
+                                    title={
+                                        <Box className='flex'>
+                                            {item.icon}
+                                            <span>{item.label}</span>
+                                        </Box>
+                                    }
+                                    triggerButton={
+                                        <IconButton>
+                                            <PreviewIcon />
+                                        </IconButton>
+                                    }
+                                >
+                                    <LinkPreview url={value[itemID]} />
                                 </SimpleDialog>
                             )}
                         </Box>

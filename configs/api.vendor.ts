@@ -22,6 +22,8 @@ const API_VENDOR = {
     searchOSM: (txt: string) => HOST.get(`/api/osm`, { params: { txt } }),
     getDataKPU: ({ id, timestamp, type }: ParamsKPUType) =>
         HOST_BE.get(`vendor/kpu`, { params: { id, timestamp, type } }),
+    getUrlMetadata: (urlInput: string) =>
+        HOST.get(`/api/url-metadata`, { params: { url: urlInput } }),
 };
 
 export default API_VENDOR;
