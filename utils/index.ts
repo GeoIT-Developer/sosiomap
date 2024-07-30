@@ -98,6 +98,29 @@ export function isObjectHasValues(obj: ObjectLiteral): boolean {
     return false;
 }
 
+export function cleanObject(obj: any): any {
+    if (obj === null || obj === undefined || obj === '') {
+        return undefined;
+    }
+
+    if (typeof obj !== 'object' || Array.isArray(obj)) {
+        return obj;
+    }
+
+    const cleanedObj: any = {};
+
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            const cleanedValue = cleanObject(obj[key]);
+            if (cleanedValue !== undefined) {
+                cleanedObj[key] = cleanedValue;
+            }
+        }
+    }
+
+    return Object.keys(cleanedObj).length === 0 ? undefined : cleanedObj;
+}
+
 export function downloadFile(
     eData: any,
     type: string,

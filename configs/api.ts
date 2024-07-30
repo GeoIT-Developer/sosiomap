@@ -8,6 +8,7 @@ import { PostPostParamsInterface } from '@/types/api/params/post-post.interface'
 import { GetPublicMapPostParamsInterface } from '@/types/api/params/get-public-map-post.interface';
 import { PostCommentParamsInterface } from '@/types/api/params/post-comment.interface';
 import { PutProfileDataParamsInterface } from '@/types/api/params/put-profile-data.interface';
+import { cleanObject } from '@/utils';
 
 export const HOST = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -132,7 +133,8 @@ const API = {
     },
 
     putProfileData: (rawData: PutProfileDataParamsInterface) => {
-        return HOST.put(`profile`, rawData);
+        const newObj = cleanObject(rawData);
+        return HOST.put(`profile`, newObj);
     },
 };
 
