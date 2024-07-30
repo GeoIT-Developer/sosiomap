@@ -4,6 +4,7 @@ enum SocialMediaEnum {
     TWITTER = 'twitter',
     FACEBOOK = 'facebook',
     YOUTUBE = 'youtube',
+    LINKEDIN = 'linkedin',
     NEWS_WEBSITE = 'news_website',
     OTHER = 'other',
 }

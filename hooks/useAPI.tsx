@@ -108,6 +108,74 @@ const useAPI = <
             .finally(() => setLoading(false));
     };
 
+    const callAndWait = (
+        params?: ParamsType,
+    ): Promise<{
+        params?: ParamsType;
+        data: DataType;
+        list?: ListType;
+        meta?: MetaType;
+    }> => {
+        setLoading(true);
+        return new Promise((resolve, reject) => {
+            API(params || {})
+                .then((res: any) => {
+                    const datas = res.data;
+                    if (!datas) {
+                        throw new Error(res.status.toString());
+                    }
+                    setError(null);
+
+                    const parse: {
+                        params?: ParamsType;
+                        data: DataType;
+                        list?: ListType;
+                        meta?: MetaType;
+                    } = {
+                        params: params,
+                        data: datas,
+                    };
+
+                    if (args?.dataKey) {
+                        const eData = getValObject(datas, args.dataKey, {});
+                        parse.data = eData;
+                        setData(eData);
+                    } else {
+                        setData(datas);
+                    }
+                    if (args?.listkey) {
+                        const eList = getValObject(datas, args.listkey, []);
+                        parse.list = eList;
+                        setList(eList);
+                    }
+                    if (args?.metaKey) {
+                        const eMeta = getValObject(datas, args.metaKey, {});
+                        parse.meta = eMeta;
+                        setMeta(eMeta);
+                    }
+                    if (args?.onSuccess) {
+                        args.onSuccess(res, parse);
+                    }
+                    resolve(parse);
+                })
+                .catch((err: any) => {
+                    setData(null);
+                    setError(errorResponse(err));
+                    if (args?.onError) {
+                        args.onError(errorResponse(err), params);
+                    }
+                    if (args?.listkey) {
+                        setList(null);
+                    }
+                    if (args?.metaKey) {
+                        setMeta(null);
+                    }
+                    reject(errorResponse(err)); // Reject the promise with the error
+                })
+                .finally(() => setLoading(false));
+        });
+    };
+
     const clearData = () => {
         setData(null);
         setError(null);
@@ -126,6 +194,6 @@ const useAPI = <
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return { data, loading, error, call, list, meta, clearData };
+    return { data, loading, error, call, callAndWait, list, meta, clearData };
 };
 export default useAPI;

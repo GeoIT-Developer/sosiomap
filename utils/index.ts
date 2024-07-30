@@ -1,4 +1,5 @@
 import { ObjectLiteral } from '@/types/object-literal.interface';
+import { toast } from 'react-toastify';
 
 export function safeArray<T = ObjectLiteral>(arr: any, defaultValue = []) {
     if (Array.isArray(arr) && arr.length > 0) {
@@ -79,6 +80,24 @@ export function areObjectsEqual(
     return true;
 }
 
+export function isObjectHasValues(obj: ObjectLiteral): boolean {
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            const value = obj[key];
+            if (value !== null && value !== undefined && value !== '') {
+                if (typeof value === 'object' && !Array.isArray(value)) {
+                    if (isObjectHasValues(value)) {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 export function downloadFile(
     eData: any,
     type: string,
@@ -117,10 +136,16 @@ export const errorResponse = (err: any, arrayBuffer = false): string => {
             }
         } else {
             msg = err.response.status + ' ' + err.response.statusText;
-            if (err.response.data?.message) {
-                msg = err.response.data?.message;
-            } else if (err.response.data?.messages) {
-                msg = err.response.data?.messages;
+            const eMessage =
+                err.response.data?.message || err.response.data?.messages;
+            if (eMessage) {
+                if (Array.isArray(eMessage)) {
+                    msg = eMessage.join(', ');
+                } else if (typeof eMessage === 'object') {
+                    msg = JSON.stringify(eMessage);
+                } else {
+                    msg = eMessage;
+                }
             }
         }
     } else if (err.message) {
@@ -165,6 +190,12 @@ export const getFileOrError = (datas: any, type = 'application/pdf') => {
     }
 };
 
+export const showError = (err: any) => {
+    toast.error(errorResponse(err), {
+        theme: 'colored',
+    });
+};
+
 export const validateEmail = (email: any) => {
     return String(email)
         .toLowerCase()
@@ -175,4 +206,29 @@ export const validateEmail = (email: any) => {
 
 export function getRandomNumber(min: number, max: number): number {
     return Math.random() * (max - min) + min;
+}
+
+export async function shareUrl(
+    url: string,
+    title: string,
+    desc?: string,
+): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: title,
+                    text: desc,
+                    url: url,
+                });
+                resolve();
+            } catch (error) {
+                reject(error);
+            }
+        } else {
+            reject(
+                new Error('Web Share API is not supported in your browser.'),
+            );
+        }
+    });
 }

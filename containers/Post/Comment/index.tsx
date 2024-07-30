@@ -115,6 +115,7 @@ export default function CommentPage({ postId }: Props) {
             url_instagram_post: socialMediaURL.instagram,
             url_tiktok_post: socialMediaURL.tiktok,
             url_youtube_post: socialMediaURL.youtube,
+            url_linkedin_post: socialMediaURL.linkedin,
             url_news_website_post: socialMediaURL.news_website,
             url_other: socialMediaURL.other,
         };

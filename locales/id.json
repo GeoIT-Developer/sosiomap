@@ -7,7 +7,8 @@
         "message": "Pesan",
         "general": "Umum",
         "local": "Lokal",
-        "info": "Info"
+        "info": "Info",
+        "account": "Akun"
     },
     "button": {
         "login": "Masuk",
@@ -41,7 +42,31 @@
     "profile": {
         "username": "Nama Pengguna",
         "name": "Nama",
-        "email": "Surel"
+        "email": "Surel",
+        "edit_profile": "Sunting Profil",
+        "share_profile": "Bagikan Profil",
+        "default_about_section": "Hai hai! Selamat datang di profilku.",
+        "message_the_data_will_be_publicly_accessible": "Harap diperhatikan bahwa data apa pun yang Anda masukkan di sini akan dapat diakses oleh publik. Pastikan untuk tidak menyertakan informasi sensitif atau pribadi.",
+        "bio": "Bio",
+        "website": "Situs Web",
+        "phone_number": "Nomor HP",
+        "social_media_account": "Akun Sosial Media",
+        "instagram": "Instagram",
+        "facebook": "Facebook",
+        "twitter": "Twitter",
+        "tiktok": "TikTok",
+        "youtube": "YouTube",
+        "linkedin": "LinkedIn",
+        "whatsapp": "WhatsApp",
+        "telegram": "Telegram",
+        "discord": "Discord",
+        "github": "GitHub",
+        "spotify": "Spotify",
+        "pinterest": "Pinterest",
+        "reddit": "Reddit",
+        "type_your_username": "Ketikkan username Anda",
+        "type_your_phone_number": "Ketikkan nomor HP Anda",
+        "type_your_account_url": "Ketikkan URL akun Anda"
     },
     "message": {
         "error": {
@@ -55,14 +80,19 @@
             "no_post_found_in_your_area": "Tidak ada postingan yang ditemukan di area peta Anda sekarang!",
             "invalid_email_or_username": "Surel atau nama pengguna tidak valid!",
             "failed_to_process_file": "Gagal untuk memproses berkas!",
-            "file_not_found": "Berkas tidak ditemukan!"
+            "file_not_found": "Berkas tidak ditemukan!",
+            "invalid_email_format": "Format surel tidak valid!",
+            "invalid_phone_number_format": "Format nomor telepon tidak valid!",
+            "invalid_username_format": "Format nama pengguna valid!",
+            "invalid_url_format": "Format URL tidak valid!"
         },
         "info": {
             "login_to_continue": "Masuk untuk melanjutkan!",
             "coming_soon": "Segera Hadir!"
         },
         "success": {
-            "success": "Berhasil"
+            "success": "Berhasil",
+            "saved": "Tersimpan"
         }
     },
     "unit": {

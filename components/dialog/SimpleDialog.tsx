@@ -25,7 +25,7 @@ interface SimpleDialogProps {
     children: ReactNode;
     title?: ReactNode;
     triggerButton?: ReactElement;
-    keepMounted?: boolean | 'on-open';
+    keepMounted?: boolean | 'on-first-open';
 }
 
 export default function SimpleDialog({
@@ -48,7 +48,7 @@ export default function SimpleDialog({
     useEffect(() => {
         if (keepMountedSetting === true) {
             setKeepMounted(true);
-        } else if (keepMountedSetting === 'on-open' && open) {
+        } else if (keepMountedSetting === 'on-first-open' && open) {
             setKeepMounted(true);
         }
     }, [keepMountedSetting, open]);
@@ -60,6 +60,7 @@ export default function SimpleDialog({
                 onClose={handleClose}
                 open={open}
                 keepMounted={keepMounted}
+                className={open ? '' : 'hidden pointer-events-none'}
             >
                 {title && (
                     <>

@@ -2,23 +2,23 @@ import { Alert, Box, Paper, Tab, Tabs, Typography } from '@mui/material';
 import PageAppBar from './PageAppBar';
 import useWindowHeight from '@/hooks/useWindowHeight';
 import NeedLogin from '@/components/auth/NeedLogin';
-import { useSession } from 'next-auth/react';
 import usePageLoaded from '@/hooks/usePageLoaded';
 import useAccessToken from '@/hooks/useAccessToken';
 import TabPanel, { a11yProps } from '@/components/tab/TabPanel';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import { useI18n } from '@/locales/client';
 import SocialMediaFooter from '../AboutPage/SocialMediaFooter';
-import DetailTab from './tab/DetailTab';
+import DetailTab from './tab/detail';
 import useRefresh from '@/hooks/useRefresh';
 import useAPI from '@/hooks/useAPI';
 import API from '@/configs/api';
 import { ProfileDataInterface } from '@/types/api/responses/profile-data.interface';
 import ProfileCover from './main/ProfileCover';
 import ProfilePicture from './main/ProfilePicture';
+import { toast } from 'react-toastify';
 
 enum ProfileTabEnum {
     DETAIL = 'detail',
@@ -26,14 +26,16 @@ enum ProfileTabEnum {
     POST = 'post',
 }
 
+export const RefreshContext = createContext<{
+    setRefresh: () => void;
+}>({ setRefresh: () => {} });
+
 export default function ProfilePage({ show = true }: { show?: boolean }) {
     const t = useI18n();
     const { fragmentHeightStyle } = useWindowHeight();
-    const session = useSession();
     const accessToken = useAccessToken();
     const pageLoaded = usePageLoaded(show);
     const [refresh, setRefresh] = useRefresh();
-    const [profileData, setProfileData] = useState<ProfileDataInterface>();
 
     const [profileTab, setProfileTab] = useState<ProfileTabEnum>(
         ProfileTabEnum.DETAIL,
@@ -48,11 +50,16 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
 
     const eName = accessToken?.name || accessToken?.preferred_username || '';
 
-    const apiProfile = useAPI<ProfileDataInterface>(API.getProfile, {
-        onSuccess: (_raw, { data }) => {
-            setProfileData(data);
+    const { data: profileData, ...apiProfile } = useAPI<ProfileDataInterface>(
+        API.getProfile,
+        {
+            onError: (err) => {
+                toast.error(err, {
+                    theme: 'colored',
+                });
+            },
         },
-    });
+    );
 
     useEffect(() => {
         if (!pageLoaded) return;
@@ -85,7 +92,10 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
                             onRefresh={setRefresh}
                         />
                         <Typography variant='body1'>
-                            {session.data?.user.name}
+                            {accessToken?.name}
+                        </Typography>
+                        <Typography variant='body2' className='opacity-50'>
+                            @{accessToken?.preferred_username}
                         </Typography>
                     </Box>
                     <Paper
@@ -125,7 +135,9 @@ export default function ProfilePage({ show = true }: { show?: boolean }) {
                             value={profileTab}
                             index={ProfileTabEnum.DETAIL}
                         >
-                            <DetailTab />
+                            <RefreshContext.Provider value={{ setRefresh }}>
+                                <DetailTab profile={profileData} />
+                            </RefreshContext.Provider>
                         </TabPanel>
                         <TabPanel
                             value={profileTab}

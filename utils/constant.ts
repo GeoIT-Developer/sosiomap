@@ -110,6 +110,28 @@ export const ROUTE_EXTERNAL = {
     },
 };
 
+export const SOCIAL_MEDIA = {
+    getInstagramUrl: (username: string) =>
+        `https://www.instagram.com/${username}`,
+    getFacebookUrl: (username: string) =>
+        `https://www.facebook.com/${username}`,
+    getTwitterUrl: (username: string) => `https://twitter.com/${username}`,
+    getTiktokUrl: (username: string) => `https://www.tiktok.com/@${username}`,
+    getYouTubeUrl: (channel: string) => `https://www.youtube.com/@${channel}`,
+    getLinkedinUrl: (username: string) =>
+        `https://www.linkedin.com/in/${username}`,
+    getWhatsappUrl: (phone_number: string) => `https://wa.me/${phone_number}`,
+    getTelegramUrl: (username: string) => `https://t.me/${username}`,
+    getDiscordUrl: (invite_link: string) => invite_link,
+    getRedditUrl: (username: string) =>
+        `https://www.reddit.com/user/${username}`,
+    getPinterestUrl: (username: string) =>
+        `https://www.pinterest.com/${username}`,
+    getGithubUrl: (username: string) => `https://github.com/${username}`,
+    getSpotifyUrl: (username: string) =>
+        `https://open.spotify.com/user/${username}`,
+};
+
 export const CONTACT = {
     EMAIL: {
         ADDRESS: 'info@geoit.dev',
@@ -145,6 +167,10 @@ export const POPUP_PARAMS = {
         KEY: 'image-cropper',
         VALUE: 'open',
     },
+    FULL_SCRREN_DIALOG: {
+        KEY: 'full-screen-dialog',
+        VALUE: 'open',
+    },
 };
 
 export const MAX_LENGTH = {
@@ -168,5 +194,12 @@ export const MAX_LENGTH = {
     CHAT: {
         MIN_CHAT: 5,
         MAX_CHAT: 200,
+    },
+    PROFILE: {
+        MAX_SOCIAL_MEDIA_USERNAME: 30,
+        MAX_URL: 100,
+        MAX_ABOUT: 500,
+        MAX_PHONE_NUMBER: 15,
+        MAX_EMAIL: 50,
     },
 };

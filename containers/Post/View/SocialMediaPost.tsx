@@ -7,6 +7,7 @@ import { useScopedI18n } from '@/locales/client';
 import {
     FacebookEmbed,
     InstagramEmbed,
+    LinkedInEmbed,
     TikTokEmbed,
     TwitterEmbed,
     YouTubeEmbed,
@@ -130,6 +131,20 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
                                 {...a11yProps(SocialMediaEnum.YOUTUBE)}
                             />
                         )}
+                        {postUrl.linkedin && (
+                            <Tab
+                                icon={
+                                    <MyImage
+                                        src={`${ASSETS.ICON}linkedin.ico`}
+                                        alt={SocialMediaEnum.LINKEDIN}
+                                        width={28}
+                                        className='mr-2 align-text-bottom'
+                                    />
+                                }
+                                value={SocialMediaEnum.LINKEDIN}
+                                {...a11yProps(SocialMediaEnum.LINKEDIN)}
+                            />
+                        )}
                         {postUrl.news_website && (
                             <Tab
                                 icon={
@@ -224,6 +239,20 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
                         <Box className='bg-white mx-auto w-fit'>
                             <YouTubeEmbed
                                 url={postUrl?.youtube || ''}
+                                width={325}
+                            />
+                        </Box>
+                    </SingleAccordion>
+                </TabPanel>
+                <TabPanel
+                    value={activeTab}
+                    index={SocialMediaEnum.LINKEDIN}
+                    className='text-center'
+                >
+                    <SingleAccordion title='LinkedIn' defaultOpen>
+                        <Box className='bg-white mx-auto w-fit'>
+                            <LinkedInEmbed
+                                url={postUrl?.linkedin || ''}
                                 width={325}
                             />
                         </Box>
