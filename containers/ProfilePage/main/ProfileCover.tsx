@@ -3,7 +3,6 @@ import { alpha } from '@mui/material/styles';
 import { useEffect, useRef, useState } from 'react';
 import MyImage from '@/components/preview/MyImage';
 import { ASSETS } from '@/utils/constant';
-import { useI18n } from '@/locales/client';
 import {
     addMinioPrefix,
     fileToObjectURL,
@@ -14,11 +13,11 @@ import VisuallyHiddenInput from '@/components/input/FileUpload/VisuallyHiddenInp
 import useAPI from '@/hooks/useAPI';
 import { ProfileDataInterface } from '@/types/api/responses/profile-data.interface';
 import API from '@/configs/api';
-import { toast } from 'react-toastify';
 import ImageViewer, { MediaType } from '@/components/preview/ImageViewer';
 import PopupImageCropper, {
     usePopupImageCropper,
 } from '@/components/editor/PopupImageCropper';
+import { showError } from '@/utils';
 
 export default function ProfileCover({
     photoURL,
@@ -27,19 +26,12 @@ export default function ProfileCover({
     photoURL: string | undefined;
     onRefresh: () => void;
 }) {
-    const t = useI18n();
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [media, setMedia] = useState<MediaType[]>([]);
 
     const popupImageCropperHooks = usePopupImageCropper();
-    const {
-        croppedArea,
-        imgFileURL,
-        onCloseDialog,
-        setOpenCropper,
-        setImgFileURL,
-        processImage,
-    } = popupImageCropperHooks;
+    const { onCloseDialog, setOpenCropper, setImgFileURL, processImage } =
+        popupImageCropperHooks;
 
     const apiUpdateCover = useAPI<ProfileDataInterface, File>(
         API.putProfileCoverPhoto,
@@ -48,9 +40,7 @@ export default function ProfileCover({
                 onRefresh();
             },
             onError: (err) => {
-                toast.error(err, {
-                    theme: 'colored',
-                });
+                showError(err);
             },
         },
     );
@@ -73,9 +63,7 @@ export default function ProfileCover({
                 onCloseDialog();
             })
             .catch((err) => {
-                toast.error(err, {
-                    theme: 'colored',
-                });
+                showError(err);
             });
     }
 

@@ -1,7 +1,6 @@
 import { Avatar, Box, IconButton } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import { useEffect, useRef, useState } from 'react';
-import { useI18n } from '@/locales/client';
 import {
     addMinioPrefix,
     fileToObjectURL,
@@ -13,12 +12,12 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import VisuallyHiddenInput from '@/components/input/FileUpload/VisuallyHiddenInput';
 import useAPI from '@/hooks/useAPI';
 import API from '@/configs/api';
-import { toast } from 'react-toastify';
 import { ProfileDataInterface } from '@/types/api/responses/profile-data.interface';
 import ImageViewer, { MediaType } from '@/components/preview/ImageViewer';
 import PopupImageCropper, {
     usePopupImageCropper,
 } from '@/components/editor/PopupImageCropper';
+import { showError } from '@/utils';
 
 export default function ProfilePicture({
     name,
@@ -29,7 +28,6 @@ export default function ProfilePicture({
     photoURL: string | undefined;
     onRefresh: () => void;
 }) {
-    const t = useI18n();
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [media, setMedia] = useState<MediaType[]>([]);
     const popupImageCropperHooks = usePopupImageCropper();
@@ -43,9 +41,7 @@ export default function ProfilePicture({
                 onRefresh();
             },
             onError: (err) => {
-                toast.error(err, {
-                    theme: 'colored',
-                });
+                showError(err);
             },
         },
     );
@@ -68,9 +64,7 @@ export default function ProfilePicture({
                 onCloseDialog();
             })
             .catch((err) => {
-                toast.error(err, {
-                    theme: 'colored',
-                });
+                showError(err);
             });
     }
 
