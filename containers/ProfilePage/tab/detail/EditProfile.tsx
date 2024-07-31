@@ -26,7 +26,7 @@ import { PutProfileDataParamsInterface } from '@/types/api/params/put-profile-da
 import API from '@/configs/api';
 import useAPI from '@/hooks/useAPI';
 import { toast } from 'react-toastify';
-import { RefreshContext } from '../..';
+import { RefreshContext } from '../../Content';
 
 type Props = {
     profile: ProfileDataInterface | undefined | null;
