@@ -29,6 +29,8 @@ import PostDrawer from './PostDrawer';
 import useQueryParams from '@/hooks/useQueryParams';
 import { useSearchParams } from 'next/navigation';
 
+export const SIMPLE_POST_HEIGHT = 233; //pixel
+
 type Props = {
     post: MapPostDataInterface;
     style?: React.CSSProperties;
@@ -77,14 +79,21 @@ export default function SimplePost({ post, style, userLocation }: Props) {
             <Box style={style}>
                 <ListItem>
                     <ListItemAvatar>
-                        <Avatar
-                            sx={{
-                                fontWeight: 'bold',
-                                bgcolor: stringToColor(post.name),
-                            }}
-                        >
-                            {nameToInitial(post.name)}
-                        </Avatar>
+                        {post.photo_url ? (
+                            <Avatar
+                                className='border border-gray-500 border-solid'
+                                src={post.photo_url}
+                            />
+                        ) : (
+                            <Avatar
+                                sx={{
+                                    fontWeight: 'bold',
+                                    bgcolor: stringToColor(post.name),
+                                }}
+                            >
+                                {nameToInitial(post.name)}
+                            </Avatar>
+                        )}
                     </ListItemAvatar>
                     <ListItemText
                         primary={

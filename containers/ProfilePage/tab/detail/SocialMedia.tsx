@@ -5,7 +5,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import XIcon from '@mui/icons-material/X';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
-import { ProfileDataInterface } from '@/types/api/responses/profile-data.interface';
+import { ProfileInterface } from '@/types/api/responses/profile-data.interface';
 import PodcastsIcon from '@mui/icons-material/Podcasts';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import PinterestIcon from '@mui/icons-material/Pinterest';
@@ -16,7 +16,7 @@ import RedditIcon from '@mui/icons-material/Reddit';
 import ChildCareIcon from '@mui/icons-material/ChildCare';
 
 type Props = {
-    profile: ProfileDataInterface;
+    profile: ProfileInterface;
 };
 
 const {

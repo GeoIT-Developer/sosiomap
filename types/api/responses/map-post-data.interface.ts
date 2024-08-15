@@ -13,6 +13,7 @@ export interface MapPostDataInterface {
     distance?: number;
     username: string;
     name: string;
+    photo_url?: string;
     title?: string;
     start_date?: string;
     end_date?: string;

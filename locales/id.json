@@ -8,7 +8,8 @@
         "general": "Umum",
         "local": "Lokal",
         "info": "Info",
-        "account": "Akun"
+        "account": "Akun",
+        "no_data": "Data Kosong"
     },
     "button": {
         "login": "Masuk",
@@ -66,7 +67,63 @@
         "reddit": "Reddit",
         "type_your_username": "Ketikkan username Anda",
         "type_your_phone_number": "Ketikkan nomor HP Anda",
-        "type_your_account_url": "Ketikkan URL akun Anda"
+        "type_your_account_url": "Ketikkan URL akun Anda",
+        "posts": "Postingan",
+        "followers": "Pengikut",
+        "following": "Mengikuti",
+        "places": "Tempat",
+        "summary": {
+            "total_posts": "Postingan",
+            "total_comments": "Komentar",
+            "total_post_views": "Pos Dilihat",
+            "total_chats_sent": "Mengirim Pesan",
+            "total_app_opens_daily": "Pembukaan Aplikasi Harian",
+            "streak_daily_app_opens": "Rangkaian Pembukaan Aplikasi Harian",
+            "total_viewing_posts": "Melihat Pos",
+            "total_screen_time": "Waktu Layar",
+
+            "total_positive_reactions_given": "Reaksi Positif Diberikan",
+            "total_thank_you_reactions_given": "Reaksi Terima Kasih Diberikan",
+            "total_negative_reactions_given": "Reaksi Negatif Diberikan",
+            "total_misleading_reactions_given": "Reaksi Menyesatkan Diberikan",
+
+            "total_positive_reactions_received": "Reaksi Positif Diterima",
+            "total_thank_you_reactions_received": "Reaksi Terima Kasih Diterima",
+            "total_negative_reactions_received": "Reaksi Negatif Diterima",
+            "total_misleading_reactions_received": "Reaksi Menyesatkan Diterima",
+
+            "total_followers": "Pengikut",
+            "total_following": "Mengikuti",
+            "total_place_following": "Tempat Diikuti",
+            "total_profile_views": "Tampilan Profil",
+
+            "news_posts": "Postingan Berita Dibuat",
+            "news_interactions": "Interaksi di Postingan Berita",
+            "event_posts": "Postingan Acara Dibuat",
+            "event_interactions": "Interaksi di Postingan Acara",
+            "tourism_posts": "Postingan Pariwisata Dibuat",
+            "tourism_interactions": "Interaksi di Postingan Pariwisata",
+            "user_stories_posts": "Postingan Cerita Pengguna Dibuat",
+            "user_stories_interactions": "Interaksi di Postingan Cerita Pengguna",
+            "traffic_posts": "Postingan Lalu Lintas Dibuat",
+            "traffic_interactions": "Interaksi di Postingan Lalu Lintas",
+            "environment_posts": "Postingan Lingkungan Dibuat",
+            "environment_interactions": "Interaksi di Postingan Lingkungan",
+            "disaster_posts": "Postingan Bencana Dibuat",
+            "disaster_interactions": "Interaksi di Postingan Bencana",
+            "social_posts": "Postingan Sosial Dibuat",
+            "social_interactions": "Interaksi di Postingan Sosial",
+            "marketplace_posts": "Postingan Marketplace Dibuat",
+            "marketplace_interactions": "Interaksi di Postingan Marketplace",
+            "promo_posts": "Postingan Promo Dibuat",
+            "promo_interactions": "Interaksi di Postingan Promo",
+            "qa_posts": "Postingan Tanya Jawab Dibuat",
+            "qa_interactions": "Interaksi di Postingan Tanya Jawab",
+            "open_topic_created": "Topik Terbuka Dibuat",
+            "open_topic_posts": "Postingan Topik Terbuka Dibuat",
+            "open_topic_subscriptions": "Langganan Topik Terbuka",
+            "open_topic_interactions": "Interaksi di Postingan Topik Terbuka"
+        }
     },
     "message": {
         "error": {
@@ -96,7 +153,12 @@
         }
     },
     "unit": {
-        "km": "km"
+        "km": "km",
+        "number": {
+            "k": "RB",
+            "m": "JT",
+            "b": "M"
+        }
     },
     "date": {
         "today": "Hari Ini",

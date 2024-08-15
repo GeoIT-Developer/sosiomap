@@ -1,5 +1,3 @@
-import ChooseLocationEnum from '@/types/choose-location.enum';
-import PostTypeEnum from '@/types/post-type.enum';
 import { ProfileSocialMediaInterface } from '../responses/profile-data.interface';
 
 export interface PutProfileDataParamsInterface

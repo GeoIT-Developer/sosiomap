@@ -8,7 +8,8 @@
         "general": "General",
         "local": "Local",
         "info": "Info",
-        "account": "Account"
+        "account": "Account",
+        "no_data": "No Data"
     },
     "button": {
         "login": "Login",
@@ -66,7 +67,63 @@
         "reddit": "Reddit",
         "type_your_username": "Type your username",
         "type_your_phone_number": "Type your phone number",
-        "type_your_account_url": "Type your account URL"
+        "type_your_account_url": "Type your account URL",
+        "posts": "Posts",
+        "followers": "Followers",
+        "following": "Following",
+        "places": "Places",
+        "summary": {
+            "total_posts": "Posts",
+            "total_comments": "Comments",
+            "total_post_views": "Post Views",
+            "total_chats_sent": "Chats Sent",
+            "total_app_opens_daily": "App Opens Daily",
+            "streak_daily_app_opens": "Daily App Opens Streak",
+            "total_viewing_posts": "Viewing Posts",
+            "total_screen_time": "Screen Time",
+
+            "total_positive_reactions_given": "Positive Reactions Given",
+            "total_thank_you_reactions_given": "Thank You Reactions Given",
+            "total_negative_reactions_given": "Negative Reactions Given",
+            "total_misleading_reactions_given": "Misleading Reactions Given",
+
+            "total_positive_reactions_received": "Positive Reactions Received",
+            "total_thank_you_reactions_received": "Thank You Reactions Received",
+            "total_negative_reactions_received": "Negative Reactions Received",
+            "total_misleading_reactions_received": "Misleading Reactions Received",
+
+            "total_followers": "Followers",
+            "total_following": "Following",
+            "total_place_following": "Places Followed",
+            "total_profile_views": "Profile Views",
+
+            "news_posts": "News Posts Created",
+            "news_interactions": "Interactions in News Posts",
+            "event_posts": "Event Posts Created",
+            "event_interactions": "Interactions in Event Posts",
+            "tourism_posts": "Tourism Posts Created",
+            "tourism_interactions": "Interactions in Tourism Posts",
+            "user_stories_posts": "User Stories Posts Created",
+            "user_stories_interactions": "Interactions in User Stories Posts",
+            "traffic_posts": "Traffic Posts Created",
+            "traffic_interactions": "Interactions in Traffic Posts",
+            "environment_posts": "Environment Posts Created",
+            "environment_interactions": "Interactions in Environment Posts",
+            "disaster_posts": "Disaster Posts Created",
+            "disaster_interactions": "Interactions in Disaster Posts",
+            "social_posts": "Social Posts Created",
+            "social_interactions": "Interactions in Social Posts",
+            "marketplace_posts": "Marketplace Posts Created",
+            "marketplace_interactions": "Interactions in Marketplace Posts",
+            "promo_posts": "Promo Posts Created",
+            "promo_interactions": "Interactions in Promo Posts",
+            "qa_posts": "Q&A Posts Created",
+            "qa_interactions": "Interactions in Q&A Posts",
+            "open_topic_created": "Open Topics Created",
+            "open_topic_posts": "Open Topic Posts Created",
+            "open_topic_subscriptions": "Open Topic Subscriptions",
+            "open_topic_interactions": "Interactions in Open Topic Posts"
+        }
     },
     "message": {
         "error": {
@@ -96,7 +153,12 @@
         }
     },
     "unit": {
-        "km": "km"
+        "km": "km",
+        "number": {
+            "k": "K",
+            "m": "M",
+            "b": "B"
+        }
     },
     "date": {
         "today": "Today",

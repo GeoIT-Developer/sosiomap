@@ -4,6 +4,7 @@ import { ReadonlyURLSearchParams } from 'next/navigation';
 import CryptoJS from 'crypto-js';
 import imageCompression from 'browser-image-compression';
 import * as turf from '@turf/turf';
+import { Badge } from '@/types/api/responses/profile-data.interface';
 
 export const myTurf = turf;
 
@@ -83,6 +84,7 @@ export function fileToObjectURL(file: File) {
 }
 
 export function stringToColor(string: string) {
+    if (!string) return '#FFFFFF';
     let hash = 0;
     let i;
 
@@ -145,6 +147,33 @@ export function formatDateTime(utcString: string, format: string = 'HH:mm') {
 
 export function formatDistance(distance: number) {
     return distance.toFixed(1);
+}
+
+export function formatDataCount(count: number | undefined | null): {
+    count: string;
+    label: 'b' | 'm' | 'k' | '';
+} {
+    if (!count) {
+        return { count: '0', label: '' };
+    }
+
+    if (count >= 1_000_000_000) {
+        return { count: (count / 1_000_000_000).toFixed(1), label: 'b' };
+    } else if (count >= 1_000_000) {
+        return { count: (count / 1_000_000).toFixed(1), label: 'm' };
+    } else if (count >= 1_000) {
+        return { count: (count / 1_000).toFixed(1), label: 'k' };
+    } else {
+        return { count: count.toString() || '0', label: '' };
+    }
+}
+
+export function formatReadableNumber(num: number | undefined | null): string {
+    if (!num) {
+        return '0';
+    } else {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    }
 }
 
 export const getDateLabel = (eDate: string): 'today' | 'yesterday' | string => {
@@ -318,4 +347,22 @@ export function isTWA(): boolean {
     return document.referrer.includes(
         `android-app://${process.env.NEXT_PUBLIC_PACKAGE_NAME || ''}`,
     );
+}
+
+export function getLatestBadges(badges: Badge[]): Badge[] {
+    const latestBadges = badges.reduce(
+        (acc, badge) => {
+            if (
+                !acc[badge.badge_id] ||
+                new Date(badge.date_earned) >
+                    new Date(acc[badge.badge_id].date_earned)
+            ) {
+                acc[badge.badge_id] = badge;
+            }
+            return acc;
+        },
+        {} as { [key: string]: Badge },
+    );
+
+    return Object.values(latestBadges);
 }

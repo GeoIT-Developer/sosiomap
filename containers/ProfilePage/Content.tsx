@@ -1,11 +1,10 @@
-import { Alert, Box, Paper, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Paper, Tab, Tabs, Typography } from '@mui/material';
 import useAccessToken from '@/hooks/useAccessToken';
 import TabPanel, { a11yProps } from '@/components/tab/TabPanel';
 import { createContext, useEffect, useState } from 'react';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import ViewListIcon from '@mui/icons-material/ViewList';
-import { useI18n } from '@/locales/client';
 import DetailTab from './tab/detail';
 import useRefresh from '@/hooks/useRefresh';
 import useAPI from '@/hooks/useAPI';
@@ -14,6 +13,8 @@ import { ProfileDataInterface } from '@/types/api/responses/profile-data.interfa
 import ProfileCover from './main/ProfileCover';
 import ProfilePicture from './main/ProfilePicture';
 import { toast } from 'react-toastify';
+import SummaryTab from './tab/summary';
+import PostTab from './tab/post';
 
 enum ProfileTabEnum {
     DETAIL = 'detail',
@@ -21,12 +22,12 @@ enum ProfileTabEnum {
     POST = 'post',
 }
 
-export const RefreshContext = createContext<{
+export const ProfileContext = createContext<{
     setRefresh: () => void;
-}>({ setRefresh: () => {} });
+    profile: ProfileDataInterface | undefined | null;
+}>({ setRefresh: () => {}, profile: undefined });
 
 export default function ProfileContent() {
-    const t = useI18n();
     const accessToken = useAccessToken();
     const [refresh, setRefresh] = useRefresh();
 
@@ -59,7 +60,7 @@ export default function ProfileContent() {
     }, [refresh]);
 
     return (
-        <>
+        <Box className='flex-grow'>
             <ProfileCover
                 photoURL={profileData?.cover_photo}
                 onRefresh={setRefresh}
@@ -108,22 +109,20 @@ export default function ProfileContent() {
                 </Tabs>
             </Paper>
             <Box>
-                <TabPanel value={profileTab} index={ProfileTabEnum.DETAIL}>
-                    <RefreshContext.Provider value={{ setRefresh }}>
-                        <DetailTab profile={profileData} />
-                    </RefreshContext.Provider>
-                </TabPanel>
-                <TabPanel value={profileTab} index={ProfileTabEnum.SUMMARY}>
-                    <Alert color='info' className='m-2'>
-                        {t('message.info.coming_soon')}
-                    </Alert>
-                </TabPanel>
-                <TabPanel value={profileTab} index={ProfileTabEnum.POST}>
-                    <Alert color='info' className='m-2'>
-                        {t('message.info.coming_soon')}
-                    </Alert>
-                </TabPanel>
+                <ProfileContext.Provider
+                    value={{ setRefresh, profile: profileData }}
+                >
+                    <TabPanel value={profileTab} index={ProfileTabEnum.DETAIL}>
+                        <DetailTab />
+                    </TabPanel>
+                    <TabPanel value={profileTab} index={ProfileTabEnum.SUMMARY}>
+                        <SummaryTab />
+                    </TabPanel>
+                    <TabPanel value={profileTab} index={ProfileTabEnum.POST}>
+                        <PostTab />
+                    </TabPanel>
+                </ProfileContext.Provider>
             </Box>
-        </>
+        </Box>
     );
 }

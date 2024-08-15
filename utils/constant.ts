@@ -145,6 +145,7 @@ export const ASSETS = {
     ICON: '/img/icon/',
     PLACEHOLDER: '/img/placeholder/',
     TEAM: '/img/team/',
+    BADGE: '/img/badge/',
 };
 
 export const IDs = {

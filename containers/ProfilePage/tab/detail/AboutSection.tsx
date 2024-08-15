@@ -3,20 +3,18 @@ import { ROUTE } from '@/utils/constant';
 import { useI18n } from '@/locales/client';
 import LinkIcon from '@mui/icons-material/Link';
 import SocialMedia from './SocialMedia';
-import { ProfileDataInterface } from '@/types/api/responses/profile-data.interface';
 import { shareUrl, showError } from '@/utils';
 import useAccessToken from '@/hooks/useAccessToken';
 import EditProfile from './EditProfile';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import EmailIcon from '@mui/icons-material/Email';
+import { useContext } from 'react';
+import { ProfileContext } from '../../Content';
 
-type Props = {
-    profile: ProfileDataInterface | undefined | null;
-};
-
-export default function AboutSection({ profile }: Props) {
+export default function AboutSection() {
     const t = useI18n();
     const accessToken = useAccessToken();
+    const { profile } = useContext(ProfileContext);
 
     function shareProfile() {
         shareUrl(
@@ -28,49 +26,51 @@ export default function AboutSection({ profile }: Props) {
         });
     }
 
+    const eProfile = profile?.profile;
+
     return (
         <Stack spacing={1} className='px-4'>
             <Box className='w-full'>
                 <Typography variant='body2' className='break-all !text-sm'>
-                    {profile?.about || t('profile.default_about_section')}
+                    {eProfile?.about || t('profile.default_about_section')}
                 </Typography>
             </Box>
-            {profile?.phone_number && (
+            {eProfile?.phone_number && (
                 <Link
-                    href={`tel:${profile.phone_number}`}
+                    href={`tel:${eProfile.phone_number}`}
                     underline='hover'
                     className='!text-sm flex gap-1 items-center w-fit'
                 >
                     <PhoneAndroidIcon fontSize='small' />
-                    <span>{profile.phone_number}</span>
+                    <span>{eProfile.phone_number}</span>
                 </Link>
             )}
-            {profile?.email && (
+            {eProfile?.email && (
                 <Link
-                    href={`mailto:${profile.email}`}
+                    href={`mailto:${eProfile.email}`}
                     underline='hover'
                     className='!text-sm flex gap-1 items-center w-fit'
                 >
                     <EmailIcon fontSize='small' />
-                    <span>{profile.email}</span>
+                    <span>{eProfile.email}</span>
                 </Link>
             )}
-            {profile?.website && (
+            {eProfile?.website && (
                 <Link
-                    href={profile.website}
+                    href={eProfile.website}
                     underline='hover'
                     className='!text-sm flex gap-1 items-center w-fit'
                     target='_blank'
                     rel='noopener'
                 >
                     <LinkIcon fontSize='small' />
-                    <span>{profile.website}</span>
+                    <span>{eProfile.website}</span>
                 </Link>
             )}
 
-            {profile && <SocialMedia profile={profile} />}
+            {eProfile && <SocialMedia profile={eProfile} />}
             <Box className='gap-1 flex self-center'>
-                <EditProfile profile={profile} />
+                <EditProfile />
                 <Button
                     variant='outlined'
                     color='inherit'

@@ -3,12 +3,14 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ReactNode } from 'react';
+import { SxProps, Theme } from '@mui/material';
 
 interface Props {
     children: ReactNode;
     title: ReactNode;
     type?: 'standard' | 'compact';
     defaultOpen?: boolean;
+    sx?: SxProps<Theme>;
 }
 
 export default function SingleAccordion({
@@ -16,6 +18,7 @@ export default function SingleAccordion({
     children,
     type,
     defaultOpen,
+    sx,
 }: Props) {
     return (
         <Accordion
@@ -40,7 +43,7 @@ export default function SingleAccordion({
             >
                 {title}
             </AccordionSummary>
-            <AccordionDetails>{children}</AccordionDetails>
+            <AccordionDetails sx={sx}>{children}</AccordionDetails>
         </Accordion>
     );
 }
