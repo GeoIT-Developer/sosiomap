@@ -9,7 +9,12 @@ import useQueryParams from '@/hooks/useQueryParams';
 
 type SimpleLightboxType = { open: boolean; index: number };
 
-export type MediaType = { url: string; fileType: string; caption?: string };
+export type MediaType = {
+    url: string;
+    fileType: string;
+    title?: string;
+    caption?: string;
+};
 
 type Props = {
     media: MediaType[];
@@ -60,10 +65,15 @@ export default function ImageViewer({ media, children }: Props) {
                                 type: item.fileType,
                             },
                         ],
+                        title: item.title,
                         description: item.caption,
                     };
                 }
-                return { src: item.url, description: item.caption };
+                return {
+                    src: item.url,
+                    title: item.title,
+                    description: item.caption,
+                };
             }),
         );
 
