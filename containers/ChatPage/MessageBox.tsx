@@ -22,6 +22,7 @@ type Props = {
     body: string;
     createdAt: string;
     distance: number;
+    photo_url?: string;
     style?: React.CSSProperties;
 };
 
@@ -31,6 +32,7 @@ export default function MessageBox({
     body,
     createdAt,
     distance,
+    photo_url,
     style,
 }: Props) {
     const t = useScopedI18n('unit');
@@ -38,14 +40,21 @@ export default function MessageBox({
         <Box style={style}>
             <ListItem className='!items-start'>
                 <ListItemAvatar>
-                    <Avatar
-                        sx={{
-                            fontWeight: 'bold',
-                            bgcolor: stringToColor(name),
-                        }}
-                    >
-                        {nameToInitial(name)}
-                    </Avatar>
+                    {photo_url ? (
+                        <Avatar
+                            className='border border-gray-500 border-solid'
+                            src={photo_url}
+                        />
+                    ) : (
+                        <Avatar
+                            sx={{
+                                fontWeight: 'bold',
+                                bgcolor: stringToColor(name),
+                            }}
+                        >
+                            {nameToInitial(name)}
+                        </Avatar>
+                    )}
                 </ListItemAvatar>
                 <ListItemText
                     primary={extractUsernameFromEmail(username)}

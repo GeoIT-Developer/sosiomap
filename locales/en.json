@@ -196,6 +196,9 @@
         "comment": "Comment",
         "add_comment": "Add Comment"
     },
+    "chat": {
+        "no_chat_nearby": "No nearby chats!"
+    },
     "setting": {
         "account_deletion": {
             "title": "Request Account Deletion",

@@ -196,6 +196,9 @@
         "comment": "Komentar",
         "add_comment": "Tambah Komentar"
     },
+    "chat": {
+        "no_chat_nearby": "Tidak ada obrolan di dekat sini!"
+    },
     "setting": {
         "account_deletion": {
             "title": "Permintaan Penghapusan Akun",

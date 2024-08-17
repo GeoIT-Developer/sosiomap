@@ -177,7 +177,10 @@ export default function ChatPage({ show = true }: { show?: boolean }) {
                     </MainFab>
                 </Box>
                 <Box flex='1' overflow='auto' className='py-1'>
-                    <MessageWindow messages={listChat} />
+                    <MessageWindow
+                        messages={listChat}
+                        isLoading={apiPublicChat.loading}
+                    />
                 </Box>
 
                 <Divider light />
