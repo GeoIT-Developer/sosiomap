@@ -70,7 +70,7 @@ export default function ProfileCover({
                     src={
                         photoURL
                             ? photoURL
-                            : `${ASSETS.PLACEHOLDER}/profile_cover.jpg`
+                            : `${ASSETS.PLACEHOLDER}profile_cover.jpg`
                     }
                     alt='cover'
                     className='w-full object-cover h-full pb-0.5 bg-primary cursor-pointer'
