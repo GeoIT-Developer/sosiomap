@@ -112,6 +112,43 @@ export function nameToInitial(name: string) {
     }
 }
 
+export const nameToImage = (
+    text: string,
+    bgColor: string,
+    textColor: string = '#fff',
+): string => {
+    const elabel =
+        text
+            .match(/(\b\S)?/g)
+            ?.join('') // Safely access match result
+            .match(/(^\S|\S$)?/g)
+            ?.join('') // Safely access match result
+            .toUpperCase() || '';
+
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+
+    if (!context) {
+        throw new Error('Canvas context is not available');
+    }
+
+    canvas.width = 200;
+    canvas.height = 200;
+
+    // Draw background
+    context.fillStyle = bgColor;
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw text
+    context.font = 'bold 100px Tahoma';
+    context.fillStyle = textColor;
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText(elabel, canvas.width / 2, canvas.height / 2);
+
+    return canvas.toDataURL('image/png');
+};
+
 export function isValidEmail(email: string) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);

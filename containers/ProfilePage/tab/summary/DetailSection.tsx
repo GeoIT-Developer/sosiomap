@@ -1,12 +1,14 @@
 import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
-import { useContext } from 'react';
 import { formatReadableNumber } from '@/utils/helper';
-import { ProfileContext } from '../../Content';
 import { useScopedI18n } from '@/locales/client';
+import { ProfileDataInterface } from '@/types/api/responses/profile-data.interface';
 
-export default function DetailSection() {
+export default function DetailSection({
+    profile,
+}: {
+    profile: ProfileDataInterface;
+}) {
     const t = useScopedI18n('profile.summary');
-    const { profile } = useContext(ProfileContext);
 
     const eSummary = profile?.summary;
 

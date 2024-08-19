@@ -31,7 +31,7 @@ import ChooseLocationEnum from '@/types/choose-location.enum';
 import { toast } from 'react-toastify';
 import CloseIcon from '@mui/icons-material/Close';
 
-interface SimpleDialogProps {
+interface Props {
     setShowMarker: (_args: boolean) => void;
     selectedTopic: TopicType | null;
     setSelectedTopic: (_args: TopicType | null) => void;
@@ -41,7 +41,7 @@ export default function NewPostDialog({
     setShowMarker,
     selectedTopic,
     setSelectedTopic,
-}: SimpleDialogProps) {
+}: Props) {
     const router = useRouter();
     const t = useI18n();
     const [open, setOpen] = useState(false);

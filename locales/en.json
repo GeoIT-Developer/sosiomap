@@ -46,6 +46,7 @@
         "email": "Email",
         "edit_profile": "Edit Profile",
         "share_profile": "Share Profile",
+        "see_profile": "See Profile",
         "default_about_section": "Hey there! Welcome to my profile.",
         "message_the_data_will_be_publicly_accessible": "Please note that any data you enter here will be publicly accessible. Make sure not to include sensitive or personal information.",
         "bio": "Bio",

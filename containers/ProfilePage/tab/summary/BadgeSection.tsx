@@ -1,21 +1,25 @@
 import { Avatar, Box, IconButton } from '@mui/material';
 import { ASSETS } from '@/utils/constant';
-import { useContext, useEffect, useState } from 'react';
-import { ProfileContext } from '../../Content';
+import { useEffect, useState } from 'react';
 import { LIST_BADGE } from '@/utils/badge';
-import { Badge } from '@/types/api/responses/profile-data.interface';
+import {
+    Badge,
+    ProfileDataInterface,
+} from '@/types/api/responses/profile-data.interface';
 import { sortByKey } from '@/utils';
 import {
     getDateTimeString,
-    getFileExtensionFromUrl,
     getLatestBadges,
     getMimeTypeFromURL,
 } from '@/utils/helper';
 import ImageViewer, { MediaType } from '@/components/preview/ImageViewer';
 import { useScopedI18n } from '@/locales/client';
 
-export default function BadgeSection() {
-    const { profile } = useContext(ProfileContext);
+export default function BadgeSection({
+    profile,
+}: {
+    profile: ProfileDataInterface;
+}) {
     const [badges, setBadges] = useState<Badge[]>([]);
     const t = useScopedI18n('badge');
 

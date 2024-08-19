@@ -1,11 +1,13 @@
 import { Box, Grid, ListItemText } from '@mui/material';
-import { useContext } from 'react';
-import { ProfileContext } from '../../Content';
 import { useI18n, useScopedI18n } from '@/locales/client';
 import { formatDataCount } from '@/utils/helper';
+import { ProfileDataInterface } from '@/types/api/responses/profile-data.interface';
 
-export default function MainSection() {
-    const { profile } = useContext(ProfileContext);
+export default function MainSection({
+    profile,
+}: {
+    profile: ProfileDataInterface;
+}) {
     const t = useI18n();
     const tFormat = useScopedI18n('unit.number');
 

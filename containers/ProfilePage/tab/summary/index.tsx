@@ -2,23 +2,24 @@ import { Divider, Stack } from '@mui/material';
 import BadgeSection from './BadgeSection';
 import DetailSection from './DetailSection';
 import MainSection from './MainSection';
-import { useContext } from 'react';
-import { ProfileContext } from '../../Content';
+import { ProfileDataInterface } from '@/types/api/responses/profile-data.interface';
 
-export default function SummaryTab() {
-    const { profile } = useContext(ProfileContext);
-
+export default function SummaryTab({
+    profile,
+}: {
+    profile: ProfileDataInterface;
+}) {
     return (
         <Stack spacing={2} className='py-4'>
-            <MainSection />
+            <MainSection profile={profile} />
             {Boolean(profile?.badge?.badges.length) && (
                 <>
                     <Divider />
-                    <BadgeSection />
+                    <BadgeSection profile={profile} />
                 </>
             )}
             <Divider />
-            <DetailSection />
+            <DetailSection profile={profile} />
         </Stack>
     );
 }

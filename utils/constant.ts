@@ -172,6 +172,10 @@ export const POPUP_PARAMS = {
         KEY: 'full-screen-dialog',
         VALUE: 'open',
     },
+    DIALOG: {
+        KEY: 'dialog',
+        VALUE: 'open',
+    },
 };
 
 export const MAX_LENGTH = {

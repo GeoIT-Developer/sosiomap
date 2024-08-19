@@ -2,7 +2,6 @@ import { Avatar, Box, IconButton } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import { useEffect, useRef, useState } from 'react';
 import {
-    addMinioPrefix,
     fileToObjectURL,
     getMimeTypeFromURL,
     nameToInitial,
@@ -50,7 +49,7 @@ export default function ProfilePicture({
         if (photoURL) {
             setMedia([
                 {
-                    url: addMinioPrefix(photoURL),
+                    url: photoURL,
                     fileType: getMimeTypeFromURL(photoURL),
                 },
             ]);
@@ -77,9 +76,9 @@ export default function ProfilePicture({
                             width: '5rem',
                             height: '5rem',
                         }}
-                        className='mx-auto mt-[-2.5rem] border-2 border-primary border-solid'
+                        className='mx-auto mt-[-2.5rem] border-2 border-primary border-solid cursor-pointer'
                         alt={name}
-                        src={addMinioPrefix(photoURL)}
+                        src={photoURL}
                     />
                 </ImageViewer>
             ) : (

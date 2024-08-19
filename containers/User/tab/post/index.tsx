@@ -3,15 +3,13 @@ import useAPI from '@/hooks/useAPI';
 import { ObjectLiteral } from '@/types/object-literal.interface';
 import API from '@/configs/api';
 import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interface';
-import useAccessToken from '@/hooks/useAccessToken';
-import PostContent from './Content';
+import PostContent from '@/containers/ProfilePage/tab/post/Content';
 
-export default function PostTab() {
-    const accessToken = useAccessToken();
+export default function PostTab({ username }: { username: string }) {
     const [listMapPost, setListMapPost] = useState<MapPostDataInterface[]>([]);
 
     const apiQueryPost = useAPI<ObjectLiteral, string, MapPostDataInterface[]>(
-        API.getProfilePosts,
+        API.getUserPosts,
         {
             listkey: 'data',
             onSuccess: (_raw, res) => {
@@ -21,9 +19,9 @@ export default function PostTab() {
     );
 
     useEffect(() => {
-        if (!accessToken?.sub) return;
-        apiQueryPost.call();
-    }, [accessToken?.sub]);
+        if (!username) return;
+        apiQueryPost.call(username);
+    }, [username]);
 
     return (
         <PostContent

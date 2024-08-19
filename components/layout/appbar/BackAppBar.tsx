@@ -16,6 +16,14 @@ type Props = {
 export default function BackAppBar({ title, action, backUrl }: Props) {
     const history = useHistoryContext();
 
+    function onClickBack() {
+        if (window.opener) {
+            window.close();
+        } else {
+            history.onBackClose(backUrl);
+        }
+    }
+
     return (
         <Box>
             <AppBar position='sticky' className='!bg-primary'>
@@ -24,7 +32,7 @@ export default function BackAppBar({ title, action, backUrl }: Props) {
                         size='medium'
                         aria-label='theme'
                         color='inherit'
-                        onClick={() => history.onBackClose(backUrl)}
+                        onClick={onClickBack}
                         sx={{ mr: 2 }}
                     >
                         <ArrowBackIcon color='inherit' aria-label='back' />

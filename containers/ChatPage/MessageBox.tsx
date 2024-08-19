@@ -1,6 +1,5 @@
 import { useScopedI18n } from '@/locales/client';
 import {
-    extractUsernameFromEmail,
     formatDateTime,
     formatDistance,
     nameToInitial,
@@ -15,6 +14,7 @@ import {
     ListItemText,
     Typography,
 } from '@mui/material';
+import ProfileDialog from '../ProfilePage/shared/ProfileDialog';
 
 type Props = {
     username: string;
@@ -39,25 +39,42 @@ export default function MessageBox({
     return (
         <Box style={style}>
             <ListItem className='!items-start'>
-                <ListItemAvatar>
-                    {photo_url ? (
-                        <Avatar
-                            className='border border-gray-500 border-solid'
-                            src={photo_url}
-                        />
-                    ) : (
-                        <Avatar
-                            sx={{
-                                fontWeight: 'bold',
-                                bgcolor: stringToColor(name),
-                            }}
-                        >
-                            {nameToInitial(name)}
-                        </Avatar>
-                    )}
+                <ListItemAvatar className='pt-1'>
+                    <ProfileDialog
+                        name={name}
+                        username={username}
+                        photo_url={photo_url}
+                    >
+                        {photo_url ? (
+                            <Avatar
+                                className='border border-2 border-gray-500 border-solid cursor-pointer hover:border-primary active:border-primary'
+                                src={photo_url}
+                            />
+                        ) : (
+                            <Avatar
+                                sx={{
+                                    fontWeight: 'bold',
+                                    bgcolor: stringToColor(name),
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                {nameToInitial(name)}
+                            </Avatar>
+                        )}
+                    </ProfileDialog>
                 </ListItemAvatar>
                 <ListItemText
-                    primary={extractUsernameFromEmail(username)}
+                    primary={
+                        <ProfileDialog
+                            name={name}
+                            username={username}
+                            photo_url={photo_url}
+                        >
+                            <span className='cursor-pointer hover:underline active:underline'>
+                                {username}
+                            </span>
+                        </ProfileDialog>
+                    }
                     primaryTypographyProps={{
                         className: '!text-sm ',
                     }}

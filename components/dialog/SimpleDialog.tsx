@@ -11,6 +11,8 @@ import {
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import useQueryParams from '@/hooks/useQueryParams';
+import { POPUP_PARAMS } from '@/utils/constant';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -34,11 +36,14 @@ export default function SimpleDialog({
     triggerButton = <Button variant='outlined'>Open</Button>,
     keepMounted: keepMountedSetting,
 }: SimpleDialogProps) {
+    const queryParams = useQueryParams();
     const [open, setOpen] = useState(false);
     const [keepMounted, setKeepMounted] = useState(false);
 
     const handleClose = () => {
         setOpen(false);
+        // Remove params when close popup
+        queryParams.removeParam(POPUP_PARAMS.DIALOG.KEY);
     };
 
     const clonedButton = cloneElement(triggerButton, {
@@ -52,6 +57,27 @@ export default function SimpleDialog({
             setKeepMounted(true);
         }
     }, [keepMountedSetting, open]);
+
+    // Add params when open
+    useEffect(() => {
+        if (open) {
+            queryParams.addParam(
+                POPUP_PARAMS.DIALOG.KEY,
+                POPUP_PARAMS.DIALOG.VALUE,
+            );
+        }
+    }, [open]);
+
+    // Close the popup when back using navigation
+    useEffect(() => {
+        if (!open) return;
+        const popupParamsValue = queryParams.searchParams.get(
+            POPUP_PARAMS.DIALOG.KEY,
+        );
+        if (popupParamsValue !== POPUP_PARAMS.DIALOG.VALUE) {
+            setOpen(false);
+        }
+    }, [queryParams.searchParams]);
 
     return (
         <>

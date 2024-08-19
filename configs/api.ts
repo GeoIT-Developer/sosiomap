@@ -141,7 +141,12 @@ const API = {
 
     getProfilePosts: () => HOST.get(`users/me/posts`),
 
-    getUserPosts: (user_id: string) => HOST.get(`users/${user_id}/posts`),
+    getUser: (username: string) => {
+        return HOST.get(`users/${username}`, {
+            params: { param: 'user-profile-summary' },
+        });
+    },
+    getUserPosts: (username: string) => HOST.get(`users/${username}/posts`),
 };
 
 export default API;

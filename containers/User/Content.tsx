@@ -1,19 +1,14 @@
 import { Box, Paper, Tab, Tabs, Typography } from '@mui/material';
-import useAccessToken from '@/hooks/useAccessToken';
 import TabPanel, { a11yProps } from '@/components/tab/TabPanel';
-import { createContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import ViewListIcon from '@mui/icons-material/ViewList';
-import DetailTab from './tab/detail';
-import useRefresh from '@/hooks/useRefresh';
-import useAPI from '@/hooks/useAPI';
-import API from '@/configs/api';
 import { ProfileDataInterface } from '@/types/api/responses/profile-data.interface';
 import ProfileCover from './main/ProfileCover';
 import ProfilePicture from './main/ProfilePicture';
-import { toast } from 'react-toastify';
-import SummaryTab from './tab/summary';
+import SummaryTab from '../ProfilePage/tab/summary';
+import DetailTab from './tab/detail';
 import PostTab from './tab/post';
 
 enum ProfileTabEnum {
@@ -22,15 +17,11 @@ enum ProfileTabEnum {
     POST = 'post',
 }
 
-export const ProfileContext = createContext<{
-    setRefresh: () => void;
-    profile: ProfileDataInterface | undefined | null;
-}>({ setRefresh: () => {}, profile: undefined });
+type Props = {
+    user: ProfileDataInterface;
+};
 
-export default function ProfileContent() {
-    const accessToken = useAccessToken();
-    const [refresh, setRefresh] = useRefresh();
-
+export default function UserContent({ user }: Props) {
     const [profileTab, setProfileTab] = useState<ProfileTabEnum>(
         ProfileTabEnum.DETAIL,
     );
@@ -42,37 +33,16 @@ export default function ProfileContent() {
         setProfileTab(newValue);
     };
 
-    const eName = accessToken?.name || accessToken?.preferred_username || '';
-
-    const apiProfile = useAPI<ProfileDataInterface>(API.getProfile, {
-        onError: (err) => {
-            toast.error(err, {
-                theme: 'colored',
-            });
-        },
-    });
-
-    const profileData = apiProfile.data || ({} as ProfileDataInterface);
-
-    useEffect(() => {
-        apiProfile.call();
-    }, [refresh]);
+    const eName = user.name || user.username;
 
     return (
         <Box className='flex-grow'>
-            <ProfileCover
-                photoURL={profileData?.cover_photo}
-                onRefresh={setRefresh}
-            />
+            <ProfileCover photoURL={user?.cover_photo} />
             <Box className='w-full text-center'>
-                <ProfilePicture
-                    name={eName}
-                    photoURL={profileData?.photo}
-                    onRefresh={setRefresh}
-                />
-                <Typography variant='body1'>{accessToken?.name}</Typography>
+                <ProfilePicture name={eName} photoURL={user?.photo} />
+                <Typography variant='body1'>{user.name}</Typography>
                 <Typography variant='body2' className='opacity-50'>
-                    @{accessToken?.preferred_username}
+                    @{user.username}
                 </Typography>
             </Box>
             <Paper
@@ -108,19 +78,15 @@ export default function ProfileContent() {
                 </Tabs>
             </Paper>
             <Box>
-                <ProfileContext.Provider
-                    value={{ setRefresh, profile: profileData }}
-                >
-                    <TabPanel value={profileTab} index={ProfileTabEnum.DETAIL}>
-                        <DetailTab />
-                    </TabPanel>
-                    <TabPanel value={profileTab} index={ProfileTabEnum.SUMMARY}>
-                        <SummaryTab profile={profileData} />
-                    </TabPanel>
-                    <TabPanel value={profileTab} index={ProfileTabEnum.POST}>
-                        <PostTab />
-                    </TabPanel>
-                </ProfileContext.Provider>
+                <TabPanel value={profileTab} index={ProfileTabEnum.DETAIL}>
+                    <DetailTab profile={user} />
+                </TabPanel>
+                <TabPanel value={profileTab} index={ProfileTabEnum.SUMMARY}>
+                    <SummaryTab profile={user} />
+                </TabPanel>
+                <TabPanel value={profileTab} index={ProfileTabEnum.POST}>
+                    <PostTab username={user.username} />
+                </TabPanel>
             </Box>
         </Box>
     );
