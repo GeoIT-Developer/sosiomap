@@ -121,6 +121,25 @@ export function cleanObject(obj: any): any {
     return Object.keys(cleanedObj).length === 0 ? undefined : cleanedObj;
 }
 
+export function sortByKey<T>(
+    array: T[],
+    key: keyof T,
+    order: 'asc' | 'desc' = 'asc',
+): T[] {
+    return array.sort((a, b) => {
+        const valA = a[key];
+        const valB = b[key];
+
+        if (valA < valB) {
+            return order === 'asc' ? -1 : 1;
+        }
+        if (valA > valB) {
+            return order === 'asc' ? 1 : -1;
+        }
+        return 0;
+    });
+}
+
 export function downloadFile(
     eData: any,
     type: string,

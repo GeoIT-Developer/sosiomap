@@ -17,7 +17,7 @@ import {
 } from 'react';
 import useQueryParams from '@/hooks/useQueryParams';
 import { POPUP_PARAMS } from '@/utils/constant';
-import { DialogContent } from '@mui/material';
+import { DialogContent, SxProps, Theme } from '@mui/material';
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -34,6 +34,7 @@ interface Props {
     triggerButton?: ReactElement;
     action?: (handleClose: () => void) => ReactNode;
     keepMounted?: boolean | 'on-first-open';
+    sx?: SxProps<Theme>;
 }
 
 export default function FullScreenDialog({
@@ -42,6 +43,7 @@ export default function FullScreenDialog({
     triggerButton = <Button variant='outlined'>Open</Button>,
     keepMounted: keepMountedSetting,
     action,
+    sx,
 }: Props) {
     const queryParams = useQueryParams();
     const [open, setOpen] = useState(false);
@@ -117,7 +119,9 @@ export default function FullScreenDialog({
                         {action && action(handleClose)}
                     </Toolbar>
                 </AppBar>
-                <DialogContent dividers={true}>{children}</DialogContent>
+                <DialogContent dividers={true} sx={sx}>
+                    {children}
+                </DialogContent>
             </Dialog>
         </>
     );

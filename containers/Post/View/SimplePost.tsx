@@ -1,5 +1,4 @@
 import {
-    Avatar,
     Box,
     Divider,
     ListItem,
@@ -12,12 +11,9 @@ import { useI18n } from '@/locales/client';
 import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interface';
 import {
     calculateManhattanDistance,
-    extractUsernameFromEmail,
     formatDateTime,
     formatDistance,
     getMimeTypeFromURL,
-    nameToInitial,
-    stringToColor,
 } from '@/utils/helper';
 import { MyLocation } from '@/hooks/useGeolocation';
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
@@ -28,6 +24,10 @@ import { useEffect, useState } from 'react';
 import PostDrawer from './PostDrawer';
 import useQueryParams from '@/hooks/useQueryParams';
 import { useSearchParams } from 'next/navigation';
+import MyAvatar from '@/components/preview/MyAvatar';
+import ProfileDialog from '@/containers/ProfilePage/shared/ProfileDialog';
+
+export const SIMPLE_POST_HEIGHT = 233; //pixel
 
 type Props = {
     post: MapPostDataInterface;
@@ -77,23 +77,31 @@ export default function SimplePost({ post, style, userLocation }: Props) {
             <Box style={style}>
                 <ListItem>
                     <ListItemAvatar>
-                        <Avatar
-                            sx={{
-                                fontWeight: 'bold',
-                                bgcolor: stringToColor(post.name),
-                            }}
+                        <ProfileDialog
+                            name={post.name}
+                            username={post.username}
+                            photo_url={post.photo_url}
                         >
-                            {nameToInitial(post.name)}
-                        </Avatar>
+                            <MyAvatar
+                                name={post.name}
+                                photo_url={post.photo_url}
+                            />
+                        </ProfileDialog>
                     </ListItemAvatar>
                     <ListItemText
                         primary={
-                            <>
-                                {post.name}
-                                <span className='ml-1 text-slate-500'>
-                                    @{extractUsernameFromEmail(post.username)}
+                            <ProfileDialog
+                                name={post.name}
+                                username={post.username}
+                                photo_url={post.photo_url}
+                            >
+                                <span className='cursor-pointer hover:underline active:underline'>
+                                    {post.name}
+                                    <span className='ml-1 text-slate-500'>
+                                        @{post.username}
+                                    </span>
                                 </span>
-                            </>
+                            </ProfileDialog>
                         }
                         primaryTypographyProps={{
                             className: '!text-sm ',

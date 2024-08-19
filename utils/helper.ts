@@ -4,6 +4,7 @@ import { ReadonlyURLSearchParams } from 'next/navigation';
 import CryptoJS from 'crypto-js';
 import imageCompression from 'browser-image-compression';
 import * as turf from '@turf/turf';
+import { Badge } from '@/types/api/responses/profile-data.interface';
 
 export const myTurf = turf;
 
@@ -83,6 +84,7 @@ export function fileToObjectURL(file: File) {
 }
 
 export function stringToColor(string: string) {
+    if (!string) return '#FFFFFF';
     let hash = 0;
     let i;
 
@@ -109,6 +111,43 @@ export function nameToInitial(name: string) {
         return `${nameSplit[0][0]}`;
     }
 }
+
+export const nameToImage = (
+    text: string,
+    bgColor: string,
+    textColor: string = '#fff',
+): string => {
+    const elabel =
+        text
+            .match(/(\b\S)?/g)
+            ?.join('') // Safely access match result
+            .match(/(^\S|\S$)?/g)
+            ?.join('') // Safely access match result
+            .toUpperCase() || '';
+
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+
+    if (!context) {
+        throw new Error('Canvas context is not available');
+    }
+
+    canvas.width = 200;
+    canvas.height = 200;
+
+    // Draw background
+    context.fillStyle = bgColor;
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw text
+    context.font = 'bold 100px Tahoma';
+    context.fillStyle = textColor;
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText(elabel, canvas.width / 2, canvas.height / 2);
+
+    return canvas.toDataURL('image/png');
+};
 
 export function isValidEmail(email: string) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -145,6 +184,33 @@ export function formatDateTime(utcString: string, format: string = 'HH:mm') {
 
 export function formatDistance(distance: number) {
     return distance.toFixed(1);
+}
+
+export function formatDataCount(count: number | undefined | null): {
+    count: string;
+    label: 'b' | 'm' | 'k' | '';
+} {
+    if (!count) {
+        return { count: '0', label: '' };
+    }
+
+    if (count >= 1_000_000_000) {
+        return { count: (count / 1_000_000_000).toFixed(1), label: 'b' };
+    } else if (count >= 1_000_000) {
+        return { count: (count / 1_000_000).toFixed(1), label: 'm' };
+    } else if (count >= 1_000) {
+        return { count: (count / 1_000).toFixed(1), label: 'k' };
+    } else {
+        return { count: count.toString() || '0', label: '' };
+    }
+}
+
+export function formatReadableNumber(num: number | undefined | null): string {
+    if (!num) {
+        return '0';
+    } else {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    }
 }
 
 export const getDateLabel = (eDate: string): 'today' | 'yesterday' | string => {
@@ -318,4 +384,22 @@ export function isTWA(): boolean {
     return document.referrer.includes(
         `android-app://${process.env.NEXT_PUBLIC_PACKAGE_NAME || ''}`,
     );
+}
+
+export function getLatestBadges(badges: Badge[]): Badge[] {
+    const latestBadges = badges.reduce(
+        (acc, badge) => {
+            if (
+                !acc[badge.badge_id] ||
+                new Date(badge.date_earned) >
+                    new Date(acc[badge.badge_id].date_earned)
+            ) {
+                acc[badge.badge_id] = badge;
+            }
+            return acc;
+        },
+        {} as { [key: string]: Badge },
+    );
+
+    return Object.values(latestBadges);
 }

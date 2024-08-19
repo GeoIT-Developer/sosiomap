@@ -10,8 +10,10 @@ import {
 } from 'react-virtualized';
 import { GridCoreProps } from 'react-virtualized/dist/es/Grid';
 import { MeasuredCellParent } from 'react-virtualized/dist/es/CellMeasurer';
-import { useScopedI18n } from '@/locales/client';
+import { useI18n } from '@/locales/client';
 import { ChatDataInterface } from '@/types/api/responses/chat-data.interface';
+import NoData from '@/components/skeleton/NoData';
+import ChatSkeleton from '@/components/skeleton/Chat';
 
 const cache = new CellMeasurerCache({
     fixedWidth: true,
@@ -20,10 +22,11 @@ const cache = new CellMeasurerCache({
 
 type Props = {
     messages: ChatDataInterface[];
+    isLoading?: boolean;
 };
 
-export default function MessageWindow({ messages }: Props) {
-    const t = useScopedI18n('date');
+export default function MessageWindow({ messages, isLoading }: Props) {
+    const t = useI18n();
     const listRef = useRef<List>(null);
     const [topRow, setTopRow] = useState<ChatDataInterface | null>(null);
 
@@ -37,7 +40,7 @@ export default function MessageWindow({ messages }: Props) {
     function getFormatDateLabel(eDate: string) {
         const eLabel = eDate ? getDateLabel(eDate) : '';
         return eLabel === 'today' || eLabel === 'yesterday'
-            ? t(eLabel)
+            ? t(`date.${eLabel}`)
             : eLabel;
     }
 
@@ -82,6 +85,7 @@ export default function MessageWindow({ messages }: Props) {
                                     body={item.body}
                                     createdAt={item.created_at}
                                     distance={item.distance}
+                                    photo_url={item.photo_url}
                                 />
                             </div>
                         );
@@ -103,6 +107,7 @@ export default function MessageWindow({ messages }: Props) {
                                 body={item.body}
                                 createdAt={item.created_at}
                                 distance={item.distance}
+                                photo_url={item.photo_url}
                             />
                         </div>
                     );
@@ -139,6 +144,12 @@ export default function MessageWindow({ messages }: Props) {
                     />
                 )}
             </AutoSizer>
+            {isLoading && messages.length === 0 && <ChatSkeleton row={4} />}
+            {messages.length === 0 && !isLoading && (
+                <>
+                    <NoData label={t('chat.no_chat_nearby')} />
+                </>
+            )}
         </>
     );
 }

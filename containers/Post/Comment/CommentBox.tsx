@@ -1,5 +1,4 @@
 import {
-    Avatar,
     Box,
     ListItem,
     ListItemAvatar,
@@ -9,16 +8,15 @@ import {
 } from '@mui/material';
 import { useI18n } from '@/locales/client';
 import {
-    extractUsernameFromEmail,
     formatDateTime,
     formatDistance,
     getMimeTypeFromURL,
-    nameToInitial,
-    stringToColor,
 } from '@/utils/helper';
 import { CommentDataInterface } from '@/types/api/responses/comment-data.interface';
 import ImageVideoStandard from '../View/ImageVideoStandard';
 import SocialMediaPost from '../View/SocialMediaPost';
+import MyAvatar from '@/components/preview/MyAvatar';
+import ProfileDialog from '@/containers/ProfilePage/shared/ProfileDialog';
 
 type Props = {
     comment: CommentDataInterface;
@@ -28,25 +26,33 @@ export default function CommentBox({ comment }: Props) {
     const t = useI18n();
     return (
         <Box>
-            <ListItem className='!items-start cursor-pointer'>
-                <ListItemAvatar>
-                    <Avatar
-                        sx={{
-                            fontWeight: 'bold',
-                            bgcolor: stringToColor(comment.name),
-                        }}
+            <ListItem className='!items-start'>
+                <ListItemAvatar sx={{ paddingTop: '0.35rem' }}>
+                    <ProfileDialog
+                        name={comment.name}
+                        username={comment.username}
+                        photo_url={comment.photo_url}
                     >
-                        {nameToInitial(comment.name)}
-                    </Avatar>
+                        <MyAvatar
+                            name={comment.name}
+                            photo_url={comment.photo_url}
+                        />
+                    </ProfileDialog>
                 </ListItemAvatar>
                 <ListItemText
                     primary={
-                        <>
-                            {comment.name}
-                            <span className='ml-1 text-slate-500'>
-                                @{extractUsernameFromEmail(comment.username)}
+                        <ProfileDialog
+                            name={comment.name}
+                            username={comment.username}
+                            photo_url={comment.photo_url}
+                        >
+                            <span className='cursor-pointer hover:underline active:underline'>
+                                {comment.name}
+                                <span className='ml-1 text-slate-500'>
+                                    @{comment.username}
+                                </span>
                             </span>
-                        </>
+                        </ProfileDialog>
                     }
                     primaryTypographyProps={{
                         className: '!text-sm ',

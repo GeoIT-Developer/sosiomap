@@ -1,13 +1,6 @@
 import { useScopedI18n } from '@/locales/client';
+import { formatDateTime, formatDistance } from '@/utils/helper';
 import {
-    extractUsernameFromEmail,
-    formatDateTime,
-    formatDistance,
-    nameToInitial,
-    stringToColor,
-} from '@/utils/helper';
-import {
-    Avatar,
     Box,
     Divider,
     ListItem,
@@ -15,6 +8,8 @@ import {
     ListItemText,
     Typography,
 } from '@mui/material';
+import ProfileDialog from '../ProfilePage/shared/ProfileDialog';
+import MyAvatar from '@/components/preview/MyAvatar';
 
 type Props = {
     username: string;
@@ -22,6 +17,7 @@ type Props = {
     body: string;
     createdAt: string;
     distance: number;
+    photo_url?: string;
     style?: React.CSSProperties;
 };
 
@@ -31,24 +27,34 @@ export default function MessageBox({
     body,
     createdAt,
     distance,
+    photo_url,
     style,
 }: Props) {
     const t = useScopedI18n('unit');
     return (
         <Box style={style}>
             <ListItem className='!items-start'>
-                <ListItemAvatar>
-                    <Avatar
-                        sx={{
-                            fontWeight: 'bold',
-                            bgcolor: stringToColor(name),
-                        }}
+                <ListItemAvatar className='pt-1'>
+                    <ProfileDialog
+                        name={name}
+                        username={username}
+                        photo_url={photo_url}
                     >
-                        {nameToInitial(name)}
-                    </Avatar>
+                        <MyAvatar name={name} photo_url={photo_url} />
+                    </ProfileDialog>
                 </ListItemAvatar>
                 <ListItemText
-                    primary={extractUsernameFromEmail(username)}
+                    primary={
+                        <ProfileDialog
+                            name={name}
+                            username={username}
+                            photo_url={photo_url}
+                        >
+                            <span className='cursor-pointer hover:underline active:underline'>
+                                {username}
+                            </span>
+                        </ProfileDialog>
+                    }
                     primaryTypographyProps={{
                         className: '!text-sm ',
                     }}

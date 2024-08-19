@@ -10,6 +10,7 @@ export interface CommentDataInterface {
     distance: number;
     username: string;
     name: string;
+    photo_url?: string;
     title?: string;
 }
 

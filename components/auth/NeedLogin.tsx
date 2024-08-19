@@ -42,8 +42,6 @@ export default function NeedLogin({
 
     return (
         <>
-            {/* <pre>{JSON.stringify(session, undefined, 2)}</pre> */}
-
             {session.status === 'authenticated' && children}
             {(session.status === 'loading' ||
                 session.status === 'unauthenticated') && (

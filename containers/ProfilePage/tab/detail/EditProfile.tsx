@@ -26,11 +26,7 @@ import { PutProfileDataParamsInterface } from '@/types/api/params/put-profile-da
 import API from '@/configs/api';
 import useAPI from '@/hooks/useAPI';
 import { toast } from 'react-toastify';
-import { RefreshContext } from '../../Content';
-
-type Props = {
-    profile: ProfileDataInterface | undefined | null;
-};
+import { ProfileContext } from '../../Content';
 
 type InputEditProfileInterface = PutProfileDataParamsInterface;
 
@@ -81,9 +77,9 @@ function HelperLink({ url }: { url: string }) {
     );
 }
 
-export default function EditProfile({ profile }: Props) {
+export default function EditProfile() {
     const t = useI18n();
-    const { setRefresh } = useContext(RefreshContext);
+    const { setRefresh, profile } = useContext(ProfileContext);
 
     const [inputData, setInputData] =
         useState<InputEditProfileInterface>(initialProfileData);
@@ -94,26 +90,27 @@ export default function EditProfile({ profile }: Props) {
     >(API.putProfileData);
 
     useEffect(() => {
-        if (!profile?.user_id) return;
+        const eProfile = profile?.profile;
+        if (!eProfile?.user_id) return;
 
         setInputData({
-            about: profile.about || '',
-            email: profile.email || '',
-            website: profile.website || '',
-            phone_number: profile.phone_number || '',
-            instagram: profile.social_media?.instagram || '',
-            facebook: profile.social_media?.facebook || '',
-            twitter: profile.social_media?.twitter || '',
-            tiktok: profile.social_media?.tiktok || '',
-            youtube: profile.social_media?.youtube || '',
-            linkedin: profile.social_media?.linkedin || '',
-            whatsapp: profile.social_media?.whatsapp || '',
-            telegram: profile.social_media?.telegram || '',
-            discord: profile.social_media?.discord || '',
-            github: profile.social_media?.github || '',
-            spotify: profile.social_media?.spotify || '',
-            pinterest: profile.social_media?.pinterest || '',
-            reddit: profile.social_media?.reddit || '',
+            about: eProfile.about || '',
+            email: eProfile.email || '',
+            website: eProfile.website || '',
+            phone_number: eProfile.phone_number || '',
+            instagram: eProfile.social_media?.instagram || '',
+            facebook: eProfile.social_media?.facebook || '',
+            twitter: eProfile.social_media?.twitter || '',
+            tiktok: eProfile.social_media?.tiktok || '',
+            youtube: eProfile.social_media?.youtube || '',
+            linkedin: eProfile.social_media?.linkedin || '',
+            whatsapp: eProfile.social_media?.whatsapp || '',
+            telegram: eProfile.social_media?.telegram || '',
+            discord: eProfile.social_media?.discord || '',
+            github: eProfile.social_media?.github || '',
+            spotify: eProfile.social_media?.spotify || '',
+            pinterest: eProfile.social_media?.pinterest || '',
+            reddit: eProfile.social_media?.reddit || '',
         });
     }, [profile]);
 

@@ -1,5 +1,6 @@
 export interface PostCommentParamsInterface {
     post_id: string;
+    topic_id?: string;
     title?: string;
     body: string;
     url_instagram_post?: string;

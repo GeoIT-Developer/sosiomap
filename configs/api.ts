@@ -119,23 +119,34 @@ const API = {
     putProfilePhoto: (file: File) => {
         const formData = new FormData();
         formData.append('file', file);
-        return HOST.put(`profile/photo`, formData);
+        return HOST.put(`users/me/photo`, formData);
     },
 
     putProfileCoverPhoto: (file: File) => {
         const formData = new FormData();
         formData.append('file', file);
-        return HOST.put(`profile/cover`, formData);
+        return HOST.put(`users/me/cover`, formData);
     },
 
     getProfile: () => {
-        return HOST.get(`profile`);
+        return HOST.get(`users/me`, {
+            params: { param: 'user-profile-summary' },
+        });
     },
 
     putProfileData: (rawData: PutProfileDataParamsInterface) => {
         const newObj = cleanObject(rawData);
-        return HOST.put(`profile`, newObj);
+        return HOST.put(`users/me`, newObj);
     },
+
+    getProfilePosts: () => HOST.get(`users/me/posts`),
+
+    getUser: (username: string) => {
+        return HOST.get(`users/${username}`, {
+            params: { param: 'user-profile-summary' },
+        });
+    },
+    getUserPosts: (username: string) => HOST.get(`users/${username}/posts`),
 };
 
 export default API;

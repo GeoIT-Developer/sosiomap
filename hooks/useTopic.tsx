@@ -61,6 +61,36 @@ export const TOPIC = {
     USER_STORIES: {
         id: 'user_stories',
     },
+    EVENTS: {
+        id: 'events',
+    },
+    NEWS: {
+        id: 'news',
+    },
+    TOURISM: {
+        id: 'tourism',
+    },
+    TRAFFIC: {
+        id: 'traffic',
+    },
+    ENVIRONMENT: {
+        id: 'environment',
+    },
+    DISASTER: {
+        id: 'disaster',
+    },
+    SOCIAL: {
+        id: 'social',
+    },
+    MARKETPLACE: {
+        id: 'marketplace',
+    },
+    PROMO: {
+        id: 'promo',
+    },
+    Q_AND_A: {
+        id: 'q_and_a',
+    },
 };
 
 export const useMainTopic = () => {
@@ -84,7 +114,7 @@ export const useMainTopic = () => {
                 },
             },
             {
-                id: 'events',
+                id: TOPIC.EVENTS.id,
                 label: t('main.events'),
                 description: t('main.events_desc'),
                 group: t('main_topics'),
@@ -101,7 +131,7 @@ export const useMainTopic = () => {
                 },
             },
             {
-                id: 'news',
+                id: TOPIC.NEWS.id,
                 label: t('main.news'),
                 description: t('main.news_desc'),
                 group: t('main_topics'),
@@ -118,7 +148,7 @@ export const useMainTopic = () => {
                 },
             },
             {
-                id: 'tourism',
+                id: TOPIC.TOURISM.id,
                 label: t('main.tourism'),
                 description: t('main.tourism_desc'),
                 group: t('main_topics'),
@@ -134,7 +164,7 @@ export const useMainTopic = () => {
                 },
             },
             {
-                id: 'traffic',
+                id: TOPIC.TRAFFIC.id,
                 label: t('main.traffic'),
                 description: t('main.traffic_desc'),
                 group: t('main_topics'),
@@ -151,7 +181,7 @@ export const useMainTopic = () => {
                 },
             },
             {
-                id: 'environment',
+                id: TOPIC.ENVIRONMENT.id,
                 label: t('main.environment'),
                 description: t('main.environment_desc'),
                 group: t('main_topics'),
@@ -167,7 +197,7 @@ export const useMainTopic = () => {
                 },
             },
             {
-                id: 'disaster',
+                id: TOPIC.DISASTER.id,
                 label: t('main.disaster'),
                 description: t('main.disaster_desc'),
                 group: t('main_topics'),
@@ -184,7 +214,7 @@ export const useMainTopic = () => {
                 },
             },
             {
-                id: 'social',
+                id: TOPIC.SOCIAL.id,
                 label: t('main.social'),
                 description: t('main.social_desc'),
                 group: t('main_topics'),
@@ -201,7 +231,7 @@ export const useMainTopic = () => {
                 },
             },
             {
-                id: 'marketplace',
+                id: TOPIC.MARKETPLACE.id,
                 label: t('main.marketplace'),
                 description: t('main.marketplace_desc'),
                 group: t('main_topics'),
@@ -218,7 +248,7 @@ export const useMainTopic = () => {
                 },
             },
             {
-                id: 'promo',
+                id: TOPIC.PROMO.id,
                 label: t('main.promo'),
                 description: t('main.promo_desc'),
                 group: t('main_topics'),
@@ -235,7 +265,7 @@ export const useMainTopic = () => {
                 },
             },
             {
-                id: 'q_and_a',
+                id: TOPIC.Q_AND_A.id,
                 label: t('main.q_and_a'),
                 description: t('main.q_and_a_desc'),
                 group: t('main_topics'),

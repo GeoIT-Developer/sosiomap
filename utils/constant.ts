@@ -145,6 +145,7 @@ export const ASSETS = {
     ICON: '/img/icon/',
     PLACEHOLDER: '/img/placeholder/',
     TEAM: '/img/team/',
+    BADGE: '/img/badge/',
 };
 
 export const IDs = {
@@ -169,6 +170,10 @@ export const POPUP_PARAMS = {
     },
     FULL_SCRREN_DIALOG: {
         KEY: 'full-screen-dialog',
+        VALUE: 'open',
+    },
+    DIALOG: {
+        KEY: 'dialog',
         VALUE: 'open',
     },
 };

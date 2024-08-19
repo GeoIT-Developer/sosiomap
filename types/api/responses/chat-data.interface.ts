@@ -6,6 +6,7 @@ export interface ChatDataInterface {
     channel: string;
     body: string;
     distance: number;
+    photo_url?: string;
     created_at: string;
     updated_at?: null | string;
     deleted_at?: null | string;

@@ -3,11 +3,7 @@ import { alpha } from '@mui/material/styles';
 import { useEffect, useRef, useState } from 'react';
 import MyImage from '@/components/preview/MyImage';
 import { ASSETS } from '@/utils/constant';
-import {
-    addMinioPrefix,
-    fileToObjectURL,
-    getMimeTypeFromURL,
-} from '@/utils/helper';
+import { fileToObjectURL, getMimeTypeFromURL } from '@/utils/helper';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import VisuallyHiddenInput from '@/components/input/FileUpload/VisuallyHiddenInput';
 import useAPI from '@/hooks/useAPI';
@@ -49,7 +45,7 @@ export default function ProfileCover({
         if (photoURL) {
             setMedia([
                 {
-                    url: addMinioPrefix(photoURL),
+                    url: photoURL,
                     fileType: getMimeTypeFromURL(photoURL),
                 },
             ]);
@@ -73,11 +69,11 @@ export default function ProfileCover({
                 <MyImage
                     src={
                         photoURL
-                            ? addMinioPrefix(photoURL)
-                            : `${ASSETS.PLACEHOLDER}profile_cover.jpg`
+                            ? photoURL
+                            : `${ASSETS.PLACEHOLDER}/profile_cover.jpg`
                     }
                     alt='cover'
-                    className='w-full object-cover h-full pb-0.5 bg-primary'
+                    className='w-full object-cover h-full pb-0.5 bg-primary cursor-pointer'
                 />
             </ImageViewer>
 
