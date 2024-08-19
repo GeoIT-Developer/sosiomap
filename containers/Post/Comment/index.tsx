@@ -24,9 +24,10 @@ import SendIcon from '@mui/icons-material/Send';
 
 type Props = {
     postId: string;
+    topicId: string;
 };
 
-export default function CommentPage({ postId }: Props) {
+export default function CommentPage({ postId, topicId }: Props) {
     const t = useI18n();
     const [socialMediaURL, setSocialMediaURL] = useState<SocialMediaURLType>(
         initialSocialMediaURLType,
@@ -108,6 +109,7 @@ export default function CommentPage({ postId }: Props) {
 
         const params: PostCommentParamsInterface = {
             post_id: postId,
+            topic_id: topicId,
             title: inputData.title,
             body: inputData.body,
             url_facebook_post: socialMediaURL.facebook,

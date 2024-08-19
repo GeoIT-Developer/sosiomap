@@ -1,12 +1,6 @@
 import { useScopedI18n } from '@/locales/client';
+import { formatDateTime, formatDistance } from '@/utils/helper';
 import {
-    formatDateTime,
-    formatDistance,
-    nameToInitial,
-    stringToColor,
-} from '@/utils/helper';
-import {
-    Avatar,
     Box,
     Divider,
     ListItem,
@@ -15,6 +9,7 @@ import {
     Typography,
 } from '@mui/material';
 import ProfileDialog from '../ProfilePage/shared/ProfileDialog';
+import MyAvatar from '@/components/preview/MyAvatar';
 
 type Props = {
     username: string;
@@ -45,22 +40,7 @@ export default function MessageBox({
                         username={username}
                         photo_url={photo_url}
                     >
-                        {photo_url ? (
-                            <Avatar
-                                className='border border-2 border-gray-500 border-solid cursor-pointer hover:border-primary active:border-primary'
-                                src={photo_url}
-                            />
-                        ) : (
-                            <Avatar
-                                sx={{
-                                    fontWeight: 'bold',
-                                    bgcolor: stringToColor(name),
-                                    cursor: 'pointer',
-                                }}
-                            >
-                                {nameToInitial(name)}
-                            </Avatar>
-                        )}
+                        <MyAvatar name={name} photo_url={photo_url} />
                     </ProfileDialog>
                 </ListItemAvatar>
                 <ListItemText

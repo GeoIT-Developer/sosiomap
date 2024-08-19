@@ -1,5 +1,4 @@
 import {
-    Avatar,
     Box,
     Divider,
     ListItem,
@@ -12,12 +11,9 @@ import { useI18n } from '@/locales/client';
 import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interface';
 import {
     calculateManhattanDistance,
-    extractUsernameFromEmail,
     formatDateTime,
     formatDistance,
     getMimeTypeFromURL,
-    nameToInitial,
-    stringToColor,
 } from '@/utils/helper';
 import { MyLocation } from '@/hooks/useGeolocation';
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
@@ -26,6 +22,8 @@ import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import ImageVideoStandard from './ImageVideoStandard';
 import SocialMediaPost from './SocialMediaPost';
 import CommentPage from '../Comment';
+import MyAvatar from '@/components/preview/MyAvatar';
+import ProfileDialog from '@/containers/ProfilePage/shared/ProfileDialog';
 
 type Props = {
     post: MapPostDataInterface;
@@ -38,23 +36,28 @@ export default function StandardPost({ post, userLocation }: Props) {
         <Box>
             <ListItem className='!px-0'>
                 <ListItemAvatar>
-                    <Avatar
-                        sx={{
-                            fontWeight: 'bold',
-                            bgcolor: stringToColor(post.name),
-                        }}
+                    <ProfileDialog
+                        name={post.name}
+                        username={post.username}
+                        photo_url={post.photo_url}
                     >
-                        {nameToInitial(post.name)}
-                    </Avatar>
+                        <MyAvatar name={post.name} photo_url={post.photo_url} />
+                    </ProfileDialog>
                 </ListItemAvatar>
                 <ListItemText
                     primary={
-                        <>
-                            {post.name}
-                            <span className='ml-1 text-slate-500'>
-                                @{extractUsernameFromEmail(post.username)}
+                        <ProfileDialog
+                            name={post.name}
+                            username={post.username}
+                            photo_url={post.photo_url}
+                        >
+                            <span className='cursor-pointer hover:underline active:underline'>
+                                {post.name}
+                                <span className='ml-1 text-slate-500'>
+                                    @{post.username}
+                                </span>
                             </span>
-                        </>
+                        </ProfileDialog>
                     }
                     primaryTypographyProps={{
                         className: '!text-sm ',
@@ -119,7 +122,7 @@ export default function StandardPost({ post, userLocation }: Props) {
             </Stack>
             <SocialMediaPost postUrlProps={post.post_url} />
             <Divider className='!mt-2'>{t('post.comment')}</Divider>
-            <CommentPage postId={post._id} />
+            <CommentPage postId={post._id} topicId={post.topic_id} />
         </Box>
     );
 }
