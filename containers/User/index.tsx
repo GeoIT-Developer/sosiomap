@@ -33,7 +33,10 @@ export default function UserPage({ user, status }: Props) {
                 style={{ height: heightStyleAppBar }}
                 className='overflow-y-auto md:p-4'
             >
-                <Paper className='max-w-xl mx-auto'>
+                <Paper
+                    className='max-w-xl mx-auto flex flex-col'
+                    style={{ height: heightStyleAppBar }}
+                >
                     {status?.code === 200 ? (
                         <UserContent user={user} />
                     ) : (

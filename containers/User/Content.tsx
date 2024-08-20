@@ -78,13 +78,25 @@ export default function UserContent({ user }: Props) {
                 </Tabs>
             </Paper>
             <Box>
-                <TabPanel value={profileTab} index={ProfileTabEnum.DETAIL}>
+                <TabPanel
+                    value={profileTab}
+                    index={ProfileTabEnum.DETAIL}
+                    keepMounted
+                >
                     <DetailTab profile={user} />
                 </TabPanel>
-                <TabPanel value={profileTab} index={ProfileTabEnum.SUMMARY}>
+                <TabPanel
+                    value={profileTab}
+                    index={ProfileTabEnum.SUMMARY}
+                    keepMounted
+                >
                     <SummaryTab profile={user} />
                 </TabPanel>
-                <TabPanel value={profileTab} index={ProfileTabEnum.POST}>
+                <TabPanel
+                    value={profileTab}
+                    index={ProfileTabEnum.POST}
+                    keepMounted
+                >
                     <PostTab username={user.username} />
                 </TabPanel>
             </Box>
