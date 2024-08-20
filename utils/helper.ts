@@ -106,7 +106,13 @@ export function nameToInitial(name: string) {
     if (!name) return '-';
     const nameSplit = name.split(' ');
     if (nameSplit.length >= 2) {
-        return `${nameSplit[0][0]}${nameSplit[1][0]}`;
+        if (!nameSplit[0][0]) {
+            return `${nameSplit[1][0]}`;
+        } else if (!nameSplit[1][0]) {
+            return `${nameSplit[0][0]}`;
+        } else {
+            return `${nameSplit[0][0]}${nameSplit[1][0]}`;
+        }
     } else {
         return `${nameSplit[0][0]}`;
     }

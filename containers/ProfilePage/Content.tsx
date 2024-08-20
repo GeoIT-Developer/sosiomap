@@ -111,13 +111,25 @@ export default function ProfileContent() {
                 <ProfileContext.Provider
                     value={{ setRefresh, profile: profileData }}
                 >
-                    <TabPanel value={profileTab} index={ProfileTabEnum.DETAIL}>
+                    <TabPanel
+                        value={profileTab}
+                        index={ProfileTabEnum.DETAIL}
+                        keepMounted
+                    >
                         <DetailTab />
                     </TabPanel>
-                    <TabPanel value={profileTab} index={ProfileTabEnum.SUMMARY}>
+                    <TabPanel
+                        value={profileTab}
+                        index={ProfileTabEnum.SUMMARY}
+                        keepMounted
+                    >
                         <SummaryTab profile={profileData} />
                     </TabPanel>
-                    <TabPanel value={profileTab} index={ProfileTabEnum.POST}>
+                    <TabPanel
+                        value={profileTab}
+                        index={ProfileTabEnum.POST}
+                        keepMounted
+                    >
                         <PostTab />
                     </TabPanel>
                 </ProfileContext.Provider>
