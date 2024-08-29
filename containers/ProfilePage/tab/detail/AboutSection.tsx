@@ -31,7 +31,10 @@ export default function AboutSection() {
     return (
         <Stack spacing={1} className='px-4'>
             <Box className='w-full'>
-                <Typography variant='body2' className='break-all !text-sm'>
+                <Typography
+                    variant='body2'
+                    className='break-all !text-sm whitespace-pre'
+                >
                     {eProfile?.about || t('profile.default_about_section')}
                 </Typography>
             </Box>
