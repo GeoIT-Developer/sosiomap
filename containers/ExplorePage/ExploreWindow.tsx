@@ -9,6 +9,7 @@ import { MeasuredCellParent } from 'react-virtualized/dist/es/CellMeasurer';
 import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interface';
 import { MyLocation } from '@/hooks/useGeolocation';
 import SimplePost from '../Post/View/SimplePost';
+import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
 
 const cache = new CellMeasurerCache({
     fixedWidth: true,
@@ -18,9 +19,14 @@ const cache = new CellMeasurerCache({
 type Props = {
     posts: MapPostDataInterface[];
     userLocation: MyLocation | null;
+    onChangeStats?: (stats: PostStatInterface, reactionId: string) => void;
 };
 
-export default function ExploreWindow({ posts, userLocation }: Props) {
+export default function ExploreWindow({
+    posts,
+    userLocation,
+    onChangeStats,
+}: Props) {
     function RowRenderer({
         index,
         key,
@@ -56,6 +62,7 @@ export default function ExploreWindow({ posts, userLocation }: Props) {
                             <SimplePost
                                 post={item}
                                 userLocation={userLocation}
+                                onChangeStats={onChangeStats}
                             />
                         </div>
                     );

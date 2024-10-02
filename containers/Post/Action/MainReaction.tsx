@@ -2,15 +2,16 @@ import { useEffect, useState } from 'react';
 import Reaction, { LIST_REACTION, ReactionType } from './Reaction';
 import useAPI from '@/hooks/useAPI';
 import API from '@/configs/api';
-import { ObjectLiteral } from '@/types/object-literal.interface';
 import { toast } from 'react-toastify';
 import useRefresh from '@/hooks/useRefresh';
+import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
 
 type Props = {
     positive: number;
     negative: number;
     reactionId: string | undefined | null;
     postId: string;
+    onChangeStats?: (stats: PostStatInterface, reactionId: string) => void;
 };
 
 type ReactionState = {
@@ -25,6 +26,7 @@ export default function MainReaction({
     positive,
     reactionId,
     postId,
+    onChangeStats,
 }: Props) {
     const [reaction, setReaction] = useState<ReactionState>({
         id: '',
@@ -35,18 +37,21 @@ export default function MainReaction({
     const [refresh, setRefresh] = useRefresh();
 
     const apiPostReaction = useAPI<
-        ObjectLiteral,
+        PostStatInterface,
         {
             post_id: string;
             reaction: string;
         }
     >(API.postReact, {
-        onSuccess: (raw) => {
+        onSuccess: (raw, res) => {
             const newPos = raw?.data?.positive_reactions;
             const newNeg = raw?.data?.negative_reactions;
             setReaction((oldState) => {
                 return { ...oldState, positive: newPos, negative: newNeg };
             });
+            if (onChangeStats) {
+                onChangeStats(res.data, res.params?.reaction || reaction.id);
+            }
         },
         onError: (err) => {
             setRefresh();

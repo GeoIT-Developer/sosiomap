@@ -15,6 +15,7 @@ import {
     formatDateTime,
     formatDistance,
     getMimeTypeFromURL,
+    truncateText,
 } from '@/utils/helper';
 import { MyLocation } from '@/hooks/useGeolocation';
 import ImageVideoSimple from './ImageVideoSimple';
@@ -29,6 +30,8 @@ import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
 import MainReaction from '../Action/MainReaction';
 import Views from '../Action/Views';
 import Comments from '../Action/Comments';
+import { MAX_LENGTH } from '@/utils/constant';
+import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
 
 export const SIMPLE_POST_HEIGHT = 233; //pixel
 
@@ -36,9 +39,15 @@ type Props = {
     post: MapPostDataInterface;
     style?: React.CSSProperties;
     userLocation: MyLocation | null;
+    onChangeStats?: (stats: PostStatInterface, reactionId: string) => void;
 };
 
-export default function SimplePost({ post, style, userLocation }: Props) {
+export default function SimplePost({
+    post,
+    style,
+    userLocation,
+    onChangeStats,
+}: Props) {
     const t = useI18n();
     const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -153,12 +162,23 @@ export default function SimplePost({ post, style, userLocation }: Props) {
                             variant='body1'
                             className='block break-all whitespace-pre-line'
                         >
-                            {post.title}
+                            {truncateText(
+                                post.title,
+                                MAX_LENGTH.POST.SIMPLE.TITLE,
+                            )}
                         </Typography>
                     )}
 
                     <Typography component='p' variant='body2'>
-                        {post.body}
+                        {truncateText(post.body, MAX_LENGTH.POST.SIMPLE.BODY)}
+                        {post.body.length > MAX_LENGTH.POST.SIMPLE.BODY && (
+                            <span
+                                onClick={toggleDrawer(true)}
+                                className='ml-2 text-primary hover:underline'
+                            >
+                                View More
+                            </span>
+                        )}
                     </Typography>
 
                     <Box>
@@ -182,6 +202,7 @@ export default function SimplePost({ post, style, userLocation }: Props) {
                         positive={post.stats?.positive_reactions || 0}
                         reactionId={post.reaction}
                         postId={post._id}
+                        onChangeStats={onChangeStats}
                     />
                     <div className='flex items-center'>
                         <Comments

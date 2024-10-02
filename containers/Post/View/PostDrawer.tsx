@@ -36,7 +36,7 @@ export default function PostDrawer({
                 title={t('post.view_post')}
                 keepMounted={false}
             >
-                <Box className='!min-h-[85vh]'>
+                <Box className='!min-h-[85vh] max-w-lg'>
                     {post.post_type === PostTypeEnum.STANDARD && (
                         <StandardPost post={post} userLocation={userLocation} />
                     )}

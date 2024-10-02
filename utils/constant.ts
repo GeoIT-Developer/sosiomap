@@ -192,6 +192,10 @@ export const MAX_LENGTH = {
             MAX_FILE: 10,
             CAPTION: 280,
         },
+        SIMPLE: {
+            TITLE: 64,
+            BODY: 128,
+        },
     },
     TOPIC: {
         LABEL: 64,

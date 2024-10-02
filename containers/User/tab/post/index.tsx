@@ -27,6 +27,7 @@ export default function PostTab({ username }: { username: string }) {
         <PostContent
             isLoading={apiQueryPost.loading}
             listMapPost={listMapPost}
+            setListMapPost={setListMapPost}
         />
     );
 }

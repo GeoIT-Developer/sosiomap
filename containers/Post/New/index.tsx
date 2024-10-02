@@ -93,7 +93,13 @@ export default function NewPostPage() {
                 toast.success(t('message.success.success'), {
                     theme: 'colored',
                 });
-                history.onBackClose();
+                setTimeout(() => {
+                    if (window.opener) {
+                        window.close();
+                    } else {
+                        history.onBackClose();
+                    }
+                }, 2500);
             },
             onError: (err) => {
                 toast.error(err, {
