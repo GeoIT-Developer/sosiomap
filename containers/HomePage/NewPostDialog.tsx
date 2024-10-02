@@ -15,6 +15,7 @@ import {
     ListItemAvatar,
     ListItemButton,
     ListItemText,
+    Zoom,
 } from '@mui/material';
 import AddLocationAltOutlined from '@mui/icons-material/AddLocationAltOutlined';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
@@ -30,6 +31,7 @@ import ShareLocationIcon from '@mui/icons-material/ShareLocation';
 import ChooseLocationEnum from '@/types/choose-location.enum';
 import { toast } from 'react-toastify';
 import CloseIcon from '@mui/icons-material/Close';
+import { TooltipSpeedDial } from './HomeSpeedDial';
 
 interface Props {
     setShowMarker: (_args: boolean) => void;
@@ -59,14 +61,19 @@ export default function NewPostDialog({
 
     return (
         <>
-            <Fab
-                aria-label='new_post'
-                size='medium'
-                color='primary'
-                onClick={() => setOpen(true)}
-            >
-                <AddLocationAltOutlined />
-            </Fab>
+            <Zoom in>
+                <Fab
+                    aria-label='new_post'
+                    size='medium'
+                    color='primary'
+                    onClick={() => setOpen(true)}
+                >
+                    <TooltipSpeedDial label={t('button.create_new_post')}>
+                        <AddLocationAltOutlined />
+                    </TooltipSpeedDial>
+                </Fab>
+            </Zoom>
+
             <Dialog onClose={handleClose} open={open} className='-mt-32'>
                 <DialogTitle className='!px-4'>
                     {t('post.new_post')}

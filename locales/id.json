@@ -21,7 +21,10 @@
         "post": "Bagikan",
         "submit": "Kirim",
         "save": "Simpan",
-        "edit": "Ubah"
+        "edit": "Ubah",
+        "post_story": "Bagikan Cerita",
+        "create_new_post": "Buat Postingan Baru",
+        "scan_this_area": "Pindai Area Ini"
     },
     "navigation": {
         "home": "Beranda",

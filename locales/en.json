@@ -21,7 +21,10 @@
         "post": "Post",
         "submit": "Submit",
         "save": "Save",
-        "edit": "Edit"
+        "edit": "Edit",
+        "post_story": "Post Story",
+        "create_new_post": "Create New Post",
+        "scan_this_area": "Scan This Area"
     },
     "navigation": {
         "home": "Home",

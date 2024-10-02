@@ -1,4 +1,4 @@
-import { Box, Fab, Stack } from '@mui/material';
+import { Box, Fab, Stack, Zoom } from '@mui/material';
 import { useI18n } from '@/locales/client';
 import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interface';
 import { MyLocation } from '@/hooks/useGeolocation';
@@ -10,6 +10,7 @@ import { myTurf } from '@/utils/helper';
 import { useMapLibreContext } from '@/contexts/MapLibreContext';
 import useWideScreen from '@/hooks/useWideScreen';
 import { toast } from 'react-toastify';
+import { TooltipSpeedDial } from './HomeSpeedDial';
 
 type Props = {
     userLocation: MyLocation | null;
@@ -68,9 +69,14 @@ export default function ScanDrawer({ userLocation, posts }: Props) {
 
     return (
         <>
-            <Fab aria-label='scan' size='medium' onClick={onClickScan}>
-                <SensorsIcon />
-            </Fab>
+            <Zoom in>
+                <Fab aria-label='scan' size='medium' onClick={onClickScan}>
+                    <TooltipSpeedDial label={t('button.scan_this_area')}>
+                        <SensorsIcon />
+                    </TooltipSpeedDial>
+                </Fab>
+            </Zoom>
+
             <CommonDrawer
                 anchor={isWide ? 'right' : 'bottom'}
                 open={openDrawer}
