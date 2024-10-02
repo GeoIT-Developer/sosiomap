@@ -45,6 +45,8 @@ import KPULayer from './custom/kpu/index.tsx';
 import { useActiveTopicContext } from '../AppPage';
 import useQueryParams from '@/hooks/useQueryParams';
 import HomeSpeedDial from './HomeSpeedDial';
+import useVisibilityChange from '@/hooks/useVisibilityChange';
+import useRefresh from '@/hooks/useRefresh';
 
 export default function HomePage({ show = true }: { show?: boolean }) {
     const t = useI18n();
@@ -63,7 +65,9 @@ export default function HomePage({ show = true }: { show?: boolean }) {
     );
     const [searchTxt, setSearchTxt] = useTermDebounce('', 850);
     const [inputSearch, setInputSearch] = useState('');
+    const [refresh, setRefresh] = useRefresh();
 
+    useVisibilityChange('always', () => setRefresh());
     const queryParams = useQueryParams();
     const searchParams = useSearchParams();
 
@@ -146,7 +150,7 @@ export default function HomePage({ show = true }: { show?: boolean }) {
         }
         refreshMapPost();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activeTopicType, show]);
+    }, [activeTopicType, show, refresh]);
 
     const [selectedPost, setSelectedPost] = useState<MapPostDataInterface>(
         {} as MapPostDataInterface,

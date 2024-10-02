@@ -123,7 +123,7 @@ export default function MessageWindow({ messages, isLoading }: Props) {
 
     return (
         <>
-            {topRow && (
+            {topRow && messages.length && (
                 <Box className='absolute top-0 text-center z-10 w-full'>
                     <Chip label={getFormatDateLabel(topRow.created_at)} />
                 </Box>
