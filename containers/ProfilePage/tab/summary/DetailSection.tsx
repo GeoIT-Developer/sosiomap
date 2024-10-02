@@ -1,4 +1,4 @@
-import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { List, ListItem, ListItemText, Paper, Typography } from '@mui/material';
 import { formatReadableNumber } from '@/utils/helper';
 import { useScopedI18n } from '@/locales/client';
 import { ProfileDataInterface } from '@/types/api/responses/profile-data.interface';
@@ -228,7 +228,7 @@ export default function DetailSection({
     ];
 
     return (
-        <Box>
+        <Paper>
             {listSummary.map((section, idx) => {
                 return (
                     <List key={idx} dense>
@@ -262,6 +262,6 @@ export default function DetailSection({
                     </List>
                 );
             })}
-        </Box>
+        </Paper>
     );
 }
