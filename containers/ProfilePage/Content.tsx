@@ -1,4 +1,11 @@
-import { Box, Paper, Tab, Tabs, Typography } from '@mui/material';
+import {
+    Box,
+    CircularProgress,
+    Paper,
+    Tab,
+    Tabs,
+    Typography,
+} from '@mui/material';
 import useAccessToken from '@/hooks/useAccessToken';
 import TabPanel, { a11yProps } from '@/components/tab/TabPanel';
 import { createContext, useEffect, useState } from 'react';
@@ -15,6 +22,8 @@ import ProfilePicture from './main/ProfilePicture';
 import { toast } from 'react-toastify';
 import SummaryTab from './tab/summary';
 import PostTab from './tab/post';
+import MainFab from '@/components/button/MainFab';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 enum ProfileTabEnum {
     DETAIL = 'detail',
@@ -60,6 +69,21 @@ export default function ProfileContent() {
 
     return (
         <Box className='flex-grow'>
+            <Box className='relative'>
+                <MainFab
+                    size='small'
+                    aria-label='refresh'
+                    className='!absolute top-1 right-1'
+                    onClick={setRefresh}
+                    style={{ opacity: '0.65' }}
+                >
+                    {apiProfile.loading ? (
+                        <CircularProgress size={24} />
+                    ) : (
+                        <RefreshIcon />
+                    )}
+                </MainFab>
+            </Box>
             <ProfileCover
                 photoURL={profileData?.cover_photo}
                 onRefresh={setRefresh}
