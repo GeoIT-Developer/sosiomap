@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import MessageBox from './MessageBox';
-import { Box, Chip, Divider } from '@mui/material';
+import { Box, Chip } from '@mui/material';
 import { getDateLabel } from '@/utils/helper';
 import {
     AutoSizer,
@@ -76,9 +76,14 @@ export default function MessageWindow({ messages, isLoading }: Props) {
                                     }
                                 }}
                             >
-                                <Divider className='pt-2'>
-                                    {getFormatDateLabel(item.created_at)}
-                                </Divider>
+                                <div className='w-full text-center'>
+                                    <Chip
+                                        label={getFormatDateLabel(
+                                            item.created_at,
+                                        )}
+                                        variant='outlined'
+                                    />
+                                </div>
                                 <MessageBox
                                     name={item.name}
                                     username={item.username}

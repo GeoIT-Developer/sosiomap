@@ -1,8 +1,8 @@
 import { useScopedI18n } from '@/locales/client';
-import { formatDateTime, formatDistance } from '@/utils/helper';
+import { formatDateTime, formatDistance, stringToColor } from '@/utils/helper';
 import {
     Box,
-    Divider,
+    Card,
     ListItem,
     ListItemAvatar,
     ListItemText,
@@ -33,8 +33,11 @@ export default function MessageBox({
     const t = useScopedI18n('unit');
     return (
         <Box style={style}>
-            <ListItem className='!items-start'>
-                <ListItemAvatar className='pt-1'>
+            <ListItem className='!items-start !py-1'>
+                <ListItemAvatar
+                    className='pt-1'
+                    sx={{ minWidth: 'auto !important', marginRight: '0.5rem' }}
+                >
                     <ProfileDialog
                         name={name}
                         username={username}
@@ -43,23 +46,31 @@ export default function MessageBox({
                         <MyAvatar name={name} photo_url={photo_url} />
                     </ProfileDialog>
                 </ListItemAvatar>
+
                 <ListItemText
                     primary={
-                        <ProfileDialog
-                            name={name}
-                            username={username}
-                            photo_url={photo_url}
+                        <Card
+                            className='p-2 m-0'
+                            variant='elevation'
+                            elevation={3}
+                            sx={{
+                                borderRadius: '8px',
+                                borderStartStartRadius: 0,
+                            }}
                         >
-                            <span className='cursor-pointer hover:underline active:underline'>
-                                {username}
-                            </span>
-                        </ProfileDialog>
-                    }
-                    primaryTypographyProps={{
-                        className: '!text-sm ',
-                    }}
-                    secondary={
-                        <>
+                            <ProfileDialog
+                                name={name}
+                                username={username}
+                                photo_url={photo_url}
+                            >
+                                <Typography
+                                    component='b'
+                                    className='cursor-pointer hover:underline active:underline !font-bold'
+                                    sx={{ color: stringToColor(name) }}
+                                >
+                                    {username}
+                                </Typography>
+                            </ProfileDialog>
                             <Typography
                                 component='p'
                                 variant='body2'
@@ -71,19 +82,15 @@ export default function MessageBox({
                             <Typography
                                 component='time'
                                 variant='caption'
-                                className='text-right !text-xs !-mt-1.5 block'
+                                className='text-right !text-xs !-mt-1.5 block opacity-50'
                             >
                                 {formatDistance(distance)}
                                 {t('km')} | {formatDateTime(createdAt, 'HH:mm')}
                             </Typography>
-                        </>
+                        </Card>
                     }
-                    secondaryTypographyProps={{
-                        component: 'div',
-                    }}
                 />
             </ListItem>
-            <Divider />
         </Box>
     );
 }
