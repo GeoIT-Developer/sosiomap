@@ -1,6 +1,7 @@
 import {
     Box,
-    Divider,
+    Card,
+    IconButton,
     ListItem,
     ListItemAvatar,
     ListItemText,
@@ -16,9 +17,6 @@ import {
     getMimeTypeFromURL,
 } from '@/utils/helper';
 import { MyLocation } from '@/hooks/useGeolocation';
-import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import ImageVideoSimple from './ImageVideoSimple';
 import { useEffect, useState } from 'react';
 import PostDrawer from './PostDrawer';
@@ -26,6 +24,11 @@ import useQueryParams from '@/hooks/useQueryParams';
 import { useSearchParams } from 'next/navigation';
 import MyAvatar from '@/components/preview/MyAvatar';
 import ProfileDialog from '@/containers/ProfilePage/shared/ProfileDialog';
+import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
+
+import MainReaction from '../Action/MainReaction';
+import Views from '../Action/Views';
+import Comments from '../Action/Comments';
 
 export const SIMPLE_POST_HEIGHT = 233; //pixel
 
@@ -74,7 +77,13 @@ export default function SimplePost({ post, style, userLocation }: Props) {
 
     return (
         <>
-            <Box style={style}>
+            <Card
+                style={style}
+                className='my-1'
+                variant='elevation'
+                elevation={5}
+                sx={{ borderRadius: '8px' }}
+            >
                 <ListItem>
                     <ListItemAvatar>
                         <ProfileDialog
@@ -135,7 +144,7 @@ export default function SimplePost({ post, style, userLocation }: Props) {
                 </ListItem>
                 <Stack
                     spacing={1}
-                    className='px-4 pb-4 cursor-pointer'
+                    className='px-4 cursor-pointer'
                     onClick={toggleDrawer(true)}
                 >
                     {post.title && (
@@ -161,15 +170,35 @@ export default function SimplePost({ post, style, userLocation }: Props) {
                             }))}
                         />
                     </Box>
-
-                    <Stack direction='row' spacing={2}>
-                        <TextsmsOutlinedIcon fontSize='small' />
-                        <FavoriteBorderOutlinedIcon fontSize='small' />
-                        <BarChartOutlinedIcon fontSize='small' />
-                    </Stack>
                 </Stack>
-                <Divider />
-            </Box>
+                <Stack
+                    direction='row'
+                    className='px-2'
+                    justifyContent='space-between'
+                    alignItems='center'
+                >
+                    <MainReaction
+                        negative={post.stats?.negative_reactions || 0}
+                        positive={post.stats?.positive_reactions || 0}
+                        reactionId={post.reaction}
+                        postId={post._id}
+                    />
+                    <div className='flex items-center'>
+                        <Comments
+                            value={post.stats?.comments || 0}
+                            onClick={toggleDrawer(true)}
+                        />
+                    </div>
+                    <div className='flex items-center'>
+                        <Views value={post.stats?.views || 0} />
+                    </div>
+                    <div className='flex items-center'>
+                        <IconButton aria-label='fly-to' size='medium'>
+                            <FlightTakeoffRoundedIcon fontSize='inherit' />
+                        </IconButton>
+                    </div>
+                </Stack>
+            </Card>
 
             <PostDrawer
                 post={post}

@@ -5,6 +5,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import '@fontsource/abeezee';
+import '@fontsource/pacifico';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import ThemeContext from '@/contexts/ThemeContext';
 import { I18nProviderClient } from '@/locales/client';

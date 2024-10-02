@@ -195,7 +195,30 @@
         "caption_optional": "Deskripsi singkat (opsional)",
         "media": "Media",
         "comment": "Komentar",
-        "add_comment": "Tambah Komentar"
+        "add_comment": "Tambah Komentar",
+        "reaction": {
+            "like": "Suka",
+            "love": "Cinta",
+            "care": "Peduli",
+            "haha": "Haha",
+            "wow": "Wow",
+            "thank_you": "Terima Kasih",
+            "clap": "Tepuk Tangan",
+            "support": "Dukung",
+            "insightful": "Bermanfaat",
+            "dislike": "Tidak Suka",
+            "angry": "Marah",
+            "hoax": "Hoaks",
+            "fake_news": "Berita Palsu",
+            "misleading": "Menyesatkan",
+            "report": "Laporkan",
+            "dangerous": "Berbahaya"
+        },
+        "statistic": {
+            "views": "{value} tayangan",
+            "reactions": "{value} reaksi",
+            "comments": "{value} komentar"
+        }
     },
     "chat": {
         "no_chat_nearby": "Tidak ada obrolan di dekat sini!"

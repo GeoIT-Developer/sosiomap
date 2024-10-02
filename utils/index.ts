@@ -246,8 +246,16 @@ export const validateEmail = (email: any) => {
         );
 };
 
-export function getRandomNumber(min: number, max: number): number {
-    return Math.random() * (max - min) + min;
+export function getRandomNumber(
+    min: number,
+    max: number,
+    decimalPlaces?: number,
+): number {
+    const randomNum = Math.random() * (max - min) + min;
+    if (decimalPlaces === undefined) {
+        return randomNum;
+    }
+    return parseFloat(randomNum.toFixed(decimalPlaces));
 }
 
 export async function shareUrl(
