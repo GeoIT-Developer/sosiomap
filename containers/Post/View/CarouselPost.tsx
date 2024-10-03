@@ -110,7 +110,11 @@ export default function CarouselPost({ post, userLocation }: Props) {
                     />
                 </Box>
 
-                <Typography component='p' variant='body2'>
+                <Typography
+                    component='p'
+                    variant='body2'
+                    className='!text-sm whitespace-break-spaces !font-roboto'
+                >
                     {post.body}
                 </Typography>
 

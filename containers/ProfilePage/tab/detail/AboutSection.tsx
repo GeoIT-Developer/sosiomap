@@ -33,7 +33,7 @@ export default function AboutSection() {
             <Box className='w-full'>
                 <Typography
                     variant='body2'
-                    className='break-all !text-sm whitespace-pre'
+                    className='!text-sm whitespace-break-spaces'
                 >
                     {eProfile?.about || t('profile.default_about_section')}
                 </Typography>

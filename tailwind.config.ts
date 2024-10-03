@@ -15,6 +15,7 @@ const config: Config = {
             },
             fontFamily: {
                 pacifico: ['Pacifico', 'cursive'],
+                roboto: ['Roboto', 'Helvetica Neue', 'sans-serif'],
             },
         },
     },

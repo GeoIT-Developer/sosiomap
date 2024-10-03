@@ -100,7 +100,11 @@ export default function StandardPost({ post, userLocation }: Props) {
                     </Typography>
                 )}
 
-                <Typography component='p' variant='body2'>
+                <Typography
+                    component='p'
+                    variant='body2'
+                    className='!text-sm whitespace-break-spaces !font-roboto'
+                >
                     {post.body}
                 </Typography>
 

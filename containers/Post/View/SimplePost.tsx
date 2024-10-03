@@ -161,7 +161,11 @@ export default function SimplePost({
                         </Typography>
                     )}
 
-                    <Typography component='p' variant='body2'>
+                    <Typography
+                        component='p'
+                        variant='body2'
+                        className='!font-roboto'
+                    >
                         {truncateText(post.body, MAX_LENGTH.POST.SIMPLE.BODY)}
                         {post.body.length > MAX_LENGTH.POST.SIMPLE.BODY && (
                             <span
