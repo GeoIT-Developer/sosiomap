@@ -1,5 +1,6 @@
 import { useHistoryContext } from '@/contexts/HistoryContext';
 import { useRouter, useSearchParams } from 'next/navigation';
+import useWideScreen from './useWideScreen';
 
 type QueryParams = Record<string, string>;
 
@@ -17,8 +18,10 @@ function useQueryParams() {
     const searchParams = useSearchParams();
     const history = useHistoryContext();
     const router = useRouter();
+    const isWide = useWideScreen();
 
     const setQueryParams = (params: QueryParams) => {
+        if (isWide) return;
         const currentPath = getCurrentPath(params);
         router.push(currentPath);
     };
@@ -36,6 +39,7 @@ function useQueryParams() {
     };
 
     const removeParam = (key: string) => {
+        if (isWide) return;
         const queryParams = new URLSearchParams(window.location.search);
         queryParams.delete(key);
 
@@ -43,10 +47,8 @@ function useQueryParams() {
         history.onBackFullPath(currentPath);
     };
 
-    const clearParams = (key: string) => {
-        if (searchParams.get(key)) {
-            history.onBackClose();
-        }
+    const clearParams = () => {
+        history.onBackClose();
     };
 
     return {

@@ -14,7 +14,13 @@ import BasemapDrawer from '@/components/map/BasemapDrawer';
 import SearchIcon from '@mui/icons-material/Search';
 import { toast } from 'react-toastify';
 import MyImage from '@/components/preview/MyImage';
-import { ASSETS, LOCAL_STORAGE, QUERY, ROUTE } from '@/utils/constant';
+import {
+    ASSETS,
+    LOCAL_STORAGE,
+    POPUP_PARAMS,
+    QUERY,
+    ROUTE,
+} from '@/utils/constant';
 import { useEffect, useState } from 'react';
 import { useMapLibreContext } from '@/contexts/MapLibreContext';
 import { getLngLat, getMapLibreCoordinate, truncateText } from '@/utils/helper';
@@ -170,17 +176,20 @@ export default function HomePage({ show = true }: { show?: boolean }) {
             setOpenDrawer(open);
             if (open) {
                 if (post?._id) {
-                    queryParams.addParam('post-id', post._id);
+                    queryParams.addParam(
+                        POPUP_PARAMS.POST_DETAIL.KEY,
+                        post._id,
+                    );
                 }
             } else {
-                queryParams.clearParams('post-id');
+                queryParams.removeParam(POPUP_PARAMS.POST_DETAIL.KEY);
             }
         };
 
     useEffect(() => {
         if (!openDrawer) return;
         const postId = selectedPost._id;
-        const postIdParams = searchParams.get('post-id');
+        const postIdParams = searchParams.get(POPUP_PARAMS.POST_DETAIL.KEY);
         if (postIdParams !== postId) {
             setOpenDrawer(false);
         }

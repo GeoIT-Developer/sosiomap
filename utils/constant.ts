@@ -177,6 +177,10 @@ export const POPUP_PARAMS = {
         KEY: 'dialog',
         VALUE: 'open',
     },
+    POST_DETAIL: {
+        KEY: 'post-id',
+        VALUE: 'id',
+    },
 };
 
 export const MAX_LENGTH = {

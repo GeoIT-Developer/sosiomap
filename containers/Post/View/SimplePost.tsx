@@ -30,7 +30,7 @@ import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
 import MainReaction from '../Action/MainReaction';
 import Views from '../Action/Views';
 import Comments from '../Action/Comments';
-import { MAX_LENGTH } from '@/utils/constant';
+import { MAX_LENGTH, POPUP_PARAMS } from '@/utils/constant';
 import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
 
 export const SIMPLE_POST_HEIGHT = 233; //pixel
@@ -69,16 +69,16 @@ export default function SimplePost({
             }
             setOpenDrawer(open);
             if (open) {
-                queryParams.addParam('post-id', post._id);
+                queryParams.addParam(POPUP_PARAMS.POST_DETAIL.KEY, post._id);
             } else {
-                queryParams.clearParams('post-id');
+                queryParams.removeParam(POPUP_PARAMS.POST_DETAIL.KEY);
             }
         };
 
     useEffect(() => {
         if (!openDrawer) return;
         const postId = post._id;
-        const postIdParams = searchParams.get('post-id');
+        const postIdParams = searchParams.get(POPUP_PARAMS.POST_DETAIL.KEY);
         if (postIdParams !== postId) {
             setOpenDrawer(false);
         }
