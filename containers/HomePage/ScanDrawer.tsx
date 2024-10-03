@@ -2,7 +2,9 @@ import { Box, Fab, Stack, Zoom } from '@mui/material';
 import { useI18n } from '@/locales/client';
 import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interface';
 import { MyLocation } from '@/hooks/useGeolocation';
-import CommonDrawer from '@/components/drawer/CommonDrawer';
+import CommonDrawer, {
+    useCommonDrawer,
+} from '@/components/drawer/CommonDrawer';
 import SimplePost from '../Post/View/SimplePost';
 import SensorsIcon from '@mui/icons-material/Sensors';
 import { useState } from 'react';
@@ -25,19 +27,7 @@ export default function ScanDrawer({ userLocation, posts }: Props) {
         [],
     );
 
-    const [openDrawer, setOpenDrawer] = useState(false);
-    const toggleDrawer =
-        (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-            if (
-                event &&
-                event.type === 'keydown' &&
-                ((event as React.KeyboardEvent).key === 'Tab' ||
-                    (event as React.KeyboardEvent).key === 'Shift')
-            ) {
-                return;
-            }
-            setOpenDrawer(open);
-        };
+    const { openDrawer, toggleDrawer } = useCommonDrawer();
 
     function onClickScan(e: any) {
         if (!myMap) return;
@@ -83,6 +73,7 @@ export default function ScanDrawer({ userLocation, posts }: Props) {
                 toggleDrawer={toggleDrawer}
                 title={t('post.nearby_post')}
                 keepMounted={false}
+                transparent
             >
                 <Stack spacing={2} className='max-h-[50vh] max-w-md'>
                     {listScanData.map((post) => (

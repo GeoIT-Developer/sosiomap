@@ -53,6 +53,7 @@ import useQueryParams from '@/hooks/useQueryParams';
 import HomeSpeedDial from './HomeSpeedDial';
 import useVisibilityChange from '@/hooks/useVisibilityChange';
 import useRefresh from '@/hooks/useRefresh';
+import { useCommonDrawer } from '@/components/drawer/CommonDrawer';
 
 export default function HomePage({ show = true }: { show?: boolean }) {
     const t = useI18n();
@@ -161,7 +162,9 @@ export default function HomePage({ show = true }: { show?: boolean }) {
     const [selectedPost, setSelectedPost] = useState<MapPostDataInterface>(
         {} as MapPostDataInterface,
     );
-    const [openDrawer, setOpenDrawer] = useState(false);
+
+    const { openDrawer, setOpenDrawer } = useCommonDrawer();
+
     const toggleDrawer =
         (open: boolean, post?: MapPostDataInterface) =>
         (event: React.KeyboardEvent | React.MouseEvent) => {

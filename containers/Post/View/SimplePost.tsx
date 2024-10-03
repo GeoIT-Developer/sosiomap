@@ -19,7 +19,7 @@ import {
 } from '@/utils/helper';
 import { MyLocation } from '@/hooks/useGeolocation';
 import ImageVideoSimple from './ImageVideoSimple';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import PostDrawer from './PostDrawer';
 import useQueryParams from '@/hooks/useQueryParams';
 import { useSearchParams } from 'next/navigation';
@@ -32,6 +32,7 @@ import Views from '../Action/Views';
 import Comments from '../Action/Comments';
 import { MAX_LENGTH, POPUP_PARAMS } from '@/utils/constant';
 import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
+import { useCommonDrawer } from '@/components/drawer/CommonDrawer';
 
 export const SIMPLE_POST_HEIGHT = 233; //pixel
 
@@ -49,31 +50,22 @@ export default function SimplePost({
     onChangeStats,
 }: Props) {
     const t = useI18n();
-    const [openDrawer, setOpenDrawer] = useState(false);
+    const { openDrawer, setOpenDrawer, toggleDrawer, refCallbackOpenDrawer } =
+        useCommonDrawer();
 
     const queryParams = useQueryParams();
     const searchParams = useSearchParams();
 
-    const toggleDrawer =
-        (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-            if (event) {
-                event.stopPropagation();
-            }
-            if (
-                event &&
-                event.type === 'keydown' &&
-                ((event as React.KeyboardEvent).key === 'Tab' ||
-                    (event as React.KeyboardEvent).key === 'Shift')
-            ) {
-                return;
-            }
-            setOpenDrawer(open);
+    useEffect(() => {
+        function onOpenDrawer(open: boolean) {
             if (open) {
                 queryParams.addParam(POPUP_PARAMS.POST_DETAIL.KEY, post._id);
             } else {
                 queryParams.removeParam(POPUP_PARAMS.POST_DETAIL.KEY);
             }
-        };
+        }
+        refCallbackOpenDrawer.current = onOpenDrawer;
+    }, []);
 
     useEffect(() => {
         if (!openDrawer) return;

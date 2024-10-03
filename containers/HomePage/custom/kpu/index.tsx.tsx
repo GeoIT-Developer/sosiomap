@@ -6,7 +6,9 @@ import useAPI from '@/hooks/useAPI';
 import { ObjectLiteral } from '@/types/object-literal.interface';
 import API_VENDOR, { ParamsKPUType } from '@/configs/api.vendor';
 import MapLibreGL, { MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
-import CommonDrawer from '@/components/drawer/CommonDrawer';
+import CommonDrawer, {
+    useCommonDrawer,
+} from '@/components/drawer/CommonDrawer';
 import useWideScreen from '@/hooks/useWideScreen';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import {
@@ -84,19 +86,7 @@ export default function KPULayer() {
         },
     );
 
-    const [openDrawer, setOpenDrawer] = useState(false);
-    const toggleDrawer =
-        (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-            if (
-                event &&
-                event.type === 'keydown' &&
-                ((event as React.KeyboardEvent).key === 'Tab' ||
-                    (event as React.KeyboardEvent).key === 'Shift')
-            ) {
-                return;
-            }
-            setOpenDrawer(open);
-        };
+    const { openDrawer, toggleDrawer } = useCommonDrawer();
 
     useEffect(() => {
         const dprTopic = activeTopic.find((item) => item === 'dpr');

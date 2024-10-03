@@ -1,4 +1,4 @@
-import { Fragment, ReactElement, cloneElement, useState } from 'react';
+import { Fragment, ReactElement, cloneElement } from 'react';
 import {
     Box,
     Divider,
@@ -14,7 +14,7 @@ import { ASSETS } from '@/utils/constant';
 import { useScopedI18n } from '@/locales/client';
 import { capitalizeWords } from '@/utils/helper';
 import useWideScreen from '@/hooks/useWideScreen';
-import CommonDrawer from '../drawer/CommonDrawer';
+import CommonDrawer, { useCommonDrawer } from '../drawer/CommonDrawer';
 
 const defaultButton = (
     <Fab color='default' aria-label='basemaps' size='small'>
@@ -27,24 +27,10 @@ export default function BasemapDrawer({
 }: {
     menuButton?: ReactElement;
 }) {
-    const [openDrawer, setOpenDrawer] = useState(false);
     const { basemap, setBasemap } = useBasemapContext();
     const t = useScopedI18n('map');
     const isWide = useWideScreen();
-
-    const toggleDrawer =
-        (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-            if (
-                event &&
-                event.type === 'keydown' &&
-                ((event as React.KeyboardEvent).key === 'Tab' ||
-                    (event as React.KeyboardEvent).key === 'Shift')
-            ) {
-                return;
-            }
-
-            setOpenDrawer(open);
-        };
+    const { openDrawer, toggleDrawer } = useCommonDrawer();
 
     const clonedButton = cloneElement(menuButton, {
         onClick: toggleDrawer(true),
