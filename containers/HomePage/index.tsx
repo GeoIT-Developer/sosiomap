@@ -173,7 +173,7 @@ export default function HomePage({ show = true }: { show?: boolean }) {
                     queryParams.addParam('post-id', post._id);
                 }
             } else {
-                queryParams.clearParams();
+                queryParams.clearParams('post-id');
             }
         };
 

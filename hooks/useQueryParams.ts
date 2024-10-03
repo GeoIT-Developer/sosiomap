@@ -43,8 +43,10 @@ function useQueryParams() {
         history.onBackFullPath(currentPath);
     };
 
-    const clearParams = () => {
-        history.onBackClose();
+    const clearParams = (key: string) => {
+        if (searchParams.get(key)) {
+            history.onBackClose();
+        }
     };
 
     return {

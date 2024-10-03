@@ -84,7 +84,7 @@ export default function ScanDrawer({ userLocation, posts }: Props) {
                 title={t('post.nearby_post')}
                 keepMounted={false}
             >
-                <Stack spacing={2} className='max-h-[50vh] max-w-lg'>
+                <Stack spacing={2} className='max-h-[50vh] max-w-md'>
                     {listScanData.map((post) => (
                         <Box key={post._id}>
                             <SimplePost

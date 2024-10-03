@@ -71,7 +71,7 @@ export default function SimplePost({
             if (open) {
                 queryParams.addParam('post-id', post._id);
             } else {
-                queryParams.clearParams();
+                queryParams.clearParams('post-id');
             }
         };
 

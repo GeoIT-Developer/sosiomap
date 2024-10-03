@@ -88,6 +88,8 @@ const API = {
             },
         }),
 
+    getPublicPostById: (post_id: string) => HOST.get(`posts/${post_id}`),
+
     postReact: ({
         post_id,
         reaction,
