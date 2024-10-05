@@ -42,13 +42,26 @@ export const INITIAL_MAP = {
 };
 
 export const LAYER_SRC = {
-    ADMIN: 'src-admin',
-    ADMIN_CENTROID: 'src-admin-centroid',
+    SELECTED_PT: 'src-selected-pt',
+    SELECTED_LN: 'src-selected-ln',
+    SELECTED_PL: 'src-selected-pl',
+
+    POST_PT: 'src-post-pt',
+    POST_LN: 'src-post-ln',
+    POST_PL: 'src-post-pl',
 };
 
 export const LAYER_ID = {
-    ADMIN_PL: 'layer-admin-pl',
-    ADMIN_LN: 'layer-admin-ln',
-    ADMIN_SYMBOL: 'layer-admin-symbol',
-    ADMIN_PT: 'layer-admin-pt',
+    SELECTED_PT: 'layer-selected-pt',
+    SELECTED_LN: 'layer-selected-ln',
+    SELECTED_PL: 'layer-selected-pl',
+
+    POST_PT: 'layer-post-pt',
+    POST_LABEL: 'layer-post-label',
+    POST_LN: 'layer-post-ln',
+    POST_PL: 'layer-post-pl',
+};
+
+export const LAYER_IMG = {
+    SELECTED_PT: 'img-selected-pt',
 };

@@ -221,7 +221,9 @@
             "views": "{value} tayangan",
             "reactions": "{value} reaksi",
             "comments": "{value} komentar"
-        }
+        },
+        "fly_to": "Terbang Ke",
+        "no_post_found": "Postingan tidak ditemukan!"
     },
     "chat": {
         "no_chat_nearby": "Tidak ada obrolan di dekat sini!"

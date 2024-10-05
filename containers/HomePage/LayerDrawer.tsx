@@ -6,9 +6,9 @@ import CommonDrawer, {
     useCommonDrawer,
 } from '@/components/drawer/CommonDrawer';
 import { useScopedI18n } from '@/locales/client';
-import { useActiveTopicContext } from '../AppPage';
 import { useWideScreenContext } from '@/contexts/ResponsiveContext';
 import React from 'react';
+import { useActiveTopicContext } from '../AppPage/PageContext';
 
 const defaultButton = (
     <Fab color='default' aria-label='layers' size='small'>

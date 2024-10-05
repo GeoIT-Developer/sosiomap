@@ -23,6 +23,7 @@ import 'react-virtualized/styles.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ResponsiveProvider from '@/contexts/ResponsiveContext';
+import HashRouterProvider from '@/contexts/HashRouterContext';
 
 const HEAD = {
     TITLE: 'SosioMap',
@@ -94,12 +95,14 @@ export default function RootLayout({
                     <I18nProviderClient locale={locale}>
                         <NextAuthProvider>
                             <ThemeContext>
-                                <HistoryProvider>
-                                    <ResponsiveProvider>
-                                        {children}
-                                        <ToastContainer />
-                                    </ResponsiveProvider>
-                                </HistoryProvider>
+                                <HashRouterProvider>
+                                    <HistoryProvider>
+                                        <ResponsiveProvider>
+                                            {children}
+                                            <ToastContainer autoClose={2500} />
+                                        </ResponsiveProvider>
+                                    </HistoryProvider>
+                                </HashRouterProvider>
                             </ThemeContext>
                         </NextAuthProvider>
                     </I18nProviderClient>

@@ -1,7 +1,6 @@
 import {
     Box,
     Card,
-    IconButton,
     ListItem,
     ListItemAvatar,
     ListItemText,
@@ -22,10 +21,8 @@ import ImageVideoSimple from './ImageVideoSimple';
 import { useEffect } from 'react';
 import PostDrawer from './PostDrawer';
 import useQueryParams from '@/hooks/useQueryParams';
-import { useSearchParams } from 'next/navigation';
 import MyAvatar from '@/components/preview/MyAvatar';
 import ProfileDialog from '@/containers/ProfilePage/shared/ProfileDialog';
-import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
 
 import MainReaction from '../Action/MainReaction';
 import Views from '../Action/Views';
@@ -34,6 +31,7 @@ import { MAX_LENGTH, POPUP_PARAMS } from '@/utils/constant';
 import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
 import { useCommonDrawer } from '@/components/drawer/CommonDrawer';
 import React from 'react';
+import FlyTo from '../Action/FlyTo';
 
 export const SIMPLE_POST_HEIGHT = 233; //pixel
 
@@ -54,8 +52,7 @@ export default function SimplePost({
     const { openDrawer, setOpenDrawer, toggleDrawer, refCallbackOpenDrawer } =
         useCommonDrawer();
 
-    const queryParams = useQueryParams();
-    const searchParams = useSearchParams();
+    const { searchParams, ...queryParams } = useQueryParams();
 
     function onOpenDrawer(open: boolean) {
         if (open) {
@@ -209,9 +206,7 @@ export default function SimplePost({
                         <Views value={post.stats?.views || 0} />
                     </div>
                     <div className='flex items-center'>
-                        <IconButton aria-label='fly-to' size='medium'>
-                            <FlightTakeoffRoundedIcon fontSize='inherit' />
-                        </IconButton>
+                        <FlyTo post={post} />
                     </div>
                 </Stack>
             </Card>

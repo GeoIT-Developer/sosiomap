@@ -47,8 +47,21 @@ function useQueryParams() {
         history.onBackFullPath(currentPath);
     };
 
-    const clearParams = () => {
-        history.onBackClose();
+    const clearParams = (type: 'replace' | 'push' | 'back') => {
+        const currentPath = getCurrentPath({});
+        switch (type) {
+            case 'back':
+                history.onBackClose();
+                break;
+            case 'replace':
+                router.replace(currentPath);
+                break;
+            case 'push':
+                router.push(currentPath);
+                break;
+            default:
+                history.onBackClose();
+        }
     };
 
     return {

@@ -158,6 +158,7 @@ export const QUERY = {
     LON: 'lon',
     LAT: 'lat',
     TOPIC: 'topic',
+    FLY_TO: 'fly-to',
 };
 
 export const POPUP_PARAMS = {

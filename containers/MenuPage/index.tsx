@@ -17,7 +17,7 @@ import { TopicType, useMainTopic, usePemiluTopic } from '@/hooks/useTopic';
 import { useI18n } from '@/locales/client';
 import { toast } from 'react-toastify';
 import MyImage from '@/components/preview/MyImage';
-import { useActiveTopicContext } from '../AppPage';
+import { useActiveTopicContext } from '../AppPage/PageContext';
 
 const PEMILU_ASSEST = '/img/pemilu';
 

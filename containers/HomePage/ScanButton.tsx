@@ -39,7 +39,7 @@ export default function ScanButton({ posts, onChangeListScan }: Props) {
             onChangeListScan(true, filteredData);
         } else {
             onChangeListScan(false, []);
-            toast.error(t('message.error.no_post_found_in_your_area'), {
+            toast.info(t('message.error.no_post_found_in_your_area'), {
                 theme: 'colored',
             });
         }

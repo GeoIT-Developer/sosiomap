@@ -221,7 +221,9 @@
             "views": "{value} views",
             "reactions": "{value} reactions",
             "comments": "{value} comments"
-        }
+        },
+        "fly_to": "Fly To",
+        "no_post_found": "No posts found!"
     },
     "chat": {
         "no_chat_nearby": "No nearby chats!"

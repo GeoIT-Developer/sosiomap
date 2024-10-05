@@ -15,11 +15,11 @@ import {
     changeImgSrc,
     getDapilFromString,
 } from '@/utils/kpu-helper';
-import { useActiveTopicContext } from '@/containers/AppPage';
 import { getLastCharFromString, getMapLibreCoordinate } from '@/utils/helper';
 import { createRoot } from 'react-dom/client';
 import React from 'react';
 import { useWideScreenContext } from '@/contexts/ResponsiveContext';
+import { useActiveTopicContext } from '@/containers/AppPage/PageContext';
 
 const columns: GridColDef[] = [
     {

@@ -14,6 +14,11 @@ import Slider from 'react-slick';
 import ScanButton from './ScanButton';
 import SimplePost from '../Post/View/SimplePost';
 import { useWideScreenContext } from '@/contexts/ResponsiveContext';
+import { useMapLibreContext } from '@/contexts/MapLibreContext';
+import {
+    hideSelectedPoint,
+    showSelectedPoint,
+} from '@/components/map/hooks/useMapSelected';
 
 function SliderArrow(props: any) {
     const { className, style, onClick } = props;
@@ -54,10 +59,11 @@ export default function HomeSpeedDial({
 }: Props) {
     const [openDial, setOpenDial] = useState(false);
     const isWide = useWideScreenContext();
-    const [showScanner, setShowScanner] = useState(false);
+    const [showScanner, setShowScanner] = useState<boolean>();
     const [listScanData, setListScanData] = useState<MapPostDataInterface[]>(
         [],
     );
+    const { myMap } = useMapLibreContext();
 
     const handleClickDial = () => {
         setOpenDial((oldState) => !oldState);
@@ -69,10 +75,40 @@ export default function HomeSpeedDial({
         }
     }, [activeParent]);
 
+    function handlePostScan(post: MapPostDataInterface) {
+        if (!myMap) return;
+        if (!post) return;
+        const lon = post.location.coordinates[0];
+        const lat = post.location.coordinates[1];
+        myMap.flyTo({
+            center: [lon, lat],
+            essential: true,
+            speed: 0.85,
+        });
+        showSelectedPoint(myMap, lon, lat);
+    }
+
     function onChangeListScan(show: boolean, list: MapPostDataInterface[]) {
         setShowScanner(show);
         setListScanData(list);
+        if (list.length > 0 && show) {
+            if (!myMap) return;
+            const post = list[0];
+            handlePostScan(post);
+        }
     }
+
+    function onSwipeSlider(_currentSlide: number, nextSlide: number) {
+        if (!myMap) return;
+        const post = listScanData[nextSlide];
+        handlePostScan(post);
+    }
+
+    useEffect(() => {
+        if (showScanner === false) {
+            hideSelectedPoint(myMap);
+        }
+    }, [showScanner]);
 
     return (
         <>
@@ -131,6 +167,7 @@ export default function HomeSpeedDial({
                             <KeyboardArrowDownIcon />
                         </MainFab>
                         <Slider
+                            infinite={false}
                             speed={500}
                             slidesToShow={isWide ? 2 : 1}
                             slidesToScroll={1}
@@ -140,6 +177,7 @@ export default function HomeSpeedDial({
                             className='center'
                             nextArrow={<SliderArrow />}
                             prevArrow={<SliderArrow />}
+                            beforeChange={onSwipeSlider}
                         >
                             {listScanData.map((item) => {
                                 return (
