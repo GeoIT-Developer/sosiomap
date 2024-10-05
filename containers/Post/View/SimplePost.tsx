@@ -1,6 +1,6 @@
 import {
     Box,
-    Divider,
+    Card,
     ListItem,
     ListItemAvatar,
     ListItemText,
@@ -14,18 +14,24 @@ import {
     formatDateTime,
     formatDistance,
     getMimeTypeFromURL,
+    truncateText,
 } from '@/utils/helper';
 import { MyLocation } from '@/hooks/useGeolocation';
-import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import ImageVideoSimple from './ImageVideoSimple';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import PostDrawer from './PostDrawer';
 import useQueryParams from '@/hooks/useQueryParams';
-import { useSearchParams } from 'next/navigation';
 import MyAvatar from '@/components/preview/MyAvatar';
 import ProfileDialog from '@/containers/ProfilePage/shared/ProfileDialog';
+
+import MainReaction from '../Action/MainReaction';
+import Views from '../Action/Views';
+import Comments from '../Action/Comments';
+import { MAX_LENGTH, POPUP_PARAMS } from '@/utils/constant';
+import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
+import { useCommonDrawer } from '@/components/drawer/CommonDrawer';
+import React from 'react';
+import FlyTo from '../Action/FlyTo';
 
 export const SIMPLE_POST_HEIGHT = 233; //pixel
 
@@ -33,40 +39,34 @@ type Props = {
     post: MapPostDataInterface;
     style?: React.CSSProperties;
     userLocation: MyLocation | null;
+    onChangeStats?: (stats: PostStatInterface, reactionId: string) => void;
 };
 
-export default function SimplePost({ post, style, userLocation }: Props) {
+export default function SimplePost({
+    post,
+    style,
+    userLocation,
+    onChangeStats,
+}: Props) {
     const t = useI18n();
-    const [openDrawer, setOpenDrawer] = useState(false);
+    const { openDrawer, setOpenDrawer, toggleDrawer, refCallbackOpenDrawer } =
+        useCommonDrawer();
 
-    const queryParams = useQueryParams();
-    const searchParams = useSearchParams();
+    const { searchParams, ...queryParams } = useQueryParams();
 
-    const toggleDrawer =
-        (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-            if (event) {
-                event.stopPropagation();
-            }
-            if (
-                event &&
-                event.type === 'keydown' &&
-                ((event as React.KeyboardEvent).key === 'Tab' ||
-                    (event as React.KeyboardEvent).key === 'Shift')
-            ) {
-                return;
-            }
-            setOpenDrawer(open);
-            if (open) {
-                queryParams.addParam('post-id', post._id);
-            } else {
-                queryParams.clearParams();
-            }
-        };
+    function onOpenDrawer(open: boolean) {
+        if (open) {
+            queryParams.addParam(POPUP_PARAMS.POST_DETAIL.KEY, post._id);
+        } else {
+            queryParams.removeParam(POPUP_PARAMS.POST_DETAIL.KEY);
+        }
+    }
+    refCallbackOpenDrawer.current = onOpenDrawer;
 
     useEffect(() => {
         if (!openDrawer) return;
         const postId = post._id;
-        const postIdParams = searchParams.get('post-id');
+        const postIdParams = searchParams.get(POPUP_PARAMS.POST_DETAIL.KEY);
         if (postIdParams !== postId) {
             setOpenDrawer(false);
         }
@@ -74,7 +74,13 @@ export default function SimplePost({ post, style, userLocation }: Props) {
 
     return (
         <>
-            <Box style={style}>
+            <Card
+                style={style}
+                className='my-1'
+                variant='elevation'
+                elevation={5}
+                sx={{ borderRadius: '8px' }}
+            >
                 <ListItem>
                     <ListItemAvatar>
                         <ProfileDialog
@@ -135,7 +141,7 @@ export default function SimplePost({ post, style, userLocation }: Props) {
                 </ListItem>
                 <Stack
                     spacing={1}
-                    className='px-4 pb-4 cursor-pointer'
+                    className='px-4 cursor-pointer'
                     onClick={toggleDrawer(true)}
                 >
                     {post.title && (
@@ -144,12 +150,27 @@ export default function SimplePost({ post, style, userLocation }: Props) {
                             variant='body1'
                             className='block break-all whitespace-pre-line'
                         >
-                            {post.title}
+                            {truncateText(
+                                post.title,
+                                MAX_LENGTH.POST.SIMPLE.TITLE,
+                            )}
                         </Typography>
                     )}
 
-                    <Typography component='p' variant='body2'>
-                        {post.body}
+                    <Typography
+                        component='p'
+                        variant='body2'
+                        className='!font-roboto'
+                    >
+                        {truncateText(post.body, MAX_LENGTH.POST.SIMPLE.BODY)}
+                        {post.body.length > MAX_LENGTH.POST.SIMPLE.BODY && (
+                            <span
+                                onClick={toggleDrawer(true)}
+                                className='ml-2 text-primary hover:underline'
+                            >
+                                View More
+                            </span>
+                        )}
                     </Typography>
 
                     <Box>
@@ -161,15 +182,34 @@ export default function SimplePost({ post, style, userLocation }: Props) {
                             }))}
                         />
                     </Box>
-
-                    <Stack direction='row' spacing={2}>
-                        <TextsmsOutlinedIcon fontSize='small' />
-                        <FavoriteBorderOutlinedIcon fontSize='small' />
-                        <BarChartOutlinedIcon fontSize='small' />
-                    </Stack>
                 </Stack>
-                <Divider />
-            </Box>
+                <Stack
+                    direction='row'
+                    className='px-2'
+                    justifyContent='space-between'
+                    alignItems='center'
+                >
+                    <MainReaction
+                        negative={post.stats?.negative_reactions || 0}
+                        positive={post.stats?.positive_reactions || 0}
+                        reactionId={post.reaction}
+                        postId={post._id}
+                        onChangeStats={onChangeStats}
+                    />
+                    <div className='flex items-center'>
+                        <Comments
+                            value={post.stats?.comments || 0}
+                            onClick={toggleDrawer(true)}
+                        />
+                    </div>
+                    <div className='flex items-center'>
+                        <Views value={post.stats?.views || 0} />
+                    </div>
+                    <div className='flex items-center'>
+                        <FlyTo post={post} />
+                    </div>
+                </Stack>
+            </Card>
 
             <PostDrawer
                 post={post}

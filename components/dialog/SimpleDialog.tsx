@@ -47,7 +47,10 @@ export default function SimpleDialog({
     };
 
     const clonedButton = cloneElement(triggerButton, {
-        onClick: () => setOpen(true),
+        onClick: (e: Event) => {
+            e.stopPropagation();
+            setOpen(true);
+        },
     });
 
     useEffect(() => {

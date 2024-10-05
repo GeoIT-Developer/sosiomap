@@ -1,4 +1,4 @@
-import { Paper } from '@mui/material';
+import { Box, CircularProgress, Paper } from '@mui/material';
 import PageAppBar from './PageAppBar';
 import useWindowHeight from '@/hooks/useWindowHeight';
 import usePageLoaded from '@/hooks/usePageLoaded';
@@ -12,7 +12,11 @@ import { MyLocation } from '@/hooks/useGeolocation';
 import { LOCAL_STORAGE } from '@/utils/constant';
 import ExploreWindow from './ExploreWindow';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import { useActiveTopicContext } from '../AppPage';
+import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
+import { ReactionEnum } from '@/types/reaction.enum';
+import { useActiveTopicContext } from '../AppPage/PageContext';
+import MainFab from '@/components/button/MainFab';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 export default function ExplorePage({ show = true }: { show?: boolean }) {
     const { fragmentHeightStyle } = useWindowHeight();
@@ -58,6 +62,18 @@ export default function ExplorePage({ show = true }: { show?: boolean }) {
         return null;
     }
 
+    function onChangeStat(stats: PostStatInterface, reactionId: string) {
+        const newList = [...listMapPost];
+        const findIndex = newList.findIndex(
+            (item) => item._id === stats.post_id,
+        );
+        if (findIndex !== -1) {
+            newList[findIndex].stats = stats;
+            newList[findIndex].reaction = reactionId as ReactionEnum;
+            setListMapPost(newList);
+        }
+    }
+
     return (
         <div className={show ? '' : 'hidden'}>
             <PageAppBar />
@@ -65,9 +81,25 @@ export default function ExplorePage({ show = true }: { show?: boolean }) {
                 className='overflow-y-auto !rounded-none'
                 style={{ height: fragmentHeightStyle }}
             >
+                <Box className='relative'>
+                    <MainFab
+                        size='small'
+                        aria-label='refresh'
+                        className='!absolute top-1 right-1'
+                        onClick={refreshMapPost}
+                    >
+                        {apiQueryPost.loading ? (
+                            <CircularProgress size={24} />
+                        ) : (
+                            <RefreshIcon />
+                        )}
+                    </MainFab>
+                </Box>
                 <ExploreWindow
                     posts={listMapPost || []}
                     userLocation={locationStorage}
+                    onChangeStats={onChangeStat}
+                    isLoading={apiQueryPost.loading}
                 />
             </Paper>
         </div>

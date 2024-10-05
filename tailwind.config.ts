@@ -13,6 +13,10 @@ const config: Config = {
                 primary: '#cc0004',
                 secondary: '#f5a200',
             },
+            fontFamily: {
+                pacifico: ['Pacifico', 'cursive'],
+                roboto: ['Roboto', 'Helvetica Neue', 'sans-serif'],
+            },
         },
     },
     plugins: [],

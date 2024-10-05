@@ -6,17 +6,20 @@ import useAPI from '@/hooks/useAPI';
 import { ObjectLiteral } from '@/types/object-literal.interface';
 import API_VENDOR, { ParamsKPUType } from '@/configs/api.vendor';
 import MapLibreGL, { MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
-import CommonDrawer from '@/components/drawer/CommonDrawer';
-import useWideScreen from '@/hooks/useWideScreen';
+import CommonDrawer, {
+    useCommonDrawer,
+} from '@/components/drawer/CommonDrawer';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import {
     addBaseUrlToFormAction,
     changeImgSrc,
     getDapilFromString,
 } from '@/utils/kpu-helper';
-import { useActiveTopicContext } from '@/containers/AppPage';
 import { getLastCharFromString, getMapLibreCoordinate } from '@/utils/helper';
 import { createRoot } from 'react-dom/client';
+import React from 'react';
+import { useWideScreenContext } from '@/contexts/ResponsiveContext';
+import { useActiveTopicContext } from '@/containers/AppPage/PageContext';
 
 const columns: GridColDef[] = [
     {
@@ -58,7 +61,7 @@ const columns: GridColDef[] = [
 export default function KPULayer() {
     const { myMap } = useMapLibreContext();
     const { activeTopic } = useActiveTopicContext();
-    const isWide = useWideScreen();
+    const isWide = useWideScreenContext();
 
     const [drawerTitle, setDrawerTitle] = useState('');
     const [listData, setListData] = useState<{ id: string; body: string[] }[]>(
@@ -84,19 +87,7 @@ export default function KPULayer() {
         },
     );
 
-    const [openDrawer, setOpenDrawer] = useState(false);
-    const toggleDrawer =
-        (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-            if (
-                event &&
-                event.type === 'keydown' &&
-                ((event as React.KeyboardEvent).key === 'Tab' ||
-                    (event as React.KeyboardEvent).key === 'Shift')
-            ) {
-                return;
-            }
-            setOpenDrawer(open);
-        };
+    const { openDrawer, toggleDrawer } = useCommonDrawer();
 
     useEffect(() => {
         const dprTopic = activeTopic.find((item) => item === 'dpr');

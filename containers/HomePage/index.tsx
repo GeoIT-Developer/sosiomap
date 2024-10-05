@@ -13,14 +13,18 @@ import {
 import BasemapDrawer from '@/components/map/BasemapDrawer';
 import SearchIcon from '@mui/icons-material/Search';
 import { toast } from 'react-toastify';
-import NewPostDialog from './NewPostDialog';
 import MyImage from '@/components/preview/MyImage';
-import { ASSETS, LOCAL_STORAGE, QUERY, ROUTE } from '@/utils/constant';
-import { useEffect, useState } from 'react';
+import {
+    ASSETS,
+    LOCAL_STORAGE,
+    POPUP_PARAMS,
+    QUERY,
+    ROUTE,
+} from '@/utils/constant';
+import React, { useEffect, useState } from 'react';
 import { useMapLibreContext } from '@/contexts/MapLibreContext';
-import { getLngLat, getMapLibreCoordinate, truncateText } from '@/utils/helper';
+import { getLngLat } from '@/utils/helper';
 import { useI18n } from '@/locales/client';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { TopicType } from '@/hooks/useTopic';
 import ChooseLocationEnum from '@/types/choose-location.enum';
 import LayerDrawer from './LayerDrawer';
@@ -39,20 +43,25 @@ import {
     SearchOSMInterface,
 } from '@/types/api/responses/search-osm.interface';
 import { getValObject } from '@/utils';
-import MapLibreGL, { MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
 import PostDrawer from '../Post/View/PostDrawer';
-import ScanDrawer from './ScanDrawer';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import KPULayer from './custom/kpu/index.tsx';
-import { useActiveTopicContext } from '../AppPage';
-import NewStoryButton from './NewStoryButton';
+import KPULayer from './custom/kpu';
 import useQueryParams from '@/hooks/useQueryParams';
+import HomeSpeedDial from './HomeSpeedDial';
+import useVisibilityChange from '@/hooks/useVisibilityChange';
+import useRefresh from '@/hooks/useRefresh';
+import { useCommonDrawer } from '@/components/drawer/CommonDrawer';
+import { useActiveTopicContext } from '../AppPage/PageContext';
+import useMapPost from '@/components/map/hooks/useMapPost';
+import useMapSelected, {
+    hideSelectedPoint,
+    showSelectedPoint,
+} from '@/components/map/hooks/useMapSelected';
 
 export default function HomePage({ show = true }: { show?: boolean }) {
     const t = useI18n();
-    const router = useRouter();
     const [showMarker, setShowMarker] = useState(false);
-    const { myMap } = useMapLibreContext();
+    const { myMap, mapStatus } = useMapLibreContext();
     const [center, setCenter] = useState({ lng: 0, lat: 0 });
     const [selectedTopic, setSelectedTopic] = useState<TopicType | null>(null);
     const { activeTopicType } = useActiveTopicContext();
@@ -66,9 +75,10 @@ export default function HomePage({ show = true }: { show?: boolean }) {
     );
     const [searchTxt, setSearchTxt] = useTermDebounce('', 850);
     const [inputSearch, setInputSearch] = useState('');
+    const [refresh, setRefresh] = useRefresh();
 
-    const queryParams = useQueryParams();
-    const searchParams = useSearchParams();
+    useVisibilityChange('always', () => setRefresh());
+    const { searchParams, ...queryParams } = useQueryParams();
 
     const { list: listOptions, ...apiSearchOSM } = useAPI<
         SearchOSMInterface,
@@ -121,18 +131,18 @@ export default function HomePage({ show = true }: { show?: boolean }) {
 
     function onClickOKMarker() {
         setShowMarker(false);
-        router.push(
-            `${ROUTE.POST.NEW.URL}?${QUERY.LOCATION}=${ChooseLocationEnum.CHOOSE_ON_MAP}&${QUERY.LON}=${center.lng}&${QUERY.LAT}=${center.lat}&${QUERY.TOPIC}=${selectedTopic?.id}`,
-        );
+        const theURL = `${ROUTE.POST.NEW.URL}?${QUERY.LOCATION}=${ChooseLocationEnum.CHOOSE_ON_MAP}&${QUERY.LON}=${center.lng}&${QUERY.LAT}=${center.lat}&${QUERY.TOPIC}=${selectedTopic?.id}`;
+        window.open(theURL, '_blank');
     }
 
-    const { list: listMapPost, ...apiQueryPost } = useAPI<
+    const apiQueryPost = useAPI<
         ObjectLiteral,
         GetPublicMapPostParamsInterface,
         MapPostDataInterface[]
     >(API.getPublicMapPost, {
         listkey: 'data',
     });
+    const listMapPost = apiQueryPost.list || [];
 
     function refreshMapPost() {
         apiQueryPost.call({
@@ -150,12 +160,14 @@ export default function HomePage({ show = true }: { show?: boolean }) {
         }
         refreshMapPost();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activeTopicType, show]);
+    }, [activeTopicType, show, refresh]);
 
     const [selectedPost, setSelectedPost] = useState<MapPostDataInterface>(
         {} as MapPostDataInterface,
     );
-    const [openDrawer, setOpenDrawer] = useState(false);
+
+    const { openDrawer, setOpenDrawer } = useCommonDrawer();
+
     const toggleDrawer =
         (open: boolean, post?: MapPostDataInterface) =>
         (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -170,158 +182,58 @@ export default function HomePage({ show = true }: { show?: boolean }) {
             setOpenDrawer(open);
             if (open) {
                 if (post?._id) {
-                    queryParams.addParam('post-id', post._id);
+                    queryParams.addParam(
+                        POPUP_PARAMS.POST_DETAIL.KEY,
+                        post._id,
+                    );
                 }
             } else {
-                queryParams.clearParams();
+                queryParams.removeParam(POPUP_PARAMS.POST_DETAIL.KEY);
             }
         };
 
     useEffect(() => {
         if (!openDrawer) return;
         const postId = selectedPost._id;
-        const postIdParams = searchParams.get('post-id');
+        const postIdParams = searchParams.get(POPUP_PARAMS.POST_DETAIL.KEY);
         if (postIdParams !== postId) {
             setOpenDrawer(false);
         }
     }, [searchParams]);
 
+    function onSelectedPost(findPost: MapPostDataInterface, e: any) {
+        setSelectedPost(findPost);
+        toggleDrawer(true, findPost)(e);
+    }
+
+    useMapPost(listMapPost, activeTopicType, onSelectedPost);
+    useMapSelected();
+
+    // Fly To
     useEffect(() => {
-        const layerSrc = 'map-post-src';
-        const layerId = 'map-post-layer';
+        if (!show) return;
+        if (!myMap) return;
+        const flyToId = searchParams.get(QUERY.FLY_TO);
+        const flyToLon = searchParams.get(QUERY.LON);
+        const flyToLat = searchParams.get(QUERY.LAT);
+        if (!flyToId || !flyToLon || !flyToLat) return;
 
-        const popup = new MapLibreGL.Popup({
-            closeButton: false,
-            closeOnClick: true,
-            className: 'text-xl text-black font-bold !my-0',
+        myMap.flyTo({
+            center: [Number(flyToLon), Number(flyToLat)],
+            essential: true,
+            zoom: 16,
+            speed: 0.85,
+            curve: 1,
         });
+        showSelectedPoint(myMap, Number(flyToLon), Number(flyToLat));
 
-        const onClickLayer = (
-            e: MapMouseEvent & {
-                features?: MapGeoJSONFeature[] | undefined;
-            } & Object,
-        ) => {
-            if (myMap) {
-                const eFeature = getMapLibreCoordinate(e);
-                if (!eFeature) return;
-                const postId = eFeature.properties._id;
-                const findPost = listMapPost?.find(
-                    (item) => item._id === postId,
-                );
-                if (findPost) {
-                    setSelectedPost(findPost);
-                    toggleDrawer(true, findPost)(e as any);
-                }
-            }
-        };
-        const setCursorPointer = (
-            e: MapMouseEvent & {
-                features?: MapGeoJSONFeature[] | undefined;
-            } & Object,
-        ) => {
-            if (myMap) {
-                myMap.getCanvas().style.cursor = 'pointer';
-                const eFeature = getMapLibreCoordinate(e);
-                if (!eFeature) return;
-
-                popup
-                    .setLngLat(eFeature.coordinates)
-                    .setHTML(
-                        truncateText(eFeature.properties.title || '', 25) ||
-                            truncateText(eFeature.properties.body || '', 25),
-                    )
-                    .addTo(myMap);
-            }
-        };
-        const removeCursorPointer = () => {
-            if (myMap) {
-                myMap.getCanvas().style.cursor = '';
-                popup.remove();
-            }
-        };
-        const onMapLoad = () => {
-            if (!myMap) return;
-            if (myMap.getLayer(layerId)) {
-                myMap.removeLayer(layerId);
-            }
-            if (myMap.getLayer(layerId + '-label')) {
-                myMap.removeLayer(layerId + '-label');
-            }
-            if (myMap.getSource(layerSrc)) {
-                myMap.removeSource(layerSrc);
-            }
-            myMap.addSource(layerSrc, {
-                type: 'geojson',
-                data: {
-                    type: 'FeatureCollection',
-                    features: (listMapPost || []).map((item) => {
-                        return {
-                            type: 'Feature',
-                            geometry: item.location,
-                            properties: {
-                                ...item,
-                                color:
-                                    activeTopicType.find(
-                                        (it) => it.id === item.topic_id,
-                                    )?.bgColor || 'red',
-                                label:
-                                    truncateText(item.title || '', 15) ||
-                                    truncateText(item.body || '', 15),
-                            },
-                        };
-                    }),
-                },
-            });
-            myMap.addLayer({
-                id: layerId,
-                type: 'circle',
-                source: layerSrc,
-                paint: {
-                    'circle-color': ['get', 'color'],
-                    'circle-radius': 6,
-                    'circle-stroke-color': 'white',
-                    'circle-stroke-width': 2,
-                },
-            });
-            myMap.addLayer({
-                id: layerId + '-label',
-                type: 'symbol',
-                source: layerSrc,
-                layout: {
-                    'text-field': ['get', 'label'],
-                    'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
-                    'text-radial-offset': 0.5,
-                    'text-justify': 'auto',
-                    'text-size': 14,
-                },
-                paint: {
-                    'text-color': 'black',
-                    'text-halo-color': 'white',
-                    'text-halo-width': 2,
-                },
-            });
-
-            myMap.on('mouseenter', layerId, setCursorPointer);
-            myMap.on('mouseleave', layerId, removeCursorPointer);
-
-            myMap.on('click', layerId, onClickLayer);
-        };
-
-        if (myMap) {
-            myMap.on('load', onMapLoad);
-            if (myMap.loaded()) {
-                onMapLoad();
-            }
-        }
-        return () => {
-            if (myMap) {
-                myMap.off('mouseenter', layerId, setCursorPointer);
-                myMap.off('mouseleave', layerId, removeCursorPointer);
-                myMap.off('click', layerId, onClickLayer);
-                myMap.off('load', onMapLoad);
-            }
-        };
-    }, [activeTopicType, listMapPost, myMap]);
+        myMap.once('moveend', () => {
+            queryParams.clearParams('replace');
+            setTimeout(() => {
+                hideSelectedPoint(myMap);
+            }, 5000);
+        });
+    }, [myMap, searchParams, show]);
 
     return (
         <>
@@ -439,22 +351,16 @@ export default function HomePage({ show = true }: { show?: boolean }) {
                 <LayerDrawer />
             </Stack>
 
-            <Stack spacing={2} className='absolute z-10 bottom-4 right-4'>
-                {!showMarker && <NewStoryButton />}
+            <HomeSpeedDial
+                posts={listMapPost}
+                setShowMarker={setShowMarker}
+                selectedTopic={selectedTopic}
+                setSelectedTopic={setSelectedTopic}
+                showMarker={showMarker}
+                userLocation={locationStore}
+                activeParent={show}
+            />
 
-                {!showMarker && (
-                    <NewPostDialog
-                        setShowMarker={setShowMarker}
-                        selectedTopic={selectedTopic}
-                        setSelectedTopic={setSelectedTopic}
-                    />
-                )}
-
-                <ScanDrawer
-                    posts={listMapPost || []}
-                    userLocation={locationStore}
-                />
-            </Stack>
             <PostDrawer
                 userLocation={locationStore}
                 toggleDrawer={toggleDrawer}

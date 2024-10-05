@@ -67,7 +67,10 @@ export default function ProfileDialog({
                         variant='outlined'
                         size='small'
                         sx={{ textTransform: 'none' }}
-                        onClick={onClickSeeProfile}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onClickSeeProfile();
+                        }}
                     >
                         {t('see_profile')}
                     </Button>

@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { ReactNode } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 
 const StyledBox = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[800],
@@ -28,6 +28,36 @@ type Props = {
         open: boolean,
     ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
     keepMounted?: boolean;
+    transparent?: boolean;
+};
+
+export const useCommonDrawer = () => {
+    const [openDrawer, setOpenDrawer] = useState(false);
+    const refCallbackOpenDrawer = useRef((open: boolean) => {});
+
+    const toggleDrawer =
+        (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+            if (event) {
+                event.stopPropagation();
+            }
+            if (
+                event &&
+                event.type === 'keydown' &&
+                ((event as React.KeyboardEvent).key === 'Tab' ||
+                    (event as React.KeyboardEvent).key === 'Shift')
+            ) {
+                return;
+            }
+            setOpenDrawer(open);
+            refCallbackOpenDrawer.current(open);
+        };
+
+    return {
+        openDrawer,
+        setOpenDrawer,
+        toggleDrawer,
+        refCallbackOpenDrawer,
+    };
 };
 
 export default function CommonDrawer({
@@ -38,6 +68,7 @@ export default function CommonDrawer({
     open,
     toggleDrawer,
     keepMounted = true,
+    transparent,
 }: Props) {
     return (
         <SwipeableDrawer
@@ -50,6 +81,11 @@ export default function CommonDrawer({
             ModalProps={{
                 keepMounted: keepMounted,
             }}
+            PaperProps={{
+                sx: {
+                    backgroundColor: transparent ? 'transparent' : '',
+                },
+            }}
         >
             <StyledBox
                 sx={{
@@ -57,6 +93,7 @@ export default function CommonDrawer({
                     borderTopRightRadius: 8,
                     right: 0,
                     left: 0,
+                    backgroundColor: transparent ? 'transparent' : '',
                 }}
             >
                 <Puller />
@@ -72,6 +109,7 @@ export default function CommonDrawer({
                     pb: 2,
                     height: '100%',
                     overflow: 'auto',
+                    backgroundColor: transparent ? 'transparent' : '',
                 }}
             >
                 {children}

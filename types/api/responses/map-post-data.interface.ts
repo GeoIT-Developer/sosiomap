@@ -1,3 +1,6 @@
+import { ReactionEnum } from '@/types/reaction.enum';
+import { PostStatInterface } from './post-stat.interface';
+
 export interface MapPostDataInterface {
     location: Location;
     _id: string;
@@ -18,6 +21,8 @@ export interface MapPostDataInterface {
     start_date?: string;
     end_date?: string;
     date_time?: string;
+    stats?: PostStatInterface;
+    reaction?: ReactionEnum;
 }
 
 interface Location {

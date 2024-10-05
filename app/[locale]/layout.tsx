@@ -5,6 +5,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import '@fontsource/abeezee';
+import '@fontsource/pacifico';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import ThemeContext from '@/contexts/ThemeContext';
 import { I18nProviderClient } from '@/locales/client';
@@ -19,6 +20,10 @@ import 'yet-another-react-lightbox/plugins/counter.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import 'yet-another-react-lightbox/plugins/captions.css';
 import 'react-virtualized/styles.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import ResponsiveProvider from '@/contexts/ResponsiveContext';
+import HashRouterProvider from '@/contexts/HashRouterContext';
 
 const HEAD = {
     TITLE: 'SosioMap',
@@ -90,10 +95,14 @@ export default function RootLayout({
                     <I18nProviderClient locale={locale}>
                         <NextAuthProvider>
                             <ThemeContext>
-                                <HistoryProvider>
-                                    {children}
-                                    <ToastContainer />
-                                </HistoryProvider>
+                                <HashRouterProvider>
+                                    <HistoryProvider>
+                                        <ResponsiveProvider>
+                                            {children}
+                                            <ToastContainer autoClose={2500} />
+                                        </ResponsiveProvider>
+                                    </HistoryProvider>
+                                </HashRouterProvider>
                             </ThemeContext>
                         </NextAuthProvider>
                     </I18nProviderClient>

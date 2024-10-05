@@ -88,6 +88,21 @@ const API = {
             },
         }),
 
+    getPublicPostById: (post_id: string) => HOST.get(`posts/${post_id}`),
+
+    postReact: ({
+        post_id,
+        reaction,
+    }: {
+        post_id: string;
+        reaction: string;
+    }) => {
+        return HOST.post(`posts/react`, {
+            post_id,
+            react: reaction || 'neutral',
+        });
+    },
+
     postComment: (params: PostCommentParamsInterface) => {
         const formData = new FormData();
         Object.keys(params).forEach((key) => {

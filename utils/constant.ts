@@ -146,6 +146,7 @@ export const ASSETS = {
     PLACEHOLDER: '/img/placeholder/',
     TEAM: '/img/team/',
     BADGE: '/img/badge/',
+    REACTION: '/img/reaction/',
 };
 
 export const IDs = {
@@ -157,6 +158,7 @@ export const QUERY = {
     LON: 'lon',
     LAT: 'lat',
     TOPIC: 'topic',
+    FLY_TO: 'fly-to',
 };
 
 export const POPUP_PARAMS = {
@@ -176,6 +178,10 @@ export const POPUP_PARAMS = {
         KEY: 'dialog',
         VALUE: 'open',
     },
+    POST_DETAIL: {
+        KEY: 'post-id',
+        VALUE: 'id',
+    },
 };
 
 export const MAX_LENGTH = {
@@ -190,6 +196,10 @@ export const MAX_LENGTH = {
             BODY: 2200,
             MAX_FILE: 10,
             CAPTION: 280,
+        },
+        SIMPLE: {
+            TITLE: 64,
+            BODY: 128,
         },
     },
     TOPIC: {

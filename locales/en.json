@@ -21,7 +21,10 @@
         "post": "Post",
         "submit": "Submit",
         "save": "Save",
-        "edit": "Edit"
+        "edit": "Edit",
+        "post_story": "Post Story",
+        "create_new_post": "Create New Post",
+        "scan_this_area": "Scan This Area"
     },
     "navigation": {
         "home": "Home",
@@ -195,7 +198,32 @@
         "caption_optional": "Caption (optional)",
         "media": "Media",
         "comment": "Comment",
-        "add_comment": "Add Comment"
+        "add_comment": "Add Comment",
+        "reaction": {
+            "like": "Like",
+            "love": "Love",
+            "care": "Care",
+            "haha": "Haha",
+            "wow": "Wow",
+            "thank_you": "Thank You",
+            "clap": "Clap",
+            "support": "Support",
+            "insightful": "Insightful",
+            "dislike": "Dislike",
+            "angry": "Angry",
+            "hoax": "Hoax",
+            "fake_news": "Fake News",
+            "misleading": "Misleading",
+            "report": "Report",
+            "dangerous": "Dangerous"
+        },
+        "statistic": {
+            "views": "{value} views",
+            "reactions": "{value} reactions",
+            "comments": "{value} comments"
+        },
+        "fly_to": "Fly To",
+        "no_post_found": "No posts found!"
     },
     "chat": {
         "no_chat_nearby": "No nearby chats!"

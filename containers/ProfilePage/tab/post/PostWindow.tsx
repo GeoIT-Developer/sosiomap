@@ -11,6 +11,7 @@ import { MyLocation } from '@/hooks/useGeolocation';
 import SimplePost from '@/containers/Post/View/SimplePost';
 import PostSkeleton from '@/components/skeleton/Post';
 import NoData from '@/components/skeleton/NoData';
+import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
 
 const cache = new CellMeasurerCache({
     fixedWidth: true,
@@ -21,9 +22,15 @@ type Props = {
     posts: MapPostDataInterface[];
     userLocation: MyLocation | null;
     isLoading?: boolean;
+    onChangeStats?: (stats: PostStatInterface, reactionId: string) => void;
 };
 
-export default function PostWindow({ posts, userLocation, isLoading }: Props) {
+export default function PostWindow({
+    posts,
+    userLocation,
+    isLoading,
+    onChangeStats,
+}: Props) {
     function RowRenderer({
         index,
         key,
@@ -59,6 +66,7 @@ export default function PostWindow({ posts, userLocation, isLoading }: Props) {
                             <SimplePost
                                 post={item}
                                 userLocation={userLocation}
+                                onChangeStats={onChangeStats}
                             />
                         </div>
                     );

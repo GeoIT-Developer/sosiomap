@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import useResponsive from './useResponsive';
 import DisplaySize from '@/types/display-size.enum';
+import { useResponsiveContext } from '@/contexts/ResponsiveContext';
 
 const useWindowHeight = () => {
     const [height, setHeight] = useState(0);
-    const responsive = useResponsive();
+    const responsive = useResponsiveContext();
 
     const handleResize = () => {
         setHeight(window.innerHeight);

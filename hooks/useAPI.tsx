@@ -1,6 +1,6 @@
 import { ObjectLiteral } from '@/types/object-literal.interface';
 import { errorResponse, getValObject } from '@/utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type ArgsProps<DataType, ParamsType, ListType, MetaType> = {
     onSuccess?: (
@@ -51,8 +51,11 @@ const useAPI = <
     const [meta, setMeta] = useState<MetaType | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const refLoading = useRef(false);
 
     const call = (params?: ParamsType) => {
+        if (refLoading.current) return;
+        refLoading.current = true;
         setLoading(true);
         API(params || {})
             .then((res: any) => {
@@ -105,7 +108,10 @@ const useAPI = <
                     setMeta(null);
                 }
             })
-            .finally(() => setLoading(false));
+            .finally(() => {
+                setLoading(false);
+                refLoading.current = false;
+            });
     };
 
     const callAndWait = (
@@ -117,6 +123,7 @@ const useAPI = <
         meta?: MetaType;
     }> => {
         setLoading(true);
+
         return new Promise((resolve, reject) => {
             API(params || {})
                 .then((res: any) => {

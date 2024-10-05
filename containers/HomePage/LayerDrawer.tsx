@@ -1,11 +1,14 @@
-import { ReactElement, cloneElement, useState } from 'react';
+import { ReactElement, cloneElement } from 'react';
 import { Avatar, Box, Fab, Icon } from '@mui/material';
-import useWideScreen from '@/hooks/useWideScreen';
 import LayersIcon from '@mui/icons-material/Layers';
 import SingleAccordion from '@/components/accordion/SingleAccordion';
-import CommonDrawer from '@/components/drawer/CommonDrawer';
+import CommonDrawer, {
+    useCommonDrawer,
+} from '@/components/drawer/CommonDrawer';
 import { useScopedI18n } from '@/locales/client';
-import { useActiveTopicContext } from '../AppPage';
+import { useWideScreenContext } from '@/contexts/ResponsiveContext';
+import React from 'react';
+import { useActiveTopicContext } from '../AppPage/PageContext';
 
 const defaultButton = (
     <Fab color='default' aria-label='layers' size='small'>
@@ -19,23 +22,9 @@ export default function LayerDrawer({
     menuButton?: ReactElement;
 }) {
     const t = useScopedI18n('map');
-    const [openDrawer, setOpenDrawer] = useState(false);
     const { activeTopicType } = useActiveTopicContext();
-    const isWide = useWideScreen();
-
-    const toggleDrawer =
-        (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-            if (
-                event &&
-                event.type === 'keydown' &&
-                ((event as React.KeyboardEvent).key === 'Tab' ||
-                    (event as React.KeyboardEvent).key === 'Shift')
-            ) {
-                return;
-            }
-
-            setOpenDrawer(open);
-        };
+    const isWide = useWideScreenContext();
+    const { openDrawer, toggleDrawer } = useCommonDrawer();
 
     const clonedButton = cloneElement(menuButton, {
         onClick: toggleDrawer(true),

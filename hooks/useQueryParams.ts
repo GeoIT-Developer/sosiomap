@@ -1,5 +1,6 @@
 import { useHistoryContext } from '@/contexts/HistoryContext';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useWideScreenContext } from '@/contexts/ResponsiveContext';
 
 type QueryParams = Record<string, string>;
 
@@ -17,8 +18,10 @@ function useQueryParams() {
     const searchParams = useSearchParams();
     const history = useHistoryContext();
     const router = useRouter();
+    const isWide = useWideScreenContext();
 
     const setQueryParams = (params: QueryParams) => {
+        if (isWide) return;
         const currentPath = getCurrentPath(params);
         router.push(currentPath);
     };
@@ -36,6 +39,7 @@ function useQueryParams() {
     };
 
     const removeParam = (key: string) => {
+        if (isWide) return;
         const queryParams = new URLSearchParams(window.location.search);
         queryParams.delete(key);
 
@@ -43,8 +47,21 @@ function useQueryParams() {
         history.onBackFullPath(currentPath);
     };
 
-    const clearParams = () => {
-        history.onBackClose();
+    const clearParams = (type: 'replace' | 'push' | 'back') => {
+        const currentPath = getCurrentPath({});
+        switch (type) {
+            case 'back':
+                history.onBackClose();
+                break;
+            case 'replace':
+                router.replace(currentPath);
+                break;
+            case 'push':
+                router.push(currentPath);
+                break;
+            default:
+                history.onBackClose();
+        }
     };
 
     return {

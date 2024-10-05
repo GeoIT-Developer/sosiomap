@@ -3,53 +3,26 @@
 import Box from '@mui/material/Box';
 import HomePage from '@/containers/HomePage';
 import MainMap from '@/components/map/main';
-import useHashRouter from '@/hooks/useHashRouter';
 import BottomNavBar, { LIST_ROUTE } from './BottomNavBar';
 import BasemapProvider from '@/contexts/BasemapContext';
 import { MapLibreProvider } from '@/contexts/MapLibreContext';
-import useWideScreen from '@/hooks/useWideScreen';
-import useLocalStorage from '@/hooks/useLocalStorage';
-import { createContext, useContext, useEffect } from 'react';
-import { LOCAL_STORAGE } from '@/utils/constant';
-import { TopicType, useActiveTopic, useMainTopic } from '@/hooks/useTopic';
+import { useEffect } from 'react';
 import { useI18n } from '@/locales/client';
 import dynamic from 'next/dynamic';
+import { useWideScreenContext } from '@/contexts/ResponsiveContext';
+import React from 'react';
+import { ActiveTopicProvider } from './PageContext';
+import { useHashRouterContext } from '@/contexts/HashRouterContext';
 
 const MenuPage = dynamic(() => import('@/containers/MenuPage'));
 const ExplorePage = dynamic(() => import('@/containers/ExplorePage'));
 const ChatPage = dynamic(() => import('@/containers/ChatPage'));
 const ProfilePage = dynamic(() => import('@/containers/ProfilePage'));
 
-const ActiveTopicContext = createContext<{
-    setActiveTopic: (
-        newValue: string[] | ((prevValue: string[]) => string[]),
-    ) => void;
-    activeTopic: string[];
-    activeTopicType: TopicType[];
-    refreshTopic: () => void;
-}>({
-    setActiveTopic: () => {},
-    activeTopic: [],
-    activeTopicType: [],
-    refreshTopic: () => {},
-});
-
-export function useActiveTopicContext() {
-    const context = useContext(ActiveTopicContext);
-    return context;
-}
-
 export default function AppPage() {
     const t = useI18n();
-    const [hashRouter, setHashRouter] = useHashRouter();
-    const mainTopic = useMainTopic();
-    const [activeTopic, setActiveTopic] = useLocalStorage(
-        LOCAL_STORAGE.ACTIVE_TOPIC,
-        mainTopic.map((item) => item.id),
-    );
-    const { activeTopic: activeTopicType, refreshTopic } = useActiveTopic();
-
-    const isWide = useWideScreen();
+    const isWide = useWideScreenContext();
+    const { hashRouter } = useHashRouterContext();
 
     useEffect(() => {
         const title = t('app.name');
@@ -74,14 +47,7 @@ export default function AppPage() {
     }, [hashRouter]);
 
     return (
-        <ActiveTopicContext.Provider
-            value={{
-                activeTopic,
-                setActiveTopic,
-                activeTopicType,
-                refreshTopic,
-            }}
-        >
+        <ActiveTopicProvider>
             <Box sx={{ pb: 7 }}>
                 {isWide === true && (
                     <Box display='flex'>
@@ -108,10 +74,7 @@ export default function AppPage() {
                                         <HomePage show />
                                     </MainMap>
 
-                                    <BottomNavBar
-                                        hashRouter={hashRouter}
-                                        setHashRouter={setHashRouter}
-                                    />
+                                    <BottomNavBar />
                                 </MapLibreProvider>
                             </BasemapProvider>
                         </Box>
@@ -139,15 +102,12 @@ export default function AppPage() {
                                     />
                                 </MainMap>
 
-                                <BottomNavBar
-                                    hashRouter={hashRouter}
-                                    setHashRouter={setHashRouter}
-                                />
+                                <BottomNavBar />
                             </MapLibreProvider>
                         </BasemapProvider>
                     </>
                 )}
             </Box>
-        </ActiveTopicContext.Provider>
+        </ActiveTopicProvider>
     );
 }
