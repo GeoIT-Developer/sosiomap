@@ -1,6 +1,5 @@
 import { ReactElement, cloneElement } from 'react';
 import { Avatar, Box, Fab, Icon } from '@mui/material';
-import useWideScreen from '@/hooks/useWideScreen';
 import LayersIcon from '@mui/icons-material/Layers';
 import SingleAccordion from '@/components/accordion/SingleAccordion';
 import CommonDrawer, {
@@ -8,6 +7,8 @@ import CommonDrawer, {
 } from '@/components/drawer/CommonDrawer';
 import { useScopedI18n } from '@/locales/client';
 import { useActiveTopicContext } from '../AppPage';
+import { useWideScreenContext } from '@/contexts/ResponsiveContext';
+import React from 'react';
 
 const defaultButton = (
     <Fab color='default' aria-label='layers' size='small'>
@@ -22,7 +23,7 @@ export default function LayerDrawer({
 }) {
     const t = useScopedI18n('map');
     const { activeTopicType } = useActiveTopicContext();
-    const isWide = useWideScreen();
+    const isWide = useWideScreenContext();
     const { openDrawer, toggleDrawer } = useCommonDrawer();
 
     const clonedButton = cloneElement(menuButton, {

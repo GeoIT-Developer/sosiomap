@@ -8,11 +8,11 @@ import API from '@/configs/api';
 import useLocalStorageFunc from '@/hooks/useLocalStorageFunc';
 import { LOCAL_STORAGE, MAX_LENGTH } from '@/utils/constant';
 import { ChatChannelEnum } from './PageAppBar';
-import useWideScreen from '@/hooks/useWideScreen';
 import useAPI from '@/hooks/useAPI';
 import { ObjectLiteral } from '@/types/object-literal.interface';
 import { PostChatParamsInterface } from '@/types/api/params/post-chat.interface';
 import MainFab from '@/components/button/MainFab';
+import { useWideScreenContext } from '@/contexts/ResponsiveContext';
 
 const MIN_MESSAGE_LENGTH = MAX_LENGTH.CHAT.MIN_CHAT;
 const MAX_MESSAGE_LENGTH = MAX_LENGTH.CHAT.MAX_CHAT;
@@ -25,7 +25,7 @@ type Props = {
 export default function MessageAction({ geolocation, onRefresh }: Props) {
     const t = useI18n();
     const [message, setMessage] = useState('');
-    const isWide = useWideScreen();
+    const isWide = useWideScreenContext();
     const [loadingSendButton, setLoadingSendButton] = useState(false);
     const apiPostChat = useAPI<ObjectLiteral, PostChatParamsInterface>(
         API.postChat,

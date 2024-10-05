@@ -33,6 +33,7 @@ import Comments from '../Action/Comments';
 import { MAX_LENGTH, POPUP_PARAMS } from '@/utils/constant';
 import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
 import { useCommonDrawer } from '@/components/drawer/CommonDrawer';
+import React from 'react';
 
 export const SIMPLE_POST_HEIGHT = 233; //pixel
 
@@ -56,16 +57,14 @@ export default function SimplePost({
     const queryParams = useQueryParams();
     const searchParams = useSearchParams();
 
-    useEffect(() => {
-        function onOpenDrawer(open: boolean) {
-            if (open) {
-                queryParams.addParam(POPUP_PARAMS.POST_DETAIL.KEY, post._id);
-            } else {
-                queryParams.removeParam(POPUP_PARAMS.POST_DETAIL.KEY);
-            }
+    function onOpenDrawer(open: boolean) {
+        if (open) {
+            queryParams.addParam(POPUP_PARAMS.POST_DETAIL.KEY, post._id);
+        } else {
+            queryParams.removeParam(POPUP_PARAMS.POST_DETAIL.KEY);
         }
-        refCallbackOpenDrawer.current = onOpenDrawer;
-    }, []);
+    }
+    refCallbackOpenDrawer.current = onOpenDrawer;
 
     useEffect(() => {
         if (!openDrawer) return;

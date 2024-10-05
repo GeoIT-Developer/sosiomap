@@ -20,7 +20,8 @@ import { getDeviceOrientationOnce } from '@/hooks/useDeviceOrientation';
 import useGeolocation from '@/hooks/useGeolocation';
 import { toast } from 'react-toastify';
 import { ObjectLiteral } from '@/types/object-literal.interface';
-import useWideScreen from '@/hooks/useWideScreen';
+import { useWideScreenContext } from '@/contexts/ResponsiveContext';
+import React from 'react';
 
 export const LIST_ROUTE = {
     HOME: ROUTE.HOME.MAP.URL,
@@ -51,7 +52,7 @@ export default function BottomNavBar({
     );
     const { myMap, mapStatus, geoControl } = useMapLibreContext();
     const geoLocation = useGeolocation();
-    const isWide = useWideScreen();
+    const isWide = useWideScreenContext();
 
     useEffect(() => {
         const handleOnDrag = () => {

@@ -20,6 +20,9 @@ import 'yet-another-react-lightbox/plugins/counter.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import 'yet-another-react-lightbox/plugins/captions.css';
 import 'react-virtualized/styles.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import ResponsiveProvider from '@/contexts/ResponsiveContext';
 
 const HEAD = {
     TITLE: 'SosioMap',
@@ -92,8 +95,10 @@ export default function RootLayout({
                         <NextAuthProvider>
                             <ThemeContext>
                                 <HistoryProvider>
-                                    {children}
-                                    <ToastContainer />
+                                    <ResponsiveProvider>
+                                        {children}
+                                        <ToastContainer />
+                                    </ResponsiveProvider>
                                 </HistoryProvider>
                             </ThemeContext>
                         </NextAuthProvider>

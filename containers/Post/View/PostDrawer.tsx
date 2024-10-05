@@ -3,7 +3,6 @@ import { useI18n } from '@/locales/client';
 import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interface';
 import { MyLocation } from '@/hooks/useGeolocation';
 import CommonDrawer from '@/components/drawer/CommonDrawer';
-import useWideScreen from '@/hooks/useWideScreen';
 import PostTypeEnum from '@/types/post-type.enum';
 import StandardPost from './StandardPost';
 import CarouselPost from './CarouselPost';
@@ -11,6 +10,8 @@ import useAPI from '@/hooks/useAPI';
 import API from '@/configs/api';
 import { useEffect, useState } from 'react';
 import { showError } from '@/utils';
+import { useWideScreenContext } from '@/contexts/ResponsiveContext';
+import React from 'react';
 
 type Props = {
     post: MapPostDataInterface;
@@ -28,7 +29,7 @@ export default function PostDrawer({
     openDrawer,
 }: Props) {
     const t = useI18n();
-    const isWide = useWideScreen();
+    const isWide = useWideScreenContext();
     const [post, setPost] = useState<MapPostDataInterface>(postInput);
 
     const apiGetDetailPost = useAPI<MapPostDataInterface, string>(

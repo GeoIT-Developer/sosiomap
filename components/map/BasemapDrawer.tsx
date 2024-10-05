@@ -13,8 +13,9 @@ import MyImage from '../preview/MyImage';
 import { ASSETS } from '@/utils/constant';
 import { useScopedI18n } from '@/locales/client';
 import { capitalizeWords } from '@/utils/helper';
-import useWideScreen from '@/hooks/useWideScreen';
 import CommonDrawer, { useCommonDrawer } from '../drawer/CommonDrawer';
+import { useWideScreenContext } from '@/contexts/ResponsiveContext';
+import React from 'react';
 
 const defaultButton = (
     <Fab color='default' aria-label='basemaps' size='small'>
@@ -29,7 +30,7 @@ export default function BasemapDrawer({
 }) {
     const { basemap, setBasemap } = useBasemapContext();
     const t = useScopedI18n('map');
-    const isWide = useWideScreen();
+    const isWide = useWideScreenContext();
     const { openDrawer, toggleDrawer } = useCommonDrawer();
 
     const clonedButton = cloneElement(menuButton, {

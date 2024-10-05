@@ -1,6 +1,6 @@
 import { useHistoryContext } from '@/contexts/HistoryContext';
 import { useRouter, useSearchParams } from 'next/navigation';
-import useWideScreen from './useWideScreen';
+import { useWideScreenContext } from '@/contexts/ResponsiveContext';
 
 type QueryParams = Record<string, string>;
 
@@ -18,7 +18,7 @@ function useQueryParams() {
     const searchParams = useSearchParams();
     const history = useHistoryContext();
     const router = useRouter();
-    const isWide = useWideScreen();
+    const isWide = useWideScreenContext();
 
     const setQueryParams = (params: QueryParams) => {
         if (isWide) return;

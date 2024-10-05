@@ -9,7 +9,6 @@ import MapLibreGL, { MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
 import CommonDrawer, {
     useCommonDrawer,
 } from '@/components/drawer/CommonDrawer';
-import useWideScreen from '@/hooks/useWideScreen';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import {
     addBaseUrlToFormAction,
@@ -19,6 +18,8 @@ import {
 import { useActiveTopicContext } from '@/containers/AppPage';
 import { getLastCharFromString, getMapLibreCoordinate } from '@/utils/helper';
 import { createRoot } from 'react-dom/client';
+import React from 'react';
+import { useWideScreenContext } from '@/contexts/ResponsiveContext';
 
 const columns: GridColDef[] = [
     {
@@ -60,7 +61,7 @@ const columns: GridColDef[] = [
 export default function KPULayer() {
     const { myMap } = useMapLibreContext();
     const { activeTopic } = useActiveTopicContext();
-    const isWide = useWideScreen();
+    const isWide = useWideScreenContext();
 
     const [drawerTitle, setDrawerTitle] = useState('');
     const [listData, setListData] = useState<{ id: string; body: string[] }[]>(

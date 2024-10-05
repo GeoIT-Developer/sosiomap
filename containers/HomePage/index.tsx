@@ -21,7 +21,7 @@ import {
     QUERY,
     ROUTE,
 } from '@/utils/constant';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMapLibreContext } from '@/contexts/MapLibreContext';
 import { getLngLat, getMapLibreCoordinate, truncateText } from '@/utils/helper';
 import { useI18n } from '@/locales/client';
@@ -47,7 +47,7 @@ import { getValObject } from '@/utils';
 import MapLibreGL, { MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
 import PostDrawer from '../Post/View/PostDrawer';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import KPULayer from './custom/kpu/index.tsx';
+import KPULayer from './custom/kpu';
 import { useActiveTopicContext } from '../AppPage';
 import useQueryParams from '@/hooks/useQueryParams';
 import HomeSpeedDial from './HomeSpeedDial';
@@ -451,20 +451,16 @@ export default function HomePage({ show = true }: { show?: boolean }) {
                 <LayerDrawer />
             </Stack>
 
-            <Stack
-                spacing={2}
-                className='absolute z-10 bottom-4 right-4 items-end'
-            >
-                <HomeSpeedDial
-                    posts={listMapPost || []}
-                    setShowMarker={setShowMarker}
-                    selectedTopic={selectedTopic}
-                    setSelectedTopic={setSelectedTopic}
-                    showMarker={showMarker}
-                    userLocation={locationStore}
-                    activeParent={show}
-                />
-            </Stack>
+            <HomeSpeedDial
+                posts={listMapPost || []}
+                setShowMarker={setShowMarker}
+                selectedTopic={selectedTopic}
+                setSelectedTopic={setSelectedTopic}
+                showMarker={showMarker}
+                userLocation={locationStore}
+                activeParent={show}
+            />
+
             <PostDrawer
                 userLocation={locationStore}
                 toggleDrawer={toggleDrawer}

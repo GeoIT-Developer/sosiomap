@@ -7,13 +7,14 @@ import useHashRouter from '@/hooks/useHashRouter';
 import BottomNavBar, { LIST_ROUTE } from './BottomNavBar';
 import BasemapProvider from '@/contexts/BasemapContext';
 import { MapLibreProvider } from '@/contexts/MapLibreContext';
-import useWideScreen from '@/hooks/useWideScreen';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { createContext, useContext, useEffect } from 'react';
 import { LOCAL_STORAGE } from '@/utils/constant';
 import { TopicType, useActiveTopic, useMainTopic } from '@/hooks/useTopic';
 import { useI18n } from '@/locales/client';
 import dynamic from 'next/dynamic';
+import { useWideScreenContext } from '@/contexts/ResponsiveContext';
+import React from 'react';
 
 const MenuPage = dynamic(() => import('@/containers/MenuPage'));
 const ExplorePage = dynamic(() => import('@/containers/ExplorePage'));
@@ -49,7 +50,7 @@ export default function AppPage() {
     );
     const { activeTopic: activeTopicType, refreshTopic } = useActiveTopic();
 
-    const isWide = useWideScreen();
+    const isWide = useWideScreenContext();
 
     useEffect(() => {
         const title = t('app.name');
