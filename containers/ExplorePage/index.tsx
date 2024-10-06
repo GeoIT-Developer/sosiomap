@@ -86,6 +86,7 @@ export default function ExplorePage({ show = true }: { show?: boolean }) {
                         size='small'
                         aria-label='refresh'
                         className='!absolute top-1 right-1'
+                        style={{ opacity: '0.65' }}
                         onClick={refreshMapPost}
                     >
                         {apiQueryPost.loading ? (

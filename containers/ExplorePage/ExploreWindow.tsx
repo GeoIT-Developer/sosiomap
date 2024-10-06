@@ -13,7 +13,6 @@ import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
 import React from 'react';
 import NoData from '@/components/skeleton/NoData';
 import { useI18n } from '@/locales/client';
-import PostSkeleton from '@/components/skeleton/Post';
 
 const cache = new CellMeasurerCache({
     fixedWidth: true,
@@ -81,7 +80,6 @@ export default function ExploreWindow({
     return (
         <>
             {posts.length === 0 && !isLoading && <NoData />}
-            {isLoading && <PostSkeleton />}
             <AutoSizer>
                 {({ height, width }) => (
                     <List

@@ -61,7 +61,7 @@ import useMapSelected, {
 export default function HomePage({ show = true }: { show?: boolean }) {
     const t = useI18n();
     const [showMarker, setShowMarker] = useState(false);
-    const { myMap, mapStatus } = useMapLibreContext();
+    const { myMap } = useMapLibreContext();
     const [center, setCenter] = useState({ lng: 0, lat: 0 });
     const [selectedTopic, setSelectedTopic] = useState<TopicType | null>(null);
     const { activeTopicType } = useActiveTopicContext();
@@ -131,7 +131,14 @@ export default function HomePage({ show = true }: { show?: boolean }) {
 
     function onClickOKMarker() {
         setShowMarker(false);
-        const theURL = `${ROUTE.POST.NEW.URL}?${QUERY.LOCATION}=${ChooseLocationEnum.CHOOSE_ON_MAP}&${QUERY.LON}=${center.lng}&${QUERY.LAT}=${center.lat}&${QUERY.TOPIC}=${selectedTopic?.id}`;
+
+        const newParams = new URLSearchParams();
+        newParams.set(QUERY.LOCATION, ChooseLocationEnum.CHOOSE_ON_MAP);
+        newParams.set(QUERY.LON, String(center.lng));
+        newParams.set(QUERY.LAT, String(center.lat));
+        newParams.set(QUERY.TOPIC, selectedTopic?.id || '');
+
+        const theURL = `${ROUTE.POST.NEW.URL}?${newParams.toString()}`;
         window.open(theURL, '_blank');
     }
 
@@ -368,7 +375,7 @@ export default function HomePage({ show = true }: { show?: boolean }) {
                 post={selectedPost}
             />
 
-            <KPULayer />
+            {/* <KPULayer /> */}
         </>
     );
 }
