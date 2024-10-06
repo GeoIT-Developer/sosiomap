@@ -18,7 +18,7 @@ import {
 } from '@/utils/helper';
 import { MyLocation } from '@/hooks/useGeolocation';
 import ImageVideoSimple from './ImageVideoSimple';
-import { useEffect } from 'react';
+import { cloneElement, useEffect } from 'react';
 import PostDrawer from './PostDrawer';
 import useQueryParams from '@/hooks/useQueryParams';
 import MyAvatar from '@/components/preview/MyAvatar';
@@ -32,6 +32,7 @@ import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
 import { useCommonDrawer } from '@/components/drawer/CommonDrawer';
 import React from 'react';
 import FlyTo from '../Action/FlyTo';
+import { useMainTopic } from '@/hooks/useTopic';
 
 export const SIMPLE_POST_HEIGHT = 233; //pixel
 
@@ -51,6 +52,7 @@ export default function SimplePost({
     const t = useI18n();
     const { openDrawer, setOpenDrawer, toggleDrawer, refCallbackOpenDrawer } =
         useCommonDrawer();
+    const mainTopic = useMainTopic();
 
     const { searchParams, ...queryParams } = useQueryParams();
 
@@ -71,6 +73,8 @@ export default function SimplePost({
             setOpenDrawer(false);
         }
     }, [searchParams]);
+
+    const thisTopic = mainTopic.find((item) => item.id === post.topic_id);
 
     return (
         <>
@@ -113,25 +117,42 @@ export default function SimplePost({
                             className: '!text-sm ',
                         }}
                         secondary={
-                            <div className='justify-between flex'>
-                                <Typography className='!text-xs'>
-                                    {formatDateTime(
-                                        post.createdAt,
-                                        'DD MMM YYYY - HH:mm',
-                                    )}
-                                </Typography>
-                                <Typography className='!text-xs'>
-                                    {formatDistance(
-                                        calculateManhattanDistance(
-                                            userLocation?.latitude || 0,
-                                            userLocation?.longitude || 0,
-                                            post.location.coordinates[1],
-                                            post.location.coordinates[0],
-                                        ),
-                                    )}
-                                    {t('unit.km')}
-                                </Typography>
-                            </div>
+                            <>
+                                <div className='justify-between flex'>
+                                    <Typography className='!text-xs'>
+                                        {formatDateTime(
+                                            post.createdAt,
+                                            'DD MMM YYYY - HH:mm',
+                                        )}
+                                    </Typography>
+                                    <Typography className='!text-xs'>
+                                        {formatDistance(
+                                            calculateManhattanDistance(
+                                                userLocation?.latitude || 0,
+                                                userLocation?.longitude || 0,
+                                                post.location.coordinates[1],
+                                                post.location.coordinates[0],
+                                            ),
+                                        )}
+                                        {t('unit.km')}
+                                    </Typography>
+                                </div>
+                                <div className='flex items-center'>
+                                    {thisTopic?.icon &&
+                                        typeof thisTopic?.icon !== 'string' &&
+                                        cloneElement(thisTopic?.icon, {
+                                            sx: {
+                                                color: thisTopic?.bgColor,
+                                                height: '16px',
+                                                width: '16px',
+                                                marginRight: '4px',
+                                            },
+                                        })}
+                                    <Typography className='!text-xs'>
+                                        {thisTopic?.label}
+                                    </Typography>
+                                </div>
+                            </>
                         }
                         secondaryTypographyProps={{
                             className: '!text-xs ',
@@ -168,7 +189,7 @@ export default function SimplePost({
                                 onClick={toggleDrawer(true)}
                                 className='ml-2 text-primary hover:underline'
                             >
-                                View More
+                                {t('post.see_more')}
                             </span>
                         )}
                     </Typography>

@@ -223,7 +223,8 @@
             "comments": "{value} komentar"
         },
         "fly_to": "Terbang Ke",
-        "no_post_found": "Postingan tidak ditemukan!"
+        "no_post_found": "Postingan tidak ditemukan!",
+        "see_more": "Selengkapnya"
     },
     "chat": {
         "no_chat_nearby": "Tidak ada obrolan di dekat sini!"

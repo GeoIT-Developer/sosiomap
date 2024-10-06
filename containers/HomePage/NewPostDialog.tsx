@@ -22,7 +22,6 @@ import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import PinDropIcon from '@mui/icons-material/PinDrop';
 import PolylineIcon from '@mui/icons-material/Polyline';
 import { useI18n } from '@/locales/client';
-import { useRouter } from 'next/navigation';
 import { QUERY, ROUTE } from '@/utils/constant';
 import useGeolocation from '@/hooks/useGeolocation';
 import { TopicType } from '@/hooks/useTopic';
@@ -32,6 +31,7 @@ import ChooseLocationEnum from '@/types/choose-location.enum';
 import { toast } from 'react-toastify';
 import CloseIcon from '@mui/icons-material/Close';
 import { TooltipSpeedDial } from './HomeSpeedDial';
+import React from 'react';
 
 interface Props {
     setShowMarker: (_args: boolean) => void;
@@ -44,7 +44,6 @@ export default function NewPostDialog({
     selectedTopic,
     setSelectedTopic,
 }: Props) {
-    const router = useRouter();
     const t = useI18n();
     const [open, setOpen] = useState(false);
     const geolocation = useGeolocation();
@@ -59,6 +58,27 @@ export default function NewPostDialog({
         setOpen(false);
     };
 
+    function onClickUseCurrentLocation() {
+        handleClose();
+
+        const newParams = new URLSearchParams();
+        newParams.set(QUERY.LOCATION, ChooseLocationEnum.USE_CURRENT_LOCATION);
+        newParams.set(QUERY.TOPIC, selectedTopic?.id || '');
+        const theURL = `${ROUTE.POST.NEW.URL}?${newParams.toString()}`;
+        window.open(theURL, '_blank');
+    }
+    function onClickuseApproximateLocation() {
+        handleClose();
+
+        const newParams = new URLSearchParams();
+        newParams.set(
+            QUERY.LOCATION,
+            ChooseLocationEnum.USE_APPROXIMATE_LOCATION,
+        );
+        newParams.set(QUERY.TOPIC, selectedTopic?.id || '');
+        const theURL = `${ROUTE.POST.NEW.URL}?${newParams.toString()}`;
+        window.open(theURL, '_blank');
+    }
     return (
         <>
             <Zoom in>
@@ -124,12 +144,9 @@ export default function NewPostDialog({
                                         <ListItem disableGutters>
                                             <ListItemButton
                                                 autoFocus
-                                                onClick={() => {
-                                                    handleClose();
-                                                    router.push(
-                                                        `${ROUTE.POST.NEW.URL}?${QUERY.LOCATION}=${ChooseLocationEnum.USE_CURRENT_LOCATION}&${QUERY.TOPIC}=${selectedTopic?.id}`,
-                                                    );
-                                                }}
+                                                onClick={
+                                                    onClickUseCurrentLocation
+                                                }
                                             >
                                                 <ListItemAvatar>
                                                     <Avatar>
@@ -171,12 +188,9 @@ export default function NewPostDialog({
                                         <ListItem disableGutters>
                                             <ListItemButton
                                                 autoFocus
-                                                onClick={() => {
-                                                    handleClose();
-                                                    router.push(
-                                                        `${ROUTE.POST.NEW.URL}?${QUERY.LOCATION}=${ChooseLocationEnum.USE_APPROXIMATE_LOCATION}&${QUERY.TOPIC}=${selectedTopic?.id}`,
-                                                    );
-                                                }}
+                                                onClick={
+                                                    onClickuseApproximateLocation
+                                                }
                                             >
                                                 <ListItemAvatar>
                                                     <Avatar>

@@ -156,7 +156,7 @@ export default function MenuPage({ show = true }: { show?: boolean }) {
                         </SingleAccordion>
                     </Box>
                 </Box>
-                <Box>
+                {/* <Box>
                     <Divider className='py-4'>{t('topic.pemilu_2024')}</Divider>
                     <Grid
                         container
@@ -259,7 +259,7 @@ export default function MenuPage({ show = true }: { show?: boolean }) {
                             })}
                         </SingleAccordion>
                     </Box>
-                </Box>
+                </Box> */}
                 <Box>
                     <Divider className='py-4'>{t('topic.open_topics')}</Divider>
                     <Grid
