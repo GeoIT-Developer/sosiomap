@@ -12,6 +12,7 @@ import SimplePost from '@/containers/Post/View/SimplePost';
 import PostSkeleton from '@/components/skeleton/Post';
 import NoData from '@/components/skeleton/NoData';
 import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
+import React from 'react';
 
 const cache = new CellMeasurerCache({
     fixedWidth: true,
