@@ -24,8 +24,8 @@ function SliderArrow(props: any) {
                 ...style,
                 background: '#333',
                 borderRadius: '16px',
-                height: '8rem',
-                paddingTop: '3.5rem',
+                height: '10rem',
+                paddingTop: '4.5rem',
             }}
             onClick={onClick}
         />
@@ -80,6 +80,7 @@ export default function SelectedCard() {
                         <KeyboardArrowDownIcon />
                     </MainFab>
                     <Slider
+                        lazyLoad='ondemand'
                         infinite={isWide}
                         speed={500}
                         slidesToShow={isWide ? 2 : 1}
