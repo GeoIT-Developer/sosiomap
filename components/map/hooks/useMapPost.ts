@@ -10,7 +10,11 @@ import { useMapLibreContext } from '@/contexts/MapLibreContext';
 function useMapPost(
     listMapPost: MapPostDataInterface[],
     activeTopicType: TopicType[],
-    onSelectedPost: (post: MapPostDataInterface, e: any) => void,
+    onSelectedPost: (
+        e: MapMouseEvent & {
+            features?: MapGeoJSONFeature[] | undefined;
+        } & Object,
+    ) => void,
 ) {
     const { myMap, mapStatus } = useMapLibreContext();
     useEffect(() => {
@@ -31,15 +35,7 @@ function useMapPost(
             } & Object,
         ) => {
             if (myMap) {
-                const eFeature = getMapLibreCoordinate(e);
-                if (!eFeature) return;
-                const postId = eFeature.properties._id;
-                const findPost = listMapPost.find(
-                    (item) => item._id === postId,
-                );
-                if (findPost) {
-                    onSelectedPost(findPost, e);
-                }
+                onSelectedPost(e);
             }
         };
         const setCursorPointer = (

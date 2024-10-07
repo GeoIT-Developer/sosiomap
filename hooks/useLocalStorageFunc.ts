@@ -1,6 +1,14 @@
 type LocalStorageValue<T> = T;
 
-const useLocalStorageFunc = <T>(key: string, initialValue: T) => {
+export type UseLocalStorageFuncResult<T> = {
+    getItem: () => LocalStorageValue<T>;
+    setItem: (newValue: T) => void;
+};
+
+const useLocalStorageFunc = <T>(
+    key: string,
+    initialValue: T,
+): UseLocalStorageFuncResult<T> => {
     const getItem = (): LocalStorageValue<T> => {
         const storedItem = localStorage.getItem(key);
         return storedItem ? (JSON.parse(storedItem) as T) : initialValue;

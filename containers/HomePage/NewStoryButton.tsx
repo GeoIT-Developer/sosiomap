@@ -3,9 +3,9 @@ import { QUERY, ROUTE } from '@/utils/constant';
 import { TOPIC } from '@/hooks/useTopic';
 import ChooseLocationEnum from '@/types/choose-location.enum';
 import { blue } from '@mui/material/colors';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import { TooltipSpeedDial } from './HomeSpeedDial';
 import { useScopedI18n } from '@/locales/client';
+import LocalActivityIcon from '@mui/icons-material/LocalActivity';
+import TooltipSpeedDial from '@/components/tooltip/TooltipSpeedDial';
 
 export default function NewStoryButton() {
     const t = useScopedI18n('button');
@@ -23,7 +23,7 @@ export default function NewStoryButton() {
                 onClick={onClickNewStory}
             >
                 <TooltipSpeedDial label={t('post_story')}>
-                    <AddCircleOutlineOutlinedIcon />
+                    <LocalActivityIcon />
                 </TooltipSpeedDial>
             </Fab>
         </Zoom>
