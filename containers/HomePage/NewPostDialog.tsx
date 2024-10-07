@@ -24,29 +24,22 @@ import PolylineIcon from '@mui/icons-material/Polyline';
 import { useI18n } from '@/locales/client';
 import { QUERY, ROUTE } from '@/utils/constant';
 import useGeolocation from '@/hooks/useGeolocation';
-import { TopicType } from '@/hooks/useTopic';
 import SelectTopic from '@/components/input/SelectTopic';
 import ShareLocationIcon from '@mui/icons-material/ShareLocation';
 import ChooseLocationEnum from '@/types/choose-location.enum';
 import { toast } from 'react-toastify';
 import CloseIcon from '@mui/icons-material/Close';
-import { TooltipSpeedDial } from './HomeSpeedDial';
 import React from 'react';
+import { useHomePageContext } from './PageContext';
+import TooltipSpeedDial from '@/components/tooltip/TooltipSpeedDial';
 
-interface Props {
-    setShowMarker: (_args: boolean) => void;
-    selectedTopic: TopicType | null;
-    setSelectedTopic: (_args: TopicType | null) => void;
-}
-
-export default function NewPostDialog({
-    setShowMarker,
-    selectedTopic,
-    setSelectedTopic,
-}: Props) {
+export default function NewPostDialog() {
     const t = useI18n();
     const [open, setOpen] = useState(false);
     const geolocation = useGeolocation();
+
+    const { setShowMarker, selectedTopic, setSelectedTopic } =
+        useHomePageContext();
 
     useEffect(() => {
         if (open) {

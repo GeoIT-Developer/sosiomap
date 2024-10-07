@@ -19,6 +19,28 @@ type ArgsProps<DataType, ParamsType, ListType, MetaType> = {
     callOnFirstRender?: boolean;
     callOnFirstRenderParams?: ParamsType;
 };
+
+export type UseAPIResult<
+    DataType,
+    ParamsType = ObjectLiteral,
+    ListType = ObjectLiteral[],
+    MetaType = ObjectLiteral,
+> = {
+    data: DataType | null;
+    loading: boolean;
+    error: string | null;
+    call: (params?: ParamsType) => void;
+    callAndWait: (params?: ParamsType) => Promise<{
+        params?: ParamsType;
+        data: DataType;
+        list?: ListType;
+        meta?: MetaType;
+    }>;
+    list: ListType | null;
+    meta: MetaType | null;
+    clearData: () => void;
+};
+
 /**
  * A custom hook to manage API calls and state.
  *
@@ -45,7 +67,7 @@ const useAPI = <
 >(
     API: Function,
     args?: ArgsProps<DataType, ParamsType, ListType, MetaType>,
-) => {
+): UseAPIResult<DataType, ParamsType, ListType, MetaType> => {
     const [data, setData] = useState<DataType | null>(null);
     const [list, setList] = useState<ListType | null>(null);
     const [meta, setMeta] = useState<MetaType | null>(null);

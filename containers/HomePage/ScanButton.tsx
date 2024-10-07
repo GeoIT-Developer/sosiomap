@@ -5,8 +5,8 @@ import SensorsIcon from '@mui/icons-material/Sensors';
 import { myTurf } from '@/utils/helper';
 import { useMapLibreContext } from '@/contexts/MapLibreContext';
 import { toast } from 'react-toastify';
-import { TooltipSpeedDial } from './HomeSpeedDial';
 import React from 'react';
+import TooltipSpeedDial from '@/components/tooltip/TooltipSpeedDial';
 
 type Props = {
     posts: MapPostDataInterface[];
