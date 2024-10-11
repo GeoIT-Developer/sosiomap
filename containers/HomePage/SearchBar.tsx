@@ -17,6 +17,10 @@ import {
     SearchOSMInterface,
 } from '@/types/api/responses/search-osm.interface';
 import { getValObject } from '@/utils';
+import {
+    hideAllSelectedLayer,
+    showSelectedGeometry,
+} from '@/components/map/hooks/useMapSelected';
 
 export default function SearchBar() {
     const { myMap } = useMapLibreContext();
@@ -45,6 +49,18 @@ export default function SearchBar() {
         apiSearchOSM.call(searchTxt);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTxt]);
+
+    function onSelectedFeature(opt: FeatureInterface | null) {
+        if (!opt) {
+            hideAllSelectedLayer(myMap);
+        }
+        const bbox = opt?.bbox;
+        if (!bbox) return;
+        myMap?.fitBounds(bbox, {
+            essential: true,
+        });
+        showSelectedGeometry(myMap, opt);
+    }
 
     return (
         <Paper className='!rounded-full flex-grow'>
@@ -84,11 +100,7 @@ export default function SearchBar() {
                 )}
                 size='small'
                 onChange={(_e, opt) => {
-                    const bbox = opt?.bbox;
-                    if (!bbox) return;
-                    myMap?.fitBounds(bbox, {
-                        essential: true,
-                    });
+                    onSelectedFeature(opt);
                 }}
                 loading={apiSearchOSM.loading}
             />
