@@ -161,7 +161,7 @@ export default function SimplePost({
                     />
                 </ListItem>
                 <Stack
-                    spacing={1}
+                    spacing={0.5}
                     className='px-4 cursor-pointer'
                     onClick={toggleDrawer(true)}
                 >
