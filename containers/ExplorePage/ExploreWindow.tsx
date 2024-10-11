@@ -12,7 +12,8 @@ import SimplePost from '../Post/View/SimplePost';
 import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
 import React from 'react';
 import NoData from '@/components/skeleton/NoData';
-import { useI18n } from '@/locales/client';
+import PostDrawer from '../Post/View/PostDrawer';
+import { PostDrawerProvider } from '../Post/View/PostDrawerContext';
 
 const cache = new CellMeasurerCache({
     fixedWidth: true,
@@ -32,7 +33,6 @@ export default function ExploreWindow({
     onChangeStats,
     isLoading,
 }: Props) {
-    const t = useI18n();
     function RowRenderer({
         index,
         key,
@@ -78,7 +78,7 @@ export default function ExploreWindow({
     }
 
     return (
-        <>
+        <PostDrawerProvider>
             {posts.length === 0 && !isLoading && <NoData />}
             <AutoSizer>
                 {({ height, width }) => (
@@ -92,6 +92,8 @@ export default function ExploreWindow({
                     />
                 )}
             </AutoSizer>
-        </>
+
+            <PostDrawer userLocation={userLocation} />
+        </PostDrawerProvider>
     );
 }

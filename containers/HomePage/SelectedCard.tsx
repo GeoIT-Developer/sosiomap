@@ -13,6 +13,8 @@ import {
     showSelectedPoint,
 } from '@/components/map/hooks/useMapSelected';
 import { useHomePageContext } from './PageContext';
+import { PostDrawerProvider } from '../Post/View/PostDrawerContext';
+import PostDrawer from '../Post/View/PostDrawer';
 
 function SliderArrow(props: any) {
     const { className, style, onClick } = props;
@@ -63,49 +65,54 @@ export default function SelectedCard() {
         }
     }, [showCardSlider]);
 
+    const userLocation = locationStorage.getItem();
+
     return (
-        <Fade in={showCardSlider} mountOnEnter unmountOnExit>
-            <div className='w-full absolute bottom-0 z-[3]'>
-                <div className={`${isWide ? 'w-[90%]' : 'w-full'} mx-auto`}>
-                    <MainFab
-                        onClick={() => setShowCardSlider(false)}
-                        color='error'
-                        size='small'
-                        sx={{
-                            position: 'absolute',
-                            bottom: '1rem',
-                            right: '1rem',
-                        }}
-                    >
-                        <KeyboardArrowDownIcon />
-                    </MainFab>
-                    <Slider
-                        lazyLoad='ondemand'
-                        infinite={isWide}
-                        speed={500}
-                        slidesToShow={isWide ? 2 : 1}
-                        slidesToScroll={1}
-                        adaptiveHeight
-                        arrows={isWide}
-                        centerMode={isWide}
-                        className='center'
-                        nextArrow={<SliderArrow />}
-                        prevArrow={<SliderArrow />}
-                        beforeChange={onSwipeSlider}
-                    >
-                        {listScanData.map((item) => {
-                            return (
-                                <div key={item._id} className='px-2'>
-                                    <SimplePost
-                                        post={item}
-                                        userLocation={locationStorage.getItem()}
-                                    />
-                                </div>
-                            );
-                        })}
-                    </Slider>
+        <PostDrawerProvider>
+            <Fade in={showCardSlider} mountOnEnter unmountOnExit>
+                <div className='w-full absolute bottom-0 z-[3]'>
+                    <div className={`${isWide ? 'w-[90%]' : 'w-full'} mx-auto`}>
+                        <MainFab
+                            onClick={() => setShowCardSlider(false)}
+                            color='error'
+                            size='small'
+                            sx={{
+                                position: 'absolute',
+                                bottom: '1rem',
+                                right: '1rem',
+                            }}
+                        >
+                            <KeyboardArrowDownIcon />
+                        </MainFab>
+                        <Slider
+                            lazyLoad='ondemand'
+                            infinite={isWide}
+                            speed={500}
+                            slidesToShow={isWide ? 2 : 1}
+                            slidesToScroll={1}
+                            adaptiveHeight
+                            arrows={isWide}
+                            centerMode={isWide}
+                            className='center'
+                            nextArrow={<SliderArrow />}
+                            prevArrow={<SliderArrow />}
+                            beforeChange={onSwipeSlider}
+                        >
+                            {listScanData.map((item) => {
+                                return (
+                                    <div key={item._id} className='px-2'>
+                                        <SimplePost
+                                            post={item}
+                                            userLocation={userLocation}
+                                        />
+                                    </div>
+                                );
+                            })}
+                        </Slider>
+                    </div>
                 </div>
-            </div>
-        </Fade>
+            </Fade>
+            <PostDrawer userLocation={userLocation} />
+        </PostDrawerProvider>
     );
 }
