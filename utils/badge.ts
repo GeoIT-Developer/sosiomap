@@ -1,4 +1,73 @@
 import { ASSETS } from './constant';
+import DrawTwoToneIcon from '@mui/icons-material/DrawTwoTone';
+import ForumTwoToneIcon from '@mui/icons-material/ForumTwoTone';
+import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
+import RecordVoiceOverTwoToneIcon from '@mui/icons-material/RecordVoiceOverTwoTone';
+import TodayTwoToneIcon from '@mui/icons-material/TodayTwoTone';
+import CalendarTodayTwoToneIcon from '@mui/icons-material/CalendarTodayTwoTone';
+import TrendingUpTwoToneIcon from '@mui/icons-material/TrendingUpTwoTone';
+import FreeBreakfastTwoToneIcon from '@mui/icons-material/FreeBreakfastTwoTone';
+import Face2TwoToneIcon from '@mui/icons-material/Face2TwoTone';
+import GroupAddTwoToneIcon from '@mui/icons-material/GroupAddTwoTone';
+import FaceRetouchingNaturalTwoToneIcon from '@mui/icons-material/FaceRetouchingNaturalTwoTone';
+import PlaceTwoToneIcon from '@mui/icons-material/PlaceTwoTone';
+import ThumbUpAltTwoToneIcon from '@mui/icons-material/ThumbUpAltTwoTone';
+import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
+import EmojiEmotionsTwoToneIcon from '@mui/icons-material/EmojiEmotionsTwoTone';
+import AddReactionTwoToneIcon from '@mui/icons-material/AddReactionTwoTone';
+import ThumbDownAltTwoToneIcon from '@mui/icons-material/ThumbDownAltTwoTone';
+import ReportTwoToneIcon from '@mui/icons-material/ReportTwoTone';
+import FlagTwoToneIcon from '@mui/icons-material/FlagTwoTone';
+import FeedbackTwoToneIcon from '@mui/icons-material/FeedbackTwoTone';
+import FeedTwoToneIcon from '@mui/icons-material/FeedTwoTone';
+import NewspaperTwoToneIcon from '@mui/icons-material/NewspaperTwoTone';
+import CelebrationTwoToneIcon from '@mui/icons-material/CelebrationTwoTone';
+import EventAvailableTwoToneIcon from '@mui/icons-material/EventAvailableTwoTone';
+import AirplanemodeActiveTwoToneIcon from '@mui/icons-material/AirplanemodeActiveTwoTone';
+import AirplaneTicketTwoToneIcon from '@mui/icons-material/AirplaneTicketTwoTone';
+import LocalActivityTwoToneIcon from '@mui/icons-material/LocalActivityTwoTone';
+import GradeTwoToneIcon from '@mui/icons-material/GradeTwoTone';
+import TrafficTwoToneIcon from '@mui/icons-material/TrafficTwoTone';
+import DirectionsTwoToneIcon from '@mui/icons-material/DirectionsTwoTone';
+import ForestTwoToneIcon from '@mui/icons-material/ForestTwoTone';
+import EnergySavingsLeafTwoToneIcon from '@mui/icons-material/EnergySavingsLeafTwoTone';
+import FloodTwoToneIcon from '@mui/icons-material/FloodTwoTone';
+import SupportTwoToneIcon from '@mui/icons-material/SupportTwoTone';
+import Diversity3TwoToneIcon from '@mui/icons-material/Diversity3TwoTone';
+import VolunteerActivismTwoToneIcon from '@mui/icons-material/VolunteerActivismTwoTone';
+import StoreTwoToneIcon from '@mui/icons-material/StoreTwoTone';
+import LocalGroceryStoreTwoToneIcon from '@mui/icons-material/LocalGroceryStoreTwoTone';
+import DiscountTwoToneIcon from '@mui/icons-material/DiscountTwoTone';
+import LocalOfferTwoToneIcon from '@mui/icons-material/LocalOfferTwoTone';
+import LiveHelpTwoToneIcon from '@mui/icons-material/LiveHelpTwoTone';
+import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
+import CreateNewFolderTwoToneIcon from '@mui/icons-material/CreateNewFolderTwoTone';
+import PostAddTwoToneIcon from '@mui/icons-material/PostAddTwoTone';
+import GroupWorkTwoToneIcon from '@mui/icons-material/GroupWorkTwoTone';
+import SubscriptionsTwoToneIcon from '@mui/icons-material/SubscriptionsTwoTone';
+
+export const BadgeColor = {
+    bronze: {
+        bgColor: '#CD7F32',
+        color: '#8B4513',
+    },
+    silver: {
+        bgColor: '#C0C0C0',
+        color: '#4682B4',
+    },
+    gold: {
+        bgColor: '#FFD700',
+        color: '#B8860B',
+    },
+    platinum: {
+        bgColor: '#E5E4E2',
+        color: '#708090',
+    },
+    diamond: {
+        bgColor: '#B9F2FF',
+        color: '#1E90FF',
+    },
+};
 
 export type BadgeInterface = {
     id: string;
@@ -9,6 +78,7 @@ export type BadgeInterface = {
     }[];
     type: 'common' | 'special' | 'time-limited';
     image?: string;
+    icon?: typeof DrawTwoToneIcon;
 };
 
 export const BADGE: { [key: string]: BadgeInterface } = {
@@ -23,6 +93,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 1000 },
         ],
         type: 'common',
+        icon: DrawTwoToneIcon,
     },
     COMMENTATOR: {
         id: 'commentator',
@@ -35,6 +106,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 1000 },
         ],
         type: 'common',
+        icon: ForumTwoToneIcon,
     },
     TRENDSETTER: {
         id: 'trendsetter',
@@ -47,6 +119,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 20000 },
         ],
         type: 'common',
+        icon: TrendingUpTwoToneIcon,
     },
     CHATTY: {
         id: 'chatty',
@@ -59,6 +132,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: RecordVoiceOverTwoToneIcon,
     },
     VISITOR: {
         id: 'visitor',
@@ -71,6 +145,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 730 },
         ],
         type: 'common',
+        icon: TodayTwoToneIcon,
     },
     DEDICATED: {
         id: 'dedicated',
@@ -83,6 +158,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 365 },
         ],
         type: 'common',
+        icon: CalendarTodayTwoToneIcon,
     },
     CURIOUS: {
         id: 'curious',
@@ -95,10 +171,11 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: VisibilityTwoToneIcon,
     },
     NO_LIFE: {
         id: 'no-life',
-        description: 'TotalPosts',
+        description: 'Total Screen time',
         level: [
             { name: 'bronze', value: 10 },
             { name: 'silver', value: 50 },
@@ -107,6 +184,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 500 },
         ],
         type: 'common',
+        icon: FreeBreakfastTwoToneIcon,
     },
     INFLUENCER: {
         id: 'influencer',
@@ -119,6 +197,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 1000 },
         ],
         type: 'common',
+        icon: Face2TwoToneIcon,
     },
     CONNECTOR: {
         id: 'connector',
@@ -131,6 +210,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 1000 },
         ],
         type: 'common',
+        icon: GroupAddTwoToneIcon,
     },
     POPULAR: {
         id: 'popular',
@@ -143,6 +223,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 20000 },
         ],
         type: 'common',
+        icon: FaceRetouchingNaturalTwoToneIcon,
     },
     WAYFARER: {
         id: 'wayfarer',
@@ -155,6 +236,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 100 },
         ],
         type: 'common',
+        icon: PlaceTwoToneIcon,
     },
     INSPIRATOR: {
         id: 'inspirator',
@@ -167,6 +249,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 2000 },
         ],
         type: 'common',
+        icon: ThumbUpAltTwoToneIcon,
     },
     ENCOURAGER: {
         id: 'encourager',
@@ -179,6 +262,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: FavoriteTwoToneIcon,
     },
     HONORED: {
         id: 'honored',
@@ -191,6 +275,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 1000 },
         ],
         type: 'common',
+        icon: EmojiEmotionsTwoToneIcon,
     },
     APPRECIATOR: {
         id: 'appreciator',
@@ -203,6 +288,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 2000 },
         ],
         type: 'common',
+        icon: AddReactionTwoToneIcon,
     },
     CONTROVERSIAL: {
         id: 'controversial',
@@ -215,6 +301,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 2000 },
         ],
         type: 'common',
+        icon: ThumbDownAltTwoToneIcon,
     },
     PROVOCATOR: {
         id: 'provocator',
@@ -227,6 +314,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 1000 },
         ],
         type: 'common',
+        icon: FlagTwoToneIcon,
     },
     CRITIQUE: {
         id: 'critique',
@@ -239,6 +327,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: FeedbackTwoToneIcon,
     },
     DEBUNKER: {
         id: 'debunker',
@@ -251,6 +340,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 2000 },
         ],
         type: 'common',
+        icon: ReportTwoToneIcon,
     },
     JOURNALIST: {
         id: 'journalist',
@@ -263,6 +353,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 500 },
         ],
         type: 'common',
+        icon: FeedTwoToneIcon,
     },
     HEADLINE_FAN: {
         id: 'headline-fan',
@@ -275,6 +366,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: NewspaperTwoToneIcon,
     },
     ORGANIZER: {
         id: 'organizer',
@@ -287,6 +379,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 500 },
         ],
         type: 'common',
+        icon: CelebrationTwoToneIcon,
     },
     EVENT_ENTHUSIAST: {
         id: 'event-enthusiast',
@@ -300,6 +393,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: EventAvailableTwoToneIcon,
     },
     TOUR_GUIDE: {
         id: 'tour-guide',
@@ -312,6 +406,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 500 },
         ],
         type: 'common',
+        icon: AirplanemodeActiveTwoToneIcon,
     },
     TRAVELER: {
         id: 'traveler',
@@ -325,6 +420,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: AirplaneTicketTwoToneIcon,
     },
     STORY_TELLER: {
         id: 'story-teller',
@@ -338,6 +434,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 1000 },
         ],
         type: 'common',
+        icon: LocalActivityTwoToneIcon,
     },
     STORY_LOVER: {
         id: 'story-lover',
@@ -351,6 +448,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: GradeTwoToneIcon,
     },
     TRAFFIC_REPORTER: {
         id: 'traffic-reporter',
@@ -363,6 +461,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 500 },
         ],
         type: 'common',
+        icon: TrafficTwoToneIcon,
     },
     TRAFFIC_WATCHER: {
         id: 'traffic-watcher',
@@ -376,6 +475,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: DirectionsTwoToneIcon,
     },
     ECO_WARRIOR: {
         id: 'eco-warrior',
@@ -388,6 +488,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 500 },
         ],
         type: 'common',
+        icon: ForestTwoToneIcon,
     },
     ECO_ADVOCATE: {
         id: 'eco-advocate',
@@ -401,6 +502,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: EnergySavingsLeafTwoToneIcon,
     },
     DISASTER_REPORTER: {
         id: 'disaster-reporter',
@@ -413,6 +515,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 500 },
         ],
         type: 'common',
+        icon: FloodTwoToneIcon,
     },
     DISASTER_RESPONDER: {
         id: 'disaster-responder',
@@ -426,6 +529,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: SupportTwoToneIcon,
     },
     COMMUNITY_BUILDER: {
         id: 'community-builder',
@@ -438,6 +542,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 500 },
         ],
         type: 'common',
+        icon: VolunteerActivismTwoToneIcon,
     },
     SOCIAL_BUTTERFLY: {
         id: 'social-butterfly',
@@ -451,6 +556,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: Diversity3TwoToneIcon,
     },
     TRADER: {
         id: 'trader',
@@ -463,6 +569,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 500 },
         ],
         type: 'common',
+        icon: StoreTwoToneIcon,
     },
     SHOPPER: {
         id: 'shopper',
@@ -476,6 +583,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: LocalGroceryStoreTwoToneIcon,
     },
     PROMOTER: {
         id: 'promoter',
@@ -488,6 +596,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 500 },
         ],
         type: 'common',
+        icon: DiscountTwoToneIcon,
     },
     PROMO_HUNTER: {
         id: 'promo-hunter',
@@ -501,6 +610,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: LocalOfferTwoToneIcon,
     },
     KNOWLEDGE_SEEKER: {
         id: 'knowledge-seeker',
@@ -513,6 +623,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 500 },
         ],
         type: 'common',
+        icon: LiveHelpTwoToneIcon,
     },
     KNOWLEDGE_SHARER: {
         id: 'knowledge-sharer',
@@ -525,6 +636,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: InfoTwoToneIcon,
     },
     INITIATOR: {
         id: 'initiator',
@@ -537,6 +649,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 500 },
         ],
         type: 'common',
+        icon: CreateNewFolderTwoToneIcon,
     },
     CONTRIBUTOR: {
         id: 'contributor',
@@ -549,6 +662,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 500 },
         ],
         type: 'common',
+        icon: PostAddTwoToneIcon,
     },
     DISCUSSION_LEADER: {
         id: 'discussion-leader',
@@ -562,6 +676,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 5000 },
         ],
         type: 'common',
+        icon: GroupWorkTwoToneIcon,
     },
     STAY_UPDATED: {
         id: 'stay-updated',
@@ -575,6 +690,7 @@ export const BADGE: { [key: string]: BadgeInterface } = {
             { name: 'diamond', value: 1000 },
         ],
         type: 'common',
+        icon: SubscriptionsTwoToneIcon,
     },
 };
 

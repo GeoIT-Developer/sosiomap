@@ -1,4 +1,10 @@
-import { cloneElement, ReactElement, useEffect, useState } from 'react';
+import {
+    cloneElement,
+    CSSProperties,
+    ReactElement,
+    useEffect,
+    useState,
+} from 'react';
 import Lightbox, { Plugin, Render, Slide } from 'yet-another-react-lightbox';
 import Video from 'yet-another-react-lightbox/plugins/video';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
@@ -19,9 +25,10 @@ export type MediaType = {
 type Props = {
     media: MediaType[];
     children: ReactElement;
+    slideStyles?: CSSProperties;
 };
 
-export default function ImageViewer({ media, children }: Props) {
+export default function ImageViewer({ media, children, slideStyles }: Props) {
     const queryParams = useQueryParams();
     const [slides, setSlides] = useState<Slide[]>([]);
     const [openLightBox, setOpenLightBox] = useState<SimpleLightboxType>({
@@ -129,6 +136,9 @@ export default function ImageViewer({ media, children }: Props) {
                 close={() => handleCloseLightbox(openLightBox.index)}
                 render={setting.render}
                 carousel={setting.carousel}
+                styles={{
+                    slide: slideStyles as any,
+                }}
             />
         </>
     );

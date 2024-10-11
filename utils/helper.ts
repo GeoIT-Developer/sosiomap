@@ -345,6 +345,7 @@ export function extensionToMimeType(extension: string): string | undefined {
 }
 
 export function getFileExtensionFromUrl(url: string): string {
+    if (!url) return '';
     const lastDotIndex = url.lastIndexOf('.');
     if (lastDotIndex !== -1) {
         const extension = url.slice(lastDotIndex + 1).toLowerCase();
