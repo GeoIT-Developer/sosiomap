@@ -4,7 +4,7 @@ export async function GET(req: NextRequest) {
     try {
         const txt = req.nextUrl.searchParams.get('txt') as string;
         const response = await fetch(
-            `https://nominatim.openstreetmap.org/search?format=geojson&q=${txt}`,
+            `https://nominatim.openstreetmap.org/search?format=geojson&polygon_geojson=1&q=${txt}`,
         );
 
         if (!response.ok) {
