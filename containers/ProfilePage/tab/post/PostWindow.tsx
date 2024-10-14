@@ -13,6 +13,8 @@ import PostSkeleton from '@/components/skeleton/Post';
 import NoData from '@/components/skeleton/NoData';
 import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
 import React from 'react';
+import { PostDrawerProvider } from '@/containers/Post/View/PostDrawerContext';
+import PostDrawer from '@/containers/Post/View/PostDrawer';
 
 const cache = new CellMeasurerCache({
     fixedWidth: true,
@@ -77,7 +79,7 @@ export default function PostWindow({
     }
 
     return (
-        <>
+        <PostDrawerProvider>
             {posts.length === 0 && !isLoading && <NoData />}
             {isLoading && <PostSkeleton />}
             <AutoSizer>
@@ -92,6 +94,7 @@ export default function PostWindow({
                     />
                 )}
             </AutoSizer>
-        </>
+            <PostDrawer userLocation={userLocation} />
+        </PostDrawerProvider>
     );
 }

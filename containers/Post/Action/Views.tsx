@@ -2,7 +2,7 @@ import { ClickAwayListener, IconButton, Tooltip } from '@mui/material';
 import { useScopedI18n } from '@/locales/client';
 import { useState } from 'react';
 import LeaderboardOutlinedIcon from '@mui/icons-material/LeaderboardOutlined';
-import { formatDataCount } from '@/utils/helper';
+import useFormattingData from '@/hooks/useFormattingData';
 
 type Props = {
     value: number;
@@ -12,6 +12,7 @@ export default function Views({ value }: Props) {
     const [openTooltip, setOpenTooltip] = useState(false);
 
     const t = useScopedI18n('post.statistic');
+    const { formattingData } = useFormattingData();
 
     const handleTooltipClose = () => {
         setOpenTooltip(false);
@@ -21,11 +22,6 @@ export default function Views({ value }: Props) {
         setOpenTooltip(true);
     };
 
-    const tFormat = useScopedI18n('unit.number');
-    function formattingData(count: number | undefined) {
-        const eData = formatDataCount(count);
-        return `${eData.count}${eData.label ? tFormat(eData.label) : ''}`;
-    }
     const eVal = formattingData(value);
     return (
         <ClickAwayListener onClickAway={handleTooltipClose}>

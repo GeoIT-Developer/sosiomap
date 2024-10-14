@@ -699,14 +699,14 @@ export const SPECIAL_BADGE: { [key: string]: BadgeInterface } = {
         id: 'early-adopter',
         description: 'For users who created an account before August 17, 2024',
         type: 'time-limited',
-        image: `${ASSETS.BADGE}/early-adopter.jpeg`,
+        image: `${ASSETS.BADGE}/early-adopter.png`,
     },
     BETA_TESTER: {
         id: 'beta-tester',
         description:
             'For users who were active or logged in between August 17, 2024, and December 31, 2024',
         type: 'time-limited',
-        image: `${ASSETS.BADGE}/beta-tester.jpeg`,
+        image: `${ASSETS.BADGE}/beta-tester.png`,
     },
 };
 

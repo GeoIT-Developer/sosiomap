@@ -273,7 +273,7 @@ export async function shareUrl(
                 });
                 resolve();
             } catch (error) {
-                reject(error);
+                resolve();
             }
         } else {
             reject(

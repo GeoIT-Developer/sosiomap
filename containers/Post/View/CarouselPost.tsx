@@ -1,95 +1,31 @@
-import {
-    Box,
-    Divider,
-    ListItem,
-    ListItemAvatar,
-    ListItemText,
-    Stack,
-    Typography,
-} from '@mui/material';
-import { useI18n } from '@/locales/client';
+import { Box, Card, Stack, Typography } from '@mui/material';
 import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interface';
-import {
-    calculateManhattanDistance,
-    formatDateTime,
-    formatDistance,
-    getMimeTypeFromURL,
-} from '@/utils/helper';
+import { getMimeTypeFromURL } from '@/utils/helper';
 import { MyLocation } from '@/hooks/useGeolocation';
-import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import ImageVideoCarousel from './ImageVideoCarousel';
-import SocialMediaPost from './SocialMediaPost';
-import CommentPage from '../Comment';
-import MyAvatar from '@/components/preview/MyAvatar';
-import ProfileDialog from '@/containers/ProfilePage/shared/ProfileDialog';
+import HeaderSectionPost from './HeaderSectionPost';
+import BottomSectionPost from './BottomSectionPost';
 
 type Props = {
     post: MapPostDataInterface;
     userLocation: MyLocation | null;
+    onChangePost?: (post: MapPostDataInterface) => void;
 };
 
-export default function CarouselPost({ post, userLocation }: Props) {
-    const t = useI18n();
+export default function CarouselPost({
+    post,
+    userLocation,
+    onChangePost,
+}: Props) {
     return (
-        <Box>
-            <ListItem className='!px-0'>
-                <ListItemAvatar>
-                    <ProfileDialog
-                        name={post.name}
-                        username={post.username}
-                        photo_url={post.photo_url}
-                    >
-                        <MyAvatar name={post.name} photo_url={post.photo_url} />
-                    </ProfileDialog>
-                </ListItemAvatar>
-                <ListItemText
-                    primary={
-                        <ProfileDialog
-                            name={post.name}
-                            username={post.username}
-                            photo_url={post.photo_url}
-                        >
-                            <span className='cursor-pointer hover:underline active:underline'>
-                                {post.name}
-                                <span className='ml-1 text-slate-500'>
-                                    @{post.username}
-                                </span>
-                            </span>
-                        </ProfileDialog>
-                    }
-                    primaryTypographyProps={{
-                        className: '!text-sm ',
-                    }}
-                    secondary={
-                        <div className='justify-between flex'>
-                            <Typography className='!text-xs'>
-                                {formatDateTime(
-                                    post.createdAt,
-                                    'DD MMM YYYY - HH:mm',
-                                )}
-                            </Typography>
-                            <Typography className='!text-xs'>
-                                {formatDistance(
-                                    calculateManhattanDistance(
-                                        userLocation?.latitude || 0,
-                                        userLocation?.longitude || 0,
-                                        post.location.coordinates[1],
-                                        post.location.coordinates[0],
-                                    ),
-                                )}
-                                {t('unit.km')}
-                            </Typography>
-                        </div>
-                    }
-                    secondaryTypographyProps={{
-                        className: '!text-xs ',
-                        component: 'div',
-                    }}
-                />
-            </ListItem>
-            <Stack spacing={1} className='!px-0'>
+        <Card
+            variant='elevation'
+            elevation={5}
+            sx={{ borderRadius: '8px' }}
+            className='pb-1 mx-1'
+        >
+            <HeaderSectionPost post={post} userLocation={userLocation} />
+            <Stack spacing={1} className='px-4'>
                 {post.title && (
                     <Typography
                         component='p'
@@ -100,7 +36,7 @@ export default function CarouselPost({ post, userLocation }: Props) {
                     </Typography>
                 )}
 
-                <Box>
+                <Box className='!-mx-4'>
                     <ImageVideoCarousel
                         media={post.media.map((item) => ({
                             url: item.file_url,
@@ -117,16 +53,8 @@ export default function CarouselPost({ post, userLocation }: Props) {
                 >
                     {post.body}
                 </Typography>
-
-                <Stack direction='row' spacing={2}>
-                    <TextsmsOutlinedIcon fontSize='small' />
-                    <FavoriteBorderOutlinedIcon fontSize='small' />
-                    <BarChartOutlinedIcon fontSize='small' />
-                </Stack>
             </Stack>
-            <SocialMediaPost postUrlProps={post.post_url} />
-            <Divider className='!mt-2'>{t('post.comment')}</Divider>
-            <CommentPage postId={post._id} topicId={post.topic_id} />
-        </Box>
+            <BottomSectionPost post={post} onChangePost={onChangePost} />
+        </Card>
     );
 }

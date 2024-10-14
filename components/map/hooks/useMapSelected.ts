@@ -251,6 +251,90 @@ export function getSimplifyGeometryType(
     }
 }
 
+function polygonPulseEffect(map: Map, layerId: string, pulseTimeOut = 2000) {
+    let pulseTime = 0;
+    let animationId: number | null; // To store the requestAnimationFrame ID
+
+    function animatePulse() {
+        pulseTime += 0.1; // Increase over time
+
+        // Calculate new opacity using sine wave
+        const newOpacity = 0.4 + Math.sin(pulseTime) * 0.3; // Oscillate between 0.2 and 0.7
+
+        // Update the fill-opacity property dynamically
+        map.setPaintProperty(layerId, 'fill-opacity', newOpacity);
+
+        // Request the next animation frame and store the ID
+        animationId = requestAnimationFrame(animatePulse);
+    }
+
+    // Function to start the pulse animation
+    function startPulse() {
+        if (!animationId) {
+            animatePulse(); // Start the animation
+        }
+    }
+
+    // Function to stop the pulse animation
+    function stopPulse() {
+        if (animationId) {
+            cancelAnimationFrame(animationId); // Stop the animation
+            animationId = null; // Reset the ID
+            map.setPaintProperty(layerId, 'fill-opacity', 0.5);
+        }
+    }
+
+    // Start the pulse animation
+    startPulse();
+
+    // Example usage to stop the animation after 5 seconds
+    setTimeout(() => {
+        stopPulse();
+    }, pulseTimeOut);
+}
+
+function linePulseEffect(map: Map, layerId: string, pulseTimeOut = 2000) {
+    let pulseTime = 0;
+    let lineAnimationId: number | null;
+
+    function animateLinePulse() {
+        pulseTime += 0.1; // Increment time
+
+        // Calculate new opacity using sine wave (oscillates between 0.4 and 0.8)
+        const newOpacity = 0.6 + Math.sin(pulseTime) * 0.2;
+
+        // Update the line-opacity property dynamically
+        map.setPaintProperty(layerId, 'line-opacity', newOpacity);
+
+        // Request the next animation frame and store the ID
+        lineAnimationId = requestAnimationFrame(animateLinePulse);
+    }
+
+    // Function to start the pulse animation
+    function startLinePulse() {
+        if (!lineAnimationId) {
+            animateLinePulse(); // Start the animation
+        }
+    }
+
+    // Function to stop the pulse animation
+    function stopLinePulse() {
+        if (lineAnimationId) {
+            cancelAnimationFrame(lineAnimationId); // Stop the animation
+            lineAnimationId = null; // Reset the ID
+            map.setPaintProperty(layerId, 'line-opacity', 1);
+        }
+    }
+
+    // Start the line pulse animation
+    startLinePulse();
+
+    // Example usage to stop the animation after 5 seconds
+    setTimeout(() => {
+        stopLinePulse();
+    }, pulseTimeOut);
+}
+
 export const showSelectedGeometry = (
     myMap: Map | null,
     feature: ObjectLiteral,
@@ -278,6 +362,7 @@ export const showSelectedGeometry = (
             LAYER_ID.SELECTED_PT_PULSING_DOT,
             LAYER_ID.SELECTED_PL,
         ];
+        linePulseEffect(myMap, selectedLayer, 3500);
     } else if (geoType === 'Polygon') {
         selectedSource = LAYER_SRC.SELECTED_PL;
         selectedLayer = LAYER_ID.SELECTED_PL;
@@ -285,6 +370,7 @@ export const showSelectedGeometry = (
             LAYER_ID.SELECTED_LN,
             LAYER_ID.SELECTED_PT_PULSING_DOT,
         ];
+        polygonPulseEffect(myMap, selectedLayer, 3500);
     }
 
     if (selectedSource && selectedLayer) {

@@ -22,6 +22,7 @@
         "submit": "Kirim",
         "save": "Simpan",
         "edit": "Ubah",
+        "delete": "Hapus",
         "post_story": "Bagikan Cerita",
         "create_new_post": "Buat Postingan Baru",
         "scan_this_area": "Pindai Area Ini"
@@ -171,6 +172,8 @@
     "post": {
         "new_post": "Buat Postingan",
         "view_post": "Lihat Postingan",
+        "post_details": "Detail Postingan",
+        "share_post": "Bagikan Postingan",
         "nearby_post": "Postingan Terdekat",
         "use_current_location": "Gunakan Lokasi Saya",
         "choose_on_map": "Pilih di Peta",
@@ -218,13 +221,21 @@
             "dangerous": "Berbahaya"
         },
         "statistic": {
-            "views": "{value} tayangan",
-            "reactions": "{value} reaksi",
-            "comments": "{value} komentar"
+            "views": "{value} Tayangan",
+            "unique_views": "{value} Tayangan Unik",
+            "reactions": "{value} Reaksi",
+            "comments": "{value} Komentar"
         },
         "fly_to": "Terbang Ke",
+        "archive_post": "Arsipkan Postingan",
+        "unarchive_post": "Batal Arsipkan Postingan",
+        "delete_post": "Hapus Postingan",
+        "delete_post_desc": "Apakah Anda yakin ingin menghapus postingan ini secara permanen? Tindakan ini tidak dapat dibatalkan. Jika Anda hanya ingin menyembunyikannya, pertimbangkan untuk menggunakan opsi Arsip.",
         "no_post_found": "Postingan tidak ditemukan!",
-        "see_more": "Selengkapnya"
+        "see_more": "Selengkapnya",
+        "my_posts": "Postingan Saya",
+        "saved": "Tersimpan",
+        "archived": "Diarsipkan"
     },
     "chat": {
         "no_chat_nearby": "Tidak ada obrolan di dekat sini!"

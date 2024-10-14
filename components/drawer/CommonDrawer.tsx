@@ -1,8 +1,8 @@
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { ReactNode, useRef, useState } from 'react';
+import { CSSProperties, ReactNode, useRef, useState } from 'react';
 
 const StyledBox = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[800],
@@ -29,6 +29,8 @@ type Props = {
     ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
     keepMounted?: boolean;
     transparent?: boolean;
+    contentStyles?: CSSProperties;
+    usePaperColor?: boolean;
 };
 
 export const useCommonDrawer = () => {
@@ -69,7 +71,20 @@ export default function CommonDrawer({
     toggleDrawer,
     keepMounted = true,
     transparent,
+    contentStyles,
+    usePaperColor,
 }: Props) {
+    const theme = useTheme();
+    const paperColor = usePaperColor ? theme.palette.background.paper : '';
+
+    const radiusStyle =
+        anchor === 'right'
+            ? { borderTopLeftRadius: 12, borderBottomLeftRadius: 12 }
+            : {
+                  borderTopLeftRadius: 12,
+                  borderTopRightRadius: 12,
+              };
+
     return (
         <SwipeableDrawer
             anchor={anchor}
@@ -83,7 +98,8 @@ export default function CommonDrawer({
             }}
             PaperProps={{
                 sx: {
-                    backgroundColor: transparent ? 'transparent' : '',
+                    backgroundColor: transparent ? 'transparent' : paperColor,
+                    ...radiusStyle,
                 },
             }}
         >
@@ -93,12 +109,13 @@ export default function CommonDrawer({
                     borderTopRightRadius: 8,
                     right: 0,
                     left: 0,
-                    backgroundColor: transparent ? 'transparent' : '',
+                    backgroundColor: transparent ? 'transparent' : paperColor,
+                    textAlign: 'center',
                 }}
             >
                 <Puller />
                 {title && (
-                    <Typography sx={{ p: 2, color: 'text.secondary' }}>
+                    <Typography sx={{ p: 2, pb: 0.5, color: 'text.secondary' }}>
                         {title}
                     </Typography>
                 )}
@@ -109,8 +126,9 @@ export default function CommonDrawer({
                     pb: 2,
                     height: '100%',
                     overflow: 'auto',
-                    backgroundColor: transparent ? 'transparent' : '',
+                    backgroundColor: transparent ? 'transparent' : paperColor,
                 }}
+                style={contentStyles}
             >
                 {children}
             </StyledBox>

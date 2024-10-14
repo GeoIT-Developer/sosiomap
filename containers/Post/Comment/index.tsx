@@ -1,6 +1,13 @@
 'use client';
 
-import { Box, Button, CircularProgress, Stack } from '@mui/material';
+import {
+    Box,
+    Button,
+    Card,
+    CircularProgress,
+    Stack,
+    Typography,
+} from '@mui/material';
 import NeedLogin from '@/components/auth/NeedLogin';
 import { useI18n } from '@/locales/client';
 import { useState } from 'react';
@@ -21,13 +28,15 @@ import {
 } from '../New/SocialMediaPost';
 import StandardPost from '../New/StandardPost';
 import SendIcon from '@mui/icons-material/Send';
+import useFormattingData from '@/hooks/useFormattingData';
 
 type Props = {
     postId: string;
     topicId: string;
+    commentValue: number;
 };
 
-export default function CommentPage({ postId, topicId }: Props) {
+export default function CommentPage({ postId, topicId, commentValue }: Props) {
     const t = useI18n();
     const [socialMediaURL, setSocialMediaURL] = useState<SocialMediaURLType>(
         initialSocialMediaURLType,
@@ -129,37 +138,58 @@ export default function CommentPage({ postId, topicId }: Props) {
         apiSendComment.call(params);
     }
 
+    const { formattingData } = useFormattingData();
+
+    // @ts-ignore
+    const commentLabel = t('post.statistic.comments', {
+        value: formattingData(commentValue),
+    });
+
     return (
-        <Stack spacing={2}>
-            <NeedLogin>
-                <SingleAccordion title={t('post.add_comment')}>
-                    <Box className='max-w-[350px]'>
-                        <StandardPost
-                            valueInputData={inputData}
-                            valueSocialMediaURL={socialMediaURL}
-                            onChangeInputData={setInputData}
-                            onChangeInputFiles={setInputFiles}
-                            onChangeSocialMediaURL={setSocialMediaURL}
-                        />
-                    </Box>
-                    <Box className='text-end mt-4'>
-                        <Button
-                            onClick={onClickSend}
-                            disabled={isLoading}
-                            variant='contained'
-                            endIcon={
-                                isLoading ? (
-                                    <CircularProgress size={24} />
-                                ) : (
-                                    <SendIcon />
-                                )
-                            }
-                        >
-                            {t('button.send')}
-                        </Button>
-                    </Box>
-                </SingleAccordion>
-            </NeedLogin>
+        <Stack spacing={0.5} className='mt-1 mx-1'>
+            <Card
+                elevation={5}
+                variant='elevation'
+                sx={{ borderRadius: '8px' }}
+            >
+                <Typography
+                    component='p'
+                    variant='body2'
+                    className='!mt-2 text-center'
+                >
+                    {commentLabel}
+                </Typography>
+                <NeedLogin>
+                    <SingleAccordion title={t('post.add_comment')}>
+                        <Box className='max-w-[350px]'>
+                            <StandardPost
+                                valueInputData={inputData}
+                                valueSocialMediaURL={socialMediaURL}
+                                onChangeInputData={setInputData}
+                                onChangeInputFiles={setInputFiles}
+                                onChangeSocialMediaURL={setSocialMediaURL}
+                            />
+                        </Box>
+                        <Box className='text-end mt-4'>
+                            <Button
+                                onClick={onClickSend}
+                                disabled={isLoading}
+                                variant='contained'
+                                endIcon={
+                                    isLoading ? (
+                                        <CircularProgress size={24} />
+                                    ) : (
+                                        <SendIcon />
+                                    )
+                                }
+                            >
+                                {t('button.send')}
+                            </Button>
+                        </Box>
+                    </SingleAccordion>
+                </NeedLogin>
+            </Card>
+
             {apiListComment.loading && <CircularProgress />}
             {listComment?.map((item) => {
                 return <CommentBox key={item._id} comment={item} />;

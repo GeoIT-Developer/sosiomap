@@ -1,6 +1,6 @@
 import { Box, CircularProgress } from '@mui/material';
 import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interface';
-import PostWindow from './PostWindow';
+
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { MyLocation } from '@/hooks/useGeolocation';
 import { LOCAL_STORAGE } from '@/utils/constant';
@@ -9,12 +9,12 @@ import { SIMPLE_POST_HEIGHT } from '@/containers/Post/View/SimplePost';
 import { useEffect, useState } from 'react';
 import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
 import { ReactionEnum } from '@/types/reaction.enum';
-import useAccessToken from '@/hooks/useAccessToken';
 import useAPI from '@/hooks/useAPI';
 import API from '@/configs/api';
 import { ObjectLiteral } from '@/types/object-literal.interface';
 import MainFab from '@/components/button/MainFab';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import PostWindow from '@/containers/ProfilePage/tab/post/PostWindow';
 
 function getMinimunHeight(
     screenHeight: number,
@@ -30,27 +30,16 @@ function getMinimunHeight(
     }
 }
 
-type Props = {
-    type: 'my-post' | 'saved' | 'archived';
-};
-
-export default function PostContent({ type }: Props) {
-    const accessToken = useAccessToken();
+export default function PostContent({ username }: { username: string }) {
     const [listMapPost, setListMapPost] = useState<MapPostDataInterface[]>([]);
     const [locationStorage] = useLocalStorage<MyLocation | null>(
         LOCAL_STORAGE.LASK_KNOWN_LOCATION,
         null,
     );
     const { fragmentHeightStyle, height } = useWindowHeight();
-    const TheAPI =
-        type === 'saved'
-            ? API.getProfileSavedPosts
-            : type === 'archived'
-              ? API.getProfileArchivedPosts
-              : API.getProfilePosts;
 
     const apiQueryPost = useAPI<ObjectLiteral, string, MapPostDataInterface[]>(
-        TheAPI,
+        API.getUserPosts,
         {
             listkey: 'data',
             onSuccess: (_raw, res) => {
@@ -60,9 +49,9 @@ export default function PostContent({ type }: Props) {
     );
 
     useEffect(() => {
-        if (!accessToken?.sub) return;
-        apiQueryPost.call();
-    }, [accessToken?.sub]);
+        if (!username) return;
+        apiQueryPost.call(username);
+    }, [username]);
 
     function onChangeStat(stats: PostStatInterface, reactionId: string) {
         const newList = [...listMapPost];
