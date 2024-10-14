@@ -235,7 +235,8 @@
         "see_more": "Selengkapnya",
         "my_posts": "Postingan Saya",
         "saved": "Tersimpan",
-        "archived": "Diarsipkan"
+        "archived": "Diarsipkan",
+        "post_by_user": "Postingan oleh @{value}"
     },
     "chat": {
         "no_chat_nearby": "Tidak ada obrolan di dekat sini!"
