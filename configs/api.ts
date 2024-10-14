@@ -103,6 +103,38 @@ const API = {
         });
     },
 
+    postShare: (post_id: string) => {
+        return HOST.post(`posts/share/${post_id}`);
+    },
+
+    postBookmark: ({
+        post_id,
+        bookmark,
+    }: {
+        post_id: string;
+        bookmark: boolean;
+    }) => {
+        return HOST.post(
+            `posts/bookmark/${post_id}/${bookmark ? 'add' : 'remove'}`,
+        );
+    },
+
+    postArchive: ({
+        post_id,
+        archive,
+    }: {
+        post_id: string;
+        archive: boolean;
+    }) => {
+        return HOST.post(
+            `posts/archive/${post_id}/${archive ? 'archive' : 'unarchive'}`,
+        );
+    },
+
+    postDelete: (post_id: string) => {
+        return HOST.delete(`posts/${post_id}`);
+    },
+
     postComment: (params: PostCommentParamsInterface) => {
         const formData = new FormData();
         Object.keys(params).forEach((key) => {
@@ -155,6 +187,8 @@ const API = {
     },
 
     getProfilePosts: () => HOST.get(`users/me/posts`),
+    getProfileSavedPosts: () => HOST.get(`users/me/posts/saved`),
+    getProfileArchivedPosts: () => HOST.get(`users/me/posts/archived`),
 
     getUser: (username: string) => {
         return HOST.get(`users/${username}`, {

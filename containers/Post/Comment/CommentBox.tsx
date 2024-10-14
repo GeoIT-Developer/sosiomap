@@ -1,5 +1,6 @@
 import {
     Box,
+    Card,
     ListItem,
     ListItemAvatar,
     ListItemText,
@@ -25,7 +26,7 @@ type Props = {
 export default function CommentBox({ comment }: Props) {
     const t = useI18n();
     return (
-        <Box>
+        <Card variant='elevation' elevation={5} sx={{ borderRadius: '8px' }}>
             <ListItem className='!items-start'>
                 <ListItemAvatar sx={{ paddingTop: '0.35rem' }}>
                     <ProfileDialog
@@ -106,6 +107,6 @@ export default function CommentBox({ comment }: Props) {
                 />
             </ListItem>
             <SocialMediaPost postUrlProps={comment.post_url} />
-        </Box>
+        </Card>
     );
 }

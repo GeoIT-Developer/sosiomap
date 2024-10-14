@@ -1,35 +1,86 @@
-import { useEffect, useState } from 'react';
-import useAPI from '@/hooks/useAPI';
-import { ObjectLiteral } from '@/types/object-literal.interface';
-import API from '@/configs/api';
-import { MapPostDataInterface } from '@/types/api/responses/map-post-data.interface';
-import useAccessToken from '@/hooks/useAccessToken';
+import { useState } from 'react';
 import PostContent from './Content';
+import { Box, Paper, Tab, Tabs } from '@mui/material';
+import TabPanel, { a11yProps } from '@/components/tab/TabPanel';
+import { useScopedI18n } from '@/locales/client';
+
+enum ProfilePostTabEnum {
+    MY_POST = 'my-post',
+    SAVED = 'saved',
+    ARCHIVED = 'archived',
+}
 
 export default function PostTab() {
-    const accessToken = useAccessToken();
-    const [listMapPost, setListMapPost] = useState<MapPostDataInterface[]>([]);
+    const t = useScopedI18n('post');
 
-    const apiQueryPost = useAPI<ObjectLiteral, string, MapPostDataInterface[]>(
-        API.getProfilePosts,
-        {
-            listkey: 'data',
-            onSuccess: (_raw, res) => {
-                setListMapPost(res?.list || []);
-            },
-        },
+    const [activeTab, setActiveTab] = useState<ProfilePostTabEnum>(
+        ProfilePostTabEnum.MY_POST,
     );
 
-    useEffect(() => {
-        if (!accessToken?.sub) return;
-        apiQueryPost.call();
-    }, [accessToken?.sub]);
+    const handleTabChange = (
+        _event: React.SyntheticEvent,
+        newValue: ProfilePostTabEnum,
+    ) => {
+        setActiveTab(newValue);
+    };
 
     return (
-        <PostContent
-            isLoading={apiQueryPost.loading}
-            listMapPost={listMapPost}
-            setListMapPost={setListMapPost}
-        />
+        <>
+            <Paper
+                sx={{
+                    borderBottom: 1,
+                    borderColor: 'divider',
+                    position: 'sticky',
+                    top: 0,
+                    zIndex: 1,
+                }}
+            >
+                <Tabs
+                    value={activeTab}
+                    onChange={handleTabChange}
+                    textColor='inherit'
+                    variant='fullWidth'
+                >
+                    <Tab
+                        label={t('my_posts')}
+                        value={ProfilePostTabEnum.MY_POST}
+                        {...a11yProps(ProfilePostTabEnum.MY_POST)}
+                    />
+                    <Tab
+                        label={t('saved')}
+                        value={ProfilePostTabEnum.SAVED}
+                        {...a11yProps(ProfilePostTabEnum.SAVED)}
+                    />
+                    <Tab
+                        label={t('archived')}
+                        value={ProfilePostTabEnum.ARCHIVED}
+                        {...a11yProps(ProfilePostTabEnum.ARCHIVED)}
+                    />
+                </Tabs>
+            </Paper>
+            <Box>
+                <TabPanel
+                    value={activeTab}
+                    index={ProfilePostTabEnum.MY_POST}
+                    keepMounted
+                >
+                    <PostContent type='my-post' />
+                </TabPanel>
+                <TabPanel
+                    value={activeTab}
+                    index={ProfilePostTabEnum.SAVED}
+                    keepMounted
+                >
+                    <PostContent type='saved' />
+                </TabPanel>
+                <TabPanel
+                    value={activeTab}
+                    index={ProfilePostTabEnum.ARCHIVED}
+                    keepMounted
+                >
+                    <PostContent type='archived' />
+                </TabPanel>
+            </Box>
+        </>
     );
 }

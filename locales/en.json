@@ -22,6 +22,7 @@
         "submit": "Submit",
         "save": "Save",
         "edit": "Edit",
+        "delete": "Delete",
         "post_story": "Post Story",
         "create_new_post": "Create New Post",
         "scan_this_area": "Scan This Area"
@@ -171,6 +172,8 @@
     "post": {
         "new_post": "New Post",
         "view_post": "View Post",
+        "post_details": "Post Details",
+        "share_post": "Share Post",
         "nearby_post": "Nearby Post",
         "use_current_location": "Use My Current Location",
         "choose_on_map": "Choose on Map",
@@ -218,13 +221,21 @@
             "dangerous": "Dangerous"
         },
         "statistic": {
-            "views": "{value} views",
-            "reactions": "{value} reactions",
-            "comments": "{value} comments"
+            "views": "{value} Views",
+            "unique_views": "{value} Unique Views",
+            "reactions": "{value} Reactions",
+            "comments": "{value} Comments"
         },
         "fly_to": "Fly To",
+        "archive_post": "Archive Post",
+        "unarchive_post": "Unarchive Post",
+        "delete_post": "Delete Post",
+        "delete_post_desc": "Are you sure you want to permanently delete this post? This action cannot be undone. If you just want to hide it, consider using the Archive option instead.",
         "no_post_found": "No posts found!",
-        "see_more": "See More"
+        "see_more": "See More",
+        "my_posts": "My Posts",
+        "saved": "Saved",
+        "archived": "Archived"
     },
     "chat": {
         "no_chat_nearby": "No nearby chats!"

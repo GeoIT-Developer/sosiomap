@@ -6,7 +6,6 @@ import {
     MenuItem,
 } from '@mui/material';
 import { useScopedI18n } from '@/locales/client';
-import { formatDataCount } from '@/utils/helper';
 import { useEffect, useMemo, useState } from 'react';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
@@ -15,10 +14,11 @@ import MyImage from '@/components/preview/MyImage';
 import { ASSETS } from '@/utils/constant';
 import { ReactionEnum } from '@/types/reaction.enum';
 import { useSession } from 'next-auth/react';
+import useFormattingData from '@/hooks/useFormattingData';
 
 export type ReactionType = 'positive' | 'negative';
 
-type ReactionDataType = {
+export type ReactionDataType = {
     label: string;
     id: string;
     type: 'positive' | 'negative';
@@ -110,7 +110,7 @@ const REACTION: { [key: string]: Omit<ReactionDataType, 'label'> } = {
 
 export const LIST_REACTION = Object.values(REACTION);
 
-const useListReaction = (type: ReactionType) => {
+export const useListReaction = (type: ReactionType | 'all') => {
     const t = useScopedI18n('post.reaction');
     const positiveReaction: ReactionDataType[] = useMemo(
         (): ReactionDataType[] => [
@@ -187,7 +187,11 @@ const useListReaction = (type: ReactionType) => {
         [],
     );
 
-    return type === 'negative' ? negativeReaction : positiveReaction;
+    return type === 'negative'
+        ? negativeReaction
+        : type === 'positive'
+          ? positiveReaction
+          : [...positiveReaction, ...negativeReaction];
 };
 
 export const useReaction = () => {
@@ -245,7 +249,7 @@ export default function Reaction({
     }, [reaction]);
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
+    const openMenu = Boolean(anchorEl);
     const handleAnchor = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -253,11 +257,7 @@ export default function Reaction({
         setAnchorEl(null);
     };
 
-    const tFormat = useScopedI18n('unit.number');
-    function formattingData(count: number | undefined) {
-        const eData = formatDataCount(count);
-        return `${eData.count}${eData.label ? tFormat(eData.label) : ''}`;
-    }
+    const { formattingData } = useFormattingData();
 
     function onClickReaction() {
         if (selectedReaction?.id) {
@@ -337,7 +337,7 @@ export default function Reaction({
 
             <Menu
                 anchorEl={anchorEl}
-                open={open}
+                open={openMenu}
                 onClose={handleClose}
                 MenuListProps={{
                     className: '!py-0',
@@ -366,9 +366,11 @@ export default function Reaction({
                                 </>
                             )}
                             {item.format === 'text' && (
-                                <span className='!font-pacifico w-full text-center'>
-                                    {item.label}
-                                </span>
+                                <ListItemText className='w-full text-center'>
+                                    <span className='!font-pacifico'>
+                                        {item.label}
+                                    </span>
+                                </ListItemText>
                             )}
                         </MenuItem>
                     );

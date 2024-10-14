@@ -15,6 +15,9 @@ import React from 'react';
 import { usePostDrawer } from './PostDrawerContext';
 import useQueryParams from '@/hooks/useQueryParams';
 import { POPUP_PARAMS } from '@/utils/constant';
+import MainFab from '@/components/button/MainFab';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import CommentPage from '../Comment';
 
 type Props = {
     userLocation: MyLocation | null;
@@ -60,23 +63,55 @@ export default function PostDrawer({ userLocation }: Props) {
         }
     }, [searchParams]);
 
+    function onChangePost(ePost: MapPostDataInterface) {
+        setPost(ePost);
+    }
+
     return (
         <CommonDrawer
             key={post?._id}
             anchor={isWide ? 'right' : 'bottom'}
             open={openDrawer}
             toggleDrawer={toggleDrawer}
-            title={t('post.view_post')}
+            title={t('post.post_details')}
             keepMounted={false}
+            contentStyles={{ padding: 0 }}
         >
-            <Box className='!min-h-[85vh] max-w-md'>
+            <Box className='max-w-md pb-16'>
                 {post?.post_type === PostTypeEnum.STANDARD && (
-                    <StandardPost post={post} userLocation={userLocation} />
+                    <StandardPost
+                        post={post}
+                        onChangePost={onChangePost}
+                        userLocation={userLocation}
+                    />
                 )}
                 {post?.post_type === PostTypeEnum.CAROUSEL && (
-                    <CarouselPost post={post} userLocation={userLocation} />
+                    <CarouselPost
+                        post={post}
+                        onChangePost={onChangePost}
+                        userLocation={userLocation}
+                    />
+                )}
+                {post && (
+                    <CommentPage
+                        postId={post._id}
+                        topicId={post.topic_id}
+                        commentValue={post.stats?.comments || 0}
+                    />
                 )}
             </Box>
+            <MainFab
+                onClick={toggleDrawer(false)}
+                color='error'
+                size='medium'
+                sx={{
+                    position: 'absolute',
+                    bottom: '1rem',
+                    right: '1rem',
+                }}
+            >
+                <KeyboardArrowDownIcon />
+            </MainFab>
         </CommonDrawer>
     );
 }

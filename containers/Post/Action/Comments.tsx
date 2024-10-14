@@ -1,20 +1,14 @@
 import { IconButton } from '@mui/material';
-import { useScopedI18n } from '@/locales/client';
-import { formatDataCount } from '@/utils/helper';
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
+import useFormattingData from '@/hooks/useFormattingData';
 
 type Props = {
     value: number;
-    onClick: (e: React.KeyboardEvent | React.MouseEvent) => void;
+    onClick?: (e: React.KeyboardEvent | React.MouseEvent) => void;
 };
 
 export default function Comments({ value, onClick }: Props) {
-    const tFormat = useScopedI18n('unit.number');
-    function formattingData(count: number | undefined) {
-        const eData = formatDataCount(count);
-        return `${eData.count}${eData.label ? tFormat(eData.label) : ''}`;
-    }
-    const eVal = formattingData(value);
+    const { formattingData } = useFormattingData();
     return (
         <IconButton
             aria-label='comment'
@@ -23,7 +17,7 @@ export default function Comments({ value, onClick }: Props) {
             onClick={onClick}
         >
             <TextsmsOutlinedIcon fontSize='inherit' />
-            <span className='text-xs'>{eVal}</span>
+            <span className='text-xs'>{formattingData(value)}</span>
         </IconButton>
     );
 }

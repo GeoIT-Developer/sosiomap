@@ -12,6 +12,7 @@ export interface MapPostDataInterface {
     media: MediaType[];
     createdAt: string;
     updatedAt: string;
+    archivedAt?: string;
     __v: number;
     distance?: number;
     username: string;
@@ -23,6 +24,7 @@ export interface MapPostDataInterface {
     date_time?: string;
     stats?: PostStatInterface;
     reaction?: ReactionEnum;
+    bookmarked?: boolean;
 }
 
 interface Location {
