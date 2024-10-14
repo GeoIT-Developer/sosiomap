@@ -5,16 +5,10 @@ import {
     Box,
     Button,
     CircularProgress,
-    FormControlLabel,
-    Grid,
-    IconButton,
-    InputLabel,
+    MobileStepper,
     Paper,
-    Radio,
-    RadioGroup,
     ToggleButton,
     ToggleButtonGroup,
-    Typography,
 } from '@mui/material';
 import useWindowHeight from '@/hooks/useWindowHeight';
 import NeedLogin from '@/components/auth/NeedLogin';
@@ -24,15 +18,12 @@ import BackAppBar from '@/components/layout/appbar/BackAppBar';
 import { useI18n } from '@/locales/client';
 import { TopicType } from '@/hooks/useTopic';
 import { useState } from 'react';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import SelectTopic from '@/components/input/SelectTopic';
 import ChooseLocationEnum from '@/types/choose-location.enum';
 import {
     compressImage,
     sensorLocation,
     updateSearchParams,
 } from '@/utils/helper';
-import PinDropIcon from '@mui/icons-material/PinDrop';
 import { toast } from 'react-toastify';
 import dayjs, { Dayjs } from 'dayjs';
 import PostTypeEnum from '@/types/post-type.enum';
@@ -52,6 +43,10 @@ import { TheFileType as TheFileTypeCarousel } from '@/components/input/FileUploa
 import { TheFileType as TheFileTypeStandard } from '@/components/input/FileUpload/ImageVideoUploadStandard';
 import useGeolocation from '@/hooks/useGeolocation';
 import { showError } from '@/utils';
+
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import PostSetting from './PostSetting';
 
 export default function NewPostPage() {
     const t = useI18n();
@@ -236,6 +231,17 @@ export default function NewPostPage() {
         apiSendPost.call(params);
     }
 
+    const [activeStep, setActiveStep] = useState(0);
+    const maxSteps = 2;
+
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    };
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
     return (
         <div>
             <BackAppBar
@@ -268,239 +274,106 @@ export default function NewPostPage() {
                     className='flex items-center justify-center'
                     style={{ height: heightStyleAppBar }}
                 >
-                    <Grid
-                        container
-                        spacing={{ xs: 2 }}
-                        columns={{ xs: 1, md: 2 }}
-                        className='px-0 py-4 md:px-4'
-                    >
-                        <Grid item xs={1}>
-                            <Paper className='p-4'>
-                                <Box className='mb-4'>
-                                    <SelectTopic
-                                        size='medium'
-                                        selectedTopic={selectedTopic}
-                                        onSelectTopic={onSelectTopic}
-                                        labelClass='mx-0'
-                                        className='mt-2 mb-4'
-                                        initialValue={
-                                            searchParams.get(QUERY.TOPIC) ||
-                                            undefined
-                                        }
-                                        disableClearable
-                                    />
-                                    <Typography variant='body2'>
-                                        &#9432; {selectedTopic?.description}
-                                    </Typography>
-                                </Box>
-                                <Box className='w-full mb-4'>
-                                    <InputLabel>
-                                        {t('post.choose_location')}
-                                    </InputLabel>
-                                    <RadioGroup
-                                        value={selectedLocation}
-                                        onChange={(_e, val) =>
-                                            onChangeLocation(val)
-                                        }
-                                    >
-                                        {selectedTopic?.location
-                                            ?.useCurrentLocation && (
-                                            <FormControlLabel
-                                                value={
-                                                    ChooseLocationEnum.USE_CURRENT_LOCATION
-                                                }
-                                                control={<Radio />}
-                                                label={t(
-                                                    'post.use_current_location',
-                                                )}
-                                            />
-                                        )}
+                    <Box className='px-0 py-4 md:px-4 max-w-xl mx-auto'>
+                        <Paper
+                            className='p-4 mb-8'
+                            sx={{
+                                display: activeStep === 0 ? '' : 'none',
+                            }}
+                        >
+                            <PostSetting
+                                onChangeLocation={onChangeLocation}
+                                onSelectTopic={onSelectTopic}
+                                selectedDate={selectedDate}
+                                selectedLocation={selectedLocation}
+                                selectedTopic={selectedTopic}
+                                setSelectedDate={setSelectedDate}
+                            />
+                        </Paper>
 
-                                        {selectedTopic?.location
-                                            ?.chooseOnMap && (
-                                            <FormControlLabel
-                                                value={
-                                                    ChooseLocationEnum.CHOOSE_ON_MAP
-                                                }
-                                                control={<Radio />}
-                                                label={
-                                                    <div>
-                                                        {t(
-                                                            'post.choose_on_map',
-                                                        )}
-                                                        <br />
-                                                        {`[${
-                                                            searchParams.get(
-                                                                QUERY.LON,
-                                                            ) || 0
-                                                        }, ${
-                                                            searchParams.get(
-                                                                QUERY.LAT,
-                                                            ) || 0
-                                                        }]`}
-                                                        <IconButton
-                                                            color='primary'
-                                                            onClick={() =>
-                                                                toast.error(
-                                                                    t(
-                                                                        'message.info.coming_soon',
-                                                                    ),
-                                                                    {
-                                                                        theme: 'colored',
-                                                                    },
-                                                                )
-                                                            }
-                                                        >
-                                                            <PinDropIcon />
-                                                        </IconButton>
-                                                    </div>
-                                                }
-                                                disabled={
-                                                    !searchParams.get(
-                                                        QUERY.LON,
-                                                    ) ||
-                                                    !searchParams.get(QUERY.LAT)
-                                                }
-                                            />
-                                        )}
-                                        {selectedTopic?.location
-                                            ?.useApproximateLocation && (
-                                            <FormControlLabel
-                                                value={
-                                                    ChooseLocationEnum.USE_APPROXIMATE_LOCATION
-                                                }
-                                                control={<Radio />}
-                                                label={t(
-                                                    'post.use_approximate_location',
-                                                )}
-                                            />
-                                        )}
-                                    </RadioGroup>
-                                </Box>
+                        <Paper
+                            className='p-4 mb-8'
+                            sx={{
+                                display: activeStep === 1 ? '' : 'none',
+                            }}
+                        >
+                            <Box className='text-center mb-4'>
+                                <ToggleButtonGroup
+                                    color='primary'
+                                    value={postType}
+                                    exclusive
+                                    onChange={handleChangePostType}
+                                    aria-label='post_type'
+                                >
+                                    <ToggleButton value={PostTypeEnum.STANDARD}>
+                                        {t('post.type.standard')}
+                                    </ToggleButton>
+                                    <ToggleButton value={PostTypeEnum.CAROUSEL}>
+                                        {t('post.type.carousel')}
+                                    </ToggleButton>
+                                    {/* <ToggleButton
+                                    value={PostTypeEnum.CUSTOM}
+                                >
+                                    {t('post.type.custom')}
+                                </ToggleButton> */}
+                                </ToggleButtonGroup>
+                            </Box>
 
-                                {selectedTopic?.date?.dateTime && (
-                                    <Box className='w-full mb-4'>
-                                        <InputLabel className='mb-2'>
-                                            {t('post.date_time')}
-                                        </InputLabel>
-                                        <DateTimePicker
-                                            className='w-full'
-                                            ampm={false}
-                                            format='YYYY-MM-DD HH:mm'
-                                            value={
-                                                selectedDate?.dateTime || null
-                                            }
-                                            onAccept={(val: Dayjs | null) =>
-                                                setSelectedDate((oldState) => ({
-                                                    ...oldState,
-                                                    dateTime: dayjs(val),
-                                                }))
-                                            }
-                                        />
-                                    </Box>
-                                )}
-                                {selectedTopic?.date?.startDate && (
-                                    <Box className='w-full mb-4'>
-                                        <InputLabel className='mb-2'>
-                                            {t('post.start_date')}
-                                        </InputLabel>
-                                        <DateTimePicker
-                                            className='w-full'
-                                            ampm={false}
-                                            format='YYYY-MM-DD HH:mm'
-                                            value={
-                                                selectedDate?.startDate || null
-                                            }
-                                            onAccept={(val: Dayjs | null) =>
-                                                setSelectedDate((oldState) => ({
-                                                    ...oldState,
-                                                    startDate: dayjs(val),
-                                                }))
-                                            }
-                                        />
-                                    </Box>
-                                )}
-                                {selectedTopic?.date?.endDate && (
-                                    <Box className='w-full mb-4'>
-                                        <InputLabel className='mb-2'>
-                                            {t('post.end_date')}
-                                        </InputLabel>
-                                        <DateTimePicker
-                                            className='w-full'
-                                            ampm={false}
-                                            format='YYYY-MM-DD HH:mm'
-                                            value={
-                                                selectedDate?.endDate || null
-                                            }
-                                            onAccept={(val: Dayjs | null) =>
-                                                setSelectedDate((oldState) => ({
-                                                    ...oldState,
-                                                    endDate: dayjs(val),
-                                                }))
-                                            }
-                                        />
-                                    </Box>
-                                )}
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={1}>
-                            <Paper className='p-4'>
-                                <Box className='text-center mb-4'>
-                                    <ToggleButtonGroup
-                                        color='primary'
-                                        value={postType}
-                                        exclusive
-                                        onChange={handleChangePostType}
-                                        aria-label='post_type'
-                                    >
-                                        <ToggleButton
-                                            value={PostTypeEnum.STANDARD}
-                                        >
-                                            {t('post.type.standard')}
-                                        </ToggleButton>
-                                        <ToggleButton
-                                            value={PostTypeEnum.CAROUSEL}
-                                        >
-                                            {t('post.type.carousel')}
-                                        </ToggleButton>
-                                        {/* <ToggleButton
-                                            value={PostTypeEnum.CUSTOM}
-                                        >
-                                            {t('post.type.custom')}
-                                        </ToggleButton> */}
-                                    </ToggleButtonGroup>
-                                </Box>
+                            {postType === PostTypeEnum.STANDARD && (
+                                <StandardPost
+                                    valueInputData={inputData}
+                                    valueSocialMediaURL={socialMediaURL}
+                                    onChangeInputData={setInputData}
+                                    onChangeInputFiles={setInputFiles}
+                                    onChangeSocialMediaURL={setSocialMediaURL}
+                                />
+                            )}
+                            {postType === PostTypeEnum.CAROUSEL && (
+                                <CarouselPost
+                                    valueInputData={inputData}
+                                    valueSocialMediaURL={socialMediaURL}
+                                    onChangeInputData={setInputData}
+                                    onChangeInputFiles={setInputFiles}
+                                    onChangeSocialMediaURL={setSocialMediaURL}
+                                />
+                            )}
+                            {postType === PostTypeEnum.CUSTOM && (
+                                <Alert color='info'>
+                                    {t('message.info.coming_soon')}
+                                </Alert>
+                            )}
+                        </Paper>
 
-                                {postType === PostTypeEnum.STANDARD && (
-                                    <StandardPost
-                                        valueInputData={inputData}
-                                        valueSocialMediaURL={socialMediaURL}
-                                        onChangeInputData={setInputData}
-                                        onChangeInputFiles={setInputFiles}
-                                        onChangeSocialMediaURL={
-                                            setSocialMediaURL
-                                        }
-                                    />
-                                )}
-                                {postType === PostTypeEnum.CAROUSEL && (
-                                    <CarouselPost
-                                        valueInputData={inputData}
-                                        valueSocialMediaURL={socialMediaURL}
-                                        onChangeInputData={setInputData}
-                                        onChangeInputFiles={setInputFiles}
-                                        onChangeSocialMediaURL={
-                                            setSocialMediaURL
-                                        }
-                                    />
-                                )}
-                                {postType === PostTypeEnum.CUSTOM && (
-                                    <Alert color='info'>
-                                        {t('message.info.coming_soon')}
-                                    </Alert>
-                                )}
-                            </Paper>
-                        </Grid>
-                    </Grid>
+                        <MobileStepper
+                            className='!-mx-2'
+                            variant='text'
+                            steps={maxSteps}
+                            position='bottom'
+                            activeStep={activeStep}
+                            nextButton={
+                                <Button
+                                    variant='outlined'
+                                    size='medium'
+                                    onClick={handleNext}
+                                    disabled={activeStep === maxSteps - 1}
+                                >
+                                    {t('post.post_content')}
+                                    <KeyboardArrowRight />
+                                </Button>
+                            }
+                            backButton={
+                                <Button
+                                    variant='outlined'
+                                    size='medium'
+                                    onClick={handleBack}
+                                    disabled={activeStep === 0}
+                                >
+                                    <KeyboardArrowLeft />
+                                    {t('post.post_setting')}
+                                </Button>
+                            }
+                        />
+                    </Box>
                 </NeedLogin>
             </Box>
         </div>

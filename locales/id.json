@@ -239,7 +239,9 @@
         "my_posts": "Postingan Saya",
         "saved": "Tersimpan",
         "archived": "Diarsipkan",
-        "post_by_user": "Postingan oleh @{value}"
+        "post_by_user": "Postingan oleh @{value}",
+        "post_setting": "Pengaturan Postingan",
+        "post_content": "Isi Postingan"
     },
     "chat": {
         "no_chat_nearby": "Tidak ada obrolan di dekat sini!"

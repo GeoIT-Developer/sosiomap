@@ -239,7 +239,9 @@
         "my_posts": "My Posts",
         "saved": "Saved",
         "archived": "Archived",
-        "post_by_user": "Post by @{value}"
+        "post_by_user": "Post by @{value}",
+        "post_setting": "Post Setting",
+        "post_content": "Post Content"
     },
     "chat": {
         "no_chat_nearby": "No nearby chats!"
