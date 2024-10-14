@@ -1,4 +1,4 @@
-import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Box, Card, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import MyImage from '@/components/preview/MyImage';
 import {
     FacebookEmbed,
@@ -12,7 +12,6 @@ import TabPanel from '@/components/tab/TabPanel';
 import { PostUrlType } from '@/types/api/responses/map-post-data.interface';
 import { cloneElement, useEffect, useState } from 'react';
 import SocialMediaEnum from '@/types/social-media.enum';
-import SingleAccordion from '@/components/accordion/SingleAccordion';
 import LinkPreview from '@/components/preview/LinkPreview';
 import { SocialMediaURLType, useListSocialMedia } from '../New/SocialMediaPost';
 
@@ -28,6 +27,10 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
         if (postUrlProps) {
             delete postUrlProps._id;
             setPostUrl(postUrlProps);
+            const existKeys = Object.keys(postUrlProps);
+            if (existKeys.length === 1) {
+                setActiveTab(existKeys[0] as SocialMediaEnum);
+            }
         }
     }, [postUrlProps]);
 
@@ -54,7 +57,8 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
                     flexWrap: 'wrap',
                     textAlign: 'center',
                     justifyContent: 'center',
-                    marginBottom: '0.5rem',
+                    marginTop: '0.25rem',
+                    marginTBottom: '0.25rem',
                 }}
             >
                 {listSocialMedia.map((item, idx) => {
@@ -66,12 +70,12 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
                                 <MyImage
                                     src={item.icon}
                                     alt={item.id}
-                                    width={24}
-                                    height={24}
+                                    width={28}
+                                    height={28}
                                 />
                             ) : (
                                 cloneElement(item.icon, {
-                                    sx: { width: 24, height: 24 },
+                                    sx: { width: 28, height: 28 },
                                 })
                             )}
                         </ToggleButton>
@@ -85,84 +89,87 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
                     index={SocialMediaEnum.INSTAGRAM}
                     className='text-center'
                 >
-                    <SingleAccordion title='Instagram' type='compact'>
-                        <Box className='bg-white mx-auto w-fit'>
-                            <InstagramEmbed
-                                url={postUrl?.instagram || ''}
-                                width={325}
-                            />
-                        </Box>
-                    </SingleAccordion>
+                    <Card
+                        variant='outlined'
+                        className='bg-white mx-auto w-fit px-1 pt-4 rounded-lg'
+                    >
+                        <InstagramEmbed
+                            url={postUrl?.instagram || ''}
+                            width={325}
+                        />
+                    </Card>
                 </TabPanel>
                 <TabPanel
                     value={activeTab}
                     index={SocialMediaEnum.TIKTOK}
                     className='text-center'
                 >
-                    <SingleAccordion title='Tiktok' type='compact'>
-                        <Box className='bg-white mx-auto w-fit'>
-                            <TikTokEmbed
-                                url={postUrl?.tiktok || ''}
-                                width={325}
-                            />
-                        </Box>
-                    </SingleAccordion>
+                    <Card
+                        variant='outlined'
+                        className='bg-white mx-auto w-fit px-1 pt-4 rounded-lg'
+                    >
+                        <TikTokEmbed url={postUrl?.tiktok || ''} width={325} />
+                    </Card>
                 </TabPanel>
                 <TabPanel
                     value={activeTab}
                     index={SocialMediaEnum.TWITTER}
                     className='text-center'
                 >
-                    <SingleAccordion title='Twitter' type='compact'>
-                        <Box className='bg-white mx-auto w-fit'>
-                            <TwitterEmbed
-                                url={postUrl?.twitter || ''}
-                                width={325}
-                            />
-                        </Box>
-                    </SingleAccordion>
+                    <Card
+                        variant='outlined'
+                        className='bg-white mx-auto w-fit px-1 pt-4 rounded-lg'
+                    >
+                        <TwitterEmbed
+                            url={postUrl?.twitter || ''}
+                            width={325}
+                        />
+                    </Card>
                 </TabPanel>
                 <TabPanel
                     value={activeTab}
                     index={SocialMediaEnum.FACEBOOK}
                     className='text-center'
                 >
-                    <SingleAccordion title='Facebook' type='compact'>
-                        <Box className='bg-white mx-auto w-fit'>
-                            <FacebookEmbed
-                                url={postUrl?.facebook || ''}
-                                width={325}
-                            />
-                        </Box>
-                    </SingleAccordion>
+                    <Card
+                        variant='outlined'
+                        className='bg-white mx-auto w-fit px-1 pt-4 rounded-lg'
+                    >
+                        <FacebookEmbed
+                            url={postUrl?.facebook || ''}
+                            width={325}
+                        />
+                    </Card>
                 </TabPanel>
                 <TabPanel
                     value={activeTab}
                     index={SocialMediaEnum.YOUTUBE}
                     className='text-center'
                 >
-                    <SingleAccordion title='YouTube' type='compact'>
-                        <Box className='bg-white mx-auto w-fit'>
-                            <YouTubeEmbed
-                                url={postUrl?.youtube || ''}
-                                width={325}
-                            />
-                        </Box>
-                    </SingleAccordion>
+                    <Card
+                        variant='outlined'
+                        className='bg-white mx-auto w-fit px-1 pt-4 rounded-lg'
+                    >
+                        <YouTubeEmbed
+                            url={postUrl?.youtube || ''}
+                            width={325}
+                        />
+                    </Card>
                 </TabPanel>
                 <TabPanel
                     value={activeTab}
                     index={SocialMediaEnum.LINKEDIN}
                     className='text-center'
                 >
-                    <SingleAccordion title='LinkedIn' type='compact'>
-                        <Box className='bg-white mx-auto w-fit'>
-                            <LinkedInEmbed
-                                url={postUrl?.linkedin || ''}
-                                width={325}
-                            />
-                        </Box>
-                    </SingleAccordion>
+                    <Card
+                        variant='outlined'
+                        className='bg-white mx-auto w-fit px-1 pt-4 rounded-lg'
+                    >
+                        <LinkedInEmbed
+                            url={postUrl?.linkedin || ''}
+                            width={325}
+                        />
+                    </Card>
                 </TabPanel>
                 <TabPanel
                     value={activeTab}
