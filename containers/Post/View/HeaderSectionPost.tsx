@@ -16,14 +16,22 @@ import MyAvatar from '@/components/preview/MyAvatar';
 import ProfileDialog from '@/containers/ProfilePage/shared/ProfileDialog';
 import React from 'react';
 import TopicIcon from './TopicIcon';
+import PostOwner from '../Action/PostOwner';
+import useAccessToken from '@/hooks/useAccessToken';
 
 type Props = {
     post: MapPostDataInterface;
     userLocation: MyLocation | null;
+    showMore?: boolean;
 };
 
-export default function HeaderSectionPost({ post, userLocation }: Props) {
+export default function HeaderSectionPost({
+    post,
+    userLocation,
+    showMore,
+}: Props) {
     const t = useI18n();
+    const accessToken = useAccessToken();
 
     return (
         <ListItem>
@@ -78,10 +86,19 @@ export default function HeaderSectionPost({ post, userLocation }: Props) {
                         <div className='flex items-center'>
                             <TopicIcon topicId={post.topic_id} />
                         </div>
+                        {accessToken?.preferred_username === post.username &&
+                            showMore && (
+                                <div className='absolute right-0 top-0'>
+                                    <PostOwner
+                                        postId={post._id}
+                                        isArchived={Boolean(post.archivedAt)}
+                                    />
+                                </div>
+                            )}
                     </>
                 }
                 secondaryTypographyProps={{
-                    className: '!text-xs ',
+                    className: '!text-xs',
                     component: 'div',
                 }}
             />

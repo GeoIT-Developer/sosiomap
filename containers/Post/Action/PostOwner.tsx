@@ -6,7 +6,6 @@ import {
     MenuItem,
 } from '@mui/material';
 import BasicMenu from '@/components/menu/BasicMenu';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useEffect, useState } from 'react';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ArchiveIcon from '@mui/icons-material/Archive';
@@ -18,6 +17,7 @@ import { ObjectLiteral } from '@/types/object-literal.interface';
 import API from '@/configs/api';
 import { showError } from '@/utils';
 import { toast } from 'react-toastify';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 type Props = {
     isArchived?: boolean;
@@ -77,7 +77,7 @@ export default function PostOwner({
                 menuID='more'
                 menuButton={
                     <IconButton size='medium' color='inherit'>
-                        <MoreVertIcon />
+                        <MoreHorizIcon />
                     </IconButton>
                 }
             >
