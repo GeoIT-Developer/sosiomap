@@ -1,9 +1,5 @@
-import { Box, Divider, Tab, Tabs } from '@mui/material';
+import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import MyImage from '@/components/preview/MyImage';
-import { ASSETS } from '@/utils/constant';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
-import LanguageIcon from '@mui/icons-material/Language';
-import { useScopedI18n } from '@/locales/client';
 import {
     FacebookEmbed,
     InstagramEmbed,
@@ -12,166 +8,76 @@ import {
     TwitterEmbed,
     YouTubeEmbed,
 } from 'react-social-media-embed';
-import TabPanel, { a11yProps } from '@/components/tab/TabPanel';
+import TabPanel from '@/components/tab/TabPanel';
 import { PostUrlType } from '@/types/api/responses/map-post-data.interface';
-import { useEffect, useState } from 'react';
+import { cloneElement, useEffect, useState } from 'react';
 import SocialMediaEnum from '@/types/social-media.enum';
 import SingleAccordion from '@/components/accordion/SingleAccordion';
 import LinkPreview from '@/components/preview/LinkPreview';
+import { SocialMediaURLType, useListSocialMedia } from '../New/SocialMediaPost';
 
 type Props = {
     postUrlProps: PostUrlType;
 };
 
 export default function SocialMediaPost({ postUrlProps }: Props) {
-    const t = useScopedI18n('post.url');
-
     const [activeTab, setActiveTab] = useState<SocialMediaEnum | ''>('');
     const [postUrl, setPostUrl] = useState<PostUrlType>({} as PostUrlType);
-
-    const handleTabChange = (
-        _event: React.SyntheticEvent,
-        newValue: SocialMediaEnum,
-    ) => {
-        setActiveTab(newValue);
-    };
 
     useEffect(() => {
         if (postUrlProps) {
             delete postUrlProps._id;
             setPostUrl(postUrlProps);
-            const objKey = Object.keys(postUrlProps);
-            const activeKey =
-                objKey.length > 0 ? (objKey[0] as SocialMediaEnum) : '';
-            setActiveTab(activeKey);
         }
     }, [postUrlProps]);
 
+    const existKeys = Object.keys(postUrl);
+    const listSocialMedia = useListSocialMedia(postUrl as SocialMediaURLType);
+
+    const handleChangeFields = (
+        _event: React.MouseEvent<HTMLElement>,
+        newField: SocialMediaEnum | null,
+    ) => {
+        setActiveTab(newField || '');
+    };
+
     return (
-        <>
-            {Object.keys(postUrl).length > 0 && (
-                <>
-                    <Divider />
-                    <Tabs
-                        value={activeTab}
-                        onChange={handleTabChange}
-                        textColor='inherit'
-                        variant='scrollable'
-                        scrollButtons
-                        allowScrollButtonsMobile
-                        style={{ maxWidth: '350px' }}
-                    >
-                        {postUrl.instagram && (
-                            <Tab
-                                icon={
-                                    <MyImage
-                                        src={`${ASSETS.ICON}instagram.png`}
-                                        alt={SocialMediaEnum.INSTAGRAM}
-                                        width={28}
-                                        className='mr-2 align-text-bottom'
-                                    />
-                                }
-                                value={SocialMediaEnum.INSTAGRAM}
-                                {...a11yProps(SocialMediaEnum.INSTAGRAM)}
-                            />
-                        )}
-                        {postUrl.tiktok && (
-                            <Tab
-                                icon={
-                                    <MyImage
-                                        src={`${ASSETS.ICON}tiktok.ico`}
-                                        alt={SocialMediaEnum.INSTAGRAM}
-                                        width={28}
-                                        className='mr-2 align-text-bottom'
-                                    />
-                                }
-                                value={SocialMediaEnum.TIKTOK}
-                                {...a11yProps(SocialMediaEnum.TIKTOK)}
-                            />
-                        )}
-                        {postUrl.twitter && (
-                            <Tab
-                                icon={
-                                    <MyImage
-                                        src={`${ASSETS.ICON}twitter.ico`}
-                                        alt={SocialMediaEnum.TWITTER}
-                                        width={28}
-                                        className='mr-2 align-text-bottom'
-                                    />
-                                }
-                                value={SocialMediaEnum.TWITTER}
-                                {...a11yProps(SocialMediaEnum.TWITTER)}
-                            />
-                        )}
-                        {postUrl.facebook && (
-                            <Tab
-                                icon={
-                                    <MyImage
-                                        src={`${ASSETS.ICON}facebook.ico`}
-                                        alt={SocialMediaEnum.FACEBOOK}
-                                        width={28}
-                                        className='mr-2 align-text-bottom'
-                                    />
-                                }
-                                value={SocialMediaEnum.FACEBOOK}
-                                {...a11yProps(SocialMediaEnum.FACEBOOK)}
-                            />
-                        )}
-                        {postUrl.youtube && (
-                            <Tab
-                                icon={
-                                    <MyImage
-                                        src={`${ASSETS.ICON}youtube.png`}
-                                        alt={SocialMediaEnum.YOUTUBE}
-                                        width={28}
-                                        className='mr-2 align-text-bottom'
-                                    />
-                                }
-                                value={SocialMediaEnum.YOUTUBE}
-                                {...a11yProps(SocialMediaEnum.YOUTUBE)}
-                            />
-                        )}
-                        {postUrl.linkedin && (
-                            <Tab
-                                icon={
-                                    <MyImage
-                                        src={`${ASSETS.ICON}linkedin.ico`}
-                                        alt={SocialMediaEnum.LINKEDIN}
-                                        width={28}
-                                        className='mr-2 align-text-bottom'
-                                    />
-                                }
-                                value={SocialMediaEnum.LINKEDIN}
-                                {...a11yProps(SocialMediaEnum.LINKEDIN)}
-                            />
-                        )}
-                        {postUrl.news_website && (
-                            <Tab
-                                icon={
-                                    <NewspaperIcon
-                                        sx={{ width: 28 }}
-                                        className='my-1 mr-2'
-                                    />
-                                }
-                                value={SocialMediaEnum.NEWS_WEBSITE}
-                                {...a11yProps(SocialMediaEnum.NEWS_WEBSITE)}
-                            />
-                        )}
-                        {postUrl.other && (
-                            <Tab
-                                icon={
-                                    <LanguageIcon
-                                        sx={{ width: 28 }}
-                                        className='my-1 mr-2'
-                                    />
-                                }
-                                value={SocialMediaEnum.OTHER}
-                                {...a11yProps(SocialMediaEnum.OTHER)}
-                            />
-                        )}
-                    </Tabs>
-                </>
-            )}
+        <div>
+            <ToggleButtonGroup
+                value={activeTab}
+                onChange={handleChangeFields}
+                aria-label='fields'
+                size='small'
+                exclusive
+                sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    textAlign: 'center',
+                    justifyContent: 'center',
+                    marginBottom: '0.5rem',
+                }}
+            >
+                {listSocialMedia.map((item, idx) => {
+                    const isFieldChecked = existKeys.includes(item.id);
+                    if (!isFieldChecked) return null;
+                    return (
+                        <ToggleButton key={idx} value={item.id}>
+                            {typeof item.icon === 'string' ? (
+                                <MyImage
+                                    src={item.icon}
+                                    alt={item.id}
+                                    width={24}
+                                    height={24}
+                                />
+                            ) : (
+                                cloneElement(item.icon, {
+                                    sx: { width: 24, height: 24 },
+                                })
+                            )}
+                        </ToggleButton>
+                    );
+                })}
+            </ToggleButtonGroup>
 
             <Box>
                 <TabPanel
@@ -179,7 +85,7 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
                     index={SocialMediaEnum.INSTAGRAM}
                     className='text-center'
                 >
-                    <SingleAccordion title='Instagram' defaultOpen>
+                    <SingleAccordion title='Instagram' type='compact'>
                         <Box className='bg-white mx-auto w-fit'>
                             <InstagramEmbed
                                 url={postUrl?.instagram || ''}
@@ -193,7 +99,7 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
                     index={SocialMediaEnum.TIKTOK}
                     className='text-center'
                 >
-                    <SingleAccordion title='Tiktok' defaultOpen>
+                    <SingleAccordion title='Tiktok' type='compact'>
                         <Box className='bg-white mx-auto w-fit'>
                             <TikTokEmbed
                                 url={postUrl?.tiktok || ''}
@@ -207,7 +113,7 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
                     index={SocialMediaEnum.TWITTER}
                     className='text-center'
                 >
-                    <SingleAccordion title='Twitter' defaultOpen>
+                    <SingleAccordion title='Twitter' type='compact'>
                         <Box className='bg-white mx-auto w-fit'>
                             <TwitterEmbed
                                 url={postUrl?.twitter || ''}
@@ -221,7 +127,7 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
                     index={SocialMediaEnum.FACEBOOK}
                     className='text-center'
                 >
-                    <SingleAccordion title='Facebook' defaultOpen>
+                    <SingleAccordion title='Facebook' type='compact'>
                         <Box className='bg-white mx-auto w-fit'>
                             <FacebookEmbed
                                 url={postUrl?.facebook || ''}
@@ -235,7 +141,7 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
                     index={SocialMediaEnum.YOUTUBE}
                     className='text-center'
                 >
-                    <SingleAccordion title='YouTube' defaultOpen>
+                    <SingleAccordion title='YouTube' type='compact'>
                         <Box className='bg-white mx-auto w-fit'>
                             <YouTubeEmbed
                                 url={postUrl?.youtube || ''}
@@ -249,7 +155,7 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
                     index={SocialMediaEnum.LINKEDIN}
                     className='text-center'
                 >
-                    <SingleAccordion title='LinkedIn' defaultOpen>
+                    <SingleAccordion title='LinkedIn' type='compact'>
                         <Box className='bg-white mx-auto w-fit'>
                             <LinkedInEmbed
                                 url={postUrl?.linkedin || ''}
@@ -279,6 +185,6 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
                     </Box>
                 </TabPanel>
             </Box>
-        </>
+        </div>
     );
 }

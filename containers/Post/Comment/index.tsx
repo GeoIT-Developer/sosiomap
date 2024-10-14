@@ -161,16 +161,17 @@ export default function CommentPage({ postId, topicId, commentValue }: Props) {
                 </Typography>
                 <NeedLogin>
                     <SingleAccordion title={t('post.add_comment')}>
-                        <Box className='max-w-[350px]'>
+                        <Box className='max-w-xl'>
                             <StandardPost
                                 valueInputData={inputData}
                                 valueSocialMediaURL={socialMediaURL}
                                 onChangeInputData={setInputData}
                                 onChangeInputFiles={setInputFiles}
                                 onChangeSocialMediaURL={setSocialMediaURL}
+                                placeholder={t('post.add_comment_placeholder')}
                             />
                         </Box>
-                        <Box className='text-end mt-4'>
+                        <Box className='text-end'>
                             <Button
                                 onClick={onClickSend}
                                 disabled={isLoading}

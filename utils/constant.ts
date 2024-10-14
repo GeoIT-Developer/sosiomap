@@ -201,6 +201,7 @@ export const MAX_LENGTH = {
             TITLE: 64,
             BODY: 128,
         },
+        MIN_BODY: 25,
     },
     TOPIC: {
         LABEL: 64,

@@ -136,6 +136,8 @@
             "geolocation_unavailable": "Location information is unavailable!",
             "geolocation_timeout": "Get location request timed out!",
             "geolocation_denied": "Please enable location services!",
+            "post_body_at_least_minimum": "The post body should be at least {value} characters long!",
+            "post_carousel_min_media": "The minimum number of media is at least 1 file!",
             "message_at_least_minimum": "The message should be at least 5 characters long!",
             "feature_need_geolocation": "Location data must be activated to use this feature!",
             "max_file": "Maximum number of files is {max} files!",
@@ -191,7 +193,7 @@
         },
         "url": {
             "social_media_post": "Social Media Post",
-            "social_media_post_desc": "Paste the URL of the social media post you want to connect with.",
+            "social_media_post_desc": "Checked and paste the URL of the social media post you want to connect with.",
             "news_website": "News Website",
             "other": "Other..."
         },
@@ -202,6 +204,7 @@
         "media": "Media",
         "comment": "Comment",
         "add_comment": "Add Comment",
+        "add_comment_placeholder": "Share your thoughts...",
         "reaction": {
             "like": "Like",
             "love": "Love",
@@ -236,7 +239,9 @@
         "my_posts": "My Posts",
         "saved": "Saved",
         "archived": "Archived",
-        "post_by_user": "Post by @{value}"
+        "post_by_user": "Post by @{value}",
+        "post_setting": "Post Setting",
+        "post_content": "Post Content"
     },
     "chat": {
         "no_chat_nearby": "No nearby chats!"

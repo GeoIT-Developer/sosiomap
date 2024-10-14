@@ -68,7 +68,7 @@ export default function ImageVideoCarousel({ media }: Props) {
                         maxWidth: '900px',
                         aspectRatio: '3 / 2',
                         margin: '0 auto',
-                        height: '200px',
+                        // height: '200px',
                     },
                 }}
             />

@@ -50,7 +50,7 @@ export default function MainReaction({
                 return { ...oldState, positive: newPos, negative: newNeg };
             });
             if (onChangeStats) {
-                onChangeStats(res.data, res.params?.reaction || reaction.id);
+                onChangeStats(res.data, res.params?.reaction || '');
             }
         },
         onError: (err) => {

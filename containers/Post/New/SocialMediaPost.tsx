@@ -1,5 +1,13 @@
 import SingleAccordion from '@/components/accordion/SingleAccordion';
-import { Box, IconButton, Stack, TextField, Typography } from '@mui/material';
+import {
+    Box,
+    IconButton,
+    Stack,
+    TextField,
+    ToggleButton,
+    ToggleButtonGroup,
+    Typography,
+} from '@mui/material';
 import MyImage from '@/components/preview/MyImage';
 import { ASSETS } from '@/utils/constant';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
@@ -17,6 +25,7 @@ import {
     YouTubeEmbed,
 } from 'react-social-media-embed';
 import LinkPreview from '@/components/preview/LinkPreview';
+import { cloneElement, useState } from 'react';
 
 export type SocialMediaURLType = {
     instagram: string;
@@ -48,15 +57,8 @@ type Props = {
     defaultOpen?: boolean;
 };
 
-export default function SocialMediaPost({
-    title,
-    description,
-    value,
-    onChange,
-    defaultOpen,
-}: Props) {
+export const useListSocialMedia = (value: SocialMediaURLType) => {
     const t = useScopedI18n('post.url');
-
     const LIST_SOCIAL_MEDIA = [
         {
             id: 'instagram',
@@ -97,30 +99,85 @@ export default function SocialMediaPost({
         {
             id: 'news_website',
             label: t('news_website'),
-            icon: <NewspaperIcon sx={{ width: 28 }} className='my-1 mr-2' />,
+            icon: <NewspaperIcon sx={{ width: 24 }} />,
         },
         {
             id: 'other',
             label: t('other'),
-            icon: <LanguageIcon sx={{ width: 28 }} className='my-1 mr-2' />,
+            icon: <LanguageIcon sx={{ width: 24 }} />,
         },
     ];
+    return LIST_SOCIAL_MEDIA;
+};
+
+export default function SocialMediaPost({
+    title,
+    description,
+    value,
+    onChange,
+    defaultOpen,
+}: Props) {
+    const t = useScopedI18n('post.url');
+    const [fields, setFields] = useState<string[]>(() => []);
+
+    const handleChangeFields = (
+        _event: React.MouseEvent<HTMLElement>,
+        newFields: string[],
+    ) => {
+        setFields(newFields);
+    };
+
+    const listSocialMedia = useListSocialMedia(value);
 
     return (
         <SingleAccordion
             title={title || <>&#128279; {t('social_media_post')}</>}
             defaultOpen={defaultOpen}
+            type='compact'
         >
-            <Typography variant='body2' className='!mb-8 !-mt-2'>
+            <ToggleButtonGroup
+                value={fields}
+                onChange={handleChangeFields}
+                aria-label='fields'
+                size='small'
+                sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    textAlign: 'center',
+                    justifyContent: 'center',
+                    marginBottom: '0.5rem',
+                }}
+            >
+                {listSocialMedia.map((item, idx) => {
+                    return (
+                        <ToggleButton key={idx} value={item.id}>
+                            {typeof item.icon === 'string' ? (
+                                <MyImage
+                                    src={item.icon}
+                                    alt={item.id}
+                                    width={24}
+                                />
+                            ) : (
+                                item.icon
+                            )}
+                        </ToggleButton>
+                    );
+                })}
+            </ToggleButtonGroup>
+            <Typography variant='body2' className='!mb-4 !-mt-0'>
                 &#9432; {description || t('social_media_post_desc')}
             </Typography>
-            <Stack spacing={1.5}>
-                {LIST_SOCIAL_MEDIA.map((item, idx) => {
+            <Stack spacing={1}>
+                {listSocialMedia.map((item, idx) => {
                     const itemID = item.id as keyof typeof value;
+                    const isFieldChecked = fields.includes(item.id);
                     return (
                         <Box
                             key={idx}
-                            sx={{ display: 'flex', alignItems: 'flex-end' }}
+                            sx={{
+                                display: isFieldChecked ? 'flex' : 'none',
+                                alignItems: 'flex-end',
+                            }}
                         >
                             {typeof item.icon === 'string' ? (
                                 <MyImage
@@ -130,7 +187,10 @@ export default function SocialMediaPost({
                                     className='my-1 mr-2'
                                 />
                             ) : (
-                                item.icon
+                                cloneElement(item.icon, {
+                                    className: 'my-1 mr-2',
+                                    sx: { width: 28 },
+                                })
                             )}
 
                             <TextField
