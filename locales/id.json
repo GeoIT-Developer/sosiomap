@@ -136,6 +136,8 @@
             "geolocation_unavailable": "Informasi lokasi tidak ditemukan!",
             "geolocation_timeout": "Waktu tunggu permintaan lokasi habis!",
             "geolocation_denied": "Harap aktifkan lokasi GPS anda!",
+            "post_body_at_least_minimum": "Isi postingan harus setidaknya {value} karakter!",
+            "post_carousel_min_media": "Jumlah media minimal adalah setidaknya 1 file!",
             "message_at_least_minimum": "Pesan setidaknya memiliki 5 karakter!",
             "feature_need_geolocation": "Data lokasi harus dihidupkan untuk menggunakan fitur ini!",
             "max_file": "Jumlah berkas yang dapat dipilih adalah {max} berkas!",
@@ -191,7 +193,7 @@
         },
         "url": {
             "social_media_post": "Postingan Sosial Media",
-            "social_media_post_desc": "Tempelkan URL dari postingan sosial media yang ingin Anda hubungkan.",
+            "social_media_post_desc": "Cek dan tempelkan URL dari postingan sosial media yang ingin Anda hubungkan.",
             "news_website": "Situs Berita",
             "other": "Lain-lain..."
         },
@@ -202,6 +204,7 @@
         "media": "Media",
         "comment": "Komentar",
         "add_comment": "Tambah Komentar",
+        "add_comment_placeholder": "Bagikan pemikiranmu...",
         "reaction": {
             "like": "Suka",
             "love": "Cinta",

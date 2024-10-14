@@ -1,9 +1,9 @@
 import {
-    Checkbox,
-    FormControlLabel,
-    FormGroup,
+    Box,
     Stack,
     TextField,
+    ToggleButton,
+    ToggleButtonGroup,
 } from '@mui/material';
 import SocialMediaPost, { SocialMediaURLType } from './SocialMediaPost';
 import { useI18n } from '@/locales/client';
@@ -12,6 +12,9 @@ import ImageVideoUploadStandard, {
 } from '@/components/input/FileUpload/ImageVideoUploadStandard';
 import { MAX_LENGTH } from '@/utils/constant';
 import { useState } from 'react';
+import TitleIcon from '@mui/icons-material/Title';
+import PermMediaIcon from '@mui/icons-material/PermMedia';
+import LinkIcon from '@mui/icons-material/Link';
 
 const MaxLength = MAX_LENGTH.POST.STANDARD;
 
@@ -20,12 +23,19 @@ type InputDataType = {
     body: string;
 };
 
+enum FieldEnum {
+    TITLE = 'title',
+    MEDIA = 'media',
+    SOCIAL_MEDIA_POST = 'social-media-post',
+}
+
 type Props = {
     valueSocialMediaURL: SocialMediaURLType;
     onChangeSocialMediaURL: (val: SocialMediaURLType) => void;
     valueInputData: InputDataType;
     onChangeInputData: (val: InputDataType) => void;
     onChangeInputFiles: (val: TheFileType[]) => void;
+    placeholder?: string;
 };
 
 export default function StandardPost({
@@ -34,115 +44,95 @@ export default function StandardPost({
     valueInputData,
     onChangeInputData,
     onChangeInputFiles,
+    placeholder,
 }: Props) {
     const t = useI18n();
-    const [showField, setShowField] = useState({
-        title: false,
-        media: false,
-        socialMediaPost: false,
-    });
+    const [fields, setFields] = useState<FieldEnum[]>(() => []);
+
+    const handleChangeFields = (
+        _event: React.MouseEvent<HTMLElement>,
+        newFields: FieldEnum[],
+    ) => {
+        setFields(newFields);
+    };
+
+    const showField = {
+        title: fields.includes(FieldEnum.TITLE),
+        media: fields.includes(FieldEnum.MEDIA),
+        socialMediaPost: fields.includes(FieldEnum.SOCIAL_MEDIA_POST),
+    };
 
     return (
-        <>
-            <Stack spacing={2}>
-                {showField.title && (
-                    <TextField
-                        label={t('post.title_optional')}
-                        variant='outlined'
-                        fullWidth
-                        value={valueInputData.title}
-                        onChange={(e) => {
-                            const eVal = e.target.value;
-                            if (eVal.length > MaxLength.TITLE) return;
-                            onChangeInputData({
-                                title: e.target.value,
-                                body: valueInputData.body,
-                            });
-                        }}
-                    />
-                )}
-
+        <Stack spacing={1}>
+            {showField.title && (
                 <TextField
+                    label={t('post.title_optional')}
+                    variant='outlined'
                     fullWidth
-                    minRows={4}
-                    placeholder={t('post.what_do_you_want_to_share_today')}
-                    multiline
-                    maxRows={16}
-                    value={valueInputData.body}
+                    value={valueInputData.title}
                     onChange={(e) => {
                         const eVal = e.target.value;
-                        if (eVal.length > MaxLength.BODY) return;
+                        if (eVal.length > MaxLength.TITLE) return;
                         onChangeInputData({
-                            title: valueInputData.title,
-                            body: e.target.value,
+                            title: e.target.value,
+                            body: valueInputData.body,
                         });
                     }}
                 />
+            )}
 
-                <FormGroup row>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={showField.title}
-                                onChange={(e) =>
-                                    setShowField((oldState) => ({
-                                        ...oldState,
-                                        title: e.target.checked,
-                                    }))
-                                }
-                            />
-                        }
-                        label={t('post.title')}
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={showField.media}
-                                onChange={(e) => {
-                                    const eChecked = e.target.checked;
-                                    setShowField((oldState) => ({
-                                        ...oldState,
-                                        media: eChecked,
-                                    }));
-                                    if (!eChecked) {
-                                        onChangeInputFiles([]);
-                                    }
-                                }}
-                            />
-                        }
-                        label={t('post.media')}
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={showField.socialMediaPost}
-                                onChange={(e) =>
-                                    setShowField((oldState) => ({
-                                        ...oldState,
-                                        socialMediaPost: e.target.checked,
-                                    }))
-                                }
-                            />
-                        }
-                        label={t('post.url.social_media_post')}
-                    />
-                </FormGroup>
+            <TextField
+                fullWidth
+                minRows={4}
+                placeholder={
+                    placeholder || t('post.what_do_you_want_to_share_today')
+                }
+                multiline
+                maxRows={16}
+                value={valueInputData.body}
+                onChange={(e) => {
+                    const eVal = e.target.value;
+                    if (eVal.length > MaxLength.BODY) return;
+                    onChangeInputData({
+                        title: valueInputData.title,
+                        body: e.target.value,
+                    });
+                }}
+            />
 
-                {showField.media && (
-                    <ImageVideoUploadStandard
-                        maxFile={MaxLength.MAX_FILE}
-                        onFilesChange={(files) => onChangeInputFiles(files)}
-                    />
-                )}
+            <ToggleButtonGroup
+                value={fields}
+                onChange={handleChangeFields}
+                aria-label='fields'
+                size='small'
+            >
+                <ToggleButton value={FieldEnum.TITLE}>
+                    <TitleIcon />
+                </ToggleButton>
+                <ToggleButton value={FieldEnum.MEDIA}>
+                    <PermMediaIcon />
+                </ToggleButton>
+                <ToggleButton value={FieldEnum.SOCIAL_MEDIA_POST}>
+                    <LinkIcon />
+                </ToggleButton>
+            </ToggleButtonGroup>
 
-                {showField.socialMediaPost && (
+            {showField.media && (
+                <ImageVideoUploadStandard
+                    maxFile={MaxLength.MAX_FILE}
+                    onFilesChange={(files) => onChangeInputFiles(files)}
+                />
+            )}
+
+            {showField.socialMediaPost && (
+                <Box className='!-mx-4'>
                     <SocialMediaPost
                         defaultOpen
                         value={valueSocialMediaURL}
                         onChange={(val) => onChangeSocialMediaURL(val)}
                     />
-                )}
-            </Stack>
-        </>
+                </Box>
+            )}
+        </Stack>
     );
 }

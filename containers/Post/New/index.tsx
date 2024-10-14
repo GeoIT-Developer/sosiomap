@@ -19,7 +19,7 @@ import {
 import useWindowHeight from '@/hooks/useWindowHeight';
 import NeedLogin from '@/components/auth/NeedLogin';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { QUERY, ROUTE } from '@/utils/constant';
+import { MAX_LENGTH, QUERY, ROUTE } from '@/utils/constant';
 import BackAppBar from '@/components/layout/appbar/BackAppBar';
 import { useI18n } from '@/locales/client';
 import { TopicType } from '@/hooks/useTopic';
@@ -51,6 +51,7 @@ import {
 import { TheFileType as TheFileTypeCarousel } from '@/components/input/FileUpload/ImageVideoUploadCarousel';
 import { TheFileType as TheFileTypeStandard } from '@/components/input/FileUpload/ImageVideoUploadStandard';
 import useGeolocation from '@/hooks/useGeolocation';
+import { showError } from '@/utils';
 
 export default function NewPostPage() {
     const t = useI18n();
@@ -132,6 +133,20 @@ export default function NewPostPage() {
     }
 
     async function onClickPost() {
+        if (inputData.body.length < MAX_LENGTH.POST.MIN_BODY) {
+            showError(
+                // @ts-ignore
+                t('message.error.post_body_at_least_minimum', {
+                    value: MAX_LENGTH.POST.MIN_BODY,
+                }),
+            );
+            return;
+        }
+        if (postType === PostTypeEnum.CAROUSEL && inputFiles.length === 0) {
+            showError(t('message.error.post_carousel_min_media'));
+            return;
+        }
+
         setIsLoading(true);
 
         let compressFlagError = false;
@@ -448,11 +463,11 @@ export default function NewPostPage() {
                                         >
                                             {t('post.type.carousel')}
                                         </ToggleButton>
-                                        <ToggleButton
+                                        {/* <ToggleButton
                                             value={PostTypeEnum.CUSTOM}
                                         >
                                             {t('post.type.custom')}
-                                        </ToggleButton>
+                                        </ToggleButton> */}
                                     </ToggleButtonGroup>
                                 </Box>
 
