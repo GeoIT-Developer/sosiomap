@@ -8,8 +8,6 @@ import Shares from '../Action/Shares';
 import DetailStats from '../Action/DetailStats';
 import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
 import { ReactionEnum } from '@/types/reaction.enum';
-import PostOwner from '../Action/PostOwner';
-import useAccessToken from '@/hooks/useAccessToken';
 
 type Props = {
     post: MapPostDataInterface;
@@ -18,7 +16,6 @@ type Props = {
 
 export default function BottomSectionPost({ post, onChangePost }: Props) {
     const { stats } = post;
-    const accessToken = useAccessToken();
 
     function onChangeReaction(stats: PostStatInterface, reactionId: string) {
         if (!onChangePost) return;
@@ -82,14 +79,6 @@ export default function BottomSectionPost({ post, onChangePost }: Props) {
                 <div className='flex items-center'>
                     <FlyTo post={post} />
                 </div>
-                {accessToken?.preferred_username === post.username && (
-                    <div className='flex items-center'>
-                        <PostOwner
-                            postId={post._id}
-                            isArchived={Boolean(post.archivedAt)}
-                        />
-                    </div>
-                )}
             </Stack>
         </Stack>
     );

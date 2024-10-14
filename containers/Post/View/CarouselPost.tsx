@@ -24,7 +24,11 @@ export default function CarouselPost({
             sx={{ borderRadius: '8px' }}
             className='pb-1 mx-1'
         >
-            <HeaderSectionPost post={post} userLocation={userLocation} />
+            <HeaderSectionPost
+                post={post}
+                userLocation={userLocation}
+                showMore
+            />
             <Stack spacing={1} className='px-4'>
                 {post.title && (
                     <Typography
