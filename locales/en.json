@@ -235,7 +235,8 @@
         "see_more": "See More",
         "my_posts": "My Posts",
         "saved": "Saved",
-        "archived": "Archived"
+        "archived": "Archived",
+        "post_by_user": "Post by @{value}"
     },
     "chat": {
         "no_chat_nearby": "No nearby chats!"

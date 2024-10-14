@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const HOST = axios.create({
+const HOST = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
@@ -9,6 +9,9 @@ const API_SERVER = {
         return HOST.get(`users/${username}`, {
             params: { param: 'user-profile-summary' },
         });
+    },
+    getPost: (post_id: string) => {
+        return HOST.get(`posts/${post_id}`);
     },
 };
 

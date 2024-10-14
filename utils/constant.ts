@@ -54,7 +54,7 @@ export const ROUTE = {
             URL: '/post/new',
         },
         DETAIL: {
-            URL: '/post/[post-id]',
+            URL: '/post/[post_id]',
             setURL: (id: string) => `/post/${id}`,
         },
     },
