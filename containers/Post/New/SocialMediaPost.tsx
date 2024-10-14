@@ -57,23 +57,8 @@ type Props = {
     defaultOpen?: boolean;
 };
 
-export default function SocialMediaPost({
-    title,
-    description,
-    value,
-    onChange,
-    defaultOpen,
-}: Props) {
+export const useListSocialMedia = (value: SocialMediaURLType) => {
     const t = useScopedI18n('post.url');
-    const [fields, setFields] = useState<string[]>(() => []);
-
-    const handleChangeFields = (
-        _event: React.MouseEvent<HTMLElement>,
-        newFields: string[],
-    ) => {
-        setFields(newFields);
-    };
-
     const LIST_SOCIAL_MEDIA = [
         {
             id: 'instagram',
@@ -122,6 +107,27 @@ export default function SocialMediaPost({
             icon: <LanguageIcon sx={{ width: 24 }} />,
         },
     ];
+    return LIST_SOCIAL_MEDIA;
+};
+
+export default function SocialMediaPost({
+    title,
+    description,
+    value,
+    onChange,
+    defaultOpen,
+}: Props) {
+    const t = useScopedI18n('post.url');
+    const [fields, setFields] = useState<string[]>(() => []);
+
+    const handleChangeFields = (
+        _event: React.MouseEvent<HTMLElement>,
+        newFields: string[],
+    ) => {
+        setFields(newFields);
+    };
+
+    const listSocialMedia = useListSocialMedia(value);
 
     return (
         <SingleAccordion
@@ -142,7 +148,7 @@ export default function SocialMediaPost({
                     marginBottom: '0.5rem',
                 }}
             >
-                {LIST_SOCIAL_MEDIA.map((item, idx) => {
+                {listSocialMedia.map((item, idx) => {
                     return (
                         <ToggleButton key={idx} value={item.id}>
                             {typeof item.icon === 'string' ? (
@@ -162,7 +168,7 @@ export default function SocialMediaPost({
                 &#9432; {description || t('social_media_post_desc')}
             </Typography>
             <Stack spacing={1}>
-                {LIST_SOCIAL_MEDIA.map((item, idx) => {
+                {listSocialMedia.map((item, idx) => {
                     const itemID = item.id as keyof typeof value;
                     const isFieldChecked = fields.includes(item.id);
                     return (
