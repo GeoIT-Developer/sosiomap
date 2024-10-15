@@ -150,6 +150,19 @@ const API = {
         return HOST.post(`comments`, formData);
     },
 
+    commentReact: ({
+        comment_id,
+        reaction,
+    }: {
+        comment_id: string;
+        reaction: string;
+    }) => {
+        return HOST.post(`comments/react`, {
+            post_id: comment_id,
+            react: reaction || 'neutral',
+        });
+    },
+
     getPublicComment: (postId: string) => HOST.get(`comments/${postId}`),
 
     getRequestAccountDeletion: () =>

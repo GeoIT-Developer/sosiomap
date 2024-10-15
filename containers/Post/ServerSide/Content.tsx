@@ -11,6 +11,7 @@ import CarouselPost from '../View/CarouselPost';
 import useAPI from '@/hooks/useAPI';
 import API from '@/configs/api';
 import { showError } from '@/utils';
+import { useSession } from 'next-auth/react';
 
 type Props = {
     userLocation: MyLocation | null;
@@ -21,6 +22,7 @@ export default function PostDetailContent({
     userLocation,
     post: postInput,
 }: Props) {
+    const session = useSession();
     const [post, setPost] = useState<MapPostDataInterface>(postInput);
 
     const apiGetDetailPost = useAPI<MapPostDataInterface, string>(
@@ -36,10 +38,11 @@ export default function PostDetailContent({
     );
 
     useEffect(() => {
+        if (session.status !== 'authenticated') return;
         if (postInput) {
             apiGetDetailPost.call(postInput._id);
         }
-    }, [postInput]);
+    }, [postInput, session.status]);
 
     function onChangePost(ePost: MapPostDataInterface) {
         setPost(ePost);

@@ -1,3 +1,6 @@
+import { ReactionEnum } from '@/types/reaction.enum';
+import { PostStatInterface } from './post-stat.interface';
+
 export interface CommentDataInterface {
     _id: string;
     post_id: string;
@@ -12,6 +15,8 @@ export interface CommentDataInterface {
     name: string;
     photo_url?: string;
     title?: string;
+    stats?: PostStatInterface;
+    reaction?: ReactionEnum;
 }
 
 export interface PostUrlType {

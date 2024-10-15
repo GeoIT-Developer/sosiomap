@@ -17,9 +17,13 @@ import { SocialMediaURLType, useListSocialMedia } from '../New/SocialMediaPost';
 
 type Props = {
     postUrlProps: PostUrlType;
+    defaultOpen?: 'only-have-one' | 'disable';
 };
 
-export default function SocialMediaPost({ postUrlProps }: Props) {
+export default function SocialMediaPost({
+    postUrlProps,
+    defaultOpen = 'only-have-one',
+}: Props) {
     const [activeTab, setActiveTab] = useState<SocialMediaEnum | ''>('');
     const [postUrl, setPostUrl] = useState<PostUrlType>({} as PostUrlType);
 
@@ -27,9 +31,11 @@ export default function SocialMediaPost({ postUrlProps }: Props) {
         if (postUrlProps) {
             delete postUrlProps._id;
             setPostUrl(postUrlProps);
-            const existKeys = Object.keys(postUrlProps);
-            if (existKeys.length === 1) {
-                setActiveTab(existKeys[0] as SocialMediaEnum);
+            if (defaultOpen === 'only-have-one') {
+                const existKeys = Object.keys(postUrlProps);
+                if (existKeys.length === 1) {
+                    setActiveTab(existKeys[0] as SocialMediaEnum);
+                }
             }
         }
     }, [postUrlProps]);
