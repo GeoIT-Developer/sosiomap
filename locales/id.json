@@ -9,7 +9,12 @@
         "local": "Lokal",
         "info": "Info",
         "account": "Akun",
-        "no_data": "Data Kosong"
+        "no_data": "Data Kosong",
+        "sort_by": "Urutkan",
+        "latest": "Terbaru",
+        "oldest": "Terlama",
+        "nearest": "Terdekat",
+        "farthest": "Terjauh"
     },
     "button": {
         "login": "Masuk",

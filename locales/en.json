@@ -9,7 +9,12 @@
         "local": "Local",
         "info": "Info",
         "account": "Account",
-        "no_data": "No Data"
+        "no_data": "No Data",
+        "sort_by": "Sort By",
+        "latest": "Latest",
+        "oldest": "Oldest",
+        "nearest": "Nearest",
+        "farthest": "Farthest"
     },
     "button": {
         "login": "Login",
