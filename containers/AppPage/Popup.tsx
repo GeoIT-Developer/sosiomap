@@ -76,6 +76,7 @@ export default function PopupAppPage() {
                         </Button>
                     </>
                 }
+                disableOutsideClick
             >
                 {t('info.install_android_app_desc')}
             </BootstrapDialog>
