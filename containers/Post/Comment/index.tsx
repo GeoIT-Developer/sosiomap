@@ -29,6 +29,7 @@ import {
 import StandardPost from '../New/StandardPost';
 import SendIcon from '@mui/icons-material/Send';
 import useFormattingData from '@/hooks/useFormattingData';
+import useToggleVisibility from '@/hooks/useToggleVisibility';
 
 type Props = {
     postId: string;
@@ -38,6 +39,7 @@ type Props = {
 
 export default function CommentPage({ postId, topicId, commentValue }: Props) {
     const t = useI18n();
+    const { isVisible, toggleVisibility } = useToggleVisibility();
     const [socialMediaURL, setSocialMediaURL] = useState<SocialMediaURLType>(
         initialSocialMediaURLType,
     );
@@ -70,13 +72,7 @@ export default function CommentPage({ postId, topicId, commentValue }: Props) {
         {
             onSuccess: () => {
                 apiListComment.call(postId);
-                setIsLoading(false);
-                setInputData({
-                    title: '',
-                    body: '',
-                });
-                setInputFiles([]);
-                setSocialMediaURL(initialSocialMediaURLType);
+                clearAllStates();
             },
             onError: (err) => {
                 toast.error(err, {
@@ -86,6 +82,17 @@ export default function CommentPage({ postId, topicId, commentValue }: Props) {
             },
         },
     );
+
+    function clearAllStates() {
+        setIsLoading(false);
+        setInputData({
+            title: '',
+            body: '',
+        });
+        setInputFiles([]);
+        setSocialMediaURL(initialSocialMediaURLType);
+        toggleVisibility();
+    }
 
     async function onClickSend() {
         setIsLoading(true);
@@ -162,15 +169,21 @@ export default function CommentPage({ postId, topicId, commentValue }: Props) {
                 <NeedLogin>
                     <SingleAccordion title={t('post.add_comment')} defaultOpen>
                         <Box className='max-w-xl'>
-                            <StandardPost
-                                valueInputData={inputData}
-                                valueSocialMediaURL={socialMediaURL}
-                                onChangeInputData={setInputData}
-                                onChangeInputFiles={setInputFiles}
-                                onChangeSocialMediaURL={setSocialMediaURL}
-                                placeholder={t('post.add_comment_placeholder')}
-                                minRows={2}
-                            />
+                            {isVisible ? (
+                                <StandardPost
+                                    valueInputData={inputData}
+                                    valueSocialMediaURL={socialMediaURL}
+                                    onChangeInputData={setInputData}
+                                    onChangeInputFiles={setInputFiles}
+                                    onChangeSocialMediaURL={setSocialMediaURL}
+                                    placeholder={t(
+                                        'post.add_comment_placeholder',
+                                    )}
+                                    minRows={2}
+                                />
+                            ) : (
+                                <CircularProgress />
+                            )}
                         </Box>
                         <Box className='text-end'>
                             <Button

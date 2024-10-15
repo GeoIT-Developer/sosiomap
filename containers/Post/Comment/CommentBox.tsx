@@ -97,7 +97,7 @@ export default function CommentBox({ comment }: Props) {
                         }}
                     />
                 </ListItem>
-                <Stack spacing={1}>
+                <Stack spacing={0}>
                     {comment.title && (
                         <Typography
                             component='p'
