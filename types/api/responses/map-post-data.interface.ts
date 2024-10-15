@@ -5,7 +5,7 @@ export interface MapPostDataInterface {
     location: Location;
     _id: string;
     topic_id: string;
-    location_type: string;
+    location_type?: string;
     body: string;
     post_type: string;
     post_url: PostUrlType;

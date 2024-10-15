@@ -415,6 +415,15 @@ export function isTWA(): boolean {
     );
 }
 
+export const isAndroidBrowser = (): boolean => {
+    const userAgent = navigator.userAgent.toLowerCase();
+    return (
+        /android/.test(userAgent) &&
+        /webkit/.test(userAgent) &&
+        /(chrome|firefox|safari)/.test(userAgent)
+    );
+};
+
 export function getLatestBadges(badges: Badge[]): Badge[] {
     const latestBadges = badges.reduce(
         (acc, badge) => {

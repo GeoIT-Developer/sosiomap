@@ -36,6 +36,7 @@ type Props = {
     onChangeInputData: (val: InputDataType) => void;
     onChangeInputFiles: (val: TheFileType[]) => void;
     placeholder?: string;
+    minRows?: number;
 };
 
 export default function StandardPost({
@@ -45,6 +46,7 @@ export default function StandardPost({
     onChangeInputData,
     onChangeInputFiles,
     placeholder,
+    minRows = 4,
 }: Props) {
     const t = useI18n();
     const [fields, setFields] = useState<FieldEnum[]>(() => []);
@@ -83,7 +85,7 @@ export default function StandardPost({
 
             <TextField
                 fullWidth
-                minRows={4}
+                minRows={minRows}
                 placeholder={
                     placeholder || t('post.what_do_you_want_to_share_today')
                 }

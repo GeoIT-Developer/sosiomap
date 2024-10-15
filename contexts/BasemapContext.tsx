@@ -1,6 +1,6 @@
 'use client';
 
-import useLocalStorage from '@/hooks/useLocalStorage';
+import useLocalStorageUn from '@/hooks/useLocalStorageUn';
 import { ReactChildrenProps } from '@/types/react-children.props';
 import { LOCAL_STORAGE } from '@/utils/constant';
 import { StyleSpecification } from 'maplibre-gl';
@@ -130,7 +130,7 @@ const loadBasemap = (id: string) => {
 };
 
 interface BasemapContextProps {
-    basemap: string;
+    basemap: string | undefined;
     setBasemap: (newBasemap: string) => void;
     style?: StyleSpecification;
 }
@@ -141,7 +141,7 @@ const BasemapContext = createContext<BasemapContextProps>({
 });
 
 export default function BasemapProvider({ children }: ReactChildrenProps) {
-    const [basemap, setBasemap] = useLocalStorage<string>(
+    const [basemap, setBasemap] = useLocalStorageUn<string>(
         LOCAL_STORAGE.BASEMAP,
         'osm',
     );
@@ -150,6 +150,7 @@ export default function BasemapProvider({ children }: ReactChildrenProps) {
     );
 
     useEffect(() => {
+        if (!basemap) return;
         const eStyle = loadBasemap(basemap) as StyleSpecification;
         setStyle(eStyle);
     }, [basemap]);

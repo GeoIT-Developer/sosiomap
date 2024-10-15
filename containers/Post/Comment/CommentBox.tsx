@@ -1,30 +1,28 @@
-import {
-    Box,
-    Card,
-    ListItem,
-    ListItemAvatar,
-    ListItemText,
-    Stack,
-    Typography,
-} from '@mui/material';
-import { useI18n } from '@/locales/client';
-import {
-    formatDateTime,
-    formatDistance,
-    getMimeTypeFromURL,
-} from '@/utils/helper';
+import { Box, Card, Stack, Typography } from '@mui/material';
+import { getMimeTypeFromURL } from '@/utils/helper';
 import { CommentDataInterface } from '@/types/api/responses/comment-data.interface';
 import ImageVideoStandard from '../View/ImageVideoStandard';
 import SocialMediaPost from '../View/SocialMediaPost';
-import MyAvatar from '@/components/preview/MyAvatar';
-import ProfileDialog from '@/containers/ProfilePage/shared/ProfileDialog';
+import HeaderSection from './HeaderSection';
+import CommentReaction from '../Action/CommentReaction';
+import { PostStatInterface } from '@/types/api/responses/post-stat.interface';
+import { useState } from 'react';
+import { ReactionEnum } from '@/types/reaction.enum';
 
 type Props = {
     comment: CommentDataInterface;
 };
 
-export default function CommentBox({ comment }: Props) {
-    const t = useI18n();
+export default function CommentBox({ comment: commentInput }: Props) {
+    const [comment, setComment] = useState<CommentDataInterface>(commentInput);
+
+    function onChangeReaction(stats: PostStatInterface, reactionId: string) {
+        const newComment = { ...comment };
+        newComment.stats = stats;
+        newComment.reaction = reactionId as ReactionEnum;
+        setComment(newComment);
+    }
+
     return (
         <Card
             variant='elevation'
@@ -32,60 +30,8 @@ export default function CommentBox({ comment }: Props) {
             sx={{ borderRadius: '8px', px: '1rem' }}
         >
             <Stack spacing={0.5}>
-                <ListItem className='!items-start !px-0'>
-                    <ListItemAvatar sx={{ paddingTop: '0.35rem' }}>
-                        <ProfileDialog
-                            name={comment.name}
-                            username={comment.username}
-                            photo_url={comment.photo_url}
-                        >
-                            <MyAvatar
-                                name={comment.name}
-                                photo_url={comment.photo_url}
-                            />
-                        </ProfileDialog>
-                    </ListItemAvatar>
-                    <ListItemText
-                        primary={
-                            <ProfileDialog
-                                name={comment.name}
-                                username={comment.username}
-                                photo_url={comment.photo_url}
-                            >
-                                <span className='cursor-pointer hover:underline active:underline'>
-                                    {comment.name}
-                                    <span className='ml-1 text-slate-500'>
-                                        @{comment.username}
-                                    </span>
-                                </span>
-                            </ProfileDialog>
-                        }
-                        primaryTypographyProps={{
-                            className: '!text-sm ',
-                        }}
-                        secondary={
-                            <>
-                                <div className='justify-between flex'>
-                                    <Typography className='!text-xs'>
-                                        {formatDateTime(
-                                            comment.createdAt,
-                                            'DD MMM YYYY - HH:mm',
-                                        )}
-                                    </Typography>
-                                    <Typography className='!text-xs'>
-                                        {formatDistance(comment.distance)}
-                                        {t('unit.km')}
-                                    </Typography>
-                                </div>
-                            </>
-                        }
-                        secondaryTypographyProps={{
-                            className: '!text-xs',
-                            component: 'div',
-                        }}
-                    />
-                </ListItem>
-                <Stack spacing={1}>
+                <HeaderSection comment={comment} />
+                <Stack spacing={0}>
                     {comment.title && (
                         <Typography
                             component='p'
@@ -110,7 +56,19 @@ export default function CommentBox({ comment }: Props) {
                         />
                     </Box>
                 </Stack>
-                <SocialMediaPost postUrlProps={comment.post_url} />
+                <SocialMediaPost
+                    postUrlProps={comment.post_url}
+                    defaultOpen='disable'
+                />
+                <div className='w-full flex justify-end items-end !ml-3'>
+                    <CommentReaction
+                        negative={comment.stats?.negative_reactions || 0}
+                        positive={comment.stats?.positive_reactions || 0}
+                        reactionId={comment.reaction}
+                        commentId={comment._id}
+                        onChangeStats={onChangeReaction}
+                    />
+                </div>
             </Stack>
         </Card>
     );

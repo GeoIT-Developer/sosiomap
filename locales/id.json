@@ -9,7 +9,12 @@
         "local": "Lokal",
         "info": "Info",
         "account": "Akun",
-        "no_data": "Data Kosong"
+        "no_data": "Data Kosong",
+        "sort_by": "Urutkan",
+        "latest": "Terbaru",
+        "oldest": "Terlama",
+        "nearest": "Terdekat",
+        "farthest": "Terjauh"
     },
     "button": {
         "login": "Masuk",
@@ -130,6 +135,13 @@
             "open_topic_interactions": "Interaksi di Postingan Topik Terbuka"
         }
     },
+    "info": {
+        "install_android_app": "Instal Aplikasi Android",
+        "install_android_app_desc": "Kami telah mendeteksi bahwa Anda menggunakan browser Android. Untuk pengalaman terbaik, kami sarankan mengunduh aplikasi kami dari Play Store. Klik tombol di bawah ini untuk menginstalnya sekarang!",
+        "remind_me": "Ingatkan Saya Nanti",
+        "never": "Tidak Pernah",
+        "install": "Instal"
+    },
     "message": {
         "error": {
             "geolocation_not_supported": "Informasi lokasi tidak tersedia pada perangkat ini!!",
@@ -241,7 +253,9 @@
         "archived": "Diarsipkan",
         "post_by_user": "Postingan oleh @{value}",
         "post_setting": "Pengaturan Postingan",
-        "post_content": "Isi Postingan"
+        "post_content": "Isi Postingan",
+        "post_distance_description": "Postingan berjarak {post_distance} dari Anda, dan Kreator berada sekitar {creator_distance} dari lokasi postingan saat mereka membuatnya.",
+        "comment_distance_description": "Komentar dibuat sekitar {distance} dari postingan."
     },
     "chat": {
         "no_chat_nearby": "Tidak ada obrolan di dekat sini!"

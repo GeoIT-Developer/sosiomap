@@ -18,6 +18,7 @@ import React from 'react';
 import TopicIcon from './TopicIcon';
 import PostOwner from '../Action/PostOwner';
 import useAccessToken from '@/hooks/useAccessToken';
+import TooltipClick from '@/components/tooltip/TooltipClick';
 
 type Props = {
     post: MapPostDataInterface;
@@ -32,6 +33,23 @@ export default function HeaderSectionPost({
 }: Props) {
     const t = useI18n();
     const accessToken = useAccessToken();
+
+    const postDistance = formatDistance(
+        calculateManhattanDistance(
+            userLocation?.latitude || 0,
+            userLocation?.longitude || 0,
+            post.location.coordinates[1],
+            post.location.coordinates[0],
+        ),
+    );
+    const postDistanceLabel = `${postDistance}${t('unit.km')}`;
+    const creatorDistanceLabel = `${post.distance}${t('unit.km')}`;
+
+    // @ts-ignore
+    const distanceDesc = t('post.post_distance_description', {
+        post_distance: postDistanceLabel,
+        creator_distance: creatorDistanceLabel,
+    });
 
     return (
         <ListItem>
@@ -71,17 +89,20 @@ export default function HeaderSectionPost({
                                     'DD MMM YYYY - HH:mm',
                                 )}
                             </Typography>
-                            <Typography className='!text-xs'>
-                                {formatDistance(
-                                    calculateManhattanDistance(
-                                        userLocation?.latitude || 0,
-                                        userLocation?.longitude || 0,
-                                        post.location.coordinates[1],
-                                        post.location.coordinates[0],
-                                    ),
-                                )}
-                                {t('unit.km')}
-                            </Typography>
+                            {showMore ? (
+                                <TooltipClick
+                                    title={distanceDesc}
+                                    placement='bottom'
+                                >
+                                    <Typography className='!text-xs cursor-pointer'>
+                                        &#9432; {postDistanceLabel}
+                                    </Typography>
+                                </TooltipClick>
+                            ) : (
+                                <Typography className='!text-xs'>
+                                    {postDistanceLabel}
+                                </Typography>
+                            )}
                         </div>
                         <div className='flex items-center'>
                             <TopicIcon topicId={post.topic_id} />

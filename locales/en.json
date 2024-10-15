@@ -9,7 +9,12 @@
         "local": "Local",
         "info": "Info",
         "account": "Account",
-        "no_data": "No Data"
+        "no_data": "No Data",
+        "sort_by": "Sort By",
+        "latest": "Latest",
+        "oldest": "Oldest",
+        "nearest": "Nearest",
+        "farthest": "Farthest"
     },
     "button": {
         "login": "Login",
@@ -130,6 +135,13 @@
             "open_topic_interactions": "Interactions in Open Topic Posts"
         }
     },
+    "info": {
+        "install_android_app": "Install Android App",
+        "install_android_app_desc": "We've detected that you're using an Android browser. For the best experience, we recommend downloading our app from the Play Store. Click the button below to install it now!",
+        "remind_me": "Remind Me Later",
+        "never": "Never",
+        "install": "Install"
+    },
     "message": {
         "error": {
             "geolocation_not_supported": "Get location is not supported in this device!",
@@ -241,7 +253,9 @@
         "archived": "Archived",
         "post_by_user": "Post by @{value}",
         "post_setting": "Post Setting",
-        "post_content": "Post Content"
+        "post_content": "Post Content",
+        "post_distance_description": "The post is {post_distance} from you, and the Creator was around {creator_distance} away from the post when they created it.",
+        "comment_distance_description": "The comment was made around {distance} away from the post."
     },
     "chat": {
         "no_chat_nearby": "No nearby chats!"

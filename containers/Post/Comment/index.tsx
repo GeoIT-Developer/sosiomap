@@ -5,12 +5,16 @@ import {
     Button,
     Card,
     CircularProgress,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
     Stack,
     Typography,
 } from '@mui/material';
 import NeedLogin from '@/components/auth/NeedLogin';
 import { useI18n } from '@/locales/client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { compressImage } from '@/utils/helper';
 import { toast } from 'react-toastify';
 import useAPI from '@/hooks/useAPI';
@@ -29,6 +33,15 @@ import {
 import StandardPost from '../New/StandardPost';
 import SendIcon from '@mui/icons-material/Send';
 import useFormattingData from '@/hooks/useFormattingData';
+import useToggleVisibility from '@/hooks/useToggleVisibility';
+import { sortByKey } from '@/utils';
+
+enum SortByEnum {
+    NEAREST = 'nearest',
+    FARTHEST = 'farthest',
+    LATEST = 'latest',
+    OLDEST = 'oldest',
+}
 
 type Props = {
     postId: string;
@@ -38,6 +51,7 @@ type Props = {
 
 export default function CommentPage({ postId, topicId, commentValue }: Props) {
     const t = useI18n();
+    const { isVisible, toggleVisibility } = useToggleVisibility();
     const [socialMediaURL, setSocialMediaURL] = useState<SocialMediaURLType>(
         initialSocialMediaURLType,
     );
@@ -49,9 +63,11 @@ export default function CommentPage({ postId, topicId, commentValue }: Props) {
         (TheFileTypeCarousel | TheFileTypeStandard)[]
     >([]);
 
+    const [listComment, setListComment] = useState<CommentDataInterface[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [sortBy, setSortBy] = useState<SortByEnum>(SortByEnum.LATEST);
 
-    const { list: listComment, ...apiListComment } = useAPI<
+    const apiListComment = useAPI<
         ObjectLiteral,
         string,
         CommentDataInterface[]
@@ -70,13 +86,7 @@ export default function CommentPage({ postId, topicId, commentValue }: Props) {
         {
             onSuccess: () => {
                 apiListComment.call(postId);
-                setIsLoading(false);
-                setInputData({
-                    title: '',
-                    body: '',
-                });
-                setInputFiles([]);
-                setSocialMediaURL(initialSocialMediaURLType);
+                clearAllStates();
             },
             onError: (err) => {
                 toast.error(err, {
@@ -86,6 +96,17 @@ export default function CommentPage({ postId, topicId, commentValue }: Props) {
             },
         },
     );
+
+    function clearAllStates() {
+        setIsLoading(false);
+        setInputData({
+            title: '',
+            body: '',
+        });
+        setInputFiles([]);
+        setSocialMediaURL(initialSocialMediaURLType);
+        toggleVisibility();
+    }
 
     async function onClickSend() {
         setIsLoading(true);
@@ -145,8 +166,28 @@ export default function CommentPage({ postId, topicId, commentValue }: Props) {
         value: formattingData(commentValue),
     });
 
+    useEffect(() => {
+        const eList = apiListComment.list;
+        if (!eList?.length) return;
+        let newList: CommentDataInterface[] = [];
+        switch (sortBy) {
+            case SortByEnum.OLDEST:
+                newList = sortByKey(eList, 'createdAt', 'asc');
+                break;
+            case SortByEnum.NEAREST:
+                newList = sortByKey(eList, 'distance', 'asc');
+                break;
+            case SortByEnum.FARTHEST:
+                newList = sortByKey(eList, 'distance', 'desc');
+                break;
+            default:
+                newList = sortByKey(eList, 'createdAt', 'desc');
+        }
+        setListComment([...newList]);
+    }, [sortBy, apiListComment.list]);
+
     return (
-        <Stack spacing={0.5} className='mt-1 mx-1'>
+        <Stack spacing={1} className='mt-1 mx-1'>
             <Card
                 elevation={5}
                 variant='elevation'
@@ -160,16 +201,23 @@ export default function CommentPage({ postId, topicId, commentValue }: Props) {
                     {commentLabel}
                 </Typography>
                 <NeedLogin>
-                    <SingleAccordion title={t('post.add_comment')}>
+                    <SingleAccordion title={t('post.add_comment')} defaultOpen>
                         <Box className='max-w-xl'>
-                            <StandardPost
-                                valueInputData={inputData}
-                                valueSocialMediaURL={socialMediaURL}
-                                onChangeInputData={setInputData}
-                                onChangeInputFiles={setInputFiles}
-                                onChangeSocialMediaURL={setSocialMediaURL}
-                                placeholder={t('post.add_comment_placeholder')}
-                            />
+                            {isVisible ? (
+                                <StandardPost
+                                    valueInputData={inputData}
+                                    valueSocialMediaURL={socialMediaURL}
+                                    onChangeInputData={setInputData}
+                                    onChangeInputFiles={setInputFiles}
+                                    onChangeSocialMediaURL={setSocialMediaURL}
+                                    placeholder={t(
+                                        'post.add_comment_placeholder',
+                                    )}
+                                    minRows={2}
+                                />
+                            ) : (
+                                <CircularProgress />
+                            )}
                         </Box>
                         <Box className='text-end'>
                             <Button
@@ -190,11 +238,35 @@ export default function CommentPage({ postId, topicId, commentValue }: Props) {
                     </SingleAccordion>
                 </NeedLogin>
             </Card>
-
+            <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
+                <InputLabel>{t('label.sort_by')}</InputLabel>
+                <Select
+                    value={sortBy}
+                    size='small'
+                    onChange={(e) => {
+                        setSortBy(e.target.value as SortByEnum);
+                    }}
+                >
+                    <MenuItem value={SortByEnum.LATEST}>
+                        {t('label.latest')}
+                    </MenuItem>
+                    <MenuItem value={SortByEnum.OLDEST}>
+                        {t('label.oldest')}
+                    </MenuItem>
+                    <MenuItem value={SortByEnum.NEAREST}>
+                        {t('label.nearest')}
+                    </MenuItem>
+                    <MenuItem value={SortByEnum.FARTHEST}>
+                        {t('label.farthest')}
+                    </MenuItem>
+                </Select>
+            </FormControl>
             {apiListComment.loading && <CircularProgress />}
-            {listComment?.map((item) => {
-                return <CommentBox key={item._id} comment={item} />;
-            })}
+            <Stack spacing={0.5}>
+                {listComment.map((item) => {
+                    return <CommentBox key={item._id} comment={item} />;
+                })}
+            </Stack>
         </Stack>
     );
 }
