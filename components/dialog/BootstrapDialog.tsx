@@ -26,6 +26,7 @@ interface BootstrapDialogProps {
     className?: string;
     maxWidth?: Breakpoint;
     action?: ReactNode;
+    disableOutsideClick?: boolean;
 }
 
 export default function BootstrapDialog({
@@ -36,11 +37,12 @@ export default function BootstrapDialog({
     className = '',
     maxWidth = 'lg',
     action,
+    disableOutsideClick,
 }: BootstrapDialogProps) {
     return (
         <>
             <BootstrapDialogStyle
-                onClose={handleClose}
+                onClose={disableOutsideClick ? undefined : handleClose}
                 open={open}
                 className={className}
                 fullWidth
