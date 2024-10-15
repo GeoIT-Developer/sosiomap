@@ -14,6 +14,7 @@ import React from 'react';
 import { ActiveTopicProvider } from './PageContext';
 import { useHashRouterContext } from '@/contexts/HashRouterContext';
 import { HomePageProvider } from '../HomePage/PageContext';
+import PopupAppPage from './Popup';
 
 const MenuPage = dynamic(() => import('@/containers/MenuPage'));
 const ExplorePage = dynamic(() => import('@/containers/ExplorePage'));
@@ -115,6 +116,7 @@ export default function AppPage() {
                     </>
                 )}
             </Box>
+            <PopupAppPage />
         </ActiveTopicProvider>
     );
 }

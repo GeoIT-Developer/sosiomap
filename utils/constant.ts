@@ -11,6 +11,7 @@ export const LOCAL_STORAGE = {
     CHAT_CHANNEL: 'chat-channel',
     ACTIVE_TOPIC: 'active-topic',
     REFRESH_SIGN_IN: 'refresh-sign-in',
+    INSTALL_ANDROID_APP_POPUP: 'install-android-app-popup',
 };
 
 export const KEYCLOAK_BASE = `${process.env.NEXTAUTH_URL_IAM}realms/${process.env.NEXTAUTH_REALM_IAM}`;

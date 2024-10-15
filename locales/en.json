@@ -135,6 +135,13 @@
             "open_topic_interactions": "Interactions in Open Topic Posts"
         }
     },
+    "info": {
+        "install_android_app": "Install Android App",
+        "install_android_app_desc": "We've detected that you're using an Android browser. For the best experience, we recommend downloading our app from the Play Store. Click the button below to install it now!",
+        "remind_me": "Remind Me Later",
+        "never": "Never",
+        "install": "Install"
+    },
     "message": {
         "error": {
             "geolocation_not_supported": "Get location is not supported in this device!",
