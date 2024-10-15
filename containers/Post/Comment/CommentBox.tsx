@@ -18,6 +18,7 @@ import ImageVideoStandard from '../View/ImageVideoStandard';
 import SocialMediaPost from '../View/SocialMediaPost';
 import MyAvatar from '@/components/preview/MyAvatar';
 import ProfileDialog from '@/containers/ProfilePage/shared/ProfileDialog';
+import TooltipClick from '@/components/tooltip/TooltipClick';
 
 type Props = {
     comment: CommentDataInterface;
@@ -25,6 +26,13 @@ type Props = {
 
 export default function CommentBox({ comment }: Props) {
     const t = useI18n();
+
+    const commentDistance = formatDistance(comment.distance) + t('unit.km');
+    // @ts-ignore
+    const distanceDesc = t('post.comment_distance_description', {
+        distance: commentDistance,
+    });
+
     return (
         <Card
             variant='elevation'
@@ -72,10 +80,14 @@ export default function CommentBox({ comment }: Props) {
                                             'DD MMM YYYY - HH:mm',
                                         )}
                                     </Typography>
-                                    <Typography className='!text-xs'>
-                                        {formatDistance(comment.distance)}
-                                        {t('unit.km')}
-                                    </Typography>
+                                    <TooltipClick
+                                        title={distanceDesc}
+                                        placement='bottom'
+                                    >
+                                        <Typography className='!text-xs cursor-pointer'>
+                                            &#9432; {commentDistance}
+                                        </Typography>
+                                    </TooltipClick>
                                 </div>
                             </>
                         }

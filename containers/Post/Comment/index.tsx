@@ -160,7 +160,7 @@ export default function CommentPage({ postId, topicId, commentValue }: Props) {
                     {commentLabel}
                 </Typography>
                 <NeedLogin>
-                    <SingleAccordion title={t('post.add_comment')}>
+                    <SingleAccordion title={t('post.add_comment')} defaultOpen>
                         <Box className='max-w-xl'>
                             <StandardPost
                                 valueInputData={inputData}
@@ -169,6 +169,7 @@ export default function CommentPage({ postId, topicId, commentValue }: Props) {
                                 onChangeInputFiles={setInputFiles}
                                 onChangeSocialMediaURL={setSocialMediaURL}
                                 placeholder={t('post.add_comment_placeholder')}
+                                minRows={2}
                             />
                         </Box>
                         <Box className='text-end'>

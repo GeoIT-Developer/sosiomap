@@ -241,7 +241,9 @@
         "archived": "Diarsipkan",
         "post_by_user": "Postingan oleh @{value}",
         "post_setting": "Pengaturan Postingan",
-        "post_content": "Isi Postingan"
+        "post_content": "Isi Postingan",
+        "post_distance_description": "Postingan berjarak {post_distance} dari Anda, dan Kreator berada sekitar {creator_distance} dari lokasi postingan saat mereka membuatnya.",
+        "comment_distance_description": "Komentar dibuat sekitar {distance} dari postingan."
     },
     "chat": {
         "no_chat_nearby": "Tidak ada obrolan di dekat sini!"

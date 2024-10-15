@@ -241,7 +241,9 @@
         "archived": "Archived",
         "post_by_user": "Post by @{value}",
         "post_setting": "Post Setting",
-        "post_content": "Post Content"
+        "post_content": "Post Content",
+        "post_distance_description": "The post is {post_distance} from you, and the Creator was around {creator_distance} away from the post when they created it.",
+        "comment_distance_description": "The comment was made around {distance} away from the post."
     },
     "chat": {
         "no_chat_nearby": "No nearby chats!"
