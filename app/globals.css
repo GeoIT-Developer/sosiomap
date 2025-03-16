@@ -4,8 +4,9 @@
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'ABeeZee', 'Segoe UI',
-        'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    font-family:
+        -apple-system, BlinkMacSystemFont, 'ABeeZee', 'Segoe UI', 'Roboto',
+        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
         'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -56,10 +57,8 @@ body {
 
 .bg-pattern-polkadot {
     background-color: transparent !important;
-    background-image: radial-gradient(
-            var(--primary-color) 0.65px,
-            transparent 0.65px
-        ),
+    background-image:
+        radial-gradient(var(--primary-color) 0.65px, transparent 0.65px),
         radial-gradient(var(--primary-color) 0.65px, transparent 0.65px) !important;
     background-size: 40px 28px;
     background-position:

@@ -6,8 +6,8 @@ Welcome to Sosiomap! This project is built with Next.js and uses Material-UI as 
 
 ### Prerequisites
 
--   [Node.js](https://nodejs.org/) (version 20.10.0)
--   [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) package manager
+- [Node.js](https://nodejs.org/) (version 20.10.0)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) package manager
 
 ### Installation
 
