@@ -81,7 +81,7 @@ function useMapPost(
                     features: listMapPost.map((item) => {
                         return {
                             type: 'Feature',
-                            geometry: item.location,
+                            geometry: item.location as any,
                             properties: {
                                 ...item,
                                 color:
