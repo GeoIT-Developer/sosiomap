@@ -1,4 +1,4 @@
-/** @type {import('next').NextConfig} */
+import withSerwistInit from '@serwist/next';
 
 // const cspHeader = `
 //     default-src 'self';
@@ -13,10 +13,12 @@
 //     upgrade-insecure-requests;
 // `;
 
-const withPWA = require('next-pwa')({
-    dest: 'public',
-    register: true,
-    skipWaiting: true,
+const revision = crypto.randomUUID();
+const withSerwist = withSerwistInit({
+    cacheOnNavigation: true,
+    swSrc: 'app/sw.ts',
+    swDest: 'public/sw.js',
+    additionalPrecacheEntries: [{ url: '/[locale]/~offline', revision }],
 });
 
 const nextConfig = {
@@ -61,8 +63,6 @@ const nextConfig = {
     },
 };
 
-// Disable PWA for Development
-module.exports =
-    process.env.NEXT_PUBLIC_STAGE === 'PRODUCTION'
-        ? withPWA(nextConfig)
-        : nextConfig;
+export default withSerwist({
+    ...nextConfig,
+});
